@@ -1,29 +1,3 @@
-DROP TABLE emite_poluicao;
-DROP TABLE poluicao_cadeia;
-DROP TABLE poluicao;
-DROP TABLE lista_recursos;
-DROP TABLE recurso;
-DROP TABLE lista_produtos_encomenda;
-DROP TABLE cesto_compras;
-DROP TABLE produto;
-DROP TABLE cadeia_logistica;
-DROP TABLE tipo_subtipo;
-DROP TABLE subtipo_produto;
-DROP TABLE tipo_produto;
-DROP TABLE transportar_encomendas;
-DROP TABLE lista_encomendas;
-DROP TABLE estado_encomenda;
-DROP TABLE encomenda;
-DROP TABLE lista_veiculos;
-DROP TABLE veiculo;
-DROP TABLE transportador;
-DROP TABLE lista_armazens;
-DROP TABLE armazem;
-DROP TABLE localizacao;
-DROP TABLE fornecedor;
-DROP TABLE consumidor;
-DROP TABLE utilizador;
-
 CREATE TABLE utilizador (
     id              NUMERIC PRIMARY KEY,
     nome            VARCHAR(50) NOT NULL,
@@ -72,7 +46,7 @@ CREATE TABLE lista_armazens (
     CONSTRAINT pk_armazens
         PRIMARY KEY (fornecedor,armazem),
     CONSTRAINT fk_forn_id
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador)
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador),
     CONSTRAINT fk_armazem_id
         FOREIGN KEY (armazem) REFERENCES armazem(id)
 ) ENGINE = InnoDB;
@@ -99,7 +73,7 @@ CREATE TABLE lista_veiculos (
     CONSTRAINT pk_veiculos
         PRIMARY KEY (transportador,veiculo),
     CONSTRAINT fk_transp_id
-        FOREIGN KEY (transportador) REFERENCES transportador(id),
+        FOREIGN KEY (transportador) REFERENCES transportador(utilizador),
     CONSTRAINT fk_veiculo_id
         FOREIGN KEY (veiculo) REFERENCES veiculo(id)
 ) ENGINE = InnoDB;
@@ -127,11 +101,11 @@ CREATE TABLE lista_encomendas (
     CONSTRAINT pk_encomendas
         PRIMARY KEY (consumidor,encomenda,fornecedor),
     CONSTRAINT fk_consumidor_id
-        FOREIGN KEY (consumidor) REFERENCES consumidor(id),
+        FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador),
     CONSTRAINT fk_encomenda_id
         FOREIGN KEY (encomenda) REFERENCES encomenda(id),
     CONSTRAINT fk_fornecedor_id
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(id)
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador)
 ) ENGINE = InnoDB;
 
 CREATE TABLE transportar_encomendas (
@@ -143,7 +117,7 @@ CREATE TABLE transportar_encomendas (
     CONSTRAINT fk_encomenda_ptransp
         FOREIGN KEY (encomenda) REFERENCES encomenda(id),
     CONSTRAINT fk_atransportar
-        FOREIGN KEY (transportador) REFERENCES transportador(id)
+        FOREIGN KEY (transportador) REFERENCES transportador(utilizador)
 ) ENGINE = InnoDB;
 
 CREATE TABLE tipo_produto (
@@ -161,11 +135,11 @@ CREATE TABLE tipo_subtipo (
     subtipo         NUMERIC,
     --
     CONSTRAINT pk_tipo_subtipo
-        PRIMARY KEY (tipo,sutipo),
+        PRIMARY KEY (tipo,subtipo),
     CONSTRAINT fk_tipo_lista
-        FOREIGN KEY (tipo) REFERENCES tipo(id),
+        FOREIGN KEY (tipo) REFERENCES tipo_produto(id),
     CONSTRAINT fk_subtipo_lista
-        FOREIGN KEY (subtipo) REFERENCES subtipo(id)
+        FOREIGN KEY (subtipo) REFERENCES subtipo_produto(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE cadeia_logistica (
@@ -180,16 +154,16 @@ CREATE TABLE produto (
     preco           FLOAT NOT NULL,
     tipo            NUMERIC NOT NULL,
     subtipo         NUMERIC NOT NULL,
-    cadeia_logis    NUMERIC NOT NULL, --verificar... não fará mais sentido na cadeia logistica chamar-mos o produto?
+    cadeia_logis    NUMERIC NOT NULL, -- verificar... não fará mais sentido na cadeia logistica chamar-mos o produto?
     --
     CONSTRAINT fk_fornecedor_produto
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(id),
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador),
     CONSTRAINT fk_tipo
-        FOREIGN KEY (tipo) REFERENCES tipo(id),
+        FOREIGN KEY (tipo) REFERENCES tipo_produto(id),
     CONSTRAINT fk_subtipo
-        FOREIGN KEY (subtipo) REFERENCES subtipo(id),
+        FOREIGN KEY (subtipo) REFERENCES subtipo_produto(id),
     CONSTRAINT fk_cadeia_produto
-        FOREIGN KEY (cadeia_logis) REFERENCES cadeia_logistica(id),
+        FOREIGN KEY (cadeia_logis) REFERENCES cadeia_logistica(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE cesto_compras (
@@ -199,7 +173,7 @@ CREATE TABLE cesto_compras (
     CONSTRAINT pk_cesto_compras
         PRIMARY KEY (consumidor,produto),
     CONSTRAINT fk_cesto_consumidor
-        FOREIGN KEY (consumidor) REFERENCES consumidor(id),
+        FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador),
     CONSTRAINT fk_cesto_produto
         FOREIGN KEY (produto) REFERENCES produto(id)
 ) ENGINE = InnoDB;
