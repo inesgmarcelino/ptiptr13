@@ -1,16 +1,15 @@
 import React from "react";
 
-function Home() {
+function Login() {
     return (
-        <div className="home">
+        <div className="login">
             <div className="container">
                 <div>
-                    <p className="main-title">Bem-vindo(a)!</p>
-                    
+                    <p className="main-title">Inicie sessão aqui.</p>
                 </div>
             </div>
         </div>
     );
 }
 
-export default Home;
+export default Login;
