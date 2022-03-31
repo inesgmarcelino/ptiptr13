@@ -4,10 +4,7 @@ function Home() {
     return (
         <div className="home">
             <div className="container">
-                <div>
-                    <p className="main-title">Bem-vindo(a)!</p>
-                    
-                </div>
+                <p className="main-title">Bem-vindo(a)!</p>
             </div>
         </div>
     );

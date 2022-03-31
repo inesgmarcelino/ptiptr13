@@ -4,8 +4,10 @@ function Login() {
     return (
         <div className="login">
             <div className="container">
-                <div>
-                    <p className="main-title">Inicie sessão aqui.</p>
+                <p className="main-title">Inicie sessão aqui.</p>
+
+                <div className="justify-content-center">
+                    OLÁ
                 </div>
             </div>
         </div>
