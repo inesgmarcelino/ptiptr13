@@ -5,11 +5,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+ /* sidebar */
 .sidebar {
   background-color: #283618;
   height: 100vh;
   display: flex;
-  position: absolute;
+  position: fixed;
 }
 
 #logo {
@@ -51,10 +52,10 @@ body {
   color: rgb(203, 203, 203);
 }
 
-.nav-link:active { /* to add */
+/* .nav-link:active { to add
   color: rgb(203, 203, 203);
   text-decoration: underline;
-}
+} */
 
 .bottom {
   bottom: 0;
@@ -63,4 +64,74 @@ body {
 
 .col-2 {
   width: 280px;
+  ;
+}
+
+.col-8 {
+  display: flex;
+  position: absolute;
+}
+
+.container {
+  padding: 0;
+  margin-left: 15px;
+}
+
+
+.form-content .form-items {
+  background-color: #283618;
+  /* border: 3px solid #fff; */
+  padding: 70px;
+  display: inline-block;
+  min-width: 640px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  text-align: left;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  margin-top: 150px;
+}
+
+.form-content h3 {
+  color: #fff;
+  text-align: left;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-content p {
+  color: #fff;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 20px;
+  margin-bottom: 35px;
+}
+
+
+ .form-content label {
+  color: #fff;
+  font-size: 20px;
+}
+
+.form-content input[type=email], .form-content input[type=password], .form-content input[type=text] {
+  width: 100%;
+  background-color: #fff;
+  color: #000;
+  margin-top: 6px;
+  margin-bottom: 12px;
+}
+
+.form-check label  {
+  font-size: 15px
+}
+
+.btn {
+  float: right;
+  background-color: #fff;
+  color: #283618;
+  margin-top: 30px;
+  margin-right: 15px;
 }
