@@ -5,61 +5,54 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-.name-brand {
-  font-size: 13px;
-  margin-left: -7px;
-  color: white;
-  font-style: italic;
-}
-
-.name-brand:hover, .nav-link:hover{
-  color: rgb(215, 215, 215)
-}
-
 .sidebar {
-  width: 80px;
-  background-color: #84a884;
+  background-color: #283618;
   height: 100vh;
-  border-radius: 2px;
+  display: flex;
+  position: absolute;
+}
+
+#logo {
+  max-width: 90%;
+  max-height: 90%;
+  margin: 15px 0 0 -5px;
   display: block;
-  position: fixed;
+  position: absolute;
 }
 
-.nav-item {
-  width: 60px;
-  margin-bottom: 4px;
-  margin-top: -7px
+#icon {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
 }
 
-.form-inline {
-  margin-top: -5px;
-}
+#cart {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+ }
+
+ .dropdown-divider {
+   width: 100%;
+   display: block;
+ }
 
 .form-control {
-  width: 60px;
-  margin-left: -7px;
-  height: 15px;
-  font-size: 5px;
-  padding: 2px;
+  margin-top: 100px;
+  max-width: 100%;
 }
 
 .nav-link {
-  margin-left: -7px;
   color: white;
-  font-size: 6px;
-  padding-left: 1px;
-  padding-top: 3px;
-  padding-bottom: 3px;
 }
 
-.nav-pills .nav-link.active {
-  color: #587558;
-  background-color: #84a884;
+.nav-link:hover {
+  color: rgb(203, 203, 203);
+}
+
+.nav-link:active { /* to add */
+  color: rgb(203, 203, 203);
   text-decoration: underline;
 }
 
@@ -68,18 +61,6 @@ code {
   position: absolute;
 }
 
-.home, .login {
-  display:inline-flex;
-  position: absolute;
-  margin: 20px 0px 0px 90px;
-}
-
-.login>p {
-  font-size: 10px;
-}
-
-.main-title {
-  font-size: 10px;
-  margin-left: -7px;
-  color: black;
+.col-2 {
+  width: 280px;
 }
