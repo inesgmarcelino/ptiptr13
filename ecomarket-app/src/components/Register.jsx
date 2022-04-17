@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import Axios from "axios";
+import Axios from "axios";
 
 function Register() {
 
@@ -12,43 +12,50 @@ function Register() {
     const [checkPassword, setCheckPassword]   = useState('');
 
     // states for checking errors
-    const [submitted, setSubmitted] = useState(false);
-    const [error,setError] = useState(false);
+    // const [submitted, setSubmitted] = useState(false);
+    // const [error,setError] = useState(false);
 
     const handler = (x) => {
         switch(x.target.name) {
             case "nome":
                 setNome(x.target.value);
-                setSubmitted(false);
+                // setSubmitted(false);
                 break;
             case "email":
                 setEmail(x.target.value);
-                setSubmitted(false);
+                // setSubmitted(false);
                 break;
             case "nif":
                 setNif(x.target.value);
-                setSubmitted(false);
+                // setSubmitted(false);
                 break;
             case "telem":
                 setTelem(x.target.value);
-                setSubmitted(false);
+                // setSubmitted(false);
                 break;
             case "password":
                 setPassword(x.target.value);
-                setSubmitted(false);
+                // setSubmitted(false);
                 break;
             case "checkPassword":
                 setCheckPassword(x.target.value);
-                setSubmitted(false);
+                // setSubmitted(false);
                 break;
             case "submit":
                 x.preventDefault();
                 if (nome === '' || email === '' || nif === '' || 
                     telem === '' || password === '' || checkPassword === '') {
-                        setError(true);
+                        // setError(true);
                 } else {
-                    setSubmitted(true);
-                    setError(false);
+                    Axios.post("http://localhost:3001/api/register", {
+                        nome: nome, 
+                        email: email, 
+                        nif: nif, 
+                        tlm: telem, 
+                        pwd: password
+                    }).then(() => {
+                        alert("successful insert");
+                    });
                 }
                 break;
             default:
@@ -87,7 +94,7 @@ function Register() {
                             {successMessage()}
                         </div> */}
 
-                        <form>
+                        <form method="post">
                             <div className="col-md-12">
                                 <input className="form-control" type="text" name="nome" placeholder="Nome Completo" onChange={handler} required />
                             </div>
