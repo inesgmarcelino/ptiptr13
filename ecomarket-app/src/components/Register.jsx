@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Axios from "axios";
+import $ from 'jquery';
 
 function Register() {
 
@@ -15,42 +16,45 @@ function Register() {
     const [checkTransportador, setTransportador]    = useState(false);
     const [moradaConsumidor, setMorada]             = useState('');
 
-    // states for checking errors
-    // const [submitted, setSubmitted] = useState(false);
-    // const [error,setError] = useState(false);
+    const handleShow = () => {
+        // console.log($("#modal").css("display", "block"))
+        // $("#modal").show(true);
+        // console.log($("#modal"));
+        $("#modal").css("display", "block");
+    }
+
+    const handleHide = () => {
+        document.getElementById("modal").modal('hide');
+    }
 
     const handler = (x) => {
         switch(x.target.name) {
             case "nome":
                 setNome(x.target.value);
-                // setSubmitted(false);
                 break;
             case "email":
                 setEmail(x.target.value);
-                // setSubmitted(false);
                 break;
             case "nif":
                 setNif(x.target.value);
-                // setSubmitted(false);
                 break;
             case "telem":
                 setTelem(x.target.value);
-                // setSubmitted(false);
                 break;
             case "password":
                 setPassword(x.target.value);
-                // setSubmitted(false);
                 break;
             case "checkPassword":
                 setCheckPassword(x.target.value);
-                // setSubmitted(false);
                 break;
             case "check-consumidor":
                 setConsumidor(x.target.checked);
                 if (x.target.checked) {
                     document.getElementById("morada").style.display = 'block';
+                    document.getElementById("check-transportador").disabled = true;
                 } else {
                     document.getElementById("morada").style.display = 'none';
+                    document.getElementById("check-transportador").disabled = false;
                 }
                 break;
             case "morada":
@@ -58,9 +62,21 @@ function Register() {
                 break;
             case "check-fornecedor":
                 setFornecedor(x.target.checked);
+                if (x.target.checked) {
+                    document.getElementById("check-transportador").disabled = true;
+                } else {
+                    document.getElementById("check-transportador").disabled = false;
+                } 
                 break;
             case "check-transportador":
                 setTransportador(x.target.checked);
+                if (x.target.checked) {
+                    document.getElementById("check-consumidor").disabled = true;
+                    document.getElementById("check-fornecedor").disabled = true;
+                } else {
+                    document.getElementById("check-consumidor").disabled = false;
+                    document.getElementById("check-fornecedor").disabled = false;
+                }
                 break;
             case "submit":
                 x.preventDefault();
@@ -86,6 +102,18 @@ function Register() {
                         trans: checkTransportador
                     }).then((response) => {
                         console.log(response);
+                        if (response.data === "success") {
+                            document.getElementById("modal_header").innerText = 'a';
+                            document.getElementById("modal_body").innerText = 'b';
+                            document.getElementById("modal_footer").innerHTML 
+                            = '<button type="button" onClick={handleHide} className="btn btn-secondary">Cancelar</button><button type="button" className="btn">Continuar</button>';
+                        } else {
+                            document.getElementById("modal_header").innerText = 'aa';
+                            document.getElementById("modal_body").innerText = 'bb';
+                            document.getElementById("modal_footer").innerHTML 
+                            = '<button type="button" onClick={handleHide} className="btn btn-secondary">Cancelar</button><button type="button" className="btn">Continuar</button>';
+                        }
+                        handleShow();
                     });
                 }
                 break;
@@ -94,30 +122,6 @@ function Register() {
         }
     }
 
-    // useEffect(() => {
-    //     Axios.get("http://localhost:3001/api/get").then((response) => {
-    //         console.log(response.data);
-    //     });
-    // }, []);
-
-    // // showing success message
-    // const successMessage = () => {
-    //     return (
-    //         <div className="success" style={{display: submitted ? '' : 'none'}}>
-    //             <h1>User {nome} successfully registered!</h1>
-    //         </div>
-    //     );
-    // };
-
-    // // showing error message if error true
-    // const errorMessage = () => {
-    //     return (
-    //         <div className="error" style={{display: error ? '' : 'none'}}>
-    //             <h1>Please enter all the fields</h1>
-    //         </div>
-    //     );
-    // };
-    
     return (
         <div className="col-8 justify-content-center mt-5">
             <div className="form-holder">
@@ -164,8 +168,23 @@ function Register() {
                                 </div>
                             </div>
                             
-                            <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
+                            <button id="submit" type="submit" name="submit" className="btn" onClick={handler} data-bs-toggle="modal" data-bs-target="#modal">Registar</button>
                         </form>
+
+
+                    </div>
+                </div>
+            </div>
+            {/* MODAL */}
+            <div className="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header" id="modal_header">
+                        </div>
+                        <div className="modal-body" id="modal_body">
+                        </div>
+                        <div className="modal-footer" id="modal_footer">
+                        </div>
                     </div>
                 </div>
             </div>

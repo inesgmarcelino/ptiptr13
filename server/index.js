@@ -43,7 +43,11 @@ app.post('/api/register', (req, res) => {
     const sqlInsert = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word) VALUES (?,?,?,?,?)";
     db.query(sqlInsert, [nome, email, nif, tlm, pwd], 
          (err, result) => {
-            console.log(result);
+             if (!err) {
+                console.log(result);
+             } else {
+                 res.send("fail");
+             }
     });
 
     const cons = req.body.cons;
@@ -52,60 +56,52 @@ app.post('/api/register', (req, res) => {
     const trans = req.body.trans;
 
     const sqlSelect = "SELECT id FROM utilizador WHERE email = ?";
-        db.query(sqlSelect, [email], 
-             (err, rows) => {
-                if (!err) {
-                    const result = Object.values(JSON.parse(JSON.stringify(rows)));
-                    var id = result[0].id;
+    db.query(sqlSelect, [email], 
+            (err, rows) => {
+            if (!err) {
+                const result = Object.values(JSON.parse(JSON.stringify(rows)));
+                var id = result[0].id;
 
-                    if (trans) { // criar transportador
-                        const sqlInsert = "INSERT INTO transportador (utilizador) VALUES (?)";
-                        db.query(sqlInsert, [id], 
-                            (err, result) => {
-                                console.log(result);
-                        });
-                    } else {
-                        if (cons) { //criar consumidor
-                            const sqlInsert = "INSERT INTO consumidor (utilizador, morada) VALUES (?,?)";
-                            db.query(sqlInsert, [id, morada], 
-                                (err, result) => {
-                                    console.log(result);
-                            });
-                        }
-
-                        if (forn) { //criar fornecedor
-                            const sqlInsert = "INSERT INTO fornecedor (utilizador) VALUES (?)";
-                            db.query(sqlInsert, [id], 
-                                (err, result) => {
-                                    console.log(result);
-                            });
-                        }
-                    }
-                    
-                }
-            });
-
-    if (trans) {
-        const sqlSelect = "SELECT id FROM utilizador WHERE email = ?";
-        db.query(sqlSelect, [email], 
-             (err, rows) => {
-                if (!err) {
-                    const result = Object.values(JSON.parse(JSON.stringify(rows)));
-                    var id = result[0].id;
-
-                    // criar transportador
+                if (trans) { // criar transportador
                     const sqlInsert = "INSERT INTO transportador (utilizador) VALUES (?)";
                     db.query(sqlInsert, [id], 
                         (err, result) => {
-                            console.log(result);
+                            if (!err) {
+                                console.log(result);
+                            } else {
+                                res.send("fail");
+                            }
                     });
-                }
-            });
-    } else {
-        if (cons) {
+                } else {
+                    if (cons) { //criar consumidor
+                        const sqlInsert = "INSERT INTO consumidor (utilizador, morada) VALUES (?,?)";
+                        db.query(sqlInsert, [id, morada], 
+                            (err, result) => {
+                                if (!err) {
+                                    console.log(result);
+                                } else {
+                                    res.send("fail");
+                                }
+                        });
+                    }
 
-        }
-    }
+                    if (forn) { //criar fornecedor
+                        const sqlInsert = "INSERT INTO fornecedor (utilizador) VALUES (?)";
+                        db.query(sqlInsert, [id], 
+                            (err, result) => {
+                                if (!err) {
+                                    console.log(result);
+                                } else {
+                                    res.send("fail");
+                                }
+                        });
+                    }
+                }
+                res.send("success");
+            } else {
+                res.send("fail");
+            }
+        });
 });
 
 app.listen(3001, () => {
