@@ -4,12 +4,15 @@ import Axios from "axios";
 function Register() {
 
     // states for registration
-    const [nome, setNome]           = useState('');
-    const [email, setEmail]         = useState('');
-    const [nif, setNif]             = useState('');
-    const [telem, setTelem]         = useState('');
-    const [password, setPassword]   = useState('');
-    const [checkPassword, setCheckPassword]   = useState('');
+    const [nome, setNome]                   = useState('');
+    const [email, setEmail]                 = useState('');
+    const [nif, setNif]                     = useState('');
+    const [telem, setTelem]                 = useState('');
+    const [password, setPassword]           = useState('');
+    const [checkPassword, setCheckPassword] = useState('');
+    const [checkConsumidor, setConsumidor]  = useState(false);
+    const [checkFornecedor, setFornecedor]  = useState(false);
+    const [checkTransportador, setTransportador]  = useState(false);
 
     // states for checking errors
     // const [submitted, setSubmitted] = useState(false);
@@ -41,10 +44,21 @@ function Register() {
                 setCheckPassword(x.target.value);
                 // setSubmitted(false);
                 break;
+            case "check-consumidor":
+                setConsumidor(x.target.checked);
+                break;
+            case "check-fornecedor":
+                setFornecedor(x.target.checked);
+                break;
+            case "check-transportador":
+                setTransportador(x.target.checked);
+                break;
             case "submit":
                 x.preventDefault();
                 if (nome === '' || email === '' || nif === '' || 
-                    telem === '' || password === '' || checkPassword === '') {
+                    telem === '' || password === '' || checkPassword === '' ||
+                    // verificar passwords          garante que quando se é transportador, n pode adquirir nenhum dos outros papeis
+                    (password !== checkPassword) || (checkTransportador && (checkConsumidor || checkFornecedor))) {
                         // setError(true);
                 } else {
                     Axios.post("http://localhost:3001/api/register", {
@@ -52,7 +66,10 @@ function Register() {
                         email: email, 
                         nif: nif, 
                         tlm: telem, 
-                        pwd: password
+                        pwd: password,
+                        cons: checkConsumidor,
+                        forn: checkFornecedor,
+                        trans: checkTransportador
                     }).then((response) => {
                         console.log(response);
                     });
@@ -121,13 +138,13 @@ function Register() {
                             </div>
                             <div className="col-md-12">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" id="check-consumidor" name="tipo" value="consumidor" />
+                                    <input className="form-check-input" type="checkbox" id="check-consumidor" name="check-consumidor" onChange={handler} />
                                     <label className="form-check-label" for="check-consumidor">Consumidor</label>
                                     <br />
-                                    <input className="form-check-input" type="checkbox" id="check-fornecedor" name="tipo" value="fornecedor" />
+                                    <input className="form-check-input" type="checkbox" id="check-fornecedor" name="check-fornecedor" onChange={handler} />
                                     <label className="form-check-label" for="check-fornecedor">Fornecedor</label>
                                     <br />
-                                    <input className="form-check-input" type="checkbox" id="check-transportador" name="tipo" value="transportador" />
+                                    <input className="form-check-input" type="checkbox" id="check-transportador" name="check-transportador" onChange={handler} />
                                     <label className="form-check-label" for="check-transportador">Transportador</label>
                                 </div>
                             </div>

@@ -41,11 +41,32 @@ app.post('/api/register', (req, res) => {
     const pwd = req.body.pwd;
 
     const sqlInsert = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word) VALUES (?,?,?,?,?)";
-    console.log(nome, email, nif, tlm, pwd)
     db.query(sqlInsert, [nome, email, nif, tlm, pwd], 
          (err, result) => {
             console.log(result);
-         });
+    });
+
+    const cons = req.body.cons;
+    const forn = req.body.forn;
+    const trans = req.body.trans;
+    if (trans) {
+        const sqlSelect = "SELECT id FROM utilizador WHERE email = ?";
+        db.query(sqlSelect, [email], 
+             (err, rows) => {
+                if (!err) {
+                    const result = Object.values(JSON.parse(JSON.stringify(rows)));
+                    var id = result[0].id;
+
+                    // criar transportador
+                    const sqlInsert = "INSERT INTO transportador (utilizador) VALUES (?)";
+                    db.query(sqlInsert, [id], 
+                        (err, result) => {
+                            console.log(result);
+                    });
+                }
+            });
+        // console.log(result);
+    }
 });
 
 app.listen(3001, () => {
