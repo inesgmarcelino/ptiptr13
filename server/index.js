@@ -4,6 +4,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const app = express();
+app.use(cors());
+app.use(express.json())
 
 const db = mysql.createConnection({ //bd temporária
     host: "localhost",
@@ -19,11 +21,6 @@ db.connect(err => {
         return err;
     } else {
         console.log("connected")
-        const sqlTest = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word) VALUES ('test','test@test.pt',123456789,987654321,'abc123')";
-        db.query(sqlTest, (err, result) => {
-
-        })
-        // funciona!!
     }
 });
 // console.log(db);
@@ -31,7 +28,7 @@ db.connect(err => {
 app.get('/api/get', (req, res) => {
     const sqlSelect = "SELECT * FROM utilizador";
     db.query(sqlSelect, (err, result) => {
-        console.log(result);
+        res.send(result);
     })
 })
 
@@ -39,12 +36,12 @@ app.post('/api/register', (req, res) => {
     const nome = req.body.nome;
     const email = req.body.email;
     const nif = req.body.nif;
-    const telemovel = req.body.tlm;
+    const tlm = req.body.tlm;
     // const image = req.body.image;
-    const password = req.body.pwd;
+    const pwd = req.body.pwd;
 
-    const sqlInsert = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word) VALUES (?,?,?,?,?,?)";
-
+    const sqlInsert = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word) VALUES (?,?,?,?,?)";
+    console.log(nome, email, nif, tlm, pwd)
     db.query(sqlInsert, [nome, email, nif, tlm, pwd], 
          (err, result) => {
             console.log(result);

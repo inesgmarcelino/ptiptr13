@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 
 function Register() {
@@ -53,8 +53,8 @@ function Register() {
                         nif: nif, 
                         tlm: telem, 
                         pwd: password
-                    }).then(() => {
-                        alert("successful insert");
+                    }).then((response) => {
+                        console.log(response);
                     });
                 }
                 break;
@@ -62,6 +62,12 @@ function Register() {
                 console.log();
         }
     }
+
+    // useEffect(() => {
+    //     Axios.get("http://localhost:3001/api/get").then((response) => {
+    //         console.log(response.data);
+    //     });
+    // }, []);
 
     // // showing success message
     // const successMessage = () => {
