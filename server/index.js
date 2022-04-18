@@ -49,6 +49,41 @@ app.post('/api/register', (req, res) => {
     const cons = req.body.cons;
     const forn = req.body.forn;
     const trans = req.body.trans;
+
+    const sqlSelect = "SELECT id FROM utilizador WHERE email = ?";
+        db.query(sqlSelect, [email], 
+             (err, rows) => {
+                if (!err) {
+                    const result = Object.values(JSON.parse(JSON.stringify(rows)));
+                    var id = result[0].id;
+
+                    if (trans) { // criar transportador
+                        const sqlInsert = "INSERT INTO transportador (utilizador) VALUES (?)";
+                        db.query(sqlInsert, [id], 
+                            (err, result) => {
+                                console.log(result);
+                        });
+                    } else {
+                        if (cons) { //criar consumidor
+                            const sqlInsert = "INSERT INTO consumidor (utilizador, morada) VALUES (?,?)";
+                            db.query(sqlInsert, [id, morada], 
+                                (err, result) => {
+                                    console.log(result);
+                            });
+                        }
+
+                        if (forn) { //criar fornecedor
+                            const sqlInsert = "INSERT INTO fornecedor (utilizador) VALUES (?)";
+                            db.query(sqlInsert, [id], 
+                                (err, result) => {
+                                    console.log(result);
+                            });
+                        }
+                    }
+                    
+                }
+            });
+
     if (trans) {
         const sqlSelect = "SELECT id FROM utilizador WHERE email = ?";
         db.query(sqlSelect, [email], 
@@ -65,7 +100,10 @@ app.post('/api/register', (req, res) => {
                     });
                 }
             });
-        // console.log(result);
+    } else {
+        if (cons) {
+
+        }
     }
 });
 
