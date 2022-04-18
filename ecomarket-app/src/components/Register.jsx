@@ -4,15 +4,16 @@ import Axios from "axios";
 function Register() {
 
     // states for registration
-    const [nome, setNome]                   = useState('');
-    const [email, setEmail]                 = useState('');
-    const [nif, setNif]                     = useState('');
-    const [telem, setTelem]                 = useState('');
-    const [password, setPassword]           = useState('');
-    const [checkPassword, setCheckPassword] = useState('');
-    const [checkConsumidor, setConsumidor]  = useState(false);
-    const [checkFornecedor, setFornecedor]  = useState(false);
-    const [checkTransportador, setTransportador]  = useState(false);
+    const [nome, setNome]                           = useState('');
+    const [email, setEmail]                         = useState('');
+    const [nif, setNif]                             = useState('');
+    const [telem, setTelem]                         = useState('');
+    const [password, setPassword]                   = useState('');
+    const [checkPassword, setCheckPassword]         = useState('');
+    const [checkConsumidor, setConsumidor]          = useState(false);
+    const [checkFornecedor, setFornecedor]          = useState(false);
+    const [checkTransportador, setTransportador]    = useState(false);
+    const [moradaConsumidor, setMorada]             = useState('');
 
     // states for checking errors
     // const [submitted, setSubmitted] = useState(false);
@@ -46,6 +47,14 @@ function Register() {
                 break;
             case "check-consumidor":
                 setConsumidor(x.target.checked);
+                if (x.target.checked) {
+                    document.getElementById("morada").style.display = 'block';
+                } else {
+                    document.getElementById("morada").style.display = 'none';
+                }
+                break;
+            case "morada":
+                setMorada(x.target.value);
                 break;
             case "check-fornecedor":
                 setFornecedor(x.target.checked);
@@ -57,8 +66,12 @@ function Register() {
                 x.preventDefault();
                 if (nome === '' || email === '' || nif === '' || 
                     telem === '' || password === '' || checkPassword === '' ||
-                    // verificar passwords          garante que quando se é transportador, n pode adquirir nenhum dos outros papeis
-                    (password !== checkPassword) || (checkTransportador && (checkConsumidor || checkFornecedor))) {
+                    // verificar passwords
+                    (password !== checkPassword) || 
+                    // garante que quando se é transportador, n pode adquirir nenhum dos outros papeis
+                    (checkTransportador && (checkConsumidor || checkFornecedor)) ||
+                    // garante que consumidor tem morada
+                    (checkConsumidor && moradaConsumidor === '')) {
                         // setError(true);
                 } else {
                     Axios.post("http://localhost:3001/api/register", {
@@ -68,6 +81,7 @@ function Register() {
                         tlm: telem, 
                         pwd: password,
                         cons: checkConsumidor,
+                        morada: moradaConsumidor,
                         forn: checkFornecedor,
                         trans: checkTransportador
                     }).then((response) => {
@@ -140,6 +154,7 @@ function Register() {
                                 <div className="form-check">
                                     <input className="form-check-input" type="checkbox" id="check-consumidor" name="check-consumidor" onChange={handler} />
                                     <label className="form-check-label" for="check-consumidor">Consumidor</label>
+                                    <input className="form-control" type="text" name="morada" placeholder="Adicione a sua morada" id="morada" onChange={handler} required />
                                     <br />
                                     <input className="form-check-input" type="checkbox" id="check-fornecedor" name="check-fornecedor" onChange={handler} />
                                     <label className="form-check-label" for="check-fornecedor">Fornecedor</label>

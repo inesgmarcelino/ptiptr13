@@ -47,6 +47,7 @@ app.post('/api/register', (req, res) => {
     });
 
     const cons = req.body.cons;
+    const morada = req.body.morada;
     const forn = req.body.forn;
     const trans = req.body.trans;
 
