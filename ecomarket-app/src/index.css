@@ -144,4 +144,9 @@ body {
 
 .fade:not(.show) {
   opacity: 1;
+  background-color:rgba(0, 0, 0, 0.5);
+}
+
+.modal-footer button {
+  margin-top: -5px;
 }

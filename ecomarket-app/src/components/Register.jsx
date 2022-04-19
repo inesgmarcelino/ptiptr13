@@ -17,14 +17,15 @@ function Register() {
     const [moradaConsumidor, setMorada]             = useState('');
 
     const handleShow = () => {
-        // console.log($("#modal").css("display", "block"))
-        // $("#modal").show(true);
-        // console.log($("#modal"));
         $("#modal").css("display", "block");
     }
 
     const handleHide = () => {
-        document.getElementById("modal").modal('hide');
+        $("#modal").css("display", "none");
+    }
+    
+    const goLogin = () => {
+        window.location.href = "http://localhost:3000/login";
     }
 
     const handler = (x) => {
@@ -103,15 +104,17 @@ function Register() {
                     }).then((response) => {
                         console.log(response);
                         if (response.data === "success") {
-                            document.getElementById("modal_header").innerText = 'a';
-                            document.getElementById("modal_body").innerText = 'b';
-                            document.getElementById("modal_footer").innerHTML 
-                            = '<button type="button" onClick={handleHide} className="btn btn-secondary">Cancelar</button><button type="button" className="btn">Continuar</button>';
+                            document.getElementById("modal_header").innerText = 'Registo bem sucedido!';
+                            document.getElementById("modal_body").innerHTML = "<p>Clique em 'Continuar' para proseguir para o início de sessão";
+                            document.getElementById("continue").onclick = goLogin;
                         } else {
-                            document.getElementById("modal_header").innerText = 'aa';
-                            document.getElementById("modal_body").innerText = 'bb';
-                            document.getElementById("modal_footer").innerHTML 
-                            = '<button type="button" onClick={handleHide} className="btn btn-secondary">Cancelar</button><button type="button" className="btn">Continuar</button>';
+                            document.getElementById("modal_header").innerText = 'Registo Inválido';
+                            document.getElementById("modal_body").innerHTML = "<p>A(s) razão(ões) pode(m) ser das seguintes:</p> \
+                            <ul><li>Já existe uma conta com o email "+email+".</li> \
+                            <li>Já existe uma conta com o NIF "+nif+".</li> \
+                            <li>Já existe uma conta com o número de telemóvel "+telem+".</li></ul>";
+                            // document.getElementById("modal_footer").innerHTML 
+                            // = '<button type="button" onClick={handleHide} className="btn btn-secondary">Cancelar</button><button type="button" className="btn">Continuar</button>';
                         }
                         handleShow();
                     });
@@ -157,14 +160,14 @@ function Register() {
                             <div className="col-md-12">
                                 <div className="form-check">
                                     <input className="form-check-input" type="checkbox" id="check-consumidor" name="check-consumidor" onChange={handler} />
-                                    <label className="form-check-label" for="check-consumidor">Consumidor</label>
+                                    <label className="form-check-label" htmlFor="check-consumidor">Consumidor</label>
                                     <input className="form-control" type="text" name="morada" placeholder="Adicione a sua morada" id="morada" onChange={handler} required />
                                     <br />
                                     <input className="form-check-input" type="checkbox" id="check-fornecedor" name="check-fornecedor" onChange={handler} />
-                                    <label className="form-check-label" for="check-fornecedor">Fornecedor</label>
+                                    <label className="form-check-label" htmlFor="check-fornecedor">Fornecedor</label>
                                     <br />
                                     <input className="form-check-input" type="checkbox" id="check-transportador" name="check-transportador" onChange={handler} />
-                                    <label className="form-check-label" for="check-transportador">Transportador</label>
+                                    <label className="form-check-label" htmlFor="check-transportador">Transportador</label>
                                 </div>
                             </div>
                             
@@ -176,14 +179,16 @@ function Register() {
                 </div>
             </div>
             {/* MODAL */}
-            <div className="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
+            <div className="modal fade" id="modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header" id="modal_header">
                         </div>
                         <div className="modal-body" id="modal_body">
                         </div>
                         <div className="modal-footer" id="modal_footer">
+                        <button type="button" onClick={handleHide} className="btn btn-secondary">Cancelar</button>
+                        <button type="button" className="btn" id="continue">Continuar</button>
                         </div>
                     </div>
                 </div>
