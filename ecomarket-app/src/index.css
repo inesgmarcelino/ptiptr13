@@ -37,11 +37,17 @@ body {
  .dropdown-divider {
    width: 100%;
    display: block;
+   color: white;
+   opacity: 1;
  }
 
 .form-control {
   margin-top: 100px;
   max-width: 100%;
+}
+
+#searchBar {
+  height: fit-content;
 }
 
 .nav-link {
@@ -52,7 +58,7 @@ body {
   color: rgb(203, 203, 203);
 }
 
-/* .nav-link:active { to add
+/* .nav-link:active { 
   color: rgb(203, 203, 203);
   text-decoration: underline;
 } */
@@ -64,7 +70,7 @@ body {
 
 .col-2 {
   width: 280px;
-  ;
+  margin-left: -3px;
 }
 
 .col-8 {
@@ -149,4 +155,14 @@ body {
 
 .modal-footer button {
   margin-top: -5px;
+}
+
+#cancelar {
+  background-color: lightgrey;
+  color: white
+}
+
+#continue {
+  background-color: #283618;
+  color: white
 }

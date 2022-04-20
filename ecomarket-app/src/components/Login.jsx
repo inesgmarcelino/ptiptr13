@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Axios from "axios";
+import $ from "jquery";
 
 function Login() {
 
@@ -6,42 +8,55 @@ function Login() {
     const [email, setEmail]         = useState('');
     const [password, setPassword]   = useState('');
 
-    // states for checking errors
-    const [submitted, setSubmitted] = useState(false);
-    const [error,setError] = useState(false);
+    const handleShow = () => {
+        $("#modal_login").css("display", "block");
+    }
+
+    const handleHide = () => {
+        $("#modal_login").css("display", "none")
+    }
+
+    const goHome = () => {
+        window.location.href = "http://localhost:3000/";
+    }
 
     const handler = (x) => {
         switch(x.target.name) {
             case "email":
                 setEmail(x.target.value);
-                setSubmitted(false);
                 break;
             case "password":
                 setPassword(x.target.value);
-                setSubmitted(false);
                 break;
             case "submit":
                 x.preventDefault();
                 if ( email === '' || password === '') {
-                        setError(true);
+                        // setError(true);
                 } else {
-                    setSubmitted(true);
-                    setError(false);
+                    Axios.post("http://localhost:3001/api/login", {
+                        email: email,
+                        pwd: password
+                    }).then((response) => {
+                        console.log(response);
+                        if (response.data === "success") {
+                            goHome();
+                        } else {
+                             if (response.data === "no email") {
+                            document.getElementById("modal_header_login").innerText = 'Início de Sessão Inválido';
+                            document.getElementById("modal_body_login").innerText = 'Não há nenuma conta registada com o email '+email;
+                            } else {
+                                document.getElementById("modal_header_login").innerText = 'Início de Sessão Inválido';
+                                document.getElementById("modal_body_login").innerText = 'Email e/ou password incorreto(s)';
+                            }
+                            handleShow();
+                        }
+                    })
                 }
                 break;
             default:
                 console.log();
         }
     }
-
-    // showing error message if error true
-    const errorMessage = () => {
-        return (
-            <div className="error" style={{display: error ? '' : 'none'}}>
-                <h1>Please enter all the fields</h1>
-            </div>
-        );
-    };
 
     return (
         <div className="col-8 justify-content-center mt-5">
@@ -51,22 +66,31 @@ function Login() {
                         <h3>LOGIN</h3>
                         <p>Inicie sessão aqui.</p>
 
-                        <div className="messages">
-                            {errorMessage()}
-                        </div>
-
-                        <form>
+                        <form method="get">
                             <div class="col-md-12">
-                                <label>Email: </label>
-                                <input class="form-control" type="email" name="email" onChange={handler} required />
+                                <input class="form-control" type="email" name="email" placeholder="Email" onChange={handler} required />
                             </div>
                             <div class="col-md-12">
-                                <label>Password: </label>
-                                <input class="form-control" type="password" name="password" onChange={handler} required />
+                                <input class="form-control" type="password" name="password" placeholder="Password" onChange={handler} required />
                             </div>
                             
-                            <button id="submit" type="submit" name="submit" onClick={handler} class="btn">Iniciar Sessão</button>
+                            <button id="submit" type="submit" name="submit" class="btn" onClick={handler}>Iniciar Sessão</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+            {/* MODAL */}
+            <div className="modal fade" id="modal_login" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header" id="modal_header_login">~
+                            <button type="button" class="btn-close" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body" id="modal_body_login">
+                        </div>
+                        <div className="modal-footer" id="modal_footer_login">
+                        <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ function SideBar() {
     return (
             <div className="sidebar col-2 mb-4">
                 <a href="/" ><img src={logo} alt="" id="logo" /></a>               
-                <input className="form-control" type="search" placeholder="Pesquisar" aria-label="Search" />
+                <input className="form-control" type="search" placeholder="Pesquisar" aria-label="Search" id="searchBar" />
                 <ul className="nav bottom">
                     <li className="nav-item"> {/* se autenticado user */}
                         <NavLink className="nav-link" to="/login">

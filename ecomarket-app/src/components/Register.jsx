@@ -17,11 +17,11 @@ function Register() {
     const [moradaConsumidor, setMorada]             = useState('');
 
     const handleShow = () => {
-        $("#modal").css("display", "block");
+        $("#modal_register").css("display", "block");
     }
 
     const handleHide = () => {
-        $("#modal").css("display", "none");
+        $("#modal_register").css("display", "none");
     }
     
     const goLogin = () => {
@@ -104,12 +104,12 @@ function Register() {
                     }).then((response) => {
                         console.log(response);
                         if (response.data === "success") {
-                            document.getElementById("modal_header").innerText = 'Registo bem sucedido!';
-                            document.getElementById("modal_body").innerHTML = "<p>Clique em 'Continuar' para proseguir para o início de sessão";
+                            document.getElementById("modal_header_register").innerText = 'Registo bem sucedido!';
+                            document.getElementById("modal_body_register").innerHTML = "<p>Clique em 'Continuar' para proseguir para o início de sessão";
                             document.getElementById("continue").onclick = goLogin;
                         } else {
-                            document.getElementById("modal_header").innerText = 'Registo Inválido';
-                            document.getElementById("modal_body").innerHTML = "<p>A(s) razão(ões) pode(m) ser das seguintes:</p> \
+                            document.getElementById("modal_header_register").innerText = 'Registo Inválido';
+                            document.getElementById("modal_body_register").innerHTML = "<p>A(s) razão(ões) pode(m) ser das seguintes:</p> \
                             <ul><li>Já existe uma conta com o email "+email+".</li> \
                             <li>Já existe uma conta com o NIF "+nif+".</li> \
                             <li>Já existe uma conta com o número de telemóvel "+telem+".</li></ul>";
@@ -132,11 +132,6 @@ function Register() {
                     <div className="form-items">
                         <h3>REGISTO</h3>
                         <p>Registe-se aqui.</p>
-
-                        {/* <div className="messages">
-                            {errorMessage()}
-                            {successMessage()}
-                        </div> */}
 
                         <form method="post">
                             <div className="col-md-12">
@@ -171,24 +166,23 @@ function Register() {
                                 </div>
                             </div>
                             
-                            <button id="submit" type="submit" name="submit" className="btn" onClick={handler} data-bs-toggle="modal" data-bs-target="#modal">Registar</button>
+                            <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
                         </form>
-
-
                     </div>
                 </div>
             </div>
             {/* MODAL */}
-            <div className="modal fade" id="modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="modal_register" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
-                        <div className="modal-header" id="modal_header">
+                        <div className="modal-header" id="modal_header_register">~
+                            <button type="button" class="btn-close" aria-label="Close"></button>
                         </div>
-                        <div className="modal-body" id="modal_body">
+                        <div className="modal-body" id="modal_body_register">
                         </div>
-                        <div className="modal-footer" id="modal_footer">
-                        <button type="button" onClick={handleHide} className="btn btn-secondary">Cancelar</button>
-                        <button type="button" className="btn" id="continue">Continuar</button>
+                        <div className="modal-footer" id="modal_footer_register">
+                        <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
+                        <button className="btn" id="continue">Continuar</button>
                         </div>
                     </div>
                 </div>
