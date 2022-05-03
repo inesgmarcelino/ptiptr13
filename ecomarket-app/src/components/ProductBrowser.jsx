@@ -32,8 +32,12 @@ function ProductBrowser(){
     }
 
     return(
-        <div id="catalog" class="container">
-            {/**new Product(product1)*/listprods(products)}    
+        <div id="catalog" class="album">
+            <div class='productContainer container'>
+                <div class='row'>
+                    {/**new Product(product1)*/listprods(products)}   
+                </div>
+            </div> 
         </div>
     );
 }
@@ -44,17 +48,15 @@ function Product(details/**,func */){
 
     //este objeto retorna um react.element 
     return (
-        <div class="row">
-            <div class='productContainer col'> 
-                <div id={details.id} class='detailWrapper'>
-                    <img src={details.img}></img>
-                    <div class='detailsContainer'>
-                    <p class="name"> {details.name}</p>
-                    <p class="price">{details.price}$</p>
+                <div id={details.id} class='detailWrapper col'>
+                    <div class="card">
+                        <img src={details.img} class="card-img-top"></img>
+                        <div class='detailsContainer card-body'>
+                            <p class="name"> {details.name}</p>
+                            <p class="price">{details.price}$</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
     );
 }
 
