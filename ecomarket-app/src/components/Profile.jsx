@@ -23,18 +23,18 @@ function Profile() {
       <table className="table table-bordered">
         <thead>
         </thead>
-        <tbody>
+        <tbody> 
         <tr>
-          <td style={{display: 'flex'}} ><h3>Editar os meus dados</h3> <button type="button" className="btn btn btn-primary" style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}} >Editar</button></td>
+          <td style={{display: 'flex', backgroundColor: 'grey'}} ><h3>Editar os meus dados</h3> <button type="button" className="btn btn btn-primary" style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}} >Editar</button></td>
           </tr>
           <tr>
-          <td style={{display: 'flex'}} ><h3>Sou Consumidor</h3> <button type="button" className="btn btn btn-primary" style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}} >Ver</button></td>
+          <td style={{display: 'flex', backgroundColor: 'grey'}} ><h3>Sou Consumidor</h3> <button type="button" className="btn btn btn-primary" style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}} >Ver</button></td>
           </tr>
           <tr>
-          <td style={{display: 'flex'}} ><h3>Sou Fornecedor</h3> <button type="button" className="btn btn btn-primary" style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}} >Ver</button></td>
+          <td style={{display: 'flex', backgroundColor: 'grey'}} ><h3>Sou Fornecedor</h3> <button type="button" className="btn btn btn-primary" style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}} >Ver</button></td>
           </tr>
           <tr>
-          <td style={{display: 'flex'}} ><h3>Sou Transportador</h3> <button type="button" className="btn btn btn-primary" style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}} >Tornar-me</button></td>
+          <td style={{display: 'flex', backgroundColor: 'grey'}} ><h3>Sou Transportador</h3> <button type="button" className="btn btn btn-primary" style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}} >Tornar-me</button></td>
           </tr>
         </tbody>
         </table>
