@@ -1,0 +1,1226 @@
+swagger: "2.0"
+info:
+  description: "API do serviço de loja"
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  contact:
+    email: "apiteam@swagger.io"
+host: "url.domain.amazonaws3."
+basePath: "/v1"
+tags:
+- name: "users"
+  description: "Dados relativos a utilizadores."
+- name: "providers"
+  description: "Dados relativos a fornecedores."
+- name: "products"
+  description: "Dados relativos aos produtos."
+- name: "carriers"
+  description: "Dados relativos a transportadoras."
+- name: "transportation"
+  description: "Dados relativos ao transporte de encomendas."
+schemes:
+- "https"
+- "http"
+paths:
+
+  /users/register:
+    post:
+      tags:
+      - "users"
+      summary: "Regista utilizador."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados necessários para registar."
+        schema: 
+          $ref: '#/definitions/Users'
+      responses:
+        '200':
+          description: "Utilizador registado. Retorna token de autenticação."
+          schema:
+            type: "object"
+            properties:
+              auth-token:
+                type: "string"
+              message:
+                type: "string"  
+        '400':
+          description: "Dados introduzidos não refletem os dados na base de dados."
+                
+  /users/login:
+    post:
+      tags:
+      - "users"
+      summary: "Autentica utilizador."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados necessários para login."
+        schema: 
+          type: "object"
+          properties:
+            email:
+              type: "string"
+            password: 
+              type: "string"
+      responses:
+        '200':
+          description: "Utilizador autenticado com sucesso."
+          schema:
+            type: "object"
+            properties:
+              auth-token:
+                type: "string"
+              message:
+                type: "string"  
+        '400':
+          description: "Dados introduzidos não refletem os dados na base de dados."
+                
+  /users/{u_id}:
+    get:
+      tags:
+        - "users"
+      summary: "Carrega utilizador."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do utilizador."
+          required: true
+          type: "integer"
+          minimum: 1
+      responses:
+        '200':
+          description: "Objeto utilizador."
+          schema:
+            $ref: '#/definitions/Users'
+        '404':
+          description: "Utilizador não existe."
+
+    put:
+      tags:
+        - "users"
+      summary: "Atualiza utilizador."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do utilizador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Utilizador atualizado."
+          schema:
+            $ref: '#/definitions/Users'
+        '404':
+          description: "Utilizador não existe."
+  
+  /users/{u_id}/cart: 
+    get:
+      tags:
+        - "users"
+      summary: "Busca a lista de compras do utilizador."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do utilizador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Objeto Carrinho de Compras."
+          schema:
+            type: "object"
+            properties:
+              cart:
+                type: "array"
+                items:
+                  $ref: '#/definitions/Produto'
+              
+    post:
+      tags:
+        - "users"
+      summary: "Coloca um item na lista de compras do utilizador."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do utilizador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: body
+          name: "body"
+          schema:
+            type: "object"
+            properties:
+              id_produto:
+                type: "integer"
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Produto adicionado com sucesso."
+        '400':
+          description: "Produto não existe."
+        '503': 
+          description: "Houve problemas da parte do servidor, tentar mais tarde."
+          
+  /users/{u_id}/orders:
+    get:
+      tags:
+        - "users"
+      summary: "Fetch as encomendas do utilizador"
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do utilizador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"  
+      responses:
+        '200':
+          description: "Objeto Lista de Encomendas."
+          schema:
+            type: "object"
+            properties:
+              products:
+                type: "array"
+                items:
+                  $ref: '#/definitions/Encomenda'
+        '403':
+          description: "Utilizador não tem permissões para ver as vendas."
+  
+  /users/{u_id}/orders/{sale_id}:
+    get:
+      tags:
+        - "users"
+      summary: "Fetch a encomenda sale_id do utilizador."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do utilizador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: path
+          name: "sale_id"
+          description: "Id da venda."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"  
+      responses:
+        '200':
+          description: "Encomenda."
+          schema:
+            $ref: '#/definitions/Encomenda'
+        '403':
+          description: "Utilizador não tem permissões para ver a venda."
+            
+  /providers/{u_id}:
+      get:
+        tags:
+          - "providers"
+        summary: "Vai buscar um fornecedor."
+        parameters:
+          - in: path
+            name: "u_id"
+            description: "Id do fornecedor."
+            required: true
+            type: "integer"
+            minimum: 1
+          - in: header
+            name: "token"
+            description: "Auth token."
+            required: true
+            type: "string"
+        responses:
+          '200':
+            description: "Objeto Fornecedor."
+            schema:
+              $ref: '#/definitions/Fornecedor'
+          '400':
+            description: "Utilizador não é fornecedor."
+  
+  /providers/{u_id}/storage:
+    get:
+      tags:
+        - "providers"
+      summary: "Busca os armazéns do utilizador."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do fornecedor."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Objeto lista de Armazém."
+          schema:
+            type: "object"
+            properties:
+              cart:
+                type: "array"
+                items:
+                  $ref: '#/definitions/Armazem'
+        '400':
+          description: "Utilizador não é fornecedor."
+              
+    post:
+      tags:
+        - "providers"
+      summary: "Cria um Armazém novo associado ao Fornecedor u_id."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do fornecedor."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+        - in: body
+          name: "body"
+          schema:
+            $ref: '#/definitions/Armazem'
+      responses:
+        '200':
+          description: "Armazém criado com sucesso."
+        '400':
+          description: "Utilizador não é fornecedor."
+        '503': 
+          description: "Houve problemas da parte do servidor, tentar mais tarde."
+
+                
+  /providers/{u_id}/storage/{s_id}:
+    
+    get:
+      tags:
+        - "providers"
+      summary: "Busca o Armazém s_id do fornecedor u_id."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do fornecedor."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: path
+          name: "s_id"
+          description: "Id do armazém."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Objeto Armazém."
+          schema:
+            $ref: '#/definitions/Armazem'
+        '400':
+          description: "Utilizador não é fornecedor."
+                
+  /providers/{u_id}/storage/{s_id}/products:
+                
+    get:
+      tags:
+        - "providers"
+      summary: "Busca os produtos do Armazém s_id do fornecedor u_id."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do fornecedor."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: path
+          name: "s_id"
+          description: "Id do armazém."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: query
+          name: "limit"
+          description: "Limite de produtos mostrados por página."
+          required: true
+          type: "integer"
+          maximum: 50
+        - in: query
+          name: "offset"
+          description: "Posição onde está a página."
+          type: "integer"
+          required: true
+          multipleOf: 50
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Objeto Lista de produtos."
+          schema:
+            type: "object"
+            properties:
+              products:
+                type: "array"
+                items:
+                  $ref: '#/definitions/Produto'
+        '400':
+          description: "Utilizador não é fornecedor."
+                
+    post:
+      tags:
+        - "providers"
+      summary: "Adiciona um produto a um armazém existente."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do fornecedor."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: path
+          name: "s_id"
+          description: "Id do armazém."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: body
+          name: "body"
+          schema:
+            type: "object"
+            properties:
+              id_produto:
+                type: "integer"
+      responses:
+        '200':
+          description: "Produto adicionado com sucesso."
+        '400':
+          description: "Utilizador não é fornecedor."
+        '404':
+          description: "Armazém não existe."
+        '503': 
+          description: "Houve problemas da parte do servidor, tentar mais tarde."
+          
+  /providers/{u_id}/storage/{s_id}/products/{p_id}:
+  
+    put:
+      tags:
+        - "providers"
+      summary: "Atualiza um produto no inventário armazém."
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do fornecedor."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: path
+          name: "s_id"
+          description: "Id do armazém."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: path
+          name: "p_id"
+          description: "Id do Produto."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: body
+          name: "body"
+          description: "Quantia e outros detalhes do produto"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              quantidade:
+                type: "integer"
+              detalhes:
+                description: "TO BE IMPLEMENTED"
+                type: "string"
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Produto atualizado com sucesso."
+        '400':
+          description: "Utilizador não é fornecedor."
+        '404':
+          description: "Armazém não existe."
+        '503': 
+          description: "Houve problemas da parte do servidor, tentar mais tarde."
+          
+  /providers/{u_id}/sales:
+    get:
+      tags:
+        - "providers"
+      summary: "Fetch as encomendas do fornecedor"
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do fornecedor."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"  
+      responses:
+        '200':
+          description: "Objeto Lista de Encomendas."
+          schema:
+            type: "object"
+            properties:
+              products:
+                type: "array"
+                items:
+                  $ref: '#/definitions/Encomenda'
+        '400':
+          description: "Utilizador não é fornecedor."
+        '403':
+          description: "Utilizador não tem permissões para ver as vendas."
+  
+  /providers/{u_id}/sales/{sale_id}:
+    get:
+      tags:
+        - "providers"
+      summary: "Fetch a encomenda sale_id do fornecedor"
+      parameters:
+        - in: path
+          name: "u_id"
+          description: "Id do fornecedor."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: path
+          name: "sale_id"
+          description: "Id do fornecedor."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"  
+      responses:
+        '200':
+          description: "Encomenda."
+          schema:
+            $ref: '#/definitions/Encomenda'
+        '400':
+          description: "Utilizador não é fornecedor."
+        '403':
+          description: "Utilizador não tem permissões para ver a venda."
+          
+  /products:
+    get:
+      tags:
+        - "products"
+      summary: "Vai buscar todos os produtos"
+      parameters:
+        - in: query
+          name: "prov_id"
+          description: "Filtrar produtos por utilizador."
+          type: "integer"
+        - in: query
+          name: "nome"
+          description: "Filtrar produtos por nome."
+          type: "integer"
+        - in: query
+          name: "limit"
+          description: "Limite de produtos mostrados por página."
+          required: true
+          type: "integer"
+          maximum: 50
+        - in: query
+          name: "offset"
+          description: "Posição onde está a página."
+          type: "integer"
+          required: true
+          multipleOf: 50    
+      responses:
+        '200':
+          description: "Objeto Lista de produtos."
+          schema:
+            type: "object"
+            properties:
+              products:
+                type: "array"
+                items:
+                  $ref: '#/definitions/Produto'
+        '404':
+          description: "Produto não encontrado."
+          
+    post:
+      tags:
+        - "products"
+      summary: "Regista um novo produto."
+      parameters:
+        - in: body
+          name: "body"
+          description: "Quantia e outros detalhes do produto"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+              nome:
+                type: "string"
+                maximum: 150       
+              data_prod:
+                type: "string"
+                format: "date-time"
+              preco:
+                type: "number"
+                format: "double"
+              tipo:
+                type: "integer"
+              subtipo:
+                type: "integer"
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Produto adicionado com sucesso."
+        '400':
+          description: "Utilizador não é fornecedor."
+        '503': 
+          description: "Houve problemas da parte do servidor, tentar mais tarde."
+          
+  /products/{product_id}:
+    get:
+      tags:
+        - "products"
+      summary: "Vai buscar o produto product_id."
+      parameters:
+        - in: path
+          name: "product_id"
+          description: "Id do produto."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Detalhes do produto."
+          schema:
+              $ref: '#/definitions/Produto'
+        '404':
+          description: "Produto não encontrado."
+        
+      
+  /carriers:
+    get:
+      tags:
+        - "carriers"
+      summary: "Procura transportadoras por localização."
+      parameters:
+        - in: query
+          name: "location"
+          description: "Limite de produtos mostrados por página."
+          required: true
+          type: "string"
+        - in: query
+          name: "limit"
+          description: "Limite de produtos mostrados por página."
+          required: true
+          type: "integer"
+          maximum: 50
+        - in: query
+          name: "offset"
+          description: "Posição onde está a página."
+          type: "integer"
+          required: true
+          multipleOf: 50
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"     
+      responses:
+        '200':
+          description: "Objeto Lista de Transportadores."
+          schema:
+            type: "object"
+            properties:
+              products:
+                type: "array"
+                items:
+                  $ref: '#/definitions/Transportador'
+                  
+    post:
+      tags:
+        - "carriers"
+      summary: "Regista uma nova transportadora."
+      parameters: 
+        - in: body
+          name: "body"
+          description: "Detalhes da transportadora"
+          required: true
+          schema:
+            $ref: '#/definitions/Transportador'
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Produto adicionado com sucesso."
+        '400':
+          description: "Utilizador não é fornecedor."
+        '503': 
+          description: "Houve problemas da parte do servidor, tentar mais tarde."  
+          
+  /carriers/{carrier_id}:
+ 
+    get:
+      tags:
+        - "carriers"
+      summary: "Fetch dos dados da transportadora t_id."
+      parameters:
+          - in: path
+            name: "carrier_id"
+            description: "Id do Transportador."
+            required: true
+            type: "integer"
+            minimum: 1
+          - in: header
+            name: "token"
+            description: "Auth token."
+            required: true
+            type: "string"
+      responses:
+        '200':
+          description: "Detalhes da transportadora."
+          schema:
+              $ref: '#/definitions/Transportador'
+        '404':
+          description: "Transportadora não encontrada."
+          
+  /carriers/{carrier_id}/vehicles:
+    
+    get:
+      tags:
+        - "carriers"
+      summary: "Fetch os Veiculos da transportadora t_id."
+      parameters:
+          - in: path
+            name: "carrier_id"
+            description: "Id do Transportador."
+            required: true
+            type: "integer"
+            minimum: 1
+          - in: header
+            name: "token"
+            description: "Auth token."
+            required: true
+            type: "string"
+      responses:
+        '202':
+          description: "Objeto Lista de Veiculos da Transportadora t_id."
+          schema:
+            type: "object"
+            properties:
+              products:
+                type: "array"
+                items:
+                  $ref: '#/definitions/Veiculo'
+        '404':
+          description: "Transportadora não encontrada."
+    
+    post:
+      tags:
+        - "carriers"
+      summary: "Regista um novo veiculo."
+      parameters:
+        - in: path
+          name: "carrier_id"
+          description: "Id do Transportador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: body
+          name: "body"
+          description: "Detalhes do Veiculo."
+          required: true
+          schema:
+            $ref: '#/definitions/Veiculo'
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Veiculo adicionado com sucesso."
+        '400':
+          description: "Utilizador não é Transportadora."
+        '503': 
+          description: "Houve problemas da parte do servidor, tentar mais tarde."  
+  
+  /carriers/{carrier_id}/vehicles/{vehicle_id}:
+  
+    get:
+      tags:
+        - "carriers"
+      summary: "Fetch veiculo vehicle_id da transportadora transport_id"
+      parameters:
+        - in: path
+          name: "carrier_id"
+          description: "Id do Transportador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: path
+          name: "vehicle_id"
+          description: "Id do Transportador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '202':
+          description: "Veiculo com vehicle_id."
+          schema:
+             $ref: '#/definitions/Veiculo'
+        '404':
+          description: "Transportadora ou Veiculo não encontrado."
+          
+    put:
+      tags:
+        - "carriers"
+      summary: "Atualiza os dados de um veiculo."
+      parameters:
+        - in: path
+          name: "carrier_id"
+          description: "Id do Transportador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: path
+          name: "vehicle_id"
+          description: "Id do Veiculo."
+          required: true
+          type: "integer"
+          minimum: 1  
+        - in: body
+          name: "body"
+          description: "Dados para atualizar no veiculo."
+          required: true
+          schema:
+            type: object
+            properties:
+              cond:
+                type: "string"
+                maximum: 250
+              emissao:
+                type: "integer"
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Veiculo adicionado com sucesso."
+        '400':
+          description: "Utilizador não é Transportadora."
+        '403':
+          description: "O utilizador não tem permissões para fazer esta operação"
+        '503': 
+          description: "Houve problemas da parte do servidor, tentar mais tarde."  
+  
+  /transport:
+  
+    post:
+      tags:
+        - "transportation"
+      summary: "Cria uma nova entrada na tabela de transportes"
+      parameters:
+        - in: body
+          name: "Dados relativos à transportação."
+          required: true
+          schema:
+            type: object
+            properties:
+              id_transportadora:
+                type: "integer"
+              id_encomend:
+                type: "integer"
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Nova entrada criada com sucesso."
+          
+  /transport/{transport_id}/vehicle:
+  
+    put:
+      tags:
+        - "transportation"
+      summary: "Atribui veiculo à encomenda para ser transportada"
+      parameters:
+        - in: path
+          name: "transport_id"
+          description: "Id do Transportador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: body
+          name: "Dados relativos à transportação."
+          required: true
+          schema:
+            type: object
+            properties:
+              id_veiculo:
+                type: "integer"
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Veiculo adicionado com sucesso."
+        '400':
+          description: "Utilizador não é Transportadora."
+        '403':
+          description: "O utilizador não tem permissões para fazer esta operação"
+        '503': 
+          description: "Houve problemas da parte do servidor, tentar mais tarde."      
+          
+  /transport/{transport_id}/status:
+  
+    put:
+      tags:
+        - "transportation"
+      summary: "Muda estado da encomenda a ser transportada"
+      parameters:
+        - in: path
+          name: "transport_id"
+          description: "Id do Transportador."
+          required: true
+          type: "integer"
+          minimum: 1
+        - in: body
+          name: "Dados relativos à transportação."
+          required: true
+          schema:
+            type: object
+            properties:
+              estado:
+                type: "integer"
+        - in: header
+          name: "token"
+          description: "Auth token."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: "Veiculo adicionado com sucesso."
+        '400':
+          description: "Utilizador não é Transportadora."
+        '403':
+          description: "O utilizador não tem permissões para fazer esta operação"
+        '503': 
+          description: "Houve problemas da parte do servidor, tentar mais tarde."              
+  
+    
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+
+definitions:
+
+  Users:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      nome:
+        type: "string"
+        maximum: 150
+      email:
+        type: "string"
+        maximum: 250
+        format: "email"
+      password:
+        type: "string"
+        maximum: 250
+      nif:
+        type: "integer"
+        minimum: 9
+        maximum: 9
+      tlm:
+        type: "integer"  
+        minimum: 9
+        maximum: 9        
+      tipo:
+        type: "string"
+        description: "Tipo de utilizador.\n
+                      1 - consumidor\n
+                      2 - fornecedor\n
+                      3 - consumidor + fornecedor\n
+                      4 - transportadora"
+        enum:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+      image:
+        type: "string"
+        format: "byte"
+        
+  Localizacao:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      morada:
+        type: "string"
+        maximum: 150
+      codpost:
+        type: "string"
+        maximum: 8
+      distrito:
+        type: "string"
+        maximum: 20
+      cidade:
+        type: "string"
+        maximum: 20      
+        
+  Consumidor:
+    allOf:
+      - $ref: '#/definitions/Users'
+      - type: "object"
+        properties:
+          morada:
+            $ref: '#/definitions/Localizacao'
+          encomendas:
+            type: "array"
+            items: 
+              $ref: '#/definitions/Encomenda'
+          cart:
+            type: "array"
+            items:
+              $ref: '#/definitions/Produto'
+
+  Encomenda:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      data:
+        type: "string"
+        format: "date-time"
+      produtos:
+        type: "array"
+        items:
+          $ref: '#/definitions/Produto'
+
+  Fornecedor:
+    allOf:
+      - $ref: '#/definitions/Users'
+      - type: "object"
+        properties:
+          armazens:
+            type: "array"
+            items: 
+              $ref:  '#/definitions/Armazem'
+              
+  Armazem:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      localizacao:
+        $ref: '#/definitions/Localizacao'
+      produtos:
+        type: "array"
+        items: 
+          $ref: '#/definitions/Produto'
+          
+  Produto:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      nome:
+        type: "string"
+        maximum: 150       
+      data_prod:
+        type: "string"
+        format: "date-time"
+      preco:
+        type: "number"
+        format: "double"
+      tipo:
+        type: "integer"
+      subtipo:
+        type: "integer"
+      cad_logist:
+        $ref: '#/definitions/CadeiaLog'
+        
+  CadeiaLog:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      recursos:
+        type: "array"
+        items: 
+          $ref: '#/definitions/Recurso'
+      poluicao:
+        type: "array"
+        items: 
+          $ref: '#/definitions/Poluicao'
+        
+  Recurso:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      nome:
+        type: "string"
+        maximum: 250
+      medida:
+        type: "string"
+        maximum: 25
+      quantidade:
+        type: "number"
+        format: "double"
+        
+  Poluicao:
+    type: "object"
+    properties:
+      id_princ:
+        type: "integer"
+      id_polut:
+        type: "integer"
+      quantidade:
+        type: "number"
+        format: "double"
+      nome:
+        type: "string"
+        maximum: 150
+              
+  Transportador:
+    allOf:
+      - $ref: '#/definitions/Users'
+      - type: "object"
+        properties:
+          veiculos:
+            type: "array"
+            items:
+              $ref: '#/definitions/Veiculo'
+          transportes:
+            type: "array"
+            items:
+              $ref: '#/definitions/Transporte'
+              
+  Veiculo:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      cond: 
+        type: "string"
+        maximum: 250
+      emissao:
+        type: "integer"    
+        
+  Transporte:
+    type: "object"
+    properties:
+      id_transpt:
+        type: "integer"
+      id_encomend:
+        type: "integer"
+      id_veiculo:
+        type: "integer"
+      id_transportadora:
+        type: "integer"
+      estado:
+        type: "integer"
+      
+    
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

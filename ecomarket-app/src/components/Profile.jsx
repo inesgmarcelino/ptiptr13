@@ -15,10 +15,10 @@ function Profile() {
  */
   return (
     <div className="container">
-      <div className="container">
+      {/* <div className="container">
         <h3>A minha conta</h3>
       </div>
-      <br />
+      <br /> */}
       <div className="container">
       <table className="table table-bordered">
         <thead>

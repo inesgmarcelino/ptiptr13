@@ -3,6 +3,7 @@ const card1 = require('../images/card1.jpg');
 
 function Home() {
     return (
+
         <div className="container">
         {/* <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -23,6 +24,7 @@ function Home() {
             </div>
         </div> */}
     </div>
+
     );
 }
 
