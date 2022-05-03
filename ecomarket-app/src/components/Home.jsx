@@ -3,26 +3,16 @@ const card1 = require('../images/card1.jpg');
 
 function Home() {
     return (
-            <div className="container">
-                {/* <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="1000">
-                        <img src={card1} class="d-block w-100" alt="..." />
-                        </div>
-                        <div class="carousel-item" data-bs-interval="10000">
-                        <img src={card1} class="d-block w-100" alt="..." />
-                        </div>
-                        <div class="carousel-item" data-bs-interval="10000">
-                        <img src={card1} class="d-block w-100" alt="..." />
-                        </div>
-                    </div>
-                </div> */}
-            </div>
+        <div className="col-8 justify-content-center mt-5">
+             {/* <div class="card bg-dark text-white">
+                 <img src={card1} class="card-img" alt="..." />
+                 <div class="card-img-overlay">
+                     <h5 class="card-title">Card title</h5>
+                     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                     <p class="card-text">Last updated 3 mins ago</p>
+                 </div>
+             </div> */}
+        </div>
     );
 }
 

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './temp/catalogStyles.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import {SideBar, Home, Login, Register, Cart, Catalog } from './components';
+import {SideBar, Home, Login, Register, Cart, Footer, Catalog  } from './components';
 
 ReactDOM.render(
   <Router>
@@ -15,6 +15,7 @@ ReactDOM.render(
       <Route path='/cart' element={<Cart />} />
       <Route path='/catalog' element={<Catalog/>} />
     </Routes>
+    <Footer />
   </Router>,
 
   document.getElementById('root')
