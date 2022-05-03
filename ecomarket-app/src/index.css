@@ -6,27 +6,28 @@ body {
 }
 
  /* sidebar */
-.sidebar {
+ .navbar {
   background-color: #283618;
-  height: 100vh;
+  position: relative;
+  /* height: 100vh;
   display: flex;
-  position: fixed;
+  position: fixed; */
 }
 
-#logo {
-  max-width: 95%;
-  max-height: 95%;
-  margin: 15px 0 0 -5px;
-  display: block;
-  position: absolute;
-}
+ #logo {
+  max-width: 55%;
+  max-height: 55%;
+  /* margin: 15px 0 0 -5px; */
+  /* display: block;
+  position: absolute; */
+} 
 
 #icon {
   width: 25px;
   height: 25px;
   margin-right: 10px;
 }
-
+ 
 #cart {
   width: 25px;
   height: 25px;
@@ -34,6 +35,38 @@ body {
   margin-bottom: 15px;
  }
 
+ .row {
+   margin-right: 0;
+ }
+
+ .footer {
+  bottom: 0;
+  /* margin: 0 auto !important; */
+  text-align: center;
+  width: 100% ;
+  /* height: 40px; */
+  position: absolute;
+  background-color: rgb(234, 233, 233);
+  font-size: medium;
+}
+
+.form-control, .form-check {
+  margin-top: 10px;
+  max-width: 100%;
+}
+
+.card {
+  background-color: #283618ce;
+  padding: 15px;
+  width: 500px;
+  border-radius: 10px;
+}
+
+.card h5, h6, button {
+  color: white;
+} 
+        
+ /*
  .dropdown-divider {
    width: 100%;
    display: block;
@@ -56,7 +89,7 @@ body {
 
 .nav-link:hover {
   color: rgb(203, 203, 203);
-}
+} */
 
 /* .nav-link:active { 
   color: rgb(203, 203, 203);
@@ -78,9 +111,9 @@ body {
   position: absolute;
 }
 
-.container {
+#root {
   padding: 0;
-  margin-left: 15px;
+  margin-left: 0px;
 }
 
 
