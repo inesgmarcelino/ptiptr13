@@ -199,6 +199,7 @@ body {
 
 .showItems {
   margin-top: 100px;
+  margin-left: 100px;
 }
 
 .rowH {
@@ -206,6 +207,14 @@ body {
 }
 
 .headline {
-  margin-left: 110px;
+  margin-left: 95px;
   margin-bottom: -50px;
+}
+
+.column a {
+  text-decoration: none;
+}
+
+.rowH .card {
+  width: 450px;
 }
