@@ -5,6 +5,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const bodyParser = require("body-parser");
 
 //comentado pq esses routes para esses ficheiros n são utilizados
 //var indexRouter = require('./routes/index');
@@ -133,6 +134,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+app.use(bodyParser.urlencoded({extended: true}));
 
 module.exports = app;
 /***** Codigo gerado pelo express generator ********/
