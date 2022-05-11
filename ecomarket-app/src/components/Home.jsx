@@ -10,72 +10,52 @@ const cat7 = require('../images/jardim.png');
 
 function Home() {
     return (
-
-    <div className="position-absolute top-50 start-50 translate-middle">
-
-        
-            {/* <div className="row">
-                <div className="col-md-8">
-                    <div className="card" style={{width: "30rem"}}>
-                    <img src={cat1} className="card-img-top" alt="..."/>
-                    </div>
-                </div>
-                <div className="col-6 col-md-4">
-                    <div className="card" style={{width: "30rem"}}>
-                    <img src={cat2} className="card-img-top" alt="..."/>
-                    </div>
-                </div>
+    <div>
+        <div className="position-absolute showItems">
+            <div className="headline">
+                <h2>Bem-vindo(a) à EcoMarket!</h2>
+                <h5>Faça aqui as suas compras mais eco.</h5>
             </div>
-
-            <div className="row">
-                <div className="col-6 col-md-4">
-                    <div className="card" style={{width: "30rem"}}>
-                    <img src={cat3} className="card-img-top" alt="..."/>
+            <div className="rowH">
+                <div className="column mx-auto">
+                    <div className="card mb-3 ">
+                        <img src={cat1} className="card-img-top" alt="..."/>
+                        <br />
+                        <h5 className="card-title mx-auto  my-0"> Alimentação </h5>
+                    </div>
+                    <div className="card mb-3">
+                        <img src={cat2} className="card-img-top" alt="..."/>
+                        <br />
+                        <h5 className="card-title mx-auto my-0"> Tecnologia </h5>
                     </div>
                 </div>
-
-                <div className="col-6 col-md-4">
-                    <div className="card" style={{width: "30rem"}}>
-                    <img src={cat4} className="card-img-top" alt="..."/>
+                <div className="column mx-auto">
+                    <div className="card mb-3">
+                        <img src={cat4} className="card-img-top" alt="..."/>
+                        <br />
+                        <h5 className="card-title mx-auto my-0"> Tecnologia </h5>
+                    </div>
+                    <div className="card mb-3">
+                        <img src={cat5} className="card-img-top" alt="..."/>
+                        <br />
+                        <h5 className="card-title mx-auto my-0"> Tecnologia </h5>
                     </div>
                 </div>
-                <div className="col-6 col-md-4">
-                    <div className="card" style={{width: "30rem"}}>
-                    <img src={cat5} className="card-img-top" alt="..."/>
+                <div className="column mx-auto">
+                    <div className="card mb-3">
+                        <img src={cat6} className="card-img-top" alt="..."/>
+                        <br />
+                        <h5 className="card-title mx-auto my-0"> Desporto </h5>
+                    </div>
+                    <div className="card mb-3">
+                        <img src={cat7} className="card-img-top" alt="..."/>
+                        <br />
+                        <h5 className="card-title mx-auto my-0"> Jardim </h5>
                     </div>
                 </div>
-            </div>
-
-
-            <div className="row">
-                <div className="col-6">
-                    <div className="card" style={{width: "30rem"}}>
-                    <img src={cat6} className="card-img-top" alt="..."/>
-                    </div>
-                </div>
-                <div className="col-6">
-                    <div className="card" style={{width: "30rem"}}>
-                    <img src={cat7} className="card-img-top" alt="..."/>
-                    </div>
-
-                </div>
-            </div> */}
-        <div className="rowH">
-            <div className="column">
-                <img src={cat1} className="card-img-top" alt="..."/>
-                <img src={cat2} className="card-img-top" alt="..."/>
-            </div>
-            <div className="column">
-                <img src={cat4} className="card-img-top" alt="..."/>
-                <img src={cat5} className="card-img-top" alt="..."/>
-            </div>
-            <div className="column">
-                <img src={cat6} className="card-img-top" alt="..."/>
-                <img src={cat7} className="card-img-top" alt="..."/>
             </div>
         </div>
     </div>
-
         
     );
 }

@@ -13,7 +13,7 @@ ReactDOM.render(
       <Route path='/register' element={<Register />} />
       <Route path='/cart' element={<Cart />} />
     </Routes>
-    <Footer />
+    {/* <Footer /> */}
   </Router>,
 
   document.getElementById('root')

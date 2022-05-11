@@ -11,11 +11,18 @@ body {
   /* height: 100vh;
   display: flex; */
   position: fixed; 
+  height: 70px;
+}
+
+#searchBar {
+  height: 25px;
+  width: 200px;
+  margin-bottom: 7px;
 }
 
  #logo {
-  max-width: 55%;
-  max-height: 55%;
+  max-width: 35%;
+  max-height: 35%;
   /* margin: 15px 0 0 -5px; */
   /* display: block;
   position: absolute; */
@@ -158,6 +165,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   padding: 0 4px;
+  margin: 100px;
 }
 
 /* Create four equal columns that sits next to each other */
@@ -187,4 +195,17 @@ body {
     flex: 100%;
     max-width: 100%;
   }
+}
+
+.showItems {
+  margin-top: 100px;
+}
+
+.rowH {
+  margin-left: 20px;
+}
+
+.headline {
+  margin-left: 110px;
+  margin-bottom: -50px;
 }

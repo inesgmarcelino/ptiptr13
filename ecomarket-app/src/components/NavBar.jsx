@@ -15,10 +15,7 @@ function SideBar() {
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="mx-auto"></div>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        {/* <button class="btn btn-outline-success" type="submit">Search</button> */}
-                    </form>
+                    <input class="form-control me-2" id="searchBar" type="search" placeholder="Search" aria-label="Search" />
                     <ul class="navbar-nav">
                         <li className="nav-item"> {/* se autenticado user */}
                          <NavLink className="nav-link text-white" to="/login">

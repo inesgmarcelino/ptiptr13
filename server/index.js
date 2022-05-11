@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // DATABASE
 const db = mysql.createConnection({ //bd temporária
-    host: "localhost",
+    host: "localhost", //192.168.1.8
     user: "root",
     password: "",
     database: "ptiptr13"
