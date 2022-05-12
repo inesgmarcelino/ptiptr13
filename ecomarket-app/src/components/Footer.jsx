@@ -4,9 +4,9 @@ function Footer() {
     return (
         <div className="footer">
             <div className="col-xs-3">
-                <p>About us</p>
+                <p>About us | Policy&Service | User Agreement | Terms&Conditions</p>
             </div>
-            <div className="col-xs-3">
+            {/* <div className="col-xs-3">
                 <p> Policy&Service</p>
             </div>
             <div className="col-xs-3">
@@ -14,7 +14,7 @@ function Footer() {
             </div>
             <div className="col-xs-3">
                 <p> Terms&Conditions</p>
-            </div>
+            </div> */}
         </div>
     );
 }
