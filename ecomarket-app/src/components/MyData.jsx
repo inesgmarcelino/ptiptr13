@@ -3,10 +3,11 @@ import { useState } from 'react';
 
 function MyData () {
 
-    const [nome, setNome] = useState('');
+    /* const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [tele, setTele] = useState('');
     const [pass, setPass]  = useState('');
+    const [checkPassword, setCheckPassword] = useState('');
 
     const handler = (x) => {
         switch(x.target.name) {
@@ -22,12 +23,21 @@ function MyData () {
             case "pass":
                 setPass(x.target.value);
                 break;
+            case "checkPassword":
+                setCheckPassword(x.target.value);
+                break;
             case "submit":
                 x.preventDefault();
-                break;
+                if (nome === '' || email === '' || tele === '' || pass === '' || checkPassword === '' ||
+                    // verificar passwords
+                    (password !== checkPassword)){
+                        // setError(true);
+                }else{
+
+                }
 
         }
-    }
+    } */
 
     return(
         <div className="mydata">´
@@ -64,7 +74,6 @@ function MyData () {
                     </div>
                 </form>
             </div>
-            
         </div>
     )
 }

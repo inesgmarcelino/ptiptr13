@@ -59,13 +59,6 @@ function Profile() {
         </tbody>
         </table>
       </div>
-      <p>Ola</p>
-      <p>Adeus</p>
-      <p>ate</p>
-      <p>onde</p>
-      <p>vai</p>
-      <p>a</p>
-      <p>pagina</p>
     </div>
   )
 }

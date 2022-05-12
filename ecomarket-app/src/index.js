@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import {SideBar, Home, Login, Register, Cart, Footer, Profile, MyData} from './components';
+import {NavBar, Home, Login, Register, Cart, Footer, Profile, MyData} from './components';
+
 
 ReactDOM.render(
   <Router>
-    <SideBar />
+    <NavBar />
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/login' element={<Login />} />
