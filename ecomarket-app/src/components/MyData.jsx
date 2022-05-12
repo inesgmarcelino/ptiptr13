@@ -30,21 +30,21 @@ function MyData () {
                 x.preventDefault();
                 if (nome === '' || email === '' || tele === '' || pass === '' || checkPassword === '' ||
                     // verificar passwords
-                    (password !== checkPassword)){
+                    (pass !== checkPassword)){
                         // setError(true);
                 }else{
 
                 }
 
+
         }
     } */
 
     return(
-        <div className="mydata">´
+        <div className="mydata" style={{position:'relative', display:'flex'}}>´
             <div className="container">
                 <br />
-                <h3>Está a editar os seus dados.</h3>
-            </div>
+                <h3>Está a editar os seus dados.</h3>     
             <br />
             <div className="container" style={{textAlign : 'center'}}>
                 <form method="post" style={{display: 'inline-block'}}>
@@ -69,10 +69,15 @@ function MyData () {
                             <input className="form-control" type="password" name="palavra-chave" placeholder="Palavra-chave" />
                         </label>
                     </div>
-                    <div className="container">
-                        <button type="button" className="btn btn btn-secondary" style={{display:'inside-block'}} >SALVAR</button>
+                    <br />
+                    <div className="col-md-12">
+                        <button type="button"  style={{display:'inline-block', justifyContent: 'center', alignItems: 'center', backgroundColor : 'green'}} >SALVAR</button>
                     </div>
                 </form>
+            </div>
+            <div className='container'>
+                <button type="button" style={{alignItems:'right', backgroundColor:'red', textAlign : 'right', justifyContent:'right'}} >Remover conta</button>
+            </div>
             </div>
         </div>
     )
