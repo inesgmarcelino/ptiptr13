@@ -5,6 +5,7 @@ WORKDIR /ptiptr13
 #copia os conteudos todos do pasta para uma pasta igual
 COPY . .
 
-RUN npm run deploy
+CMD npm run deploy
+
 
 EXPOSE 3000
