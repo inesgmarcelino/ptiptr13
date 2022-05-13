@@ -1,0 +1,15 @@
+TO DO
+
+Completar implementacao do auth0
+Resolver problema quanto às bibliotecas do jquery e do bootstrap (nao existem?)
+
+Dockerfile:
+Resolver questões de implementacao no GCP
+Resolver Base de dados
+criar uma network a usar a subnet de alias IP do GCP
+Usar os certificados SSL nos containers para HTTPS
+Criar o container com Nginx para distribuir a carga
+
+Replicacao da BD: configuracao master slave com containers
+
+
