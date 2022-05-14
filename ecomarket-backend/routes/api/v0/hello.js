@@ -3,7 +3,7 @@
 exports.say = function(req,res){
 	res.status(200);
 	res.type('html');
-	var ipString = "ecomarket.works";
+	var ipString = "http://ecomarket.works";
 	var imageString = ipString + "/images/hello.png";
 	var responseString = "<h1>Hello!</h1>" +
 		"<img src='"+imageString +"'>"; 
