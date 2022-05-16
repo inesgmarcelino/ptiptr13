@@ -4,11 +4,16 @@ Completar implementacao do auth0
 Resolver problema quanto às bibliotecas do jquery e do bootstrap (nao existem?)
 
 Dockerfile:
-Resolver questões de implementacao no GCP
-Resolver Base de dados
 criar uma network a usar a subnet de alias IP do GCP
-Usar os certificados SSL nos containers para HTTPS
 Criar o container com Nginx para distribuir a carga
+
+BD: not a to do but a how to do
+1.criar volume (sudo docker volume create volume_name)
+2.executar container com volume (docker run -dp hport:cport -v dbfile_path:mount_point image)
+	mount_point e a diretoria onde o ficheiro sql vai estar
+3.acrescentar um network alias (--network-alias hostname) para o DNS do docker encontrar o container
+4.colocar o nome escolhido do hostname na conexao
+
 
 Replicacao da BD: configuracao master slave com containers
 
