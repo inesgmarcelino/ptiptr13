@@ -7,12 +7,27 @@ services:
         - "80:80"
       volumes:
         - "./nginx.conf:/etc/nginx/nginx.conf"
+      networks:
+        - "c-network"
     
     backend:
       build: ./ecomarket-app/   
+      networks:
+        - "c-network"
+      deploy:
+        mode: replicated
+        replicas: 3
 
     mysql_master:
       image: mysql:debian
-   
+      networks:
+        - "c-network"
+    
     mysql_slave:
       image: mysql:debian
+      networks:
+        - "c-network"
+
+networks:
+    c-network:
+    auth-service:
