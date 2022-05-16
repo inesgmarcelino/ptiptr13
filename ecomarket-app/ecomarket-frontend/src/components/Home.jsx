@@ -1,26 +1,82 @@
 import React from "react";
-const card1 = require('../images/card1.jpg');
 
-const cat1 = require('../images/cat1.jpg');
-const cat2 = require('../images/cat2.jpg');
-const cat3 = require('../images/cat3.jpg');
-const cat4 = require('../images/cat4.jpg');
-const cat5 = require('../images/cat5.jpg');
+const cat1 = require('../images/alimentacao.png');
+const cat2 = require('../images/tecnologia.png');
+const cat3 = require('../images/vestuario.png');
+const cat4 = require('../images/casa.png');
+const cat5 = require('../images/animais.png');
+const cat6 = require('../images/desporto.png');
+const cat7 = require('../images/jardim.png');
 
 function Home() {
     return (
 
-        <div className="col-8 justify-content-center mt-5">
-             {/* <div class="card bg-dark text-white">
-                 <img src={card1} class="card-img" alt="..." />
-                 <div class="card-img-overlay">
-                     <h5 class="card-title">Card title</h5>
-                     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                     <p class="card-text">Last updated 3 mins ago</p>
-                 </div>
-             </div> */}
+    <div className="position-absolute top-50 start-50 translate-middle">
 
+        
+            {/* <div className="row">
+                <div className="col-md-8">
+                    <div className="card" style={{width: "30rem"}}>
+                    <img src={cat1} className="card-img-top" alt="..."/>
+                    </div>
+                </div>
+                <div className="col-6 col-md-4">
+                    <div className="card" style={{width: "30rem"}}>
+                    <img src={cat2} className="card-img-top" alt="..."/>
+                    </div>
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-6 col-md-4">
+                    <div className="card" style={{width: "30rem"}}>
+                    <img src={cat3} className="card-img-top" alt="..."/>
+                    </div>
+                </div>
+
+                <div className="col-6 col-md-4">
+                    <div className="card" style={{width: "30rem"}}>
+                    <img src={cat4} className="card-img-top" alt="..."/>
+                    </div>
+                </div>
+                <div className="col-6 col-md-4">
+                    <div className="card" style={{width: "30rem"}}>
+                    <img src={cat5} className="card-img-top" alt="..."/>
+                    </div>
+                </div>
+            </div>
+
+
+            <div className="row">
+                <div className="col-6">
+                    <div className="card" style={{width: "30rem"}}>
+                    <img src={cat6} className="card-img-top" alt="..."/>
+                    </div>
+                </div>
+                <div className="col-6">
+                    <div className="card" style={{width: "30rem"}}>
+                    <img src={cat7} className="card-img-top" alt="..."/>
+                    </div>
+
+                </div>
+            </div> */}
+        <div className="rowH">
+            <div className="column">
+                <img src={cat1} className="card-img-top" alt="..."/>
+                <img src={cat2} className="card-img-top" alt="..."/>
+            </div>
+            <div className="column">
+                <img src={cat4} className="card-img-top" alt="..."/>
+                <img src={cat5} className="card-img-top" alt="..."/>
+            </div>
+            <div className="column">
+                <img src={cat6} className="card-img-top" alt="..."/>
+                <img src={cat7} className="card-img-top" alt="..."/>
+            </div>
         </div>
+    </div>
+
+        
     );
 }
 

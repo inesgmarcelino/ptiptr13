@@ -126,68 +126,6 @@ function Register() {
     }
 
     return (
-        // <div className="col-8 justify-content-center mt-5">
-        //     <div className="form-holder">
-        //         <div className="form-content position-absolute" style={{margin: "-70px 0 0 0"}}>
-        //             <div className="form-items">
-        //                 <h3>REGISTO</h3>
-        //                 <p>Registe-se aqui.</p>
-
-        //                 <form method="post">
-        //                     <div className="col-md-12">
-        //                         <input className="form-control" type="text" name="nome" placeholder="Nome Completo" onChange={handler} required />
-        //                     </div>
-        //                     <div className="col-md-12">
-        //                         <input className="form-control" type="email" name="email" placeholder="Email" onChange={handler} required />
-        //                     </div>
-        //                     <div className="col-md-12">
-        //                         <input className="form-control" type="text" name="nif" placeholder="NIF" onChange={handler} required />
-        //                     </div>
-        //                     <div className="col-md-12">
-        //                         <input className="form-control" type="text" name="telem" placeholder="Número de Telemóvel" onChange={handler} required />
-        //                     </div>
-        //                     <div className="col-md-12">
-        //                         <input className="form-control" type="password" name="password" placeholder="Password" onChange={handler} required />
-        //                     </div>
-        //                     <div className="col-md-12">
-        //                         <input className="form-control" type="password" name="checkPassword" placeholder="Confirme a Password" onChange={handler} required />
-        //                     </div>
-        //                     <div className="col-md-12">
-        //                         <div className="form-check">
-        //                             <input className="form-check-input" type="checkbox" id="check-consumidor" name="check-consumidor" onChange={handler} />
-        //                             <label className="form-check-label" htmlFor="check-consumidor">Consumidor</label>
-        //                             <input className="form-control" type="text" name="morada" placeholder="Adicione a sua morada" id="morada" onChange={handler} required />
-        //                             <br />
-        //                             <input className="form-check-input" type="checkbox" id="check-fornecedor" name="check-fornecedor" onChange={handler} />
-        //                             <label className="form-check-label" htmlFor="check-fornecedor">Fornecedor</label>
-        //                             <br />
-        //                             <input className="form-check-input" type="checkbox" id="check-transportador" name="check-transportador" onChange={handler} />
-        //                             <label className="form-check-label" htmlFor="check-transportador">Transportador</label>
-        //                         </div>
-        //                     </div>
-                            
-        //                     <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
-        //                 </form>
-        //             </div>
-        //         </div>
-        //     </div>
-        //     {/* MODAL */}
-        //     <div className="modal fade" id="modal_register" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        //         <div className="modal-dialog modal-dialog-centered">
-        //             <div className="modal-content">
-        //                 <div className="modal-header" id="modal_header_register">~
-        //                     <button type="button" class="btn-close" aria-label="Close"></button>
-        //                 </div>
-        //                 <div className="modal-body" id="modal_body_register">
-        //                 </div>
-        //                 <div className="modal-footer" id="modal_footer_register">
-        //                 <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
-        //                 <button className="btn" id="continue">Continuar</button>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
         <div>
             <div className="card position-absolute top-50 start-50 translate-middle">
                 <div className="card-body">
