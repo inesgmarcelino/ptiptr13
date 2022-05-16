@@ -7,6 +7,7 @@ const cart = require('../images/icons/cart.png');
 
 function SideBar() {
     return (
+
             // <div className="sidebar col-2 mb-4">
             //     <a href="/" ><img src={logo} alt="" id="logo" /></a>               
             //     <input className="form-control" type="search" placeholder="Pesquisar" aria-label="Search" id="searchBar" />
@@ -61,6 +62,7 @@ function SideBar() {
                     </div>
                 </div>
                 </nav>
+
     );
 }
 

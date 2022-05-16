@@ -1,15 +1,15 @@
 CREATE TABLE utilizador (
-    id              NUMERIC PRIMARY KEY,
+    id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
     email           VARCHAR(50) NOT NULL UNIQUE,
-    nif             NUMERIC(9) NOT NULL UNIQUE,
-    telemovel       NUMERIC(9) NOT NULL UNIQUE,
+    nif             INT(9) NOT NULL UNIQUE,
+    telemovel       INT(9) NOT NULL UNIQUE,
     image           BLOB, -- Binary large object (verificar)
     pass_word       VARCHAR(250) NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE consumidor (
-    utilizador      NUMERIC PRIMARY KEY,
+    utilizador      INT PRIMARY KEY,
     morada          VARCHAR(250) NOT NULL,
     --
     CONSTRAINT fk_consumidor
@@ -17,14 +17,14 @@ CREATE TABLE consumidor (
 ) ENGINE = InnoDB;
 
 CREATE TABLE fornecedor (
-    utilizador      NUMERIC PRIMARY KEY,
+    utilizador      INT PRIMARY KEY,
     --
     CONSTRAINT fk_fornecedor
         FOREIGN KEY (utilizador) REFERENCES utilizador(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE localizacao (
-    id              NUMERIC PRIMARY KEY,
+    id              INT PRIMARY KEY AUTO_INCREMENT,
     morada          VARCHAR(250) NOT NULL,
     c_postal        VARCHAR(8) NOT NULL,
     distrito        VARCHAR(20) NOT NULL,
@@ -32,16 +32,16 @@ CREATE TABLE localizacao (
 ) ENGINE = InnoDB;
 
 CREATE TABLE armazem (
-    id              NUMERIC PRIMARY KEY,
-    localizacao     NUMERIC NOT NULL,
+    id              INT PRIMARY KEY AUTO_INCREMENT,
+    localizacao     INT NOT NULL,
     --
     CONSTRAINT fk_armazem
         FOREIGN KEY (localizacao) REFERENCES localizacao(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE lista_armazens (
-    fornecedor      NUMERIC,
-    armazem         NUMERIC,
+    fornecedor      INT,
+    armazem         INT,
     --
     CONSTRAINT pk_armazens
         PRIMARY KEY (fornecedor,armazem),
@@ -52,8 +52,8 @@ CREATE TABLE lista_armazens (
 ) ENGINE = InnoDB;
 
 CREATE TABLE transportador (
-    utilizador      NUMERIC PRIMARY KEY,
-    localizacao     NUMERIC,
+    utilizador      INT PRIMARY KEY,
+    localizacao     INT,
     --
     CONSTRAINT fk_transportador
         FOREIGN KEY (utilizador) REFERENCES utilizador(id) ON DELETE CASCADE,
@@ -62,13 +62,13 @@ CREATE TABLE transportador (
 ) ENGINE = InnoDB;
 
 CREATE TABLE veiculo (
-    id              NUMERIC PRIMARY KEY,
+    id              INT PRIMARY KEY AUTO_INCREMENT,
     condicoes       VARCHAR(250) NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE lista_veiculos (
-    transportador   NUMERIC,
-    veiculo         NUMERIC,
+    transportador   INT,
+    veiculo         INT,
     --
     CONSTRAINT pk_veiculos
         PRIMARY KEY (transportador,veiculo),
@@ -79,12 +79,12 @@ CREATE TABLE lista_veiculos (
 ) ENGINE = InnoDB;
 
 CREATE TABLE encomenda (
-    id              NUMERIC PRIMARY KEY,
+    id              INT PRIMARY KEY AUTO_INCREMENT,
     data            DATE NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE estado_encomenda (
-    encomenda       NUMERIC PRIMARY KEY,
+    encomenda       INT PRIMARY KEY,
     status_consum   VARCHAR(3) NOT NULL, 
     status_fornec   VARCHAR(3) NOT NULL, 
     status_transp   VARCHAR(3) NOT NULL, 
@@ -98,9 +98,9 @@ CREATE TABLE estado_encomenda (
 ) ENGINE = InnoDB;
 
 CREATE TABLE lista_encomendas (
-    consumidor      NUMERIC,
-    encomenda       NUMERIC,
-    fornecedor      NUMERIC,
+    consumidor      INT,
+    encomenda       INT,
+    fornecedor      INT,
     --
     CONSTRAINT pk_encomendas
         PRIMARY KEY (consumidor,encomenda,fornecedor),
@@ -113,8 +113,8 @@ CREATE TABLE lista_encomendas (
 ) ENGINE = InnoDB;
 
 CREATE TABLE transportar_encomendas (
-    encomenda       NUMERIC,
-    transportador   NUMERIC,
+    encomenda       INT,
+    transportador   INT,
     --
     CONSTRAINT pk_transportar_encomendas
         PRIMARY KEY (encomenda, transportador),
@@ -125,18 +125,18 @@ CREATE TABLE transportar_encomendas (
 ) ENGINE = InnoDB;
 
 CREATE TABLE tipo_produto (
-    id              NUMERIC PRIMARY KEY,
+    id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(150) NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE subtipo_produto (
-    id              NUMERIC PRIMARY KEY,
+    id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(150) NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE tipo_subtipo (
-    tipo            NUMERIC,
-    subtipo         NUMERIC,
+    tipo            INT,
+    subtipo         INT,
     --
     CONSTRAINT pk_tipo_subtipo
         PRIMARY KEY (tipo,subtipo),
@@ -147,21 +147,21 @@ CREATE TABLE tipo_subtipo (
 ) ENGINE = InnoDB;
 
 CREATE TABLE cadeia_logistica (
-    id              NUMERIC PRIMARY KEY
+    id              INT PRIMARY KEY AUTO_INCREMENT
 ) ENGINE = InnoDB;
 
 CREATE TABLE produto (
-    id              NUMERIC NOT NULL,
+    id              INT NOT NULL AUTO_INCREMENT,
     nome            VARCHAR(150) NOT NULL,
-    fornecedor      NUMERIC NOT NULL,
+    fornecedor      INT NOT NULL,
     producao        DATE NOT NULL,
     preco           NUMERIC(5,2) NOT NULL,
-    tipo            NUMERIC NOT NULL,
-    subtipo         NUMERIC NOT NULL,
-    cadeia_logis    NUMERIC NOT NULL, -- verificar... não fará mais sentido na cadeia logistica chamar-mos o produto?
+    tipo            INT NOT NULL,
+    subtipo         INT NOT NULL,
+    cadeia_logis    INT NOT NULL, -- verificar... não fará mais sentido na cadeia logistica chamar-mos o produto?
     --
     CONSTRAINT pk_produto
-        PRIMARY KEY (id, fornecedor)
+        PRIMARY KEY (id, fornecedor),
     CONSTRAINT fk_fornecedor_produto
         FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador),
     CONSTRAINT fk_tipo
@@ -175,8 +175,8 @@ CREATE TABLE produto (
 ) ENGINE = InnoDB;
 
 CREATE TABLE cesto_compras (
-    consumidor      NUMERIC,
-    produto         NUMERIC,
+    consumidor      INT,
+    produto         INT,
     --
     CONSTRAINT pk_cesto_compras
         PRIMARY KEY (consumidor,produto),
@@ -187,8 +187,8 @@ CREATE TABLE cesto_compras (
 ) ENGINE = InnoDB;
 
 CREATE TABLE lista_produtos_encomenda (
-    encomenda       NUMERIC,
-    produto         NUMERIC,
+    encomenda       INT,
+    produto         INT,
     --
     CONSTRAINT pk_lista_produtos_encomenda
         PRIMARY KEY (encomenda,produto),
@@ -199,15 +199,15 @@ CREATE TABLE lista_produtos_encomenda (
 ) ENGINE = InnoDB;
 
 CREATE TABLE recurso (
-    id              NUMERIC PRIMARY KEY,
+    id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(150) NOT NULL,
     un_medida       VARCHAR(25) NOT NULL,
     quantidade      NUMERIC(10,3) NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE lista_recursos (
-    cadeia_logis    NUMERIC,
-    recurso         NUMERIC,
+    cadeia_logis    INT,
+    recurso         INT,
     --
     CONSTRAINT pk_lista_recursos
         PRIMARY KEY (cadeia_logis,recurso),
@@ -218,13 +218,13 @@ CREATE TABLE lista_recursos (
 ) ENGINE = InnoDB;
 
 CREATE TABLE poluicao (
-    id              NUMERIC PRIMARY KEY,
+    id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(150) NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE poluicao_cadeia (
-    cadeia_logis    NUMERIC,
-    poluicao        NUMERIC
+    cadeia_logis    INT,
+    poluicao        INT,
     quantidade      NUMERIC(10,3) NOT NULL,
     --
     CONSTRAINT pk_poluicao_cadeia
@@ -236,8 +236,8 @@ CREATE TABLE poluicao_cadeia (
 ) ENGINE = InnoDB;
 
 CREATE TABLE emite_poluicao (
-    veiculo         NUMERIC,
-    poluicao        NUMERIC,
+    veiculo         INT,
+    poluicao        INT,
     quantidade      NUMERIC(10,3),
     --
     CONSTRAINT pk_emite_poluicao
