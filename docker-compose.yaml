@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+
+    nginx:
+      image: nginx:latest
+      ports:
+        - "80:80"
+      volumes:
+        - "./nginx.conf:/etc/nginx/nginx.conf"
+    
+    backend:
+      build: ./ecomarket-app/   
+
+    mysql_master:
+      image: mysql:debian
+   
+    mysql_slave:
+      image: mysql:debian
