@@ -3,6 +3,8 @@ TO DO
 Completar implementacao do auth0
 Resolver problema quanto às bibliotecas do jquery e do bootstrap (nao existem?)
 
+definir as coisas relacionadas com o setup da BD (password user e afins)
+
 Dockerfile:
 Ajustes ao ficheiro de composer para ter tudo a funcionar
 Definir as redes
