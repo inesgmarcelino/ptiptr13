@@ -5,6 +5,6 @@
   "private": true,
   "scripts": {
     "start": "(node ./ecomarket-backend/bin/www &)&&(serve -s './ecomarket-frontend/build')",
-    "wstart":"(node ./ecomarket-backend/bin/www) && (serve -s './ecomarket-frontend/build')"
+    "wstart":"(START /B node ./ecomarket-backend/bin/www) && (serve -s './ecomarket-frontend/build')"
   }
 }
