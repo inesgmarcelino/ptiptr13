@@ -6,4 +6,5 @@ export { default as Cart } from "./Cart";
 export { default as Profile } from "./Profile";
 export { default as Footer } from "./Footer";
 export { default as MyData } from "./MyData";
+export { default as Payment } from "./Payment";
 
