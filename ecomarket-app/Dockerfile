@@ -5,17 +5,17 @@ FROM node:18-bullseye
 #Define a diretoria a usar
 WORKDIR /
 #copia os conteudos para a pasta backend
-COPY ecomarket-backend backend
+COPY ecomarket-backend ecomarket-backend
 #define a current dir como backend
-WORKDIR /backend
+WORKDIR /ecomarket-backend
 #instala dependencias
 RUN npm install
 
 WORKDIR /
 
-COPY ecomarket-frontend frontend
+COPY ecomarket-frontend ecomarket-frontend
 
-WORKDIR /frontend
+WORKDIR /ecomarket-frontend
 
 RUN npm install
 RUN npm run build
