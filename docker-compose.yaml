@@ -13,21 +13,25 @@ services:
       environment:
         - NGINX_HOST=ecomarket.works
         - NGINX_PORT=80
+      restart: always
     
     backend:
       build: ./ecomarket-app/   
       networks:
         - "c-network"
+      restart: always
 
     mysql_master:
       image: mysql:debian
       networks:
         - "c-network"
+      restart: always
     
     mysql_slave:
       image: mysql:debian
       networks:
         - "c-network"
+      restart: always
 
 networks:
     c-network:
