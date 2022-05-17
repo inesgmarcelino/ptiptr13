@@ -18,9 +18,6 @@ services:
       build: ./ecomarket-app/   
       networks:
         - "c-network"
-      deploy:
-        mode: replicated
-        replicas: 3
 
     mysql_master:
       image: mysql:debian
