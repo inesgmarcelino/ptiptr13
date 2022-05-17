@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "(node ./backend/bin/www &)&&(serve -s './frontend/build')"
+    "start": "(node ./ecomarket-backend/bin/www &)&&(serve -s './ecomarket-frontend/build')",
+    "wstart":"(node ./ecomarket-backend/bin/www) && (serve -s './ecomarket-frontend/build')"
   }
 }
