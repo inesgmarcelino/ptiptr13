@@ -6,11 +6,10 @@ Resolver problema quanto às bibliotecas do jquery e do bootstrap (nao existem?)
 definir as coisas relacionadas com o setup da BD (password user e afins)
 
 Dockerfile:
-Ajustes ao ficheiro de composer para ter tudo a funcionar
-Definir as redes
 Fazer um serviço que mantem track das sessões iniciadas(ou que sincronize sessões por todos os containers)
-Eventualmente descobrir como utilizar o compose para gerir um conjunto de VMs
+(opcional)Eventualmente descobrir como utilizar o compose para gerir um conjunto de VMs
 Colocar a imagem de SQL a utilizar o ficheiro db pretendido
+Replicacao da BD: configuracao master slave com containers
 
 BD: not a to do but a how to do
 1.criar volume (sudo docker volume create volume_name)
@@ -19,9 +18,7 @@ BD: not a to do but a how to do
 3.acrescentar um network alias (--network-alias hostname) para o DNS do docker encontrar o container
 4.colocar o nome escolhido do hostname na conexao
 
-
-Replicacao da BD: configuracao master slave com containers
-
+Maybe later mudar o nginx para estar MESMO defacto a fazer load balancing (por enquanto ele usa apenas o DNS do docker(talvez falar sobre isto com o prof?))
 
 Problema: session management
 Possivel solucao: acrescentar um servico de autenticacao exterior (unsure se o auth0 faz isto sozinho)
