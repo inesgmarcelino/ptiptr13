@@ -8,4 +8,4 @@ RUN npm install
 
 ENV NODE_ENV=production
 
-CMD npm start
+CMD node ./bin/www

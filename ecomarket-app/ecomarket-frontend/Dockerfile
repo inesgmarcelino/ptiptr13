@@ -16,4 +16,4 @@ RUN rm .gitignore
 
 RUN npm install -g serve
 
-CMD npm start
+CMD serve -s build
