@@ -46,4 +46,5 @@ networks:
     auth-service:
 
 volumes:
-  - data:/var/lib/mysql
+    #volume for where sql is stored
+    data:
