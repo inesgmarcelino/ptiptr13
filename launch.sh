@@ -1,1 +1,1 @@
-docker-compose up -d --scale backend=3
+docker-compose up -d --scale app=3
