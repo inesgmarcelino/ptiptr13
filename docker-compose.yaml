@@ -26,6 +26,14 @@ services:
       networks:
         - "c-network"
       restart: always
+      environment:
+        - MYSQL_ROOT_PASSWORD=S3cret
+        - MYSQL_PASSWORD=An0thrS3crt
+        - MYSQL_USER=user
+        - MYSQL_DATABASE=ecodb
+      volumes:
+        - ./database/db.sql:/data/application/init.sql
+        - data:/var/lib/mysql
     
     mysql_slave:
       image: mysql:debian
@@ -36,3 +44,6 @@ services:
 networks:
     c-network:
     auth-service:
+
+volumes:
+  - data:/var/lib/mysql
