@@ -4,7 +4,8 @@ var pool = mysql.createPool({
     connectionLimit:10,
     host: "mysql",
     user: "root",
-    password: "abc123"
+    password: "S3cret",
+    database: "ecodb"
   });
 
 pool.getConnection((err, connection) => {

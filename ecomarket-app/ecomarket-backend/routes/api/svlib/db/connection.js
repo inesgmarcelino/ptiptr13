@@ -2,10 +2,11 @@
 var mysql = require('mysql');
 
 var conn = mysql.createConnection({
-    host: "35.246.42.37",
-    user: "root",
-    password: "abc123"
-  });
+  host: "mysql",
+  user: "root",
+  password: "S3cret",
+  database: "ecodb"
+});
   
   conn.connect(function(err) {
     //if (err) throw err;
