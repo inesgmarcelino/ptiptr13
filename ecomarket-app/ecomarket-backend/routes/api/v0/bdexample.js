@@ -3,6 +3,7 @@ var pool = require('../svlib/db/getPool');
 //from example: https://stackoverflow.com/questions/37102364/how-do-i-create-a-mysql-connection-pool-while-working-with-nodejs-and-express
 
 exports.hello = function(req,res){
+    var o;
     pool.getConnection((err, connection) => {
 
         if(err){
@@ -21,11 +22,13 @@ exports.hello = function(req,res){
         }
 
         //res.send(connection.threadId);
-        
-        if (connection) connection.release();
+        o = connection.threadId;
+
+        connection.release();
       
-        return ;
+        
       });
+      res.send(o);
 }
 
 exports.insert = function(req,res){
