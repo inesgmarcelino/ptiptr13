@@ -23,6 +23,7 @@ exports.hello = function(req,res){
 
         //res.send(connection.threadId);
         o = connection.threadId;
+        console.log(o);
 
         connection.release();
       
