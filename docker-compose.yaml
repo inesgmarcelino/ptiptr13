@@ -51,7 +51,11 @@ services:
       volumes:
         - ./database/db.sql:/data/application/init.sql
         - data:/var/lib/mysql
-    
+      
+      stdin_open: true # docker run -i
+      tty: true        # docker run -t
+
+
     mysql_slave:
       image: mysql:debian
       networks:
