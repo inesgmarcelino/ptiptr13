@@ -24,7 +24,9 @@ services:
     mysql_master:
       image: mysql:debian
       networks:
-        - "c-network"
+        c-network:
+          aliases:
+            - mysql
       restart: always
       environment:
         - MYSQL_ROOT_PASSWORD=S3cret
