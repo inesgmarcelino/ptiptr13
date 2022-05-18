@@ -20,7 +20,7 @@ exports.hello = function(req,res){
           res.send(err.message);
         }
 
-        res.send(connection);
+        res.send(connection.threadId);
         
         if (connection) connection.release();
       
