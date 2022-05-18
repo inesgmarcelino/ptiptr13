@@ -7,8 +7,14 @@ var pool = mysql.createPool({
     password: "S3cret",
     database: "ecodb"
   });
+  
+module.exports = pool;
 
-pool.getConnection((err, connection) => {
+/**Codigo para obter uma ligacao
+ * deve ser invocado dentro das paths
+ * 
+ * 
+ * pool.getConnection((err, connection) => {
 
   if(err){
     if(err.code === 'PROTOCOL_CONNECTION_LOST'){
@@ -22,9 +28,13 @@ pool.getConnection((err, connection) => {
     }
   }
 
+  Codigo de fetch e afins
+
   if (connection) connection.release();
 
   return ;
 });
-  
-module.exports = pool;
+ * 
+ * 
+ * 
+ */

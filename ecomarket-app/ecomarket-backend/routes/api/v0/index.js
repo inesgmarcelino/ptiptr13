@@ -7,6 +7,7 @@ var router = express.Router();
 const hello = require('./hello.js');
 const json = require('./json.js');
 const pathexample = require('./pathexample.js'); 
+const testbd = require('./bdexample.js');
 
 /** o objeto router define as paths
  *  eh invocado como router.METODO_HTTP
@@ -59,6 +60,18 @@ router.get('/pathexample?', function(req,res,next){
 	//para exemplificar com variaveis na query
 	//exemplo online : https://stackabuse.com/get-query-strings-and-parameters-in-express-js/
 	pathexample.getUserByQuery(req,res);
+});
+
+router.get('/testbd/hello',function(req,res,next){
+	testbd.hello(req,res);
+});
+
+router.get('/testbd/insert',function(req,res,next){
+	//
+});
+
+router.get('/testbd/fetch',function(req,res,next){
+	//
 });
 
 /** exporta o objeto router para ser invocado pelo app.js
