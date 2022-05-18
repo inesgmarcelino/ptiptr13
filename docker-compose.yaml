@@ -17,6 +17,7 @@ services:
     
     frontend:
       build: ./ecomarket-app/ecomarket-frontend    
+      networks:
         c-network:
           aliases:
             - frontend
@@ -26,6 +27,7 @@ services:
 
     backend:
       build: ./ecomarket-app/ecomarket-backend 
+      networks:
         c-network:
           aliases:
             - backend
