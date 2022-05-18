@@ -1,4 +1,5 @@
-docker kill $(docker ps)
+docker kill $(docker ps) -f
+docker image remove -f ptiptr13_app
 docker image prune -a -f
-docker system prune
+docker system prune -f
 ./launch.sh
