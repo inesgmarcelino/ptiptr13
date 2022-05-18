@@ -79,6 +79,10 @@ body {
   margin-left: 0px;
 }
 
+.card>.card-img-top {
+  aspect-ratio: 3.5/2.5;
+}
+
 
 .form-content .form-items {
   background-color: #283618;
