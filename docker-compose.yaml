@@ -5,7 +5,7 @@ services:
       image: nginx:latest
       ports:
         - "80:80"
-      volumes:
+      #volumes:
       #  - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       networks:
         - "c-network"
