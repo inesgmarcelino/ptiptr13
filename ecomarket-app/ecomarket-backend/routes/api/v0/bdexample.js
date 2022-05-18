@@ -19,7 +19,8 @@ exports.hello = function(req,res){
           res.status(500);
           res.send(err.message);
         }
-        res.send(connection.state);
+
+        res.send(connection);
         
         if (connection) connection.release();
       
