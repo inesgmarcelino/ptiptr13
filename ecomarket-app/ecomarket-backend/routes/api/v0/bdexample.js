@@ -17,7 +17,7 @@ exports.hello = function(req,res){
             console.error('Database connection was refused.');
           }*/ 
           res.status(500);
-          res.send(err.code/**+","+err.message*/);
+          res.send(err.code+","+err.message);
         }
         res.send(connection.state);
         
