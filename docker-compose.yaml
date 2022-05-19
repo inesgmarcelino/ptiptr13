@@ -47,7 +47,6 @@ services:
         - MYSQL_ROOT_PASSWORD=S3cret
         - MYSQL_PASSWORD=An0thrS3crt
         - MYSQL_USER=user
-        - MYSQL_DATABASE=ecodb
       volumes:
         - ./database/db.sql:/docker-entrypoint-initdb.d/init.sql
         - data:/var/lib/mysql
