@@ -4,17 +4,6 @@ var mysql = require('mysql2');
 
 //from example: https://stackoverflow.com/questions/37102364/how-do-i-create-a-mysql-connection-pool-while-working-with-nodejs-and-express
 
-  /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
-  var pool = mysql.createPool({
-    connectionLimit:10,
-    host: "mysql",
-    user: "root",
-    password: "S3cret",
-    database: "hello"
-  });
-  /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
-
-
 exports.hello = function(req,res){
 
   /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
@@ -41,7 +30,6 @@ exports.hello = function(req,res){
       res.send("Se estás a ler isto é porque o ExpressJS se conectou à BD.");
 }
 
-
 exports.insert = function(req,res){
   var desc = parseInt(req.query.id);
   if(desc === undefined){
@@ -49,6 +37,16 @@ exports.insert = function(req,res){
       res.type('json');
       res.json({"message":err.message});
   }
+
+  /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
+  var pool = mysql.createPool({
+    connectionLimit:10,
+    host: "mysql",
+    user: "root",
+    password: "S3cret",
+    database: "hello"
+  });
+  /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
 
     pool.getConnection((err, connection) => {
 
@@ -84,6 +82,16 @@ exports.insert = function(req,res){
 exports.fetch = function(req,res){
   
   var id = parseInt(req.params.id);
+
+    /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
+    var pool = mysql.createPool({
+      connectionLimit:10,
+      host: "mysql",
+      user: "root",
+      password: "S3cret",
+      database: "hello"
+    });
+    /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
   
   pool.getConnection((err, connection) => {
 
