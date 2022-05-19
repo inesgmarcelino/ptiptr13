@@ -48,10 +48,10 @@ function Profile() {
           <td style={{display: 'flex', backgroundColor: 'grey'}} ><h3>Editar os meus dados</h3> <Link to ='/mydata' style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}} ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
           </tr>
           <tr>
-          <td style={{display: 'flex', backgroundColor: 'grey'}} ><h3>Sou Consumidor</h3> <Link to ='/login' style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}}> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>
+          <td style={{display: 'flex', backgroundColor: 'grey'}} ><h3>Sou Consumidor</h3> <Link to ='/consumidor' style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}}> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>
           </tr>
           <tr>
-          <td style={{display: 'flex', backgroundColor: 'grey'}} ><h3>Sou Fornecedor</h3> <Link to ='/login' style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}}> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
+          <td style={{display: 'flex', backgroundColor: 'grey'}} ><h3>Sou Fornecedor</h3> <Link to ='/fornecedor' style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}}> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
           </tr>
           <tr>
           <td style={{display: 'flex', backgroundColor: 'grey'}} ><h3>Sou Transportador</h3> <Link to ='/login' style={{display:'block', marginLeft:'auto', marginRight:'20px', width:'150px'}}> <button type="button" className="btn btn btn-primary" >Tornar-me</button></Link> </td>
