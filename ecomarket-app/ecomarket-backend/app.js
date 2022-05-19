@@ -37,7 +37,6 @@ const basePathTest = '/api/v0';
 const testAPIRouter = require('./routes/api/v0/index.js');
 app.use(basePathTest, testAPIRouter);
 
-
 /** Portanto, se quiseres fazer uma api versao 1 tudo o que tens de fazer
  * eh criares um ficheiro js que contem as routes que queres utilizar
  * 
