@@ -24,7 +24,6 @@ exports.hello = function(req,res){
           res.type('json');
           res.json({"message":err.message});
         }
-        connection.on()
         connection.release();
 
       });
