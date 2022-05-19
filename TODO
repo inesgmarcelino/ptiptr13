@@ -4,6 +4,7 @@ TO DO (por ordem de prioridades)
 2.Serviço de gestão de sessões (Fazer um serviço que mantem track das sessões iniciadas(ou que sincronize sessões por todos os containers))
 3.Replicacao da BD: configuracao master slave com containers
 4.Usar metodos asincronos com as bases de dados (é mais amigo desta forma)
+5.instalar coisas de segurança relacionadas com as boas praticas de expressjs
 
 Menor prioridade
 definir as coisas relacionadas com o setup da BD (password user e afins)

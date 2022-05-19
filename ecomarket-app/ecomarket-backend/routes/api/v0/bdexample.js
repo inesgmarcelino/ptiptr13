@@ -31,7 +31,7 @@ exports.hello = function(req,res){
 }
 
 exports.insert = function(req,res){
-  var desc = parseInt(req.query.id);
+  var desc = req.query.desc;
   if(desc === undefined){
       res.status(500);
       res.type('json');
@@ -52,6 +52,7 @@ exports.insert = function(req,res){
 
         if(err){
           res.status(500);
+          res.type('json');
           res.json({"message":err.message});
         }
 
@@ -66,10 +67,11 @@ exports.insert = function(req,res){
           function(err,results,fields){
             if(err){
               res.status(500);
+              res.type('json');
               res.json({"message":err.message});
             } else {
               res.status(200);
-              res.res.type('json');
+              res.type('json');
               res.json({"message":"Descrição adicionada com sucesso!"});
             }
           }
@@ -115,11 +117,11 @@ exports.fetch = function(req,res){
         } else {
           if(results.length == 0){
             res.status(404);
-            res.res.type('json');
+            res.type('json');
             res.json({"message":"Esse descrição com ID não existe"});
           } else {
             res.status(200);
-            res.res.type('json');
+            res.type('json');
             var reply = {};
             for(var key of results.keys()){
               reply[key] = results[key];
