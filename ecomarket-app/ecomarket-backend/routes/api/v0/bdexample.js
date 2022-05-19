@@ -123,6 +123,8 @@ exports.fetch = function(req,res){
             res.status(200);
             res.type('json');
             var reply = {};
+            console.log(results);
+            console.log(fields);
             for(var key of results.keys()){
               reply[key] = results[key];
             }
