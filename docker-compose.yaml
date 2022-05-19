@@ -48,7 +48,8 @@ services:
         - MYSQL_PASSWORD=An0thrS3crt
         - MYSQL_USER=user
       volumes:
-        - ./database/db.sql:/docker-entrypoint-initdb.d/init.sql
+        - ./database/db.sql:/docker-entrypoint-initdb.d/db.sql
+        - ./database/hello.sql:/docker-entrypoint-initdb.d/hello.sql
         - data:/var/lib/mysql
       
       stdin_open: true # docker run -i
