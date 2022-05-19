@@ -122,13 +122,14 @@ exports.fetch = function(req,res){
           } else {
             res.status(200);
             res.type('json');
-            var reply = {};
+            //var reply = {};
             console.log(results);
             console.log(fields);
-            for(var key of results.keys()){
+            //desnecessario pq ele retorna logo um json
+            /*for(var key of results.keys()){
               reply[key] = results[key];
-            }
-            res.json(reply);
+            }*/
+            res.json(results);
           }
         }
       }
