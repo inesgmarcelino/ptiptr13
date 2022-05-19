@@ -31,7 +31,7 @@ function Fornecedor () {
                         <td>4</td>
                         {/* Fazer aqui um if em que caso a encomenda já tenha sido confirmada o botão muda para confirmada e colocar num verde mais claro */}
                         <div class="d-flex justify-content-center"> 
-                            <td><Link to ='/confirmarencomenda'> {App}</Link></td>
+                            <td><Link to ='/confirmarencomenda'> <button type="button" class="btn btn-success">CONFIRMAR</button></Link></td>
                         </div>
                     </tr>
                 </tbody>
