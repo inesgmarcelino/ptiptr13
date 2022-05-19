@@ -1,6 +1,3 @@
-CREATE DATABASE IF NOT EXISTS ecodb;
-USE ecodb;
-
 CREATE TABLE utilizador (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,

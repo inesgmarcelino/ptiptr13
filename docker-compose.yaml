@@ -49,7 +49,7 @@ services:
         - MYSQL_USER=user
         - MYSQL_DATABASE=ecodb
       volumes:
-        - ./database/db.sql:/data/application/init.sql
+        - ./database/db.sql:/docker-entrypoint-initdb.d/init.sql
         - data:/var/lib/mysql
       
       stdin_open: true # docker run -i
