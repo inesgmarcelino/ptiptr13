@@ -17,6 +17,16 @@ var mysql = require('mysql2');
 
 exports.hello = function(req,res){
 
+  /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
+  var pool = mysql.createPool({
+    connectionLimit:10,
+    host: "mysql",
+    user: "root",
+    password: "S3cret",
+    database: "hello"
+  });
+  /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
+
     pool.getConnection((err, connection) => {
 
         if(err){
