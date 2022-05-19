@@ -66,12 +66,12 @@ router.get('/testbd/hello',function(req,res,next){
 	testbd.hello(req,res);
 });
 
-router.get('/testbd/insert',function(req,res,next){
-	//
+router.get('/testbd/insert?',function(req,res,next){
+	testbd.insert(req,res);
 });
 
-router.get('/testbd/fetch',function(req,res,next){
-	//
+router.get('/testbd/fetch/:id',function(req,res,next){
+	testbd.fetch(req,res);
 });
 
 /** exporta o objeto router para ser invocado pelo app.js
