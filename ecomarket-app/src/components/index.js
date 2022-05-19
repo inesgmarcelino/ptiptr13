@@ -10,3 +10,4 @@ export { default as Payment } from "./Payment";
 export { default as ShoopingCart } from "./ShoopingCart";
 export { default as Consumidor } from "./Consumidor";
 export { default as Fornecedor } from "./Fornecedor";
+export { default as ConfirmarEncomenda } from "./ConfirmarEncomenda";

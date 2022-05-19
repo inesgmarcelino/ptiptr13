@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import {NavBar, Home, Login, Register, Cart, Footer, Profile, MyData, Payment, ShoopingCart, Consumidor, Fornecedor} from './components';
+import {NavBar, Home, Login, Register, Cart, Footer, Profile, MyData, Payment, ShoopingCart, Consumidor, Fornecedor, ConfirmarEncomenda} from './components';
 
 
 ReactDOM.render(
@@ -19,6 +19,7 @@ ReactDOM.render(
       <Route path='/shoopingcart' element={<ShoopingCart />} />
       <Route path='/consumidor' element={<Consumidor />} />
       <Route path='/fornecedor' element={<Fornecedor />} />
+      <Route path='/confirmarencomenda' element={<ConfirmarEncomenda />} />
     </Routes>
     <Footer />
   </Router>,

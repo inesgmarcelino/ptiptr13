@@ -4,6 +4,7 @@ import {Link } from "react-router-dom";
 
 function Fornecedor () {
 
+
     return(
         <div>
             <div className="container">
@@ -30,7 +31,7 @@ function Fornecedor () {
                         <td>4</td>
                         {/* Fazer aqui um if em que caso a encomenda já tenha sido confirmada o botão muda para confirmada e colocar num verde mais claro */}
                         <div class="d-flex justify-content-center"> 
-                            <td><button type="button" class="btn btn-success">CONFIRMAR</button></td>
+                            <td><Link to ='/confirmarencomenda'> {App}</Link></td>
                         </div>
                     </tr>
                 </tbody>
