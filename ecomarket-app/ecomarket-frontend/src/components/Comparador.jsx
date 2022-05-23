@@ -37,7 +37,7 @@ function Comparador () {
                     </div>
                 </div>
             </div>
-</div>
+        </div>
         </div>
     )
 
