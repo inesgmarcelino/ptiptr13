@@ -15,11 +15,26 @@ services:
         - NGINX_PORT=80
       restart: always
     
-    app:
-      build: ./ecomarket-app/   
+    frontend:
+      build: ./ecomarket-app/ecomarket-frontend    
       networks:
-        - "c-network"
+        c-network:
+          aliases:
+            - frontend
       restart: always
+      depends_on:
+        - "backend"
+
+    backend:
+      build: ./ecomarket-app/ecomarket-backend 
+      networks:
+        c-network:
+          aliases:
+            - backend
+      restart: always
+      depends_on:
+        - "loadbalancer"
+        - "mysql_master"
 
     mysql_master:
       image: mysql:debian
@@ -32,21 +47,27 @@ services:
         - MYSQL_ROOT_PASSWORD=S3cret
         - MYSQL_PASSWORD=An0thrS3crt
         - MYSQL_USER=user
-        - MYSQL_DATABASE=ecodb
       volumes:
-        - ./database/db.sql:/data/application/init.sql
+        - ./database/db.sql:/docker-entrypoint-initdb.d/db.sql
+        - ./database/hello.sql:/docker-entrypoint-initdb.d/hello.sql
         - data:/var/lib/mysql
-    
+      
+      stdin_open: true # docker run -i
+      tty: true        # docker run -t
+
+
     mysql_slave:
       image: mysql:debian
       networks:
         - "c-network"
-      restart: always
+      #restart: always
+      depends_on:
+        - "mysql_master"
 
 networks:
     c-network:
     auth-service:
 
 volumes:
-    #volume for where sql is stored
+    #volume for where sql data is stored
     data:

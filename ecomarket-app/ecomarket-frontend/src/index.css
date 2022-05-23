@@ -203,6 +203,13 @@ body {
   }
 }
 
+.subtotal {
+  color: red;
+  display:flex;
+  justify-content: right;
+  align-items: right;
+}
+
 .showItems {
   margin-top: 100px;
   margin-left: 100px;
@@ -223,4 +230,11 @@ body {
 
 .rowH .card {
   width: 450px;
+}
+
+.caixasComparador{
+  width: 500px;
+  border: 15px solid rgb(1, 59, 1);
+  padding: 50px;
+  margin: 20px;
 }
