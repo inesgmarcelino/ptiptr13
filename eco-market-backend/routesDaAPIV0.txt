@@ -1,8 +1,0 @@
-API v0 com exemplos de codigo e links para documentacao relevante
-
-
-localhost:3000/api/v0/hello
-localhost:3000/api/v0/json
-localhost:3000/api/v0/json/email
-localhost:3000/api/v0/pathexample/id (id um numero inteiro)
-localhost:3000/api/v0/pathexample?id=uid (uid um numero intero)

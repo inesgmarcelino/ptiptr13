@@ -1,0 +1,21 @@
+TO DO (por ordem de prioridades)
+
+1.Completar implementacao do auth0
+2.Serviço de gestão de sessões (Fazer um serviço que mantem track das sessões iniciadas(ou que sincronize sessões por todos os containers))
+3.Replicacao da BD: configuracao master slave com containers
+4.Usar metodos asincronos com as bases de dados (é mais amigo desta forma)
+5.instalar coisas de segurança relacionadas com as boas praticas de expressjs
+
+Menor prioridade
+definir as coisas relacionadas com o setup da BD (password user e afins)
+(opcional)Eventualmente descobrir como utilizar o compose para gerir um conjunto de VMs
+Maybe later mudar o nginx para estar MESMO defacto a fazer load balancing (por enquanto ele usa apenas o DNS do docker(talvez falar sobre isto com o prof?))
+
+
+BD: not a to do but a how to do
+1.criar volume (sudo docker volume create volume_name)
+2.executar container com volume (docker run -d --network net_name --network-alias alias -v dbfile_path:mount_point image)
+	mount_point e a diretoria onde o ficheiro sql vai estar
+3.acrescentar um network alias (--network-alias hostname) para o DNS do docker encontrar o container
+4.colocar o nome escolhido do hostname na conexao
+
