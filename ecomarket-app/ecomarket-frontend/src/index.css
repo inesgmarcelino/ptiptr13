@@ -238,3 +238,14 @@ body {
   padding: 50px;
   margin: 20px;
 }
+
+.preco {
+  border: 1px solid black ;
+  width: 150px;
+}
+
+.caixaProduto{
+  border: 5px solid grey ;
+  padding: 50px;
+  margin: 20px;
+}
