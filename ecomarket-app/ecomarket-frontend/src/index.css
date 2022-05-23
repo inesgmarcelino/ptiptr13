@@ -227,3 +227,10 @@ body {
 .rowH .card {
   width: 450px;
 }
+
+.caixasComparador{
+  width: 500px;
+  border: 15px solid rgb(1, 59, 1);
+  padding: 50px;
+  margin: 20px;
+}

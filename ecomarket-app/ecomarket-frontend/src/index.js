@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './temp/catalogStyles.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import {NavBar, Home, Login, Register, Cart, Footer, Profile, MyData, Catalog, Payment, ShoopingCart, Consumidor, Fornecedor, ConfirmarEncomenda} from './components';
+import {NavBar, Home, Login, Register, Cart, Footer, Profile, MyData, Catalog, Payment, ShoopingCart, Consumidor, Fornecedor, ConfirmarEncomenda, Comparador} from './components';
 
 
 
@@ -23,6 +23,7 @@ ReactDOM.render(
       <Route path='/consumidor' element={<Consumidor />} />
       <Route path='/fornecedor' element={<Fornecedor />} />
       <Route path='/confirmarencomenda' element={<ConfirmarEncomenda />} />
+      <Route path='/comparador' element={<Comparador />} />
     </Routes>
     {/* <Footer /> */}
   </Router>,

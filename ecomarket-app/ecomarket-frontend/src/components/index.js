@@ -12,3 +12,4 @@ export { default as ShoopingCart } from "./ShoopingCart";
 export { default as Consumidor } from "./Consumidor";
 export { default as Fornecedor } from "./Fornecedor";
 export { default as ConfirmarEncomenda } from "./ConfirmarEncomenda";
+export { default as Comparador } from "./Comparador";
