@@ -79,6 +79,10 @@ body {
   margin-left: 0px;
 }
 
+.card>.card-img-top {
+  aspect-ratio: 3.5/2.5;
+}
+
 
 .form-content .form-items {
   background-color: #283618;
@@ -199,6 +203,13 @@ body {
   }
 }
 
+.subtotal {
+  color: red;
+  display:flex;
+  justify-content: right;
+  align-items: right;
+}
+
 .showItems {
   margin-top: 100px;
   margin-left: 100px;
@@ -219,4 +230,22 @@ body {
 
 .rowH .card {
   width: 450px;
+}
+
+.caixasComparador{
+  width: 500px;
+  border: 15px solid rgb(1, 59, 1);
+  padding: 50px;
+  margin: 20px;
+}
+
+.preco {
+  border: 1px solid black ;
+  width: 150px;
+}
+
+.caixaProduto{
+  border: 5px solid grey ;
+  padding: 50px;
+  margin: 20px;
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
+import {Link } from "react-router-dom";
 
 function MyData () {
 
@@ -41,8 +41,9 @@ function MyData () {
     } */
 
     return(
-        <div className="mydata" style={{position:'relative', display:'flex'}}>´
+        <div className="position-absolute showItems" style={{position:'relative', display:'flex'}}>´
             <div className="container">
+                <Link to ='/profile' ><button>Voltar</button></Link>
                 <br />
                 <h3>Está a editar os seus dados.</h3>     
             <br />
