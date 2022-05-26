@@ -26,9 +26,9 @@ function ConfirmarEncomenda () {
     return(
         <div className="position-absolute showItems">
             <div className="container">
-                <Link to ='/profile' ><button>Voltar</button></Link>
+                <Link to ='/profile' ><button type="button" className="btn" >Voltar</button></Link>
                 <br />
-                <h3>Confirmando Encomenda</h3>     
+                <h3>Confirmar Encomenda</h3>     
             </div>
             <br />
             <div className="container">
@@ -42,7 +42,7 @@ function ConfirmarEncomenda () {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* Aqui colocar um for que tem tantas linhas como o nuemro de transportadoras para esta encomenda */}
+                    {/* Aqui colocar um for que tem tantas linhas como o numero de transportadoras para esta encomenda */}
                     <tr>
                         <td>Transportador 1</td>
                         <td>10-mar 09h00</td>
