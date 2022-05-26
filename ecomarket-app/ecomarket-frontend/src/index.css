@@ -1,3 +1,9 @@
+#root{
+  padding: 0;
+  margin-left: 0px;
+  background-image: url('greenback.jpg');
+}
+
 body {
   margin: 0;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
