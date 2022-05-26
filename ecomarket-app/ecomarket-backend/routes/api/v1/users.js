@@ -129,27 +129,26 @@ router.get('/login', (req, res) => {
         queryString,
         [email],
         (err, results) => {
+            var message;
             if (!err) {
                 if(results.length > 0){
                     if(results.password === pwd){
                         res.status(200);
-                        res.type('json');
-                        res.send({"message":"User authenticated successfully."});
+                        message = "User authenticated successfully.";
                     } else {
                         res.status(401);
-                        res.type('json');
-                        res.send({"message":"User didn't authenticate successfully."});
+                        message = "User didn't authenticate successfully.";
                     }
                 } else {
                     res.status(404);
-                    res.type('json');
-                    res.send({"message":"User wasn't found."});
+                    message = "User wasn't found.";
                 }
             } else {
                 res.status(500);
-                res.type('json');
-                res.send({"message":"Error processing this query."});
+                message = "Error processing this query.";
             }
+            res.type('json');
+            res.send({"message": message});
         })
     connection.release();    
     });
