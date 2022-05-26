@@ -6,11 +6,10 @@ function Consumidor () {
     return(
         <div className="position-absolute showItems">
             <div className="container">
-                <Link to ='/profile' ><button>Voltar</button></Link>
+                <Link to ='/profile' ><button type="button" className="btn">Voltar</button></Link>
                 <br />
                 <h3>As minhas encomendas</h3>     
-                <h4>Morada de entrega: </h4> {/* Aqui ir buscar a morada do consumidor */}
-                <button>ALTERAR</button> {/* Vai servir para alterarmos a nossa morada, se quisermos ter esta opção aqui */}
+                
             </div>
             <br />
             <div className="container">
@@ -18,6 +17,7 @@ function Consumidor () {
                 <thead>
                     <tr>
                         <th>#ID</th>
+                        <th>Morada de Entrega</th>
                         <th>Produto</th>
                         <th>Quantidade</th>
                         <th>Estado</th>
@@ -27,6 +27,7 @@ function Consumidor () {
                     {/* Aqui colocar um for que tem tantas linhas como as encomendas do Consumidor e o conteúdo das encomendas */}
                     <tr>
                         <td>1234</td>
+                        <td>Rua das Flores</td>
                         <td>Cereais</td>
                         <td>2</td>
                         <td>Em trânsito</td>
