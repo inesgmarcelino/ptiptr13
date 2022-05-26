@@ -257,3 +257,10 @@ body {
   padding: 50px;
   margin: 20px;
 }
+
+.card-profile{
+  display: flex;
+  background-color: #283618ce;
+  padding: 15px;
+  border-radius: 10px;
+}
