@@ -67,7 +67,7 @@ console.error(req.body);
             }
         }   
     )
-    
+    console.error(id);
     if(cons){
         queryString = "INSERT INTO consumidor (utilizador, morada) VALUES (?,?)";
         connection.execute(
