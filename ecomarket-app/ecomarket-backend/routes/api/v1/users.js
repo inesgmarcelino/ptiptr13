@@ -13,8 +13,15 @@ const { query } = require('../svlib/db/getPool');
 
 //probably very useful: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 
+router.get('register', (req,res) =>{
+    console.log("oops");
+    res.status(404);
+    res.send({});
+})
+
 /* GET users listing. */
 router.post('/register', (req, res) => {
+  console.log("recebi um post");
   const nome = req.body.nome;
   const email = req.body.email;
   const nif = req.body.nif;
@@ -129,27 +136,26 @@ router.get('/login', (req, res) => {
         queryString,
         [email],
         (err, results) => {
+            var message;
             if (!err) {
                 if(results.length > 0){
                     if(results.password === pwd){
                         res.status(200);
-                        res.type('json');
-                        res.send({"message":"User authenticated successfully."});
+                        message = "User authenticated successfully.";
                     } else {
                         res.status(401);
-                        res.type('json');
-                        res.send({"message":"User didn't authenticate successfully."});
+                        message = "User didn't authenticate successfully.";
                     }
                 } else {
                     res.status(404);
-                    res.type('json');
-                    res.send({"message":"User wasn't found."});
+                    message = "User wasn't found.";
                 }
             } else {
                 res.status(500);
-                res.type('json');
-                res.send({"message":"Error processing this query."});
+                message = "Error processing this query.";
             }
+            res.type('json');
+            res.send({"message": message});
         })
     connection.release();    
     });
@@ -181,6 +187,8 @@ router.get('/:uid', function(req, res, next) {
         })
   });
 });
+
+// um user que seja só consumidor ou só fornecedor pode se tornar também fornecedor ou consumidor...
 
 
 //exporta funções/"objetos"

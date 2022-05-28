@@ -25,7 +25,7 @@ function Register() {
     }
     
     const goLogin = () => {
-        window.location.href = "http://localhost:3000/login";
+        window.location.href = "https://ecomarket.works/login";
     }
 
     const handler = (x) => {
@@ -91,7 +91,7 @@ function Register() {
                     (checkConsumidor && moradaConsumidor === '')) {
                         // setError(true);
                 } else {
-                    Axios.post("http://localhost:3001/api/register", {
+                    Axios.post("https://ecomarket.works/api/v1/users/register", {
                         nome: nome, 
                         email: email, 
                         nif: nif, 
