@@ -16,7 +16,6 @@ const { query } = require('../svlib/db/getPool');
 /* GET users listing. */
 router.post('/register', (req, res) => {
 console.error(req.body);
-console.error(typeof(req.body.nome));
   const nome = req.body.nome;
   const email = req.body.email;
   const nif = req.body.nif;
@@ -43,7 +42,7 @@ console.error(typeof(req.body.nome));
     connection.execute(
         queryString,
         [nome, email, nif, tlm, pwd],
-        (err, result) => {
+        function(err,results,fields){
             if (err) {
                 res.status(500);
                 res.type('json');
@@ -51,7 +50,7 @@ console.error(typeof(req.body.nome));
                 connection.release();
                 return;
             } else {
-                console.error(result)
+                console.error(results)
             }
         });
 
@@ -60,7 +59,7 @@ console.error(typeof(req.body.nome));
     connection.execute(
         queryString,
         [email],
-        (err,result) => {
+        function(err,results,fields){
             if(!err){
                 id = result.id;
                 console.error(result);
@@ -81,7 +80,7 @@ console.error(typeof(req.body.nome));
         connection.execute(
             queryString,
             [id,morada],
-            (err,result) => {
+            function(err,results,fields){
                 if(!err){
                     id = result.id;
                 } else {
@@ -108,7 +107,7 @@ console.error(typeof(req.body.nome));
         connection.execute(
             queryString,
             [id],
-            (err,result) => {
+            function(err,results,fields){
                 if(!err){
                     res.status(200);
                     res.type('json');
