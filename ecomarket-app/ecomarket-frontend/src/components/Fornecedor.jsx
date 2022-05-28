@@ -8,13 +8,13 @@ function Fornecedor () {
     return(
         <div className="position-absolute showItems">
             <div className="container">
-                <Link to ='/profile' ><button>Voltar</button></Link>
+                <Link to ='/profile' ><button className="btn">Voltar</button></Link>
                 <br />
                 <h3>Encomendas</h3>     
             </div>
             <br />
             <div className="container">
-            <table className="table table-bordered" style={{ textAlign:"center"}}>
+            <table className="table table-bordered" id='tableCon'>
                 <thead>
                     <tr>
                         <th>#ID</th>

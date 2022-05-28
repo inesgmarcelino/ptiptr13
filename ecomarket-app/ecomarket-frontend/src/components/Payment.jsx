@@ -8,8 +8,8 @@ function Payment () {
                 <br />
                 <h3>Pagamento</h3>     
             <br />
-            <div className="container" style={{textAlign : 'center'}}>
-                <form method="post" style={{display: 'inline-block'}}>
+            <div className="container" id='tableCon'>
+                <form method="post" id='formPagamento'>
                     <div className="col-md-12">
                         <label>Número do cartão: 
                             <input className="form-control" type="text" name="numero_cartao" placeholder="Número do Cartão" size="50" /* onChange={handler} required */ />
