@@ -29,11 +29,13 @@ console.error(typeof(req.body.nome));
   const trans = req.body.trans;
 
   pool.getConnection((err, connection) => {
-
+    
     if(err){
         res.status(500);
         res.type('json');
         res.json({"message":"Couldn't register you right now try again later"});
+    } else {
+        console.error("Connection with Database established");
     }
   
     var queryString = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word) VALUES (?,?,?,?,?)";
