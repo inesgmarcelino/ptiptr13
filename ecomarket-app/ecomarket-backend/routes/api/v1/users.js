@@ -61,6 +61,7 @@ console.error(req.body);
                 console.error(results);
                 console.error(id);
             } else {
+                console.error(err.message);
                 res.status(500);
                 res.type('json');
                 res.send({"message":"Couldn't register you right now try again later"});
