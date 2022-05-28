@@ -10,7 +10,7 @@ function Product() {
     return(
         <div className="position-absolute showItems">
             <div className="container">
-                <Link to ='/profile' ><button style={{color:"black"}}>Voltar</button></Link>
+                <Link to ='/profile' ><button id='profileButton'>Voltar</button></Link>
                 <br />
                 <h3>Cereais Golden Graham</h3>     
             </div>
@@ -22,8 +22,8 @@ function Product() {
                 </div>
                 <div class="col-lg-8">
                     <div class="caixaProduto">
-                       <div class="preco" style={{textAlign:"center"}}>3.29&euro;/unidade</div> {/* Chamar aqui o preço do produto da base de dados */}
-                       <button style={{color:"black", float:"right", margin:"10 0 0 auto", height:"40px", width:"100px"}} >BUY</button>
+                       <div class="preco" id='tableCon'>3.29&euro;/unidade</div> {/* Chamar aqui o preço do produto da base de dados */}
+                       <button id='buttonProduct' >BUY</button>
                        <br />
                         <p><h4>Cadeia Logistica: </h4>Produto Agrícula, 500kms pelo Transportador; Produtor Industrial, 125kms pelo Transportador; Grossista, 80kms pelo Transportador; Retalhista</p>
                         <p><h4>Recursos Consumidos: </h4>1000 L de Água, 2000 kW de Eletricidade, 162L de Gasóleo</p>

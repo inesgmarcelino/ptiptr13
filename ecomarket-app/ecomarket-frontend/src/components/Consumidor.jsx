@@ -13,7 +13,7 @@ function Consumidor () {
             </div>
             <br />
             <div className="container">
-            <table className="table table-bordered" style={{ textAlign:"center"}}>
+            <table className="table table-bordered" id='tableCon'>
                 <thead>
                     <tr>
                         <th>#ID</th>
