@@ -53,7 +53,7 @@ console.error(req.body);
                 console.error(results)
             }
         });
-
+/**
     queryString = "SELECT id FROM utilizador WHERE email = ?";
     var id;
     connection.execute(
@@ -123,7 +123,7 @@ console.error(req.body);
                 }
             }   
         )
-    }
+    }*/
   });
 });
 
