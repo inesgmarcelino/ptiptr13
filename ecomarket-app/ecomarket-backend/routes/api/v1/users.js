@@ -13,15 +13,13 @@ const { query } = require('../svlib/db/getPool');
 
 //probably very useful: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 
-router.get('register', (req,res) =>{
-    console.log("oops");
-    res.status(404);
-    res.send({});
-})
+// router.get('register', (req,res) =>{
+//     res.status(404);
+//     res.send({});
+// })
 
 /* GET users listing. */
 router.post('/register', (req, res) => {
-  console.log("recebi um post");
   const nome = req.body.nome;
   const email = req.body.email;
   const nif = req.body.nif;
@@ -73,6 +71,7 @@ router.post('/register', (req, res) => {
             }
         }   
     )
+    console.log(id);
     
     if(cons){
         queryString = "INSERT INTO consumidor (utilizador, morada) VALUES (?,?)";
