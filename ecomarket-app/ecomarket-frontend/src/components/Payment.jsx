@@ -8,7 +8,7 @@ function Payment () {
                 <br />
                 <h3>Pagamento</h3>     
             <br />
-            <div className="container" id='tableCon'>
+            <div className="container" id='centrar'>
                 <form method="post" id='formPagamento'>
                     <div className="col-md-12">
                         <label>Número do cartão: 
