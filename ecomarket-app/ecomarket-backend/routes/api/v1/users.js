@@ -181,6 +181,8 @@ router.get('/:uid', function(req, res, next) {
   });
 });
 
+// um user que seja só consumidor ou só fornecedor pode se tornar também fornecedor ou consumidor...
+
 
 //exporta funções/"objetos"
 module.exports = router ;
