@@ -58,6 +58,8 @@ console.error(req.body);
         (err,results) => {
             if(!err){
                 id = results.id;
+                console.error(results);
+                console.error(id);
             } else {
                 res.status(500);
                 res.type('json');
