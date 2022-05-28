@@ -50,6 +50,8 @@ console.error(typeof(req.body.nome));
                 res.send({"message":"Couldn't register you right now try again later"});
                 connection.release();
                 return;
+            } else {
+                console.error(result)
             }
         });
 
@@ -58,10 +60,10 @@ console.error(typeof(req.body.nome));
     connection.execute(
         queryString,
         [email],
-        (err,results) => {
+        (err,result) => {
             if(!err){
-                id = results.id;
-                console.error(results);
+                id = result.id;
+                console.error(result);
                 console.error(id);
             } else {
                 console.error(err.message);
@@ -79,9 +81,9 @@ console.error(typeof(req.body.nome));
         connection.execute(
             queryString,
             [id,morada],
-            (err,results) => {
+            (err,result) => {
                 if(!err){
-                    id = results.id;
+                    id = result.id;
                 } else {
                     res.status(500);
                     res.type('json');
@@ -106,7 +108,7 @@ console.error(typeof(req.body.nome));
         connection.execute(
             queryString,
             [id],
-            (err,results) => {
+            (err,result) => {
                 if(!err){
                     res.status(200);
                     res.type('json');
@@ -135,9 +137,9 @@ router.get('/login', (req, res) => {
     connection.execute(
         queryString,
         [email],
-        (err, results) => {
+        (err, result) => {
             if (!err) {
-                if(results.length > 0){
+                if(result.length > 0){
                     if(results.password === pwd){
                         res.status(200);
                         res.type('json');
@@ -169,12 +171,12 @@ router.get('/:uid', function(req, res, next) {
     connection.execute(
         queryString,
         [userId],
-        (err, results) =>  {
+        (err, result) =>  {
             if (!err) {
-                if(results.length > 0){
+                if(result.length > 0){
                     res.status(200);
                     res.type('json');
-                    res.send(results);
+                    res.send(result);
                 } else {
                     res.status(404);
                     res.type('json');
