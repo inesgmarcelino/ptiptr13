@@ -16,6 +16,7 @@ const { query } = require('../svlib/db/getPool');
 /* GET users listing. */
 router.post('/register', (req, res) => {
 console.error(req.body);
+console.error(typeof(req.body.nome));
   const nome = req.body.nome;
   const email = req.body.email;
   const nif = req.body.nif;
