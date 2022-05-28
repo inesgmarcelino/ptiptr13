@@ -15,7 +15,8 @@ var pool = mysql.createPool({
     host: "mysql",
     user: "root",
     password: "S3cret",
-    database: "ecodb"
+    database: "ecodb",
+    multipleStatements: true
   });
   
 module.exports = pool;
