@@ -17,7 +17,7 @@ function AdminLogin() {
     }
 
     const goHome = () => {
-        window.location.href = "http://localhost:3000/";
+        window.location.href = "https://ecomarket.works/";
     }
 
     const handler = (x) => {
