@@ -9,7 +9,7 @@ CREATE TABLE utilizador (
     telemovel       INT(9) NOT NULL UNIQUE,
     image           BLOB, -- Binary large object (verificar)
     pass_word       VARCHAR(250) NOT NULL,
-    morada          VARCHAR(250) NOT NULL,
+    morada          VARCHAR(250) NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE consumidor (

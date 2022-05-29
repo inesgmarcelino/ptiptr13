@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 
 var conn = mysql.createConnection({
-  host: "localhost",
+  host: "85.139.144.95",
   user: "root",
   password: "",
   database: "ecodb"
