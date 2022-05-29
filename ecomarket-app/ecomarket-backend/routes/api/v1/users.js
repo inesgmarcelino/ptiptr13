@@ -137,27 +137,27 @@ router.get('/login', (req, res) => {
     });
 });
 
-router.get('/:uid', function(req, res, next) {
-    var userId = req.params.uid;
-    var queryString = "SELECT * FROM utilizador WHERE id = ?";
-    conn.query(queryString, [userId], (err, results) =>  {
-        if (!err) {
-            if(results.length > 0){
-                res.status(200);
-                res.type('json');
-                res.send(results);
-            } else {
-                res.status(404);
-                res.type('json');
-                res.send({"message":"User wasn't found."});
-            }
-        } else {
-            res.status(500);
-            res.type('json');
-            res.send({"message":"Error processing this query."});
-        }
-    });
-  });
+// router.get('/:uid', function(req, res, next) {
+//     var userId = req.params.uid;
+//     var queryString = "SELECT * FROM utilizador WHERE id = ?";
+//     conn.query(queryString, [userId], (err, results) =>  {
+//         if (!err) {
+//             if(results.length > 0){
+//                 res.status(200);
+//                 res.type('json');
+//                 res.send(results);
+//             } else {
+//                 res.status(404);
+//                 res.type('json');
+//                 res.send({"message":"User wasn't found."});
+//             }
+//         } else {
+//             res.status(500);
+//             res.type('json');
+//             res.send({"message":"Error processing this query."});
+//         }
+//     });
+// });
 
 // um user que seja só consumidor ou só fornecedor pode se tornar também fornecedor ou consumidor...
 
