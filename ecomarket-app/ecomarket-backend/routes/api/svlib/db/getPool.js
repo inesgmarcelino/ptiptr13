@@ -13,8 +13,8 @@ var mysql = require('mysql2');
 var pool = mysql.createPool({
     connectionLimit:10,
     host: "mysql",
-    user: "root",
-    password: "S3cret",
+    user: "user",
+    password: "An0thrS3crt",
     database: "ecodb",
     multipleStatements: true
   });

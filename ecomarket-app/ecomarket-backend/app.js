@@ -26,6 +26,41 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/index', indexRouter);
 //app.use('/users', usersRouter);
 
+
+
+/** Definir o middleware para as sessões */
+//para usar sessoões, fazer req.sessions
+const session = require('express-session');
+const mysql2 = require('mysql2/promise');
+const MySQLStore = require('express-mysql-session')(session);
+
+var connection = mysql2.createPool({
+  host: 'mysql',
+  user: 'user',
+  password: 'An0thrS3crt',
+  database: 'session'
+});
+
+app.use(session({
+	key: 'ecoseshcooky',
+	secret: 'SecretString#3125/$!5',      
+
+  cookie: {
+    domain: "ecomarket.works",
+    expires: (new Date(Date.now() + 3600000)),
+    path: '/',
+    sameSite: 'lax'
+  },
+
+	store: new MySQLStore({}, connection),
+  
+	resave: false,
+	saveUninitialized: false
+}));
+/** Fim do middleware */
+
+
+
 //***************Codigo gerado pelo express generator********** */
 
 /**Definir route para API de test 
