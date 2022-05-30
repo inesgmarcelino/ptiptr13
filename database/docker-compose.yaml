@@ -18,7 +18,7 @@ services:
         - data:/var/lib/mysql
       stdin_open: true # docker run -i
       tty: true        # docker run -t
-      container_name: db_container
+      container_name: db_test
      # command:
 networks:
     db-network:
