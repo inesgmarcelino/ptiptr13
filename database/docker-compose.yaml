@@ -1,7 +1,7 @@
 version: "3"
 services:       
     database:
-      image: mysql:debian
+      image: mysql/mysql-server:8.0
       networks:
         db-network:
           aliases:
