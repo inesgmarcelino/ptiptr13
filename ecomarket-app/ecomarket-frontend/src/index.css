@@ -16,6 +16,7 @@ body {
   height: 70px;
 }
 
+
 #searchBar {
   height: 25px;
   width: 200px;
@@ -39,10 +40,12 @@ body {
 }
  
 #cart {
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   margin-right: 10px;
-  margin-bottom: 15px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  margin-top: 5px;
  }
 
  .row {

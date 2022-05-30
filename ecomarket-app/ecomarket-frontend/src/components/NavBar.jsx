@@ -16,6 +16,9 @@ function SideBar() {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="mx-auto"></div>
                     <input class="form-control me-2" id="searchBar" type="search" placeholder="Search" aria-label="Search" />
+                    <NavLink to="/Cart">
+                        <img src={cart} id="cart" alt=""/>
+                    </NavLink>
                     <ul class="navbar-nav">
                         <li className="nav-item"> {/* se autenticado user */}
                          <NavLink className="nav-link text-white" to="/login">
