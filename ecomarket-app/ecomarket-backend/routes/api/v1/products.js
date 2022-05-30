@@ -63,6 +63,7 @@ router.get('/:pname', (req,res) => {
 
         conn.query(queryString, [pname], (err, rows) => {
             conn.release();
+            
             if (err) {
                 res.status(500);
                 res.type('json');

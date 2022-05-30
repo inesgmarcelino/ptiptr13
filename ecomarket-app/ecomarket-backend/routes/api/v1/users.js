@@ -46,8 +46,9 @@ router.post('/register', (req, res) => {
         
         conn.query(queryString, [nome, email, nif, tlm, pwd], (err, result) => {
             // conn.release();
-            console.error(err);
             if (err) {
+                conn.release();
+                
                 res.status(500);
                 res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 1"});
@@ -63,6 +64,7 @@ router.post('/register', (req, res) => {
             if(!err){
                 id = results.id;
             } else {
+                conn.release();
                 res.status(500);
                 res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 2"});
@@ -74,9 +76,8 @@ router.post('/register', (req, res) => {
         if(cons){
             queryString = "INSERT INTO consumidor (utilizador, morada) VALUES (?,?)";
             conn.query(queryString, [id,morada], (err,results) => {
-                console.error(err);
-
                 conn.release();
+
                 if(!err){
                     id = results.id;
                 } else {
@@ -93,6 +94,8 @@ router.post('/register', (req, res) => {
             } else if (forn) {
                 queryString = "INSERT INTO fornecedor (utilizador) VALUES (?)";
             } else {
+                conn.release();
+
                 res.status(400);
                 res.type('json');
                 res.send({"message":"Bad Request"});
@@ -100,9 +103,8 @@ router.post('/register', (req, res) => {
             }
     
             conn.query(queryString, [id], (err,results) => {
-                console.error(err);
-
                 conn.release();
+
                 if(!err){
                     res.status(200);
                     res.type('json');
@@ -126,72 +128,93 @@ router.get('/login', (req, res) => {
     const email = req.body.email;
     const pwd = req.body.pwd;
     const queryString = "SELECT pass_word FROM utilizador WHERE email = ?";
-  
-    conn.query(queryString, [email], (err, results) => {
-        var message;
-        if (!err) {
-            if(results.length > 0){
-                if(results.password === pwd){
-                    res.status(200);
-                    message = "Utilizador autenticado";
+
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [email], (err, results) => {
+            conn.release();
+
+            var message;
+            if (!err) {
+                if(results.length > 0){
+                    if(results.password === pwd){
+                        res.status(200);
+                        message = "Utilizador autenticado";
+                    } else {
+                        res.status(401);
+                        message = "Não foi possível autenticar o utilizador.";
+                    }
                 } else {
-                    res.status(401);
-                    message = "Não foi possível autenticar o utilizador.";
+                    res.status(404);
+                    message = "Utilizador não se encontra na base de dados";
                 }
             } else {
-                res.status(404);
-                message = "Utilizador não se encontra na base de dados";
+                res.status(500);
+                message = "Não foi possível realizar essa operação. output 5";
             }
-        } else {
-            res.status(500);
-            message = "Não foi possível realizar essa operação. outpout 5";
-        }
-        res.type('json');
-        res.send({"message": message});
+            res.type('json');
+            res.send({"message": message});
+        });
     });
+  
 });
 
 router.get('/:uid', (req,res) => {
     var userId = req.params.uid;
     var queryString = "SELECT * FROM utilizador WHERE id = ?";
-    conn.query(queryString, [userId], (err, results) =>  {
-        if (!err) {
-            if(results.length > 0){
-                res.status(200);
-                res.type('json');
-                res.send(results);
+
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [userId], (err, results) =>  {
+            conn.release();
+
+            if (!err) {
+                if(results.length > 0){
+                    res.status(200);
+                    res.type('json');
+                    res.send(results);
+                } else {
+                    res.status(404);
+                    res.type('json');
+                    res.send({"message":"Utilizador não se encontra na base de dados"});
+                }
             } else {
-                res.status(404);
+                res.status(500);
                 res.type('json');
-                res.send({"message":"Utilizador não se encontra na base de dados"});
+                res.send({"message":"Não foi possível realizar essa operação. output 6"});
             }
-        } else {
-            res.status(500);
-            res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. outpout 6"});
-        }
+        });
     });
 });
 
 router.post('/delete/:uid', (req,res) => {
     var userId = req.params.uid;
     var queryString = "DELETE FROM utilizador WHERE id = ?";
-    conn.query(queryString, [userId], (err, results) =>  {
-        if (!err) {
-            if(results.length > 0){
-                res.status(200);
-                res.type('json');
-                res.send(results);
+
+    pool.getConnection((err,conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [userId], (err, results) =>  {
+            conn.release();
+
+            if (!err) {
+                if(results.length > 0){
+                    res.status(200);
+                    res.type('json');
+                    res.send(results);
+                } else {
+                    res.status(404);
+                    res.type('json');
+                    res.send({"message":"Utilizador não se encontra na base de dados"});
+                }
             } else {
-                res.status(404);
+                res.status(500);
                 res.type('json');
-                res.send({"message":"Utilizador não se encontra na base de dados"});
+                res.send({"message":"Não foi possível realizar essa operação. output 7"});
             }
-        } else {
-            res.status(500);
-            res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. outpout 7"});
-        }
+        });
     });
 });
 
