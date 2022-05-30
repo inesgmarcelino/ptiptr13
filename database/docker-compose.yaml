@@ -13,12 +13,14 @@ services:
         - MYSQL_USER=user
         #- DATA_SAVE_PATH=../data
       volumes:
-        - ./database/db.sql:/docker-entrypoint-initdb.d/db.sql
-        - ./database/hello.sql:/docker-entrypoint-initdb.d/hello.sql
+        - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+        - ./hello.sql:/docker-entrypoint-initdb.d/hello.sql
         - data:/var/lib/mysql
+        - ./conf.cnf:/etc/mysql/conf.cnf 
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       stdin_open: true # docker run -i
       tty: true        # docker run -t
-     # command:
+      command:
 networks:
     db-network:
       driver: bridge
