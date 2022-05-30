@@ -3,7 +3,8 @@ var router = express.Router();
 
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
-var pool = require('../svlib/db/getPool');
+// var pool = require('../svlib/db/getPool');
+var conn = require('../svlib/db/connect-ines');
 
 
 /** auth0 */
@@ -18,32 +19,30 @@ router.get('/adminlogin', (req, res) => {
     const pwd = req.body.pwd;
     const queryString = "SELECT pass_word from utilizador WHERE email = ?";
 
-    pool.getConnection((err, connection) => {
-        connection.execute(queryString, [email], (err, results) => {
-            var message;
-            if (!err) {
-                if (results.length > 0) {
-                    if (results.password === pwd) {
-                        res.status(200);
-                        message = "Admin autenticado";
-                    } else {
-                        res.send(401);
-                        message = "Não foi possível autenticar o admin.";
-                    }
+    conn.query(queryString, [email], (err, results) => {
+        var message;
+        if (!err) {
+            if (results.length > 0) {
+                if (results.password === pwd) {
+                    res.status(200);
+                    message = "Admin autenticado";
                 } else {
-                    res.send(404);
-                    message = "Argumentos inválidos.";
+                    res.send(401);
+                    message = "Não foi possível autenticar o admin.";
                 }
             } else {
-                res.status(500);
-                message = "Não foi possível realizar essa operação. outpout 1";
+                res.send(404);
+                message = "Argumentos inválidos.";
             }
-            res.type('json');
-            res.send({"message": message});
-        });
-        connection.release();
+        } else {
+            res.status(500);
+            message = "Não foi possível realizar essa operação. outpout 1";
+        }
+        res.type('json');
+        res.send({"message": message});
     });
 });
+
 
 router.get('/adminadd', (req, res) => {
     var tab = req.params.tab; //tipo ou subtipo
@@ -51,67 +50,60 @@ router.get('/adminadd', (req, res) => {
     var message;
     if (tab === "tipo") {
         const queryString = "INSERT INTO tipo_produto VALUES (nome) VALUES (?)";
-        pool.getConnection((err, connection) => {
-            connection.execute(queryString, [nome], (err, result) => {
-                if (err) {
-                    res.status(500);
-                    res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. outpout 2"});
-                    connection.release();
-                    return;
-                } else {
-                    res.status(200);
-                    message = "Novo tipo adicionado.";
-                }
-            });
+        conn.query(queryString, [nome], (err, result) => {
+            if (err) {
+                res.status(500);
+                res.type('json');
+                res.send({"message":"Não foi possível realizar essa operação. outpout 2"});
+                connection.release();
+                return;
+            } else {
+                res.status(200);
+                message = "Novo tipo adicionado.";
+            }
         });
 
     } else if (tab === "subtipo") {
         var mae = req.params.mae; //tipo
         const queryString = "INSERT INTO subtipo_produto VALUES (nome) VALUES (?)";
-        pool.getConnection((err, connection) => {
-            connection.execute(queryString, [nome], (err,result) => {
-                if (err) {
-                    res.status(500);
-                    res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. outpout 3"});
-                    connection.release();
-                    return;
-                }
-            });
+        conn.query(queryString, [nome], (err,result) => {
+            if (err) {
+                res.status(500);
+                res.type('json');
+                res.send({"message":"Não foi possível realizar essa operação. outpout 3"});
+                connection.release();
+                return;
+            }
+        });
 
-            queryString = "SELECT id from subtipo_produto WHERE nome = ?";
-            var id;
-            connection.execute(queryString, [nome], (err, results) => {
-                if (!err) {
-                    id = results.id;
-                } else {
-                    res.status(500);
-                    res.type('json');
-                    res.send({"message":"Subtipo não se encontra na base de dados"});
-                    connection.release();
-                    return;
-                }
-            });
+        queryString = "SELECT id from subtipo_produto WHERE nome = ?";
+        var id;
+        conn.query(queryString, [nome], (err, results) => {
+            if (!err) {
+                id = results.id;
+            } else {
+                res.status(500);
+                res.type('json');
+                res.send({"message":"Subtipo não se encontra na base de dados"});
+                return;
+            }
+        });
 
-            queryString = "INSERT INTO tipo_subtipo VALUES (?,?)";
-            connection.execute(queryString, [mae, id], (err,result) => {
-                if (err) {
-                    res.status(500);
-                    res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. outpout 4"});
-                    connection.release();
-                    return;
-                } else {
-                    res.status(200);
-                    message = "Novo subtipo adicionado."
-                }
-            });
+        queryString = "INSERT INTO tipo_subtipo VALUES (?,?)";
+        conn.query(queryString, [mae, id], (err,result) => {
+            if (err) {
+                res.status(500);
+                res.type('json');
+                res.send({"message":"Não foi possível realizar essa operação. outpout 4"});
+                return;
+            } else {
+                res.status(200);
+                message = "Novo subtipo adicionado."
+            }
         });
     }
     res.type('json');
     res.send({"message": message});
-    connection.release();
 });
 
 router.get('/edit/:uid', (req, res, next) => {
@@ -126,20 +118,16 @@ router.get('/edit/:uid', (req, res, next) => {
 
     const queryString = "UPDATE utilizador SET nome = ?, email = ?, nif = ?, telemovel = ?\
                                                 pass_word = ?, morada = ? WHERE id = ?";
-    pool.getConnection((err, connection) => {
-        connection.execute(queryString, [nome,email,nif,tlm,pwd,morada,id], (err, results) => {
-            if (err) {
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. outpout 5"});
-                connection.release();
-                return;
-            } else {
-                res.status(200);
-                res.type('json');
-                res.send({"message":"Alterações guardadas."});
-            }
-        });
-        connection.release();
+    conn.query(queryString, [nome,email,nif,tlm,pwd,morada,id], (err, results) => {
+        if (err) {
+            res.status(500);
+            res.type('json');
+            res.send({"message":"Não foi possível realizar essa operação. outpout 5"});
+            return;
+        } else {
+            res.status(200);
+            res.type('json');
+            res.send({"message":"Alterações guardadas."});
+        }
     });
 });
