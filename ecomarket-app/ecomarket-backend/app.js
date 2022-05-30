@@ -23,9 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/users', usersRouter);
 
 
-/**
 
-/** Definir o middleware para as sessões 
+/** Definir o middleware para as sessões */
 //para usar sessoões, fazer req.sessions
 const session = require('express-session');
 const mysql2 = require('mysql2/promise');
@@ -33,8 +32,8 @@ const MySQLStore = require('express-mysql-session')(session);
 
 var connection = mysql2.createPool({
   host: 'mysql',
-  user: 'user',
-  password: 'An0thrS3crt',
+  user: 'root',
+  password: 'S3cret',
   database: 'session'
 });
 
