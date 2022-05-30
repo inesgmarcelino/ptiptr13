@@ -65,7 +65,7 @@ router.post('/order', (req,res) => {
 
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 2"});
+                res.send({"message":"Não foi possível realizar essa operação. output 3"});
                 return;
             }
         });
@@ -80,7 +80,7 @@ router.post('/order', (req,res) => {
                         if (err) {
                             res.status(500);
                             res.type('json');
-                            res.send({"message":"Não foi possível realizar essa operação. output 3"});
+                            res.send({"message":"Não foi possível realizar essa operação. output 4"});
                             return;
                         }
                     })
@@ -90,7 +90,7 @@ router.post('/order', (req,res) => {
 
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 2"});
+                res.send({"message":"Não foi possível realizar essa operação. output 5"});
                 return;
             }
         });
@@ -103,7 +103,7 @@ router.post('/order', (req,res) => {
 
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 4"});
+                res.send({"message":"Não foi possível realizar essa operação. output 6"});
                 return;
             }
         })
@@ -120,7 +120,7 @@ router.post('/order', (req,res) => {
             } else {
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 5"});
+                res.send({"message":"Não foi possível realizar essa operação. output 7"});
                 return;
             }
         });
@@ -144,7 +144,7 @@ router.post('/cancel/:oid', (req,res) => {
         } else {
             res.status(500);
             res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. outpout 6"});
+            res.send({"message":"Não foi possível realizar essa operação. output 8"});
         }
     });
 });
@@ -160,7 +160,7 @@ router.get('/orders/:cid', (req,res) => {
         } else {
             res.status(500);
             res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. outpout 7"});
+            res.send({"message":"Não foi possível realizar essa operação. output 9"});
         }
     });
 });

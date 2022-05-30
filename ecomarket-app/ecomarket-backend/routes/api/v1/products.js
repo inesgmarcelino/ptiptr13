@@ -21,6 +21,7 @@ router.get('/:cid', (req,res) => {
 
         conn.query(queryString, [cid], (err, rows) => {
             conn.release();
+
             if (err) {
                 res.status(500);
                 res.type('json');
@@ -42,10 +43,11 @@ router.get('/:pid', (req,res) => {
 
         conn.query(queryString, [pid], (err, rows) => {
             conn.release();
+
             if (err) {
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 1"});
+                res.send({"message":"Não foi possível realizar essa operação. output 2"});
                 return;
             } else {
                 // por acabar
@@ -67,7 +69,7 @@ router.get('/:pname', (req,res) => {
             if (err) {
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 1"});
+                res.send({"message":"Não foi possível realizar essa operação. output 3"});
                 return;
             } else {
                 // por acabar

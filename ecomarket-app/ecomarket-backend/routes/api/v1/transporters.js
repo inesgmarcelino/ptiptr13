@@ -42,7 +42,7 @@ router.post('/reg_car', (req,res) => {
                 
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 1"});
+                res.send({"message":"Não foi possível realizar essa operação. output 2"});
                 return;
             }
         });
@@ -54,7 +54,7 @@ router.post('/reg_car', (req,res) => {
                 
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 2"});
+                res.send({"message":"Não foi possível realizar essa operação. output 3"});
                 return;
             } else {
                 res.status(200);

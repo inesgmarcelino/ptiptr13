@@ -41,7 +41,7 @@ router.get('/adminlogin', (req, res) => {
                 }
             } else {
                 res.status(500);
-                message = "Não foi possível realizar essa operação. outpout 1";
+                message = "Não foi possível realizar essa operação. output 1";
             }
             res.type('json');
             res.send({"message": message});
@@ -67,7 +67,7 @@ router.get('/adminadd', (req, res) => {
                 if (err) {
                     res.status(500);
                     res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. outpout 2"});
+                    res.send({"message":"Não foi possível realizar essa operação. output 2"});
                     connection.release();
                     return;
                 } else {
@@ -85,7 +85,7 @@ router.get('/adminadd', (req, res) => {
 
                     res.status(500);
                     res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. outpout 3"});
+                    res.send({"message":"Não foi possível realizar essa operação. output 3"});
                     connection.release();
                     return;
                 }
@@ -113,7 +113,7 @@ router.get('/adminadd', (req, res) => {
 
                     res.status(500);
                     res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. outpout 4"});
+                    res.send({"message":"Não foi possível realizar essa operação. output 4"});
                     return;
                 } else {
                     res.status(200);
@@ -147,7 +147,7 @@ router.get('/edit/:uid', (req, res, next) => {
             if (err) {
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. outpout 5"});
+                res.send({"message":"Não foi possível realizar essa operação. output 5"});
                 return;
             } else {
                 res.status(200);
