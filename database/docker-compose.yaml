@@ -21,6 +21,7 @@ services:
       stdin_open: true # docker run -i
       tty: true        # docker run -t
       #command:
+      scale: 3
 networks:
     db-network:
       driver: bridge
