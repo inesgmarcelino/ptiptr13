@@ -15,4 +15,6 @@ export { default as ConfirmarEncomenda } from "./ConfirmarEncomenda";
 export { default as Comparador } from "./Comparador";
 export { default as Product } from "./Product";
 export { default as Product2} from "./Product2";
-export { default as ArmazemRegister} from "./ArmazemRegister"
+export { default as ArmazemRegister} from "./ArmazemRegister";
+export { default as ProductRegister} from "./ProductRegister";
+export { default as Album} from "./Album";
