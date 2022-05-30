@@ -8,12 +8,12 @@ CREATE TABLE utilizador (
     nif             INT(9) NOT NULL UNIQUE,
     telemovel       INT(9) NOT NULL UNIQUE,
     image           BLOB, -- Binary large object (verificar)
-    pass_word       VARCHAR(250) NOT NULL
+    pass_word       VARCHAR(250) NOT NULL,
+    morada          VARCHAR(250) NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE consumidor (
     utilizador      INT PRIMARY KEY,
-    morada          VARCHAR(250) NOT NULL,
     --
     CONSTRAINT fk_consumidor
         FOREIGN KEY (utilizador) REFERENCES utilizador(id) ON DELETE CASCADE
@@ -95,9 +95,9 @@ CREATE TABLE estado_encomenda (
     CONSTRAINT fk_encomenda_status
         FOREIGN KEY (encomenda) REFERENCES encomenda(id) ON DELETE CASCADE,
     CONSTRAINT ck_status
-        CHECK ((status_consum = 'NOT' OR status_consum = 'YES') 
-            AND (status_fornec = 'NOT' OR status_fornec = 'YES')
-            AND (status_transp = 'NOT' OR status_transp = 'YES'))
+        CHECK ((status_consum = 'NO' OR status_consum = 'YES') 
+            AND (status_fornec = 'NO' OR status_fornec = 'YES')
+            AND (status_transp = 'NO' OR status_transp = 'YES'))
 ) ENGINE = InnoDB;
 
 CREATE TABLE lista_encomendas (

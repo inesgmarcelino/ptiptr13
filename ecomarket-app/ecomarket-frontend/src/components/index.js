@@ -14,3 +14,5 @@ export { default as Fornecedor } from "./Fornecedor";
 export { default as ConfirmarEncomenda } from "./ConfirmarEncomenda";
 export { default as Comparador } from "./Comparador";
 export { default as Product } from "./Product";
+export { default as AdminLogin } from "./AdminLogin";
+export { default as Admin } from "./Admin";
