@@ -97,7 +97,7 @@ function Cart() {
                 <div className="total-price">3 euros</div>
             </div>
  
-           
+ 
         </div>
     );
 }

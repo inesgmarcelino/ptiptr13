@@ -321,14 +321,7 @@ body {
   font-weight: 400;
 }
  
-.description span:first-child {
-  margin-bottom: 5px;
-}
-.description span:last-child {
-  font-weight: 300;
-  margin-top: 8px;
-  color: #86939E;
-}
+
 
 .quantity {
   padding-top: 20px;
@@ -411,4 +404,41 @@ input:focus {
   margin-Left:auto;
   margin-Right:20px; 
   width:150px
+}
+
+/*product2 */
+.product-details{
+  width: 100%;
+  padding: 60px 10vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.details{
+  width: 50%;
+}
+.details > p{
+  margin-top: -30px;
+}
+
+.details .product-brand{
+  text-transform: capitalize;
+  font-size: 30px;
+}
+
+.details .product-short-des{
+  font-size: 25px;
+  line-height: 30px;
+  height: auto;
+  margin: 15px 0 30px;
+}
+
+.product-price{
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.cart-btnP{
+  margin-right: 2%;
+
 }
