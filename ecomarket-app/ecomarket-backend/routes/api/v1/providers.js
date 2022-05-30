@@ -104,7 +104,7 @@ router.post('/reg_product', (req,res) => {
         if (err) {
             res.status(500);
             res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. output 5"});
+            res.send({"message":"Não foi possível realizar essa operação. output 6"});
             return;
         }
     });
@@ -122,7 +122,7 @@ router.post('/reg_product', (req,res) => {
         if (err) {
             res.status(500);
             res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. output 5"});
+            res.send({"message":"Não foi possível realizar essa operação. output 7"});
             return;
         }
     });
@@ -140,7 +140,7 @@ router.post('/reg_product', (req,res) => {
         if (err) {
             res.status(500);
             res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. output 5"});
+            res.send({"message":"Não foi possível realizar essa operação. output 8"});
             return;
         }
     });
@@ -151,7 +151,7 @@ router.post('/reg_product', (req,res) => {
         if (err) {
             res.status(500);
             res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. output 5"});
+            res.send({"message":"Não foi possível realizar essa operação. output 9"});
             return;
         }
     });
@@ -172,7 +172,7 @@ router.post('/reg_product', (req,res) => {
         } else {
             res.status(500);
             res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. output 6"});
+            res.send({"message":"Não foi possível realizar essa operação. output 10"});
             return;
         }
     });

@@ -137,7 +137,7 @@ router.get('/login', (req, res) => {
     });
 });
 
-router.get('/:uid', function(req, res, next) {
+router.get('/:uid', (req,res) => {
     var userId = req.params.uid;
     var queryString = "SELECT * FROM utilizador WHERE id = ?";
     conn.query(queryString, [userId], (err, results) =>  {
@@ -155,6 +155,28 @@ router.get('/:uid', function(req, res, next) {
             res.status(500);
             res.type('json');
             res.send({"message":"Não foi possível realizar essa operação. outpout 6"});
+        }
+    });
+});
+
+router.post('/delete/:uid', (req,res) => {
+    var userId = req.params.uid;
+    var queryString = "DELETE FROM utilizador WHERE id = ?";
+    conn.query(queryString, [userId], (err, results) =>  {
+        if (!err) {
+            if(results.length > 0){
+                res.status(200);
+                res.type('json');
+                res.send(results);
+            } else {
+                res.status(404);
+                res.type('json');
+                res.send({"message":"Utilizador não se encontra na base de dados"});
+            }
+        } else {
+            res.status(500);
+            res.type('json');
+            res.send({"message":"Não foi possível realizar essa operação. outpout 7"});
         }
     });
 });
