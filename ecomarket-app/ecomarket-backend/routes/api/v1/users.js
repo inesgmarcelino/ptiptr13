@@ -4,12 +4,11 @@ var router = express.Router();
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
 // var pool = require('../svlib/db/getPool');
-var conn = require('../svlib/db/connection');
+var pool = require('../svlib/db/connection');
 
 
 /** auth0 */
 var auth = require('../svlib/auth0/tokenlib');
-const { query } = require('../svlib/db/getPool');
 /** */
 
 //probably very useful: https://www.w3schools.com/nodejs/nodejs_mysql.asp
@@ -42,68 +41,76 @@ router.post('/register', (req, res) => {
   
     var queryString = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word) VALUES (?,?,?,?,?)";
 
-    conn.query(queryString, [nome, email, nif, tlm, pwd], (err, result) => {
-        if (err) {
-            res.status(500);
-            res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. output 1"});
-            return;
-        }
-    });
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+        
+        conn.query(queryString, [nome, email, nif, tlm, pwd], (err, result) => {
+            // conn.release();
+            if (err) {
+                res.status(500);
+                res.type('json');
+                res.send({"message":"Não foi possível realizar essa operação. output 1"});
+                return;
+            }
+        });
 
-    queryString = "SELECT id FROM utilizador WHERE email = ?";
-    var id;
-    conn.query(queryString, [email], (err,results) => {
-        if(!err){
-            id = results.id;
-        } else {
-            res.status(500);
-            res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. output 2"});
-            return;
-        }
-    });
-    console.log(id);
-    
-    if(cons){
-        queryString = "INSERT INTO consumidor (utilizador, morada) VALUES (?,?)";
-        conn.query(queryString, [id,morada], (err,results) => {
+        queryString = "SELECT id FROM utilizador WHERE email = ?";
+        var id;
+        conn.query(queryString, [email], (err,results) => {
             if(!err){
                 id = results.id;
             } else {
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 3"});
+                res.send({"message":"Não foi possível realizar essa operação. output 2"});
                 return;
             }
         });
+        console.log(id);
 
-    } else {
-        if (trans){
-            queryString = "INSERT INTO transportador (utilizador) VALUES (?)";
-        } else if (forn) {
-            queryString = "INSERT INTO fornecedor (utilizador) VALUES (?)";
+        if(cons){
+            queryString = "INSERT INTO consumidor (utilizador, morada) VALUES (?,?)";
+            conn.query(queryString, [id,morada], (err,results) => {
+                conn.release();
+                if(!err){
+                    id = results.id;
+                } else {
+                    res.status(500);
+                    res.type('json');
+                    res.send({"message":"Não foi possível realizar essa operação. output 3"});
+                    return;
+                }
+            });
+    
         } else {
-            res.status(400);
-            res.type('json');
-            res.send({"message":"Bad Request"});
-            return;
-        }
-
-        conn.query(queryString, [id], (err,results) => {
-            if(!err){
-                res.status(200);
-                res.type('json');
-                res.send({"message":"Registo bem sucessido"});
-                return;
+            if (trans){
+                queryString = "INSERT INTO transportador (utilizador) VALUES (?)";
+            } else if (forn) {
+                queryString = "INSERT INTO fornecedor (utilizador) VALUES (?)";
             } else {
-                res.status(500);
+                res.status(400);
                 res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 4"});
+                res.send({"message":"Bad Request"});
                 return;
             }
-        });
-    }
+    
+            conn.query(queryString, [id], (err,results) => {
+                conn.release();
+                if(!err){
+                    res.status(200);
+                    res.type('json');
+                    res.send({"message":"Registo bem sucessido"});
+                    return;
+                } else {
+                    res.status(500);
+                    res.type('json');
+                    res.send({"message":"Não foi possível realizar essa operação. output 4"});
+                    return;
+                }
+            });
+        }
+    });
+    
   });
 // });
 
