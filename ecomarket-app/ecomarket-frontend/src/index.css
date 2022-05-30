@@ -448,3 +448,12 @@ input:focus {
   color: #fff;
   border: none;
 }
+
+
+/*ArmazemRegister*/
+.cardAdmin {
+  background-color: #4e6b2dce;
+  padding: 15px;
+  width: 500px;
+  border-radius: 10px;
+}
