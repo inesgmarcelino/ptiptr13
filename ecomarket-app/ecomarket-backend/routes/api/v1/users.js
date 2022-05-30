@@ -46,6 +46,7 @@ router.post('/register', (req, res) => {
         
         conn.query(queryString, [nome, email, nif, tlm, pwd], (err, result) => {
             // conn.release();
+            console.error(err);
             if (err) {
                 res.status(500);
                 res.type('json');
@@ -57,6 +58,8 @@ router.post('/register', (req, res) => {
         queryString = "SELECT id FROM utilizador WHERE email = ?";
         var id;
         conn.query(queryString, [email], (err,results) => {
+            console.error(err);
+            
             if(!err){
                 id = results.id;
             } else {
@@ -71,6 +74,8 @@ router.post('/register', (req, res) => {
         if(cons){
             queryString = "INSERT INTO consumidor (utilizador, morada) VALUES (?,?)";
             conn.query(queryString, [id,morada], (err,results) => {
+                console.error(err);
+
                 conn.release();
                 if(!err){
                     id = results.id;
@@ -95,6 +100,8 @@ router.post('/register', (req, res) => {
             }
     
             conn.query(queryString, [id], (err,results) => {
+                console.error(err);
+
                 conn.release();
                 if(!err){
                     res.status(200);
