@@ -1,3 +1,4 @@
+USE ecodb;
 DROP PROCEDURE IF EXISTS set_as_master;
 
 DELIMITER $$
