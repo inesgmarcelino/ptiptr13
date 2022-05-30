@@ -68,6 +68,7 @@ function MyData () {
                              
                             
                              <button id="submit" type="submit" name="submit" className="btn">Guardar</button>
+                             <button id='remove'className='btn'> Remover Conta</button>
                          </form>
                 </div>
             </div>

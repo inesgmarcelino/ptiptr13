@@ -440,5 +440,11 @@ input:focus {
 
 .cart-btnP{
   margin-right: 2%;
+}
 
+/*MyData*/
+#remove{
+  background-color: #8d1a0f;
+  color: #fff;
+  border: none;
 }
