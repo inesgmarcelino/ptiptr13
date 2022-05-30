@@ -113,7 +113,7 @@ router.post('/cancel/:oid', (req,res) => {
         } else {
             res.status(500);
             res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. outpout 7"});
+            res.send({"message":"Não foi possível realizar essa operação. outpout 6"});
         }
     });
 });
@@ -126,6 +126,10 @@ router.get('/orders/:cid', (req,res) => {
             results.forEach(enc => {
                 queryString = ""
             });
+        } else {
+            res.status(500);
+            res.type('json');
+            res.send({"message":"Não foi possível realizar essa operação. outpout 7"});
         }
     })
 })
