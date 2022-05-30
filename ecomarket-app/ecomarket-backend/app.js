@@ -13,10 +13,6 @@ const bodyParser = require("body-parser");
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,8 +23,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/users', usersRouter);
 
 
+/**
 
-/** Definir o middleware para as sessões */
+/** Definir o middleware para as sessões 
 //para usar sessoões, fazer req.sessions
 const session = require('express-session');
 const mysql2 = require('mysql2/promise');
