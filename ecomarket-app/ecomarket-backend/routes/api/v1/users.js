@@ -46,8 +46,8 @@ router.post('/register', (req, res) => {
         
         conn.query(queryString, [nome, email, nif, tlm, pwd], (err, result) => {
             // conn.release();
-            console.error(err);
             if (err) {
+                console.error(err);
                 res.status(500);
                 res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 1"});
