@@ -20,7 +20,7 @@ services:
         - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       stdin_open: true # docker run -i
       tty: true        # docker run -t
-      command:
+      #command:
 networks:
     db-network:
       driver: bridge
