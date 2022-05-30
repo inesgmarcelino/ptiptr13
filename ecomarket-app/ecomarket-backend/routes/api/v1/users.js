@@ -46,7 +46,7 @@ router.post('/register', (req, res) => {
         if (err) {
             res.status(500);
             res.type('json');
-            res.send({"message":"Couldn't register you right now try again later"});
+            res.send({"message":"Não foi possível realizar essa operação. output 1"});
             return;
         }
     });
@@ -59,7 +59,7 @@ router.post('/register', (req, res) => {
         } else {
             res.status(500);
             res.type('json');
-            res.send({"message":"Couldn't register you right now try again later"});
+            res.send({"message":"Não foi possível realizar essa operação. output 2"});
             return;
         }
     });
@@ -73,7 +73,7 @@ router.post('/register', (req, res) => {
             } else {
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Couldn't register you right now try again later"});
+                res.send({"message":"Não foi possível realizar essa operação. output 3"});
                 return;
             }
         });
@@ -94,12 +94,12 @@ router.post('/register', (req, res) => {
             if(!err){
                 res.status(200);
                 res.type('json');
-                res.send({"message":"Registado com sucesso"});
+                res.send({"message":"Registo bem sucessido"});
                 return;
             } else {
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Couldn't register you right now try again later"});
+                res.send({"message":"Não foi possível realizar essa operação. output 4"});
                 return;
             }
         });
@@ -119,45 +119,46 @@ router.get('/login', (req, res) => {
             if(results.length > 0){
                 if(results.password === pwd){
                     res.status(200);
-                    message = "User authenticated successfully.";
+                    message = "Utilizador autenticado";
                 } else {
                     res.status(401);
-                    message = "User didn't authenticate successfully.";
+                    message = "Não foi possível autenticar o utilizador.";
                 }
             } else {
                 res.status(404);
-                message = "User wasn't found.";
+                message = "Utilizador não se encontra na base de dados";
             }
         } else {
             res.status(500);
-            message = "Error processing this query.";
+            message = "Não foi possível realizar essa operação. outpout 5";
         }
         res.type('json');
         res.send({"message": message});
     });
 });
 
-// router.get('/:uid', function(req, res, next) {
-//     var userId = req.params.uid;
-//     var queryString = "SELECT * FROM utilizador WHERE id = ?";
-//     conn.query(queryString, [userId], (err, results) =>  {
-//         if (!err) {
-//             if(results.length > 0){
-//                 res.status(200);
-//                 res.type('json');
-//                 res.send(results);
-//             } else {
-//                 res.status(404);
-//                 res.type('json');
-//                 res.send({"message":"User wasn't found."});
-//             }
-//         } else {
-//             res.status(500);
-//             res.type('json');
-//             res.send({"message":"Error processing this query."});
-//         }
-//     });
-// });
+router.get('/:uid', function(req, res, next) {
+    var userId = req.params.uid;
+    var queryString = "SELECT * FROM utilizador WHERE id = ?";
+    conn.query(queryString, [userId], (err, results) =>  {
+        if (!err) {
+            if(results.length > 0){
+                res.status(200);
+                res.type('json');
+                res.send(results);
+            } else {
+                res.status(404);
+                res.type('json');
+                res.send({"message":"Utilizador não se encontra na base de dados"});
+            }
+        } else {
+            res.status(500);
+            res.type('json');
+            res.send({"message":"Não foi possível realizar essa operação. outpout 6"});
+        }
+    });
+});
+
 
 // um user que seja só consumidor ou só fornecedor pode se tornar também fornecedor ou consumidor...
 

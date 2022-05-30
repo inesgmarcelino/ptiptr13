@@ -25,18 +25,18 @@ router.get('/adminlogin', (req, res) => {
                 if (results.length > 0) {
                     if (results.password === pwd) {
                         res.status(200);
-                        message = "Admin authenticated successfully.";
+                        message = "Admin autenticado";
                     } else {
                         res.send(401);
-                        message = "Admin was not authenticated.";
+                        message = "Não foi possível autenticar o admin.";
                     }
                 } else {
                     res.send(404);
-                    message = "Invalid arguments.";
+                    message = "Argumentos inválidos.";
                 }
             } else {
                 res.status(500);
-                message = "Error processing this query.";
+                message = "Não foi possível realizar essa operação. outpout 1";
             }
             res.type('json');
             res.send({"message": message});
@@ -56,12 +56,12 @@ router.get('/adminadd', (req, res) => {
                 if (err) {
                     res.status(500);
                     res.type('json');
-                    res.send({"message":"Couldn't register the new type of product."});
+                    res.send({"message":"Não foi possível realizar essa operação. outpout 2"});
                     connection.release();
                     return;
                 } else {
                     res.status(200);
-                    message = "New type added.";
+                    message = "Novo tipo adicionado.";
                 }
             });
         });
@@ -74,7 +74,7 @@ router.get('/adminadd', (req, res) => {
                 if (err) {
                     res.status(500);
                     res.type('json');
-                    res.send({"message":"Couldn't register the new subtype of product."});
+                    res.send({"message":"Não foi possível realizar essa operação. outpout 3"});
                     connection.release();
                     return;
                 }
@@ -88,7 +88,7 @@ router.get('/adminadd', (req, res) => {
                 } else {
                     res.status(500);
                     res.type('json');
-                    res.send({"message":"Couldn't find the new subtype of product."});
+                    res.send({"message":"Subtipo não se encontra na base de dados"});
                     connection.release();
                     return;
                 }
@@ -99,12 +99,12 @@ router.get('/adminadd', (req, res) => {
                 if (err) {
                     res.status(500);
                     res.type('json');
-                    res.send({"message":"Coundn't register the relation between type and subtype."});
+                    res.send({"message":"Não foi possível realizar essa operação. outpout 4"});
                     connection.release();
                     return;
                 } else {
                     res.status(200);
-                    message = "New subtype added."
+                    message = "Novo subtipo adicionado."
                 }
             });
         });
@@ -131,13 +131,13 @@ router.get('/edit/:uid', (req, res, next) => {
             if (err) {
                 res.status(500);
                 res.type('json');
-                res.send({"message":"Couldn't save your changes."});
+                res.send({"message":"Não foi possível realizar essa operação. outpout 5"});
                 connection.release();
                 return;
             } else {
                 res.status(200);
                 res.type('json');
-                res.send({"message":"Changes saved."});
+                res.send({"message":"Alterações guardadas."});
             }
         });
         connection.release();
