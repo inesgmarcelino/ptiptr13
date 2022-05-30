@@ -97,9 +97,35 @@ router.post('/order', (req,res) => {
 });
 
 router.post('/cancel/:oid', (req,res) => {
-
+    var orderId = req.params.oid;
+    var queryString = "DELETE FROM encomenda WHERE id = ?";
+    conn.query(queryString, [orderId], (err, results) =>  {
+        if (!err) {
+            if(results.length > 0){
+                res.status(200);
+                res.type('json');
+                res.send(results);
+            } else {
+                res.status(404);
+                res.type('json');
+                res.send({"message":"Utilizador não se encontra na base de dados"});
+            }
+        } else {
+            res.status(500);
+            res.type('json');
+            res.send({"message":"Não foi possível realizar essa operação. outpout 7"});
+        }
+    });
 });
 
 router.get('/orders/:cid', (req,res) => {
-
+    var consId = req.params.cid;
+    var queryString = "SELECT encomenda FROM lista_encomendas WHERE consumidor = ?";
+    conn.query(queryString, [consId], (err, results) => {
+        if (!err) {
+            results.forEach(enc => {
+                queryString = ""
+            });
+        }
+    })
 })
