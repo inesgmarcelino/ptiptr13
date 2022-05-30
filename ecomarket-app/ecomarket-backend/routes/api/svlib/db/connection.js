@@ -1,5 +1,5 @@
 //codigo que vem do projeto em react
-var mysql = require('mysql');
+var mysql = require('mysql2');
 
 var conn = mysql.createPool({
   connectionLimit: 10,
