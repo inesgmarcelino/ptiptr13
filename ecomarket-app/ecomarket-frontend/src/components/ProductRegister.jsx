@@ -7,66 +7,56 @@ function ProductRegister(){
                 <h6 className="card-subtitle mb-2">Registe aqui os aspetos gerais do Produto</h6>
                 <form method="post">
                     <div className="col-md-12">
-                        <label>Nome do Produto:
-                            <input className="form-control" type="text" name="nome" placeholder="Nome Produto" size="50"/>
-                        </label>
+                        <label>Nome do Produto:</label>
+                        <input className="form-control" type="text" name="nome"  size="50"/>
                     </div>
                     <div className="col-md-12">
-                        <label>Data de Produção:
-                            <input className="form-control" type="text" name="zona" placeholder="DD/MM/AAAA"  size="50"/>
-                        </label>
+                        <label>Data de Produção:</label>
+                        <input className="form-control" type="text" name="zona" placeholder="DD/MM/AAAA"  size="50"/>
                     </div>
                         
                     <div className="col-md-12">
-                        <label>Preço Unitário:
-                            <input className="form-control" type="text" name="preco" placeholder="Preço Unitário" size="50"/>
-                        </label>
+                        <label>Preço Unitário:</label>
+                        <input className="form-control" type="text" name="preco"  size="50"/>
                     </div>
 
                     <div className="col-md-12">
-                        <label>Tipo
-                            <input className="form-control" type="text" name="tipo" placeholder="Tipo" size="50" />
-                        </label>
+                        <label>Tipo</label>
+                        <input className="form-control" type="text" name="tipo"  size="50" />
                     </div>
 
                     <div className="col-md-12">
-                        <label>SubTipo
-                            <input className="form-control" type="text" name="subtipo" placeholder="Subtipo" size="50" />
-                        </label>
+                        <label>SubTipo</label>
+                        <input className="form-control" type="text" name="subtipo"  size="50" />
                     </div>
                     
                     <h6 className="card-subtitle2 mb-2">Recursos</h6>
 
                     <div className="col-md-12">
-                        <label>Nome:
-                            <input className="form-control" type="text" name="nomeR" placeholder="Nome" size="50"/>
-                        </label>
+                        <label>Nome:</label>
+                        <input className="form-control" type="text" name="nomeR"  size="50"/>
                     </div>
 
                     <div className="col-md-12">
-                        <label>Medida:
-                            <input className="form-control" type="text" name="medidaR" placeholder="Medida" size="50"/>
-                        </label>
+                        <label>Medida:</label>
+                        <input className="form-control" type="text" name="medidaR" size="50"/>
                     </div>
 
                     <div className="col-md-12">
-                        <label>Quantidade:
-                            <input className="form-control" type="text" name="quantidadeR" placeholder="Quantidade" size="50"/>
-                        </label>
+                        <label>Quantidade:</label>
+                        <input className="form-control" type="text" name="quantidadeR" size="50"/>
                     </div>
                 
                     <h6 className="card-subtitle2 mb-2">Poluição</h6>
 
                     <div className="col-md-12">
-                        <label>Nome:
-                            <input className="form-control" type="text" name="nomeP" placeholder="Nome" size="50"/>
-                        </label>
+                        <label>Nome:</label>
+                        <input className="form-control" type="text" name="nomeP" size="50"/>
                     </div>
 
                     <div className="col-md-12">
-                        <label>Quantidade:
-                            <input className="form-control" type="text" name="quantidadeP" placeholder="Quantidade" size="50"/>
-                        </label>
+                        <label>Quantidade:</label>
+                        <input className="form-control" type="text" name="quantidadeP"  size="50"/>
                     </div>
                         
                          

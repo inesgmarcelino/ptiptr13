@@ -66,10 +66,12 @@ function Login() {
                     <h6 className="card-subtitle mb-2">Inicie aqui a Sessão</h6>
                     <form method="get">
                         <div className="col-md-12">
-                            <input className="form-control" type="email" name="email" placeholder="Email" onChange={handler} required />
+                            <label>Email</label>
+                            <input className="form-control" type="email" name="email" size="50" onChange={handler} required />
                         </div>
                         <div className="col-md-12">
-                            <input className="form-control" type="password" name="password" placeholder="Password" onChange={handler} required />
+                            <label>Password</label>
+                            <input className="form-control" type="password" name="password" size="50"  onChange={handler} required />
                         </div>
                     
                         <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Iniciar Sessão</button>

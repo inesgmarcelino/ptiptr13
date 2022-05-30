@@ -12,12 +12,12 @@ function Payment () {
                 <form method="post" id='formPagamento'>
                     <div className="col-md-12">
                         <label>Número do cartão: 
-                            <input className="form-control" type="text" name="numero_cartao" placeholder="Número do Cartão" size="50" /* onChange={handler} required */ />
+                            <input className="form-control" type="text" name="numero_cartao"  size="50" /* onChange={handler} required */ />
                         </label>
                     </div> 
                     <div className="col-md-12">
                         <label>CVV:
-                            <input className="form-control" type="CVV" name="CVV" placeholder="CVV" size="50" />
+                            <input className="form-control" type="CVV" name="CVV"  size="50" />
                         </label>
                     </div>
                     <div className="col-md-12">
@@ -27,7 +27,7 @@ function Payment () {
                     </div>
                     <div className="col-md-12">
                         <label>Nome no Cartão:
-                            <input className="form-control" type="Nome no Cartão" name="Nome no Cartão " placeholder="Nome no Cartão" size="50" />
+                            <input className="form-control" type="Nome no Cartão" name="Nome no Cartão " size="50" />
                         </label>
                     </div>
                     
