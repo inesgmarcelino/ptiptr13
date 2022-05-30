@@ -178,3 +178,6 @@ router.post('/reg_product', (req,res) => {
     });
 });
 
+router.get('/orders/:pid', (req,res) => {
+
+});

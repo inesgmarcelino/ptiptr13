@@ -39,7 +39,7 @@ router.post('/reg_car', (req,res) => {
         if (err) {
             res.status(500);
             res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. output 1"});
+            res.send({"message":"Não foi possível realizar essa operação. output 2"});
             return;
         } else {
             res.status(200);
@@ -48,4 +48,8 @@ router.post('/reg_car', (req,res) => {
             return;
         }
     });
+});
+
+router.get('/orders/:tid', (req,res) => {
+
 });

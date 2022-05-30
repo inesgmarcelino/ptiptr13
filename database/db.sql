@@ -95,9 +95,9 @@ CREATE TABLE estado_encomenda (
     CONSTRAINT fk_encomenda_status
         FOREIGN KEY (encomenda) REFERENCES encomenda(id) ON DELETE CASCADE,
     CONSTRAINT ck_status
-        CHECK ((status_consum = 'NOT' OR status_consum = 'YES') 
-            AND (status_fornec = 'NOT' OR status_fornec = 'YES')
-            AND (status_transp = 'NOT' OR status_transp = 'YES'))
+        CHECK ((status_consum = 'NO' OR status_consum = 'YES') 
+            AND (status_fornec = 'NO' OR status_fornec = 'YES')
+            AND (status_transp = 'NO' OR status_transp = 'YES'))
 ) ENGINE = InnoDB;
 
 CREATE TABLE lista_encomendas (
