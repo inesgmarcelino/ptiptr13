@@ -13,10 +13,55 @@ const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
 router.post('/reg_storage', (req,res) => {
-    const loc = req.body.loc;
+    const morada = req.body.morada;
+    const cpostal = req.body.cpostal;
+    const dist = req.body.dist;
+    const conc = req.body.conc;
+    const prov = req.body.prov;
 
-    var queryString = "INSERT INTO armazem (localizacao) VALUES (?)";
-    conn.query(queryString, [loc], (err,result) => {
+    var queryString = "INSERT INTO localizacao (morada, c_postal, distrito, concelho) VALUES (?,?,?,?)";
+    conn.query(queryString, [morada, cpostal, dist, conc], (err, result) => {
+        if (err) {
+            res.status(500);
+            res.type('json');
+            res.send({"message":"Não foi possível realizar essa operação. outpout 1"});
+            return;
+        }
+    });
+
+    var idloc;
+    queryString = "SELECT id FROM localizacao";
+    conn.query(queryString, [], (err,results) => {
+        if (!err) {
+            idloc = results[results.length -1].id; //por verificar
+        }
+    });
+
+    queryString = "INSERT INTO armazem (localizacao) VALUES (?)";
+    conn.query(queryString, [idloc], (err,result) => {
+        if (err) {
+            res.status(500);
+            res.type('json');
+            res.send({"message":"Não foi possível realizar essa operação. outpout 1"});
+            return;
+        }
+    });
+
+    var idsto;
+    queryString = "SELECT id FROM armazem WHERE localizacao = ?";
+    conn.query(queryString, [idloc], (err, result) => {
+        if (!err) {
+            idsto = result.id //por verificar
+        } else {
+            res.status(500);
+            res.type('json');
+            res.send({"message":"Não foi possível realizar essa operação. output 2"});
+            return;
+        }
+    });
+
+    queryString = "INSERT INTO lista_armazens (fornecedor, armazem) VALUES (?,?)";
+    conn.query(queryString, [prov, idsto], (err, results) => {
         if (err) {
             res.status(500);
             res.type('json');
@@ -25,7 +70,8 @@ router.post('/reg_storage', (req,res) => {
         } else {
             res.status(200);
             res.type('json');
-            res.send({"message":"Registado com sucesso"})
+            res.send({"message":"Registo bem sucessido"});
+            return;
         }
     })
 });
