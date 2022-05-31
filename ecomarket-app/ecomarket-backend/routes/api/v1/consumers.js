@@ -130,37 +130,52 @@ router.post('/order', (req,res) => {
 router.post('/cancel/:oid', (req,res) => {
     var orderId = req.params.oid;
     var queryString = "DELETE FROM encomenda WHERE id = ?";
-    conn.query(queryString, [orderId], (err, results) =>  {
-        if (!err) {
-            if(results.length > 0){
-                res.status(200);
-                res.type('json');
-                res.send(results);
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+        
+        conn.query(queryString, [orderId], (err, results) =>  {
+            if (!err) {
+                if(results.length > 0){
+                    res.status(200);
+                    res.type('json');
+                    res.send(results);
+                } else {
+                    res.status(404);
+                    res.type('json');
+                    res.send({"message":"Utilizador não se encontra na base de dados"});
+                }
             } else {
-                res.status(404);
+                conn.release();
+
+                res.status(500);
                 res.type('json');
-                res.send({"message":"Utilizador não se encontra na base de dados"});
+                res.send({"message":"Não foi possível realizar essa operação. output 8"});
             }
-        } else {
-            res.status(500);
-            res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. output 8"});
-        }
+        });
     });
 });
 
 router.get('/orders/:cid', (req,res) => {
     var consId = req.params.cid;
     var queryString = "SELECT encomenda FROM lista_encomendas WHERE consumidor = ?";
-    conn.query(queryString, [consId], (err, results) => {
-        if (!err) {
-            results.forEach(enc => {
-                queryString = "" //por acabar
-            });
-        } else {
-            res.status(500);
-            res.type('json');
-            res.send({"message":"Não foi possível realizar essa operação. output 9"});
-        }
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [consId], (err, results) => {
+            if (!err) {
+                results.forEach(enc => {
+                    queryString = "SELECT p.* FROM produto p, lista_produtos_encomenda lpe WHERE p.id = lpe.produto AND lpe.encomenda = ?";
+                    conn.query(queryString, [enc], (err, results) => {
+                        // por acabar
+                    });
+                });
+            } else {
+                conn.release();
+                
+                res.status(500);
+                res.type('json');
+                res.send({"message":"Não foi possível realizar essa operação. output 9"});
+            }
+        });
     });
 });

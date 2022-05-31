@@ -236,5 +236,23 @@ router.post('/reg_product', (req,res) => {
 });
 
 router.get('/orders/:pid', (req,res) => {
+    var provId = req.params.pid;
+    var queryString = "SELECT encomenda FROM lista_encomendas WHERE fornecedor = ?";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
 
+        conn.query(queryString, [provId], (err, results) =>{ 
+            if (!err) {
+                results.forEach(enc => {
+                    queryString = ""; //por acabar
+                });
+            } else {
+                conn.release();
+
+                res.status(500);
+                res.type('json');
+                res.send({"message":"Não foi possível realizar essa operação. output 9"});
+            }
+        });
+    });
 });

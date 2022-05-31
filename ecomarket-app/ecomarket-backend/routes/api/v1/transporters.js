@@ -67,5 +67,23 @@ router.post('/reg_car', (req,res) => {
 });
 
 router.get('/orders/:tid', (req,res) => {
+    var transId = req.params.tid;
+    var queryString = "SELECT encomenda FROM transportar_encomendas WHERE transportador = ?";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
 
+        conn.query(queryString, [transId], (err, results) =>{ 
+            if (!err) {
+                results.forEach(enc => {
+                    queryString = ""; //por acabar
+                });
+            } else {
+                conn.release();
+
+                res.status(500);
+                res.type('json');
+                res.send({"message":"Não foi possível realizar essa operação. output 9"});
+            }
+        });
+    });
 });
