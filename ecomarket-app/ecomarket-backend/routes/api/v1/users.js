@@ -59,12 +59,9 @@ router.post('/register', (req, res) => {
         queryString = "SELECT id FROM utilizador WHERE email = ?";
         var id;
         conn.query(queryString, [email], (err,results) => {
-            console.error(err);
             
             if(!err){
                 id = results.id;
-                console.error(result);
-                console.error(id);
             } else {
                 conn.release();
                 
