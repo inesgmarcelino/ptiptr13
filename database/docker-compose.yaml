@@ -1,7 +1,7 @@
 version: "3"
 services:       
     database:
-      image: mysql/mysql-server:8.0
+      image: mysql:debian
       networks:
         db-network:
           aliases:
@@ -20,7 +20,8 @@ services:
         - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       stdin_open: true # docker run -i
       tty: true        # docker run -t
-      #command:
+      command: [ "mysqld",      
+    	"--loose-group-replication-local-address=alpha:6606" ]
       scale: 3
 networks:
     db-network:
