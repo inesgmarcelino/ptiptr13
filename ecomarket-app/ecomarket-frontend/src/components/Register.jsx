@@ -9,12 +9,12 @@ function Register() {
     const [email, setEmail]                         = useState('');
     const [nif, setNif]                             = useState('');
     const [telem, setTelem]                         = useState('');
+    const [morada, setMorada]                       = useState('');
     const [password, setPassword]                   = useState('');
     const [checkPassword, setCheckPassword]         = useState('');
     const [checkConsumidor, setConsumidor]          = useState(false);
     const [checkFornecedor, setFornecedor]          = useState(false);
     const [checkTransportador, setTransportador]    = useState(false);
-    const [moradaConsumidor, setMorada]             = useState('');
 
     const handleShow = () => {
         $("#modal_register").css("display", "block");
@@ -48,47 +48,26 @@ function Register() {
             case "checkPassword":
                 setCheckPassword(x.target.value);
                 break;
-            case "check-consumidor":
-                setConsumidor(x.target.checked);
-                if (x.target.checked) {
-                    document.getElementById("morada").style.display = 'block';
-                    document.getElementById("check-transportador").disabled = true;
-                } else {
-                    document.getElementById("morada").style.display = 'none';
-                    document.getElementById("check-transportador").disabled = false;
-                }
-                break;
             case "morada":
                 setMorada(x.target.value);
                 break;
+            case "check-consumidor":
+                setConsumidor(x.target.checked);
+                break;
             case "check-fornecedor":
                 setFornecedor(x.target.checked);
-                if (x.target.checked) {
-                    document.getElementById("check-transportador").disabled = true;
-                } else {
-                    document.getElementById("check-transportador").disabled = false;
-                } 
                 break;
             case "check-transportador":
                 setTransportador(x.target.checked);
-                if (x.target.checked) {
-                    document.getElementById("check-consumidor").disabled = true;
-                    document.getElementById("check-fornecedor").disabled = true;
-                } else {
-                    document.getElementById("check-consumidor").disabled = false;
-                    document.getElementById("check-fornecedor").disabled = false;
-                }
                 break;
             case "submit":
                 x.preventDefault();
                 if (nome === '' || email === '' || nif === '' || 
-                    telem === '' || password === '' || checkPassword === '' ||
+                    telem === '' || password === '' || checkPassword === '' || morada === '' ||
                     // verificar passwords
                     (password !== checkPassword) || 
                     // garante que quando se é transportador, n pode adquirir nenhum dos outros papeis
-                    (checkTransportador && (checkConsumidor || checkFornecedor)) ||
-                    // garante que consumidor tem morada
-                    (checkConsumidor && moradaConsumidor === '')) {
+                    (checkTransportador && (checkConsumidor || checkFornecedor))) {
                         // setError(true);
                 } else {
                     Axios.post("https://ecomarket.works/api/v1/users/register", {
@@ -96,9 +75,9 @@ function Register() {
                         email: email, 
                         nif: nif, 
                         tlm: telem, 
+                        morada: morada,
                         pwd: password,
                         cons: checkConsumidor,
-                        morada: moradaConsumidor,
                         forn: checkFornecedor,
                         trans: checkTransportador
                     }).then((response) => {
@@ -154,7 +133,6 @@ function Register() {
                                  <div className="form-check">
                                      <input className="form-check-input" type="checkbox" id="check-consumidor" name="check-consumidor" onChange={handler} />
                                      <label className="form-check-label" htmlFor="check-consumidor">Consumidor</label>
-                                     <input className="form-control" type="text" name="morada" placeholder="Adicione a sua morada" id="morada" onChange={handler} required />
                                      <br />
                                      <input className="form-check-input" type="checkbox" id="check-fornecedor" name="check-fornecedor" onChange={handler} />
                                      <label className="form-check-label" htmlFor="check-fornecedor">Fornecedor</label>
