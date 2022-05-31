@@ -4,7 +4,7 @@ var router = express.Router();
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
 // var pool = require('../svlib/db/getPool');
-var pool = require('../svlib/db/connection');
+var pool = require('../svlib/db/getPool');
 
 
 /** auth0 */
@@ -48,7 +48,7 @@ router.post('/register', (req, res) => {
             // conn.release();
             if (err) {
                 conn.release();
-                
+
                 res.status(500);
                 res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 1"});
@@ -62,9 +62,12 @@ router.post('/register', (req, res) => {
             console.error(err);
             
             if(!err){
-                id = results.id;
+                id = result.id;
+                console.error(result);
+                console.error(id);
             } else {
                 conn.release();
+                
                 res.status(500);
                 res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 2"});

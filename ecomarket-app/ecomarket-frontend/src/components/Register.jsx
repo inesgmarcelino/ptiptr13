@@ -111,26 +111,36 @@ function Register() {
                     <h5 className="card-title">REGISTO</h5>
                     <h6 className="card-subtitle mb-2">Registe-se aqui</h6>
                     <form method="post">
-                             <div className="col-md-12">
-                                 <input className="form-control" type="text" name="nome" placeholder="Nome Completo" onChange={handler} required />
-                             </div>
-                             <div className="col-md-12">
-                                 <input className="form-control" type="email" name="email" placeholder="Email" onChange={handler} required />
-                             </div>
-                             <div className="col-md-12">
-                                 <input className="form-control" type="text" name="nif" placeholder="NIF" onChange={handler} required />
-                             </div>
-                             <div className="col-md-12">
-                                 <input className="form-control" type="text" name="telem" placeholder="Número de Telemóvel" onChange={handler} required />
-                             </div>
-                             <div className="col-md-12">
-                                 <input className="form-control" type="password" name="password" placeholder="Password" onChange={handler} required />
-                             </div>
-                             <div className="col-md-12">
-                                 <input className="form-control" type="password" name="checkPassword" placeholder="Confirme a Password" onChange={handler} required />
-                             </div>
-                             <div className="col-md-12">
-                                 <div className="form-check">
+                            <div className="col-md-12">
+                                <label>Nome Completo</label>
+                                <input className="form-control" type="text" name="nome" size="50" onChange={handler} required />
+                            </div>
+                            <div className="col-md-12">
+                                <label>Email</label>
+                                <input className="form-control" type="email" name="email" size="50" onChange={handler} required />
+                            </div>
+                            <div className="col-md-12">
+                                <label>NIF</label>
+                                <input className="form-control" type="text" name="nif" size="50" onChange={handler} required />
+                            </div>
+                            <div className="col-md-12">
+                                <label>Morada</label>
+                                <input className="form-control" type="text" name="morada" size="50" onChange={handler} required />
+                            </div>
+                            <div className="col-md-12">
+                                <label>Número de Telemóvel</label>
+                                <input className="form-control" type="text" name="telem" size="50" onChange={handler} required />
+                            </div>
+                            <div className="col-md-12">
+                                <label>Password</label>
+                                <input className="form-control" type="password" name="password"size="50" onChange={handler} required />
+                            </div>
+                            <div className="col-md-12">
+                                <label>Confirme a Password</label>
+                                <input className="form-control" type="password" name="checkPassword" size="50" onChange={handler} required />
+                            </div>
+                            <div className="col-md-12">
+                                <div className="form-check">
                                      <input className="form-check-input" type="checkbox" id="check-consumidor" name="check-consumidor" onChange={handler} />
                                      <label className="form-check-label" htmlFor="check-consumidor">Consumidor</label>
                                      <br />
@@ -139,8 +149,8 @@ function Register() {
                                      <br />
                                      <input className="form-check-input" type="checkbox" id="check-transportador" name="check-transportador" onChange={handler} />
                                      <label className="form-check-label" htmlFor="check-transportador">Transportador</label>
-                                 </div>
-                             </div>
+                                </div>
+                            </div>
                             
                              <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
                          </form>

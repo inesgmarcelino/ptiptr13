@@ -13,10 +13,6 @@ const bodyParser = require("body-parser");
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -25,6 +21,41 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/index', indexRouter);
 //app.use('/users', usersRouter);
+
+
+
+/** Definir o middleware para as sessões */
+//para usar sessoões, fazer req.sessions
+const session = require('express-session');
+const mysql2 = require('mysql2/promise');
+const MySQLStore = require('express-mysql-session')(session);
+
+var connection = mysql2.createPool({
+  host: 'mysql',
+  user: 'root',
+  password: 'S3cret',
+  database: 'session'
+});
+
+app.use(session({
+	key: 'ecoseshcooky',
+	secret: 'SecretString#3125/$!5',      
+
+  cookie: {
+    domain: "ecomarket.works",
+    expires: (new Date(Date.now() + 3600000)),
+    path: '/',
+    sameSite: 'lax'
+  },
+
+	store: new MySQLStore({}, connection),
+  
+	resave: false,
+	saveUninitialized: false
+}));
+/** Fim do middleware */
+
+
 
 //***************Codigo gerado pelo express generator********** */
 
@@ -36,7 +67,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 const basePathTest = '/api/v0';
 const testAPIRouter = require('./routes/api/v0/index.js');
 app.use(basePathTest, testAPIRouter);
-
 
 /** Portanto, se quiseres fazer uma api versao 1 tudo o que tens de fazer
  * eh criares um ficheiro js que contem as routes que queres utilizar
@@ -124,18 +154,6 @@ app.use(function(req, res, next) {
 //app.use(express.static('public'));
 
 /***** Codigo gerado pelo express generator ********/
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
 
 app.use(bodyParser.urlencoded({extended: true}));
 

@@ -33,8 +33,9 @@ function Home() {
     return (
     <div>
         <div className="position-absolute showItems">
+
             <div className="headline">
-                <h2>Bem-vindo(a) à EcoMarket!</h2>
+                <h2>Bem-vindo ao EcoMarket!</h2>
                 <h5>Faça aqui as suas compras mais eco.</h5>
             </div>
             <div className="rowH">

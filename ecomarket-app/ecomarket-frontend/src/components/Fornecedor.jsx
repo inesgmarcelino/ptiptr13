@@ -14,7 +14,7 @@ function Fornecedor () {
             </div>
             <br />
             <div className="container">
-            <table className="table table-bordered" id='tableCon'>
+            <table className="table table-bordered" id='centrar'>
                 <thead>
                     <tr>
                         <th>#ID</th>

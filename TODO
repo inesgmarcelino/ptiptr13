@@ -19,3 +19,4 @@ BD: not a to do but a how to do
 3.acrescentar um network alias (--network-alias hostname) para o DNS do docker encontrar o container
 4.colocar o nome escolhido do hostname na conexao
 
+No ato do login, o servidor pinga o endpoint do auth pra receber um token e retorna esse token ao utilizador.
