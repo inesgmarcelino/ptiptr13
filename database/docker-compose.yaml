@@ -16,8 +16,8 @@ services:
         - ./db.sql:/docker-entrypoint-initdb.d/db.sql
         - ./hello.sql:/docker-entrypoint-initdb.d/hello.sql
         - data:/var/lib/mysql
-        - ./conf.cnf:/etc/mysql/conf.cnf 
-        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        #- ./conf.cnf:/etc/mysql/conf.cnf 
+        #- ./init.sql:/docker-entrypoint-initdb.d/init.sql
       stdin_open: true # docker run -i
       tty: true        # docker run -t
       #command: [ "mysqld","--loose-group-replication-local-address=alpha:6606" ]
