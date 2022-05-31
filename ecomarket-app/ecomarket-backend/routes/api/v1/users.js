@@ -61,8 +61,8 @@ router.post('/register', (req, res) => {
         conn.query(queryString, [email], (err,results) => {
             console.error(err);
             if(!err){
-                console.log(results);
-                id = results[0].id;
+                console.log(results.get(0));
+                id = results.get(0).id;
             } else {
                 conn.release();
                 
