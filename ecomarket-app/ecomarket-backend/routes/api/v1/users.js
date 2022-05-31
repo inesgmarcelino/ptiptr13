@@ -62,7 +62,7 @@ router.post('/register', (req, res) => {
             console.error(err);
             
             if(!err){
-                id = result.id;
+                id = results.id;
                 console.error(result);
                 console.error(id);
             } else {
