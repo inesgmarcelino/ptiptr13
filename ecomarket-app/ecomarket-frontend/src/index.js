@@ -4,7 +4,7 @@ import './index.css';
 import './temp/catalogStyles.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {NavBar, Home, Login, Register, Cart, Footer, Profile, MyData, Catalog, Payment, ShoopingCart, Consumidor, 
-   Fornecedor, ConfirmarEncomenda, Comparador, Product, Product2, ArmazemRegister, ProductRegister, Album, AdminLogin, Admin} from './components';
+   Fornecedor, ConfirmarEncomenda, Comparador, Product, Product2, ArmazemRegister, ProductRegister, Album, AdminLogin, AdminTipos} from './components';
 
 
 
@@ -27,11 +27,12 @@ ReactDOM.render(
       <Route path='/comparador' element={<Comparador />} />
       <Route path='/product' element={<Product />} />
       <Route path='/adminlogin' element={<AdminLogin />} />
-      <Route path='/admin' element={<Admin />} />
       <Route path='/product2' element={<Product2 />} />
       <Route path='/ArmazemRegister' element={<ArmazemRegister />} />
       <Route path='/ProductRegister' element={<ProductRegister />} />
       <Route path='/Album' element={<Album />} />
+      <Route path='/admintipos' element={<AdminTipos />} />
+
 
     </Routes>
     {/* <Footer /> */}
