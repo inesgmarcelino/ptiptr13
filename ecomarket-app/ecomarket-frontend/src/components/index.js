@@ -14,12 +14,9 @@ export { default as Fornecedor } from "./Fornecedor";
 export { default as ConfirmarEncomenda } from "./ConfirmarEncomenda";
 export { default as Comparador } from "./Comparador";
 export { default as Product } from "./Product";
-<<<<<<< HEAD
 export { default as AdminLogin } from "./AdminLogin";
 export { default as Admin } from "./Admin";
-=======
 export { default as Product2} from "./Product2";
 export { default as ArmazemRegister} from "./ArmazemRegister";
 export { default as ProductRegister} from "./ProductRegister";
 export { default as Album} from "./Album";
->>>>>>> sofia
