@@ -25,9 +25,9 @@ router.post('/register', (req, res) => {
     const nif = req.body.nif;
     const tlm = req.body.tlm;
     // const image = req.body.image;
+    const morada = req.body.morada;
     const pwd = req.body.pwd;
     const cons = req.body.cons;
-    const morada = req.body.morada;
     const forn = req.body.forn;
     const trans = req.body.trans;
 
@@ -39,12 +39,12 @@ router.post('/register', (req, res) => {
     //     res.json({"message":"Couldn't register you right now try again later"});
     // }
   
-    var queryString = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word) VALUES (?,?,?,?,?)";
+    var queryString = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES (?,?,?,?,?,?)";
 
     pool.getConnection((err, conn) => {
         if (err) throw err;
         
-        conn.query(queryString, [nome, email, nif, tlm, pwd], (err, result) => {
+        conn.query(queryString, [nome, email, nif, tlm, pwd, morada], (err, result) => {
             // conn.release();
             if (err) {
                 conn.release();
