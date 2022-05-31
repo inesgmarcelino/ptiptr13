@@ -62,7 +62,7 @@ router.post('/register', (req, res) => {
             console.error(err);
             if(!err){
                 console.log(results[0]);
-                id = results.[0];
+                id = results[0];
             } else {
                 conn.release();
                 
