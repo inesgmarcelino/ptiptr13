@@ -60,7 +60,8 @@ router.post('/register', (req, res) => {
         var id = 0;
         conn.query(queryString, [email], (err,results) => {
             if(!err){
-                id = results[0]['id'];
+                id = parseInt(results[0]['id']);
+                console.log("aqui " + id);
             } else {
                 conn.release();
                 
@@ -70,16 +71,14 @@ router.post('/register', (req, res) => {
                 return;
             }
         });
+        console.log("e aqui " + id);
 
         if(cons){
             queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
             conn.query(queryString, [id], (err,results) => {
-                console.error(err);
                 conn.release();
 
-                if(!err){
-                    id = results.id;
-                } else {
+                if(err){
                     res.status(500);
                     res.type('json');
                     res.send({"message":"Não foi possível realizar essa operação. output 3"});
