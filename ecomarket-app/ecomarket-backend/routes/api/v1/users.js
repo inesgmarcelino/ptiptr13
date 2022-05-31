@@ -75,7 +75,7 @@ router.post('/register', (req, res) => {
         console.log(id);
 
         if(cons){
-            queryString = "INSERT INTO consumidor (utilizador) VALUES (?,?)";
+            queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
             conn.query(queryString, [id], (err,results) => {
                 console.error(err);
                 conn.release();
