@@ -21,7 +21,6 @@ services:
       stdin_open: true # docker run -i
       tty: true        # docker run -t
       #command: [ "mysqld","--loose-group-replication-local-address=alpha:6606" ]
-      scale: 3
 networks:
     db-network:
       driver: bridge
