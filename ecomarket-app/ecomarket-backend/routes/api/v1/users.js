@@ -62,7 +62,7 @@ router.post('/register', (req, res) => {
             console.error(err);
             if(!err){
                 console.log(results);
-                id = results.id;
+                id = results[0].id;
             } else {
                 conn.release();
                 
@@ -75,8 +75,8 @@ router.post('/register', (req, res) => {
         console.log(id);
 
         if(cons){
-            queryString = "INSERT INTO consumidor (utilizador, morada) VALUES (?,?)";
-            conn.query(queryString, [id,morada], (err,results) => {
+            queryString = "INSERT INTO consumidor (utilizador) VALUES (?,?)";
+            conn.query(queryString, [id], (err,results) => {
                 console.error(err);
                 conn.release();
 
