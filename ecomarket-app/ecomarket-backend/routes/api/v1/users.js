@@ -57,13 +57,10 @@ router.post('/register', (req, res) => {
         });
 
         queryString = "SELECT id FROM utilizador WHERE email = ?";
-        var id;
+        let id;
         conn.query(queryString, [email], (err,results) => {
-            console.error(err);
             if(!err){
-                console.log(results[0].id);
-                console.log(results[0]['id']);
-                id = results[0];
+                id = results[0]['id'];
             } else {
                 conn.release();
                 
@@ -73,7 +70,6 @@ router.post('/register', (req, res) => {
                 return;
             }
         });
-        console.log(id);
 
         if(cons){
             queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
