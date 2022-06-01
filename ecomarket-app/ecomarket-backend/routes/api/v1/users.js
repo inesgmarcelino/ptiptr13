@@ -37,12 +37,10 @@ router.post('/register', (req, res) => {
         if (err) throw err;
         
         conn.query(queryString, [nome, email, nif, tlm, pwd, morada], (err, result) => {
-            // conn.release();
             if (err) {
                 conn.release();
-                res.status(500);
-                res.send({"message":"Não foi possível realizar essa operação. output 1"});
-                return;
+                console.log("Não foi possível realizar essa operação. output 1");
+                return res.status(500).send({message:"fail"});
             }
         });
 
@@ -51,9 +49,8 @@ router.post('/register', (req, res) => {
         conn.query(queryString, [email], (err,results) => {
             if(err){
                 conn.release();
-                res.status(500);
-                res.send({"message":"Não foi possível realizar essa operação. output 2"});
-                return;
+                console.log("Não foi possível realizar essa operação. output 2");
+                return res.status(500).send({message:"fail"});
             } else {
                 var id = results[0].id;
 
@@ -63,10 +60,10 @@ router.post('/register', (req, res) => {
                         conn.release();
         
                         if(err){
-                            res.status(500);
-                            res.send({"message":"Não foi possível realizar essa operação. output 3"});
-                            return;
+                            console.log("Não foi possível realizar essa operação. output 3");
+                            return res.status(500).send({message:"fail"});
                         }
+                        console.log("Registo bem sucessido");
                         return res.status(200).send({message:"success"});
                     });
             
@@ -78,33 +75,26 @@ router.post('/register', (req, res) => {
                     } else {
                         conn.release();
         
-                        res.status(400);
-                        res.send({"message":"Bad Request"});
-                        return;
+                        console.log("Bad Request");
+                        return res.status(400).send({message:"fail"});
                     }
             
                     conn.query(queryString, [id], (err,results) => {
-                        console.error(err);
                         conn.release();
         
                         if(!err){
-                            res.status(200);
-                            console.log("Registo bem sucessido")
-                            res.send({"message":"success"});
-                            return;
+                            console.log("Registo bem sucessido");
+                            return res.status(200).send({message:"success"});
                         } else {
-                            res.status(500);
-                            res.send({"message":"Não foi possível realizar essa operação. output 4"});
-                            return;
+                            console.log("Não foi possível realizar essa operação. output 4");
+                            return res.status(500).send({message:"fail"});
                         }
                     });
                 }
             }
         });
     });
-    
   });
-// });
 
 
 router.get('/login', (req, res) => {
@@ -122,21 +112,20 @@ router.get('/login', (req, res) => {
             if (!err) {
                 if(results.length > 0){
                     if(results.password === pwd){
-                        res.status(200);
-                        message = "Utilizador autenticado";
+                        console.log("Utilizador autenticado");
+                        return res.status(200).send({message:"success"});
                     } else {
-                        res.status(401);
-                        message = "Não foi possível autenticar o utilizador.";
+                        console.log("Não foi possível autenticar o utilizador.");
+                        return res.status(401).send({message:"fail"});
                     }
                 } else {
-                    res.status(404);
-                    message = "Utilizador não se encontra na base de dados";
+                    console.log("Utilizador não se encontra na base de dados");
+                    return res.status(404).send({message:"no email"});
                 }
             } else {
-                res.status(500);
-                message = "Não foi possível realizar essa operação. output 5";
+                console.log("Não foi possível realizar essa operação. output 5");
+                return res.status(500).send({message:"fail"});
             }
-            res.send({"message": message});
         });
     });
   
@@ -149,20 +138,19 @@ router.get('/:uid', (req,res) => {
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
-        conn.query(queryString, [userId], (err, results) =>  {
+        conn.query(queryString, [userId], (err, rows) =>  {
             conn.release();
 
             if (!err) {
                 if(results.length > 0){
-                    res.status(200);
-                    res.send(results);
+                    return res.status(200).send({message:"success", results: rows});
                 } else {
-                    res.status(404);
-                    res.send({"message":"Utilizador não se encontra na base de dados"});
+                    console.log("Utilizador não se encontra na base de dados");
+                    return res.status(404).send({message:"no email"});
                 }
             } else {
-                res.status(500);
-                res.send({"message":"Não foi possível realizar essa operação. output 6"});
+                console.log("Não foi possível realizar essa operação. output 6");
+                return res.status(500).send({message:"fail"});
             }
         });
     });
@@ -180,15 +168,15 @@ router.post('/delete/:uid', (req,res) => {
 
             if (!err) {
                 if(results.length > 0){
-                    res.status(200);
-                    res.send(results);
+                    console.log("Utilizador removido com sucesso");
+                    return res.status(200).send({message:"success"});
                 } else {
-                    res.status(404);
-                    res.send({"message":"Utilizador não se encontra na base de dados"});
+                    console.log("Utilizador não se encontra na base de dados");
+                    return res.status(404).send({message:"fail"});
                 }
             } else {
-                res.status(500);
-                res.send({"message":"Não foi possível realizar essa operação. output 7"});
+                console.log("Não foi possível realizar essa operação. output 7");
+                return res.status(500).send({message:"fail"});
             }
         });
     });
