@@ -66,7 +66,8 @@ router.post('/register', (req, res) => {
             }
             setOutput(results);
         });
-        console.log(output[0]['id']);
+        console.log(output);
+        console.log(output[0]);
 
         if(cons){
             queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
