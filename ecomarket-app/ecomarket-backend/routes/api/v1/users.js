@@ -96,12 +96,10 @@ router.post('/register', (req, res) => {
   });
 
 
-router.post('/login', (req, res) => {
-    console.log(req);
+router.get('/login', (req, res) => {
     const email = req.body.email;
     const pwd = req.body.pwd;
-
-    console.log(email, pwd);
+    
     const queryString = "SELECT pass_word FROM utilizador WHERE email = ?";
 
     pool.getConnection((err, conn) => {
