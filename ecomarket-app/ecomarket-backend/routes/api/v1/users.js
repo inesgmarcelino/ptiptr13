@@ -30,11 +30,6 @@ router.post('/register', (req, res) => {
     const cons = req.body.cons;
     const forn = req.body.forn;
     const trans = req.body.trans;
-
-    let output;
-    const setOutput = (rows) => {
-        output = rows;
-    }
   
     var queryString = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES (?,?,?,?,?,?)";
 
@@ -63,56 +58,55 @@ router.post('/register', (req, res) => {
                 res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 2"});
                 return;
-            }
-            setOutput(results);
-        });
-        console.log(output);
-        console.log(output[0]);
-
-        if(cons){
-            queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
-            conn.query(queryString, [id], (err,results) => {
-                conn.release();
-
-                if(err){
-                    res.status(500);
-                    res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. output 3"});
-                    return;
-                }
-            });
-    
-        } else {
-            if (trans){
-                queryString = "INSERT INTO transportador (utilizador) VALUES (?)";
-            } else if (forn) {
-                queryString = "INSERT INTO fornecedor (utilizador) VALUES (?)";
             } else {
-                conn.release();
+                var id = results[0]['id'];
 
-                res.status(400);
-                res.type('json');
-                res.send({"message":"Bad Request"});
-                return;
-            }
-    
-            conn.query(queryString, [id], (err,results) => {
-                console.error(err);
-                conn.release();
-
-                if(!err){
-                    res.status(200);
-                    res.type('json');
-                    res.send({"message":"Registo bem sucessido"});
-                    return;
+                if(cons){
+                    queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
+                    conn.query(queryString, [id], (err,results) => {
+                        conn.release();
+        
+                        if(err){
+                            res.status(500);
+                            res.type('json');
+                            res.send({"message":"Não foi possível realizar essa operação. output 3"});
+                            return;
+                        }
+                    });
+            
                 } else {
-                    res.status(500);
-                    res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. output 4"});
-                    return;
+                    if (trans){
+                        queryString = "INSERT INTO transportador (utilizador) VALUES (?)";
+                    } else if (forn) {
+                        queryString = "INSERT INTO fornecedor (utilizador) VALUES (?)";
+                    } else {
+                        conn.release();
+        
+                        res.status(400);
+                        res.type('json');
+                        res.send({"message":"Bad Request"});
+                        return;
+                    }
+            
+                    conn.query(queryString, [id], (err,results) => {
+                        console.error(err);
+                        conn.release();
+        
+                        if(!err){
+                            res.status(200);
+                            res.type('json');
+                            res.send({"message":"Registo bem sucessido"});
+                            return;
+                        } else {
+                            res.status(500);
+                            res.type('json');
+                            res.send({"message":"Não foi possível realizar essa operação. output 4"});
+                            return;
+                        }
+                    });
                 }
-            });
-        }
+            }
+        });
     });
     
   });
