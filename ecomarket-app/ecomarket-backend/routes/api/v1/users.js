@@ -45,7 +45,6 @@ router.post('/register', (req, res) => {
         });
 
         queryString = "SELECT id FROM utilizador WHERE email = ?";
-        let id = 0;
         conn.query(queryString, [email], (err,results) => {
             if(err){
                 conn.release();
@@ -109,18 +108,19 @@ router.get('/login', (req, res) => {
             conn.release();
 
             if (!err) {
-                if(Object.keys(results).length > 0){
-                    if(results[0].pass_word === pwd){
-                        console.log("Utilizador autenticado");
-                        return res.status(200).send({message:"success"});
-                    } else {
-                        console.log("Não foi possível autenticar o utilizador.");
-                        return res.status(401).send({message:"fail"});
-                    }
-                } else {
-                    console.log("Utilizador não se encontra na base de dados");
-                    return res.status(404).send({message:"no email"});
-                }
+                console.log(results);
+                // if(Object.keys(results).length > 0){
+                //     if(results[0].pass_word === pwd){
+                //         console.log("Utilizador autenticado");
+                //         return res.status(200).send({message:"success"});
+                //     } else {
+                //         console.log("Não foi possível autenticar o utilizador.");
+                //         return res.status(401).send({message:"fail"});
+                //     }
+                // } else {
+                //     console.log("Utilizador não se encontra na base de dados");
+                //     return res.status(404).send({message:"no email"});
+                // }
             } else {
                 console.log("Não foi possível realizar essa operação. output 5");
                 return res.status(500).send({message:"fail"});
