@@ -108,10 +108,9 @@ router.get('/login', (req, res) => {
         conn.query(queryString, [email], (err, results) => {
             conn.release();
 
-            var message;
             if (!err) {
-                if(results.length > 0){
-                    if(results.password === pwd){
+                if(Object.keys(results).length > 0){
+                    if(results[0].pass_word === pwd){
                         console.log("Utilizador autenticado");
                         return res.status(200).send({message:"success"});
                     } else {
