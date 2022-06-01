@@ -31,13 +31,10 @@ router.post('/register', (req, res) => {
     const forn = req.body.forn;
     const trans = req.body.trans;
 
-    // pool.getConnection((err, connection) => {
-
-    // if(err){
-    //     res.status(500);
-    //     res.type('json');
-    //     res.json({"message":"Couldn't register you right now try again later"});
-    // }
+    let output;
+    const setOutput = (rows) => {
+        output = rows;
+    }
   
     var queryString = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES (?,?,?,?,?,?)";
 
@@ -59,10 +56,7 @@ router.post('/register', (req, res) => {
         queryString = "SELECT id FROM utilizador WHERE email = ?";
         let id = 0;
         conn.query(queryString, [email], (err,results) => {
-            if(!err){
-                id = parseInt(results[0]['id']);
-                console.log("aqui " + id);
-            } else {
+            if(err){
                 conn.release();
                 
                 res.status(500);
@@ -70,8 +64,9 @@ router.post('/register', (req, res) => {
                 res.send({"message":"Não foi possível realizar essa operação. output 2"});
                 return;
             }
+            setOutput(results);
         });
-        console.log("e aqui " + id);
+        console.log(output[0]['id']);
 
         if(cons){
             queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
