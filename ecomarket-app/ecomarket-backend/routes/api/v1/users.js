@@ -96,10 +96,10 @@ router.post('/register', (req, res) => {
   });
 
 
-router.get('/login', (req, res) => {
+router.post('/login', (req, res) => {
     const email = req.body.email;
     const pwd = req.body.pwd;
-    
+
     const queryString = "SELECT pass_word FROM utilizador WHERE email = ?";
 
     pool.getConnection((err, conn) => {
@@ -109,19 +109,18 @@ router.get('/login', (req, res) => {
             conn.release();
 
             if (!err) {
-                // console.log(results[0].pass_word);
-                // if(Object.keys(results).length > 0){
-                //     if(results[0].pass_word === pwd){
-                //         console.log("Utilizador autenticado");
-                //         return res.status(200).send({message:"success"});
-                //     } else {
-                //         console.log("Não foi possível autenticar o utilizador.");
-                //         return res.status(401).send({message:"fail"});
-                //     }
-                // } else {
-                //     console.log("Utilizador não se encontra na base de dados");
-                //     return res.status(404).send({message:"no email"});
-                // }
+                if(results > 0){
+                    if(results[0].pass_word === pwd){
+                        console.log("Utilizador autenticado");
+                        return res.status(200).send({message:"success"});
+                    } else {
+                        console.log("Não foi possível autenticar o utilizador.");
+                        return res.status(401).send({message:"fail"});
+                    }
+                } else {
+                    console.log("Utilizador não se encontra na base de dados");
+                    return res.status(404).send({message:"no email"});
+                }
             } else {
                 console.log("Não foi possível realizar essa operação. output 5");
                 return res.status(500).send({message:"fail"});
