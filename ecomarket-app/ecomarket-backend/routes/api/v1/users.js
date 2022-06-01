@@ -55,7 +55,7 @@ router.post('/register', (req, res) => {
                 res.send({"message":"Não foi possível realizar essa operação. output 2"});
                 return;
             } else {
-                var id = results[0]['id'];
+                var id = results[0].id;
 
                 if(cons){
                     queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
