@@ -40,9 +40,7 @@ router.post('/register', (req, res) => {
             // conn.release();
             if (err) {
                 conn.release();
-
                 res.status(500);
-                res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 1"});
                 return;
             }
@@ -53,9 +51,7 @@ router.post('/register', (req, res) => {
         conn.query(queryString, [email], (err,results) => {
             if(err){
                 conn.release();
-                
                 res.status(500);
-                res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 2"});
                 return;
             } else {
@@ -68,7 +64,6 @@ router.post('/register', (req, res) => {
         
                         if(err){
                             res.status(500);
-                            res.type('json');
                             res.send({"message":"Não foi possível realizar essa operação. output 3"});
                             return;
                         }
@@ -83,7 +78,6 @@ router.post('/register', (req, res) => {
                         conn.release();
         
                         res.status(400);
-                        res.type('json');
                         res.send({"message":"Bad Request"});
                         return;
                     }
@@ -94,13 +88,11 @@ router.post('/register', (req, res) => {
         
                         if(!err){
                             res.status(200);
-                            res.type('json');
                             console.log("Registo bem sucessido")
                             res.send({"message":"success"});
                             return;
                         } else {
                             res.status(500);
-                            res.type('json');
                             res.send({"message":"Não foi possível realizar essa operação. output 4"});
                             return;
                         }
@@ -143,7 +135,6 @@ router.get('/login', (req, res) => {
                 res.status(500);
                 message = "Não foi possível realizar essa operação. output 5";
             }
-            res.type('json');
             res.send({"message": message});
         });
     });
@@ -163,16 +154,13 @@ router.get('/:uid', (req,res) => {
             if (!err) {
                 if(results.length > 0){
                     res.status(200);
-                    res.type('json');
                     res.send(results);
                 } else {
                     res.status(404);
-                    res.type('json');
                     res.send({"message":"Utilizador não se encontra na base de dados"});
                 }
             } else {
                 res.status(500);
-                res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 6"});
             }
         });
@@ -192,16 +180,13 @@ router.post('/delete/:uid', (req,res) => {
             if (!err) {
                 if(results.length > 0){
                     res.status(200);
-                    res.type('json');
                     res.send(results);
                 } else {
                     res.status(404);
-                    res.type('json');
                     res.send({"message":"Utilizador não se encontra na base de dados"});
                 }
             } else {
                 res.status(500);
-                res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 7"});
             }
         });

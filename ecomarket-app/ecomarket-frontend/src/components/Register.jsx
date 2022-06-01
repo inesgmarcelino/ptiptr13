@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import Axios from "axios";
 import $ from 'jquery';
 
-const config = {
-    headers: {'Content-Type': 'application/json;charset=UTF-8'}
-};
-
 function Register() {
 
     // states for registration
@@ -84,7 +80,7 @@ function Register() {
                         cons: checkConsumidor,
                         forn: checkFornecedor,
                         trans: checkTransportador
-                    }, config).then((response) => {
+                    }).then((response) => {
                         console.log(response);
                         if (response.message === "success") {
                             document.getElementById("modal_header_register").innerText = 'Registo bem sucedido!';
