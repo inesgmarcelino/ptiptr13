@@ -57,7 +57,7 @@ router.post('/register', (req, res) => {
         });
 
         queryString = "SELECT id FROM utilizador WHERE email = ?";
-        var id = 0;
+        let id = 0;
         conn.query(queryString, [email], (err,results) => {
             if(!err){
                 id = parseInt(results[0]['id']);
