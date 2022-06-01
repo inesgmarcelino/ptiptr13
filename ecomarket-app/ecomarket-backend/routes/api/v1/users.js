@@ -98,6 +98,7 @@ router.post('/register', (req, res) => {
 
 router.get('/login', (req, res) => {
     const email = req.body.email;
+    console.log(email);
     const pwd = req.body.pwd;
     const queryString = "SELECT pass_word FROM utilizador WHERE email = ?";
 
@@ -108,7 +109,7 @@ router.get('/login', (req, res) => {
             conn.release();
 
             if (!err) {
-                console.log(results);
+                console.log(results[0].pass_word);
                 // if(Object.keys(results).length > 0){
                 //     if(results[0].pass_word === pwd){
                 //         console.log("Utilizador autenticado");

@@ -37,7 +37,6 @@ function Login() {
                         email: email,
                         pwd: password
                     }).then((response) => {
-                        console.log(response);
                         if (response.data.message === "success") {
                             goHome();
                         } else {
