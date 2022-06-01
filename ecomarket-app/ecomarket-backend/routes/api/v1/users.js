@@ -97,6 +97,7 @@ router.post('/register', (req, res) => {
 
 
 router.get('/login', (req, res) => {
+    console.log(req);
     const email = req.body.email;
     const pwd = req.body.pwd;
 
