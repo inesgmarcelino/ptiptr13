@@ -109,7 +109,7 @@ router.post('/login', (req, res) => {
             conn.release();
 
             if (!err) {
-                if(results > 0){
+                if(results.length > 0){
                     if(results[0].pass_word === pwd){
                         console.log("Utilizador autenticado");
                         return res.status(200).send({message:"success"});
@@ -141,7 +141,7 @@ router.get('/:uid', (req,res) => {
             conn.release();
 
             if (!err) {
-                if(results.length > 0){
+                if(rows.length > 0){
                     return res.status(200).send({message:"success", results: rows});
                 } else {
                     console.log("Utilizador não se encontra na base de dados");
