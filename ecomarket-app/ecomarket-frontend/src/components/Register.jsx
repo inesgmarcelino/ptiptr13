@@ -82,7 +82,7 @@ function Register() {
                         trans: checkTransportador
                     }).then((response) => {
                         console.log(response);
-                        if (response.data === "success") {
+                        if (response.message === "success") {
                             document.getElementById("modal_header_register").innerText = 'Registo bem sucedido!';
                             document.getElementById("modal_body_register").innerHTML = "<p>Clique em 'Continuar' para proseguir para o início de sessão";
                             document.getElementById("continue").onclick = goLogin;

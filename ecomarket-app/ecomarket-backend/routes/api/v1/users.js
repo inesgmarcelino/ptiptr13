@@ -95,7 +95,8 @@ router.post('/register', (req, res) => {
                         if(!err){
                             res.status(200);
                             res.type('json');
-                            res.send({"message":"Registo bem sucessido"});
+                            console.log("Registo bem sucessido")
+                            res.send({"message":"success"});
                             return;
                         } else {
                             res.status(500);
