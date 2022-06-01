@@ -67,9 +67,7 @@ router.post('/register', (req, res) => {
                             res.send({"message":"Não foi possível realizar essa operação. output 3"});
                             return;
                         }
-                        res.status(200);
-                        res.send({"message":"success"});
-                        return;
+                        return res.status(200).send({message:"success"});
                     });
             
                 } else {
