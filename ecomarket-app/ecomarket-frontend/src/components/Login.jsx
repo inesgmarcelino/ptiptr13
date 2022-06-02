@@ -37,11 +37,10 @@ function Login() {
                         email: email,
                         pwd: password
                     }).then((response) => {
-                        console.log(response);
-                        if (response.data === "success") {
+                        if (response.data.message === "success") {
                             goHome();
                         } else {
-                             if (response.data === "no email") {
+                             if (response.data.message === "no email") {
                             document.getElementById("modal_header_login").innerText = 'Início de Sessão Inválido';
                             document.getElementById("modal_body_login").innerText = 'Não há nenuma conta registada com o email '+email;
                             } else {
