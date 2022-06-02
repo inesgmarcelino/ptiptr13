@@ -157,3 +157,6 @@ router.get('/edit/:uid', (req, res, next) => {
         });
     });
 });
+
+//exporta funções/"objetos"
+module.exports = router ;
