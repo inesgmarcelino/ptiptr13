@@ -42,7 +42,7 @@ function Login() {
                         } else {
                              if (response.data.message === "no email") {
                             document.getElementById("modal_header_login").innerText = 'Início de Sessão Inválido';
-                            document.getElementById("modal_body_login").innerText = 'Não há nenuma conta registada com o email '+email;
+                            document.getElementById("modal_body_login").innerText = 'Não há nenhuma conta registada com o email '+email;
                             } else {
                                 document.getElementById("modal_header_login").innerText = 'Início de Sessão Inválido';
                                 document.getElementById("modal_body_login").innerText = 'Email e/ou password incorreto(s)';

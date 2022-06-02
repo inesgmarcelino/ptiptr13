@@ -118,7 +118,7 @@ router.post('/login', (req, res) => {
                         return res.status(401).send({message:"fail"});
                     }
                 } else {
-                    console.log("Utilizador não se encontra na base de dados");
+                    console.log(email + " não se encontra na base de dados.");
                     return res.status(404).send({message:"no email"});
                 }
             } else {

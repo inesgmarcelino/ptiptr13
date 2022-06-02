@@ -33,7 +33,7 @@ function AdminLogin() {
                 if ( email === '' || password === '') {
                         // setError(true);
                 } else {
-                    Axios.post("https://ecomarket.works/api/v1/admin/login", {
+                    Axios.post("https://ecomarket.works/api/v1/admin/adminlogin", {
                         email: email,
                         pwd: password
                     }).then((response) => {
@@ -42,11 +42,9 @@ function AdminLogin() {
                             goHome();
                         } else {
                              if (response.data === "no email") {
-                            document.getElementById("modal_header_login").innerText = 'Início de Sessão Inválido';
-                            document.getElementById("modal_body_login").innerText = 'Não há nenuma conta registada com o email '+email;
+                            document.getElementById("modal_body_login").innerText = 'Email do Administrador incorreto: '+email;
                             } else {
-                                document.getElementById("modal_header_login").innerText = 'Início de Sessão Inválido';
-                                document.getElementById("modal_body_login").innerText = 'Email e/ou password incorreto(s)';
+                                document.getElementById("modal_body_admin").innerText = 'Password incorreto.';
                             }
                             handleShow();
                         }
@@ -78,15 +76,15 @@ function AdminLogin() {
             </div>
 
             {/* MODAL */}
-             <div className="modal fade" id="modal_login" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+             <div className="modal fade" id="modal_admin" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                  <div className="modal-dialog modal-dialog-centered">
                      <div className="modal-content">
-                         <div className="modal-header" id="modal_header_login">~
-                             <button type="button" className="btn-close" aria-label="Close"></button>
+                         <div className="modal-header" id="modal_header_admin">
+                             Administrador Inválido
                          </div>
-                         <div className="modal-body" id="modal_body_login">
+                         <div className="modal-body" id="modal_body_admin">
                          </div>
-                         <div className="modal-footer" id="modal_footer_login">
+                         <div className="modal-footer" id="modal_footer_admin">
                          <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
                          </div>
                      </div>
