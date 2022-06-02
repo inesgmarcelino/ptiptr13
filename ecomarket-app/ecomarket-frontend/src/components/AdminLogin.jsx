@@ -9,11 +9,11 @@ function AdminLogin() {
     const [password, setPassword]   = useState('');
 
     const handleShow = () => {
-        $("#modal_login").css("display", "block");
+        $("#modal_admin").css("display", "block");
     }
 
     const handleHide = () => {
-        $("#modal_login").css("display", "none")
+        $("#modal_admin").css("display", "none")
     }
 
     const goHome = () => {
@@ -37,11 +37,10 @@ function AdminLogin() {
                         email: email,
                         pwd: password
                     }).then((response) => {
-                        console.log(response);
-                        if (response.data === "success") {
+                        if (response.data.message === "success") {
                             goHome();
                         } else {
-                             if (response.data === "no email") {
+                             if (response.data.message === "no email") {
                             document.getElementById("modal_body_login").innerText = 'Email do Administrador incorreto: '+email;
                             } else {
                                 document.getElementById("modal_body_admin").innerText = 'Password incorreto.';
