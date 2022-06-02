@@ -33,7 +33,7 @@ function AdminLogin() {
                 if ( email === '' || password === '') {
                         // setError(true);
                 } else {
-                    Axios.post("https://ecomarket.works/api/v1/admin/adminlogin", {
+                    Axios.post("https://ecomarket.works/api/v1/admin/adminLogin", {
                         email: email,
                         pwd: password
                     }).then((response) => {

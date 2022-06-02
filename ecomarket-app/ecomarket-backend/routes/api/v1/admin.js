@@ -3,20 +3,20 @@ var router = express.Router();
 
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
-// var pool = require('../svlib/db/getPool');
-var pool = require('../svlib/db/connection');
+var pool = require('../svlib/db/getPool');
 
 
 /** auth0 */
 var auth = require('../svlib/auth0/tokenlib');
-const { query } = require('../svlib/db/getPool');
 /** */
 
 //probably very useful: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 
-router.post('/adminlogin', (req, res) => {
+router.post('/adminLogin', (req, res) => {
     const email = req.body.email;
     const pwd = req.body.pwd;
+
+    console.log(email,pwd);
 
     if (email !== "admin@ecomarket.pt") {
         console.log(email + " não pertence ao Adminstrador.");
