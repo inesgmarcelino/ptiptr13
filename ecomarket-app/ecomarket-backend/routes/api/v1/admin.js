@@ -18,7 +18,7 @@ router.post('/adminlogin', (req, res) => {
     const email = req.body.email;
     const pwd = req.body.pwd;
 
-    if (email === "admin@ecomarket.pt") {
+    if (email !== "admin@ecomarket.pt") {
         console.log(email + " não pertence ao Adminstrador.");
         return res.status(404).send({message:"no email"});
     }
