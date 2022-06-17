@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './temp/catalogStyles.css';
 import Auth0ProviderWithHistory from './auth/auth0-hist-prov';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {NavBar, Home, Login, Register, Cart, Footer, Profile, MyData, Catalog, Payment, ShoopingCart, Consumidor, 
@@ -11,7 +10,8 @@ import {NavBar, Home, Login, Register, Cart, Footer, Profile, MyData, Catalog, P
 
 ReactDOM.render(
   <Router>
-  <NavBar />
+    <Auth0ProviderWithHistory>
+    <NavBar />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
@@ -34,6 +34,7 @@ ReactDOM.render(
         <Route path='/Album' element={<Album />} />
         <Route path='/admintipos' element={<AdminTipos />} />
       </Routes>
+    </Auth0ProviderWithHistory>
     {/* <Footer /> */}
   </Router>,
 
