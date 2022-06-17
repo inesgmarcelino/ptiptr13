@@ -1,11 +1,16 @@
 import React from "react";
 import {NavLink} from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+
+
 const logo = require('../images/icons/logo.png');
 const login = require('../images/icons/login.png');
 const signin = require('../images/icons/signin.png');
 const cart = require('../images/icons/cart.png');
 
+
 function SideBar() {
+    const { loginWithRedirect } = useAuth0();
     return (
             <nav class="navbar fixed-top navbar-expand-lg p-md-3">
                 <div class="container-fluid"> 
@@ -21,13 +26,13 @@ function SideBar() {
                     </NavLink>
                     <ul class="navbar-nav">
                         <li className="nav-item"> {/* se autenticado user */}
-                         <NavLink className="nav-link text-white" to="/login">
+                         <NavLink className="nav-link text-white" onClick={() => loginWithRedirect()}>
                             Inicie Sessão
                              {/* falta os pontos */}
                              </NavLink>
                          </li>
                          <li className="nav-item">
-                         <NavLink className="nav-link text-white" to="/register">
+                         <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({screen_hint:'signup'})}>
                             Registe-se
                          </NavLink>
                         </li>
