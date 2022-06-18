@@ -55,7 +55,7 @@ function ArmazemRegister(){
                 break;
             case "submit":
                 x.preventDefault();
-                if (moradaArm === '' || codpostal === '' || x in codpostal || dist === '' || conc === '') {
+                if (moradaArm === '' || codpostal === '' || 'x' in codpostal || dist === '' || conc === '') {
                     // setError(true)
                 } else {
                     Axios.post("https://ecomarket.works/api/v1/providers/reg_storage", {
