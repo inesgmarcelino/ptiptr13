@@ -3,7 +3,6 @@ var router = express.Router();
 
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
-// var pool = require('../svlib/db/getPool');
 var pool = require('../svlib/db/getPool');
 
 
@@ -118,7 +117,7 @@ router.post('/login', (req, res) => {
                         return res.status(401).send({message:"fail"});
                     }
                 } else {
-                    console.log("Utilizador não se encontra na base de dados");
+                    console.log(email + " não se encontra na base de dados.");
                     return res.status(404).send({message:"no email"});
                 }
             } else {
