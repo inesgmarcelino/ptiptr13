@@ -129,7 +129,7 @@ function Register() {
                             </div>
                             <div className="col-md-12">
                                 <label>Número de Telemóvel</label>
-                                <input className="form-control" type="number" name="telem" size="50" onChange={handler} required />
+                                <input className="form-control" type="tel" name="telem" size="50" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="xxx xxx xxx" onChange={handler} required />
                             </div>
                             <div className="col-md-12">
                                 <label>Password</label>
