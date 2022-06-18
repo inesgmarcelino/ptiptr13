@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ShoopingCart () {
+function ShoppingCart () {
 
     return(
         <div>
@@ -41,4 +41,4 @@ function ShoopingCart () {
     )
 }
     
-export default ShoopingCart;
+export default ShoppingCart;
