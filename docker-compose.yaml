@@ -57,13 +57,13 @@ services:
        tty: true        # docker run -t
 
 
-     mysql_slave:
-       image: mysql:debian
-       networks:
-         - "c-network"
-       #restart: always
-       depends_on:
-         - "mysql_master"
+    # mysql_slave:
+    #   image: mysql:debian
+    #   networks:
+    #     - "c-network"
+    #   #restart: always
+    #   depends_on:
+    #     - "mysql_master"
 
 networks:
     c-network:
