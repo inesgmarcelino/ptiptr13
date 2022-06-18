@@ -1,6 +1,20 @@
 CREATE DATABASE IF NOT EXISTS ecodb;
 USE ecodb;
 
+CREATE TABLE distrito (
+    id              INT PRIMARY KEY,
+    nome            VARCHAR(50) NOT NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE concelho (
+    id              INT PRIMARY KEY AUTO_INCREMENT,
+    nome            VARCHAR^(50) NOT NULL,
+    distrito        INT NOT NULL,
+    --
+    CONSTRAINT fk_concelho
+        FOREIGN KEY (distrito) REFERENCES distrito(id)
+) ENGINE = InnoDB;
+
 CREATE TABLE utilizador (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
