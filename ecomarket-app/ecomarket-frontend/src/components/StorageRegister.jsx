@@ -59,6 +59,7 @@ function ArmazemRegister(){
                     // setError(true)
                 } else {
                     Axios.post("https://ecomarket.works/api/v1/providers/reg_storage", {
+                        // id: id,
                         morada: moradaArm,
                         codpostal: codpostal,
                         dist: dist,

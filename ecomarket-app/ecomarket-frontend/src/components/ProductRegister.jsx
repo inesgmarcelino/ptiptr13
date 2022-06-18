@@ -64,6 +64,7 @@ function ProductRegister(){
                     // setError(true);
                 } else {
                     Axios.post("https://ecomarket.works/api/v1/providers/reg_product", {
+                        // id: id
                         nome: nomeProd,
                         data: dataProd,
                         preco: preco,
