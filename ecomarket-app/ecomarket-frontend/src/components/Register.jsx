@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-str */
 import React, { useState } from "react";
 import Axios from "axios";
 import $ from 'jquery';
