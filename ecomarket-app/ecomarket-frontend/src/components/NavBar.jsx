@@ -1,81 +1,42 @@
 import React from "react";
-import { useAuth0 } from '@auth0/auth0-react';
-import { Col, Container, Form, Navbar, Row, NavLink, Stack } from "react-bootstrap";
-
+import {NavLink} from 'react-router-dom';
 const logo = require('../images/icons/logo.png');
 const login = require('../images/icons/login.png');
 const signin = require('../images/icons/signin.png');
 const cart = require('../images/icons/cart.png');
 
-
 function SideBar() {
-    const { isAuth } = useAuth0();    
     return (
-        <Navbar className="nav navbar fixed-top navbar-expand-lg p-md-3">
-            <Container type="div" fluid>
-                <Navbar.Brand href="/" className="nav navbar-brand">
-                    <img src={logo} alt="" id="logo" />
-                </Navbar.Brand>
-            </Container>
+            <nav class="navbar fixed-top navbar-expand-lg p-md-3">
+                <div class="container-fluid"> 
+                    <a href="/" className="navbar-brand" ><img src={logo} alt="" id="logo" /></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="mx-auto"></div>
+                    <input class="form-control me-2" id="searchBar" type="search" placeholder="Search" aria-label="Search" />
+                    <NavLink to="/Cart">
+                        <img src={cart} id="cart" alt=""/>
+                    </NavLink>
+                    <ul class="navbar-nav">
+                        <li className="nav-item"> {/* se autenticado user */}
+                         <NavLink className="nav-link text-white" to="/login">
+                            Inicie Sessão
+                             {/* falta os pontos */}
+                             </NavLink>
+                         </li>
+                         <li className="nav-item">
+                         <NavLink className="nav-link text-white" to="/register">
+                            Registe-se
+                         </NavLink>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </nav>
 
-            <Container >
-                
-                <Form>
-                    <Form.Group>
-                        <Form.Control type="" placeholder="Search" className="me-auto"/>
-                    </Form.Group>
-                </Form>
-            </Container>
-                <NavLink to="/Cart">
-                    <img src={cart} id="cart" alt=""/>
-                </NavLink>
-                <Container>
-                    {useLogin(isAuth)}
-                </Container>
-            
-            <Container>
-            </Container>
-        </Navbar>    
     );
-}
-
-function useLogin(logged) {
-    const { loginWithRedirect } = useAuth0();
-    const { logout } = useAuth0();
-    if(!logged){
-        return (
-            <Row>
-                <Col>
-                    <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({}) }>
-                        Inicie Sessão
-                    </NavLink>
-                </Col>
-                <Col>
-                    <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({screen_hint: 'signup',}) }>
-                        Registar
-                    </NavLink>
-                </Col>
-            </Row>
-        );
-    } else {
-        return (
-            <Row>
-                <Col>
-                    <NavLink className="nav-link text-white">
-                        {() => function getUserName(){
-                            return "Utilizador1";
-                        }}
-                    </NavLink>
-                </Col>
-                <Col>
-                    <NavLink className="nav-link text-white" onClick={() => logout({returnTo: window.location.origin,})}>
-                        Logout
-                    </NavLink>
-                </Col>
-            </Row>
-        );
-    }
-
 }
 
 export default SideBar;
