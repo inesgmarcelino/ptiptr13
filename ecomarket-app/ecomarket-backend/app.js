@@ -23,8 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/users', usersRouter);
 
 
-
-/** Definir o middleware para as sessões */
+/** 
+/** Definir o middleware para as sessões 
 //para usar sessoões, fazer req.sessions
 const session = require('express-session');
 const mysql2 = require('mysql2/promise');

@@ -1,14 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import './index.css';
-import './temp/catalogStyles.css';
+import Auth0ProviderWithHistory from './auth/auth0-hist-prov';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {NavBar, Home, Login, Register, Cart, Footer, Profile, EditProfile, Catalog, Payment, ShoppingCart, Consumidor, 
    Fornecedor, ConfirmarEncomenda, Comparador, Product, ArmazemRegister, ProductRegister, Album, AdminLogin, AdminTipos} from './components';
 
 
+const root = createRoot(
+    document.getElementById("root")
+);
 
-ReactDOM.render(
+root.render(
   <Router>
     <NavBar />
     <Routes>
