@@ -140,7 +140,7 @@ function Register() {
                             </div>
                             <div className="col-md-12">
                                 <label>Número de Telemóvel</label>
-                                <input className="form-control" type="text" name="telem" id="tel" size="50" pattern="^\d{3} \d{3} \d{3}?$" onChange={handler} required />
+                                <input className="form-control" type="tel" name="telem" id="tel" size="50" onChange={handler} required />
                             </div>
                             <div className="col-md-12">
                                 <label>Foto de Perfil</label>
