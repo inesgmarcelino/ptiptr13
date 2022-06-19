@@ -18,12 +18,6 @@ function Register() {
     const [checkFornecedor, setFornecedor]          = useState(false);
     const [checkTransportador, setTransportador]    = useState(false);
 
-    const tel = document.querySelector("#tel");
-    const telInput = window.intlTelInput(tel, {
-        utilsScript:
-        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
-
     const handleShow = () => {
         $("#modal_register").css("display", "block");
     }

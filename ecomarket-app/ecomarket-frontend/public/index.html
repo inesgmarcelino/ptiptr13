@@ -21,4 +21,11 @@
   <body>
       <div id="root" class="row container-narrow"></div>
   </body>
+  <script>
+    const tel = document.querySelector("#tel");
+    const telInput = window.intlTelInput(tel, {
+        utilsScript:
+        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+  </script>
 </html>
