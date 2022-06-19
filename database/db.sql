@@ -265,6 +265,9 @@ CREATE TABLE emite_poluicao (
         FOREIGN KEY (poluicao)  REFERENCES poluicao(id)
 ) ENGINE = InnoDB;
 
+-- Inserts do Adminsitrador
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('Admin','admin@ecomarket.pt', 000000000,000000000, 'adminOK', 'Administração');
+
 -- Inserts de Distritos e Concelhos
 INSERT INTO distrito VALUES (1, 'Aveiro');
 INSERT INTO distrito VALUES (2, 'Beja');	
