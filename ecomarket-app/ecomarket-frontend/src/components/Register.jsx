@@ -46,6 +46,7 @@ function Register() {
                 break;
             case "profpic":
                 setProfPic(x.target.files[0]);
+                console.log(profpic);
                 break;
             case "password":
                 setPassword(x.target.value);
