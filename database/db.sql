@@ -8,7 +8,7 @@ CREATE TABLE distrito (
 
 CREATE TABLE concelho (
     id              INT PRIMARY KEY AUTO_INCREMENT,
-    nome            VARCHAR^(50) NOT NULL,
+    nome            VARCHAR(50) NOT NULL,
     distrito        INT NOT NULL,
     --
     CONSTRAINT fk_concelho
