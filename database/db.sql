@@ -15,15 +15,23 @@ CREATE TABLE concelho (
         FOREIGN KEY (distrito) REFERENCES distrito(id)
 ) ENGINE = InnoDB;
 
+CREATE TABLE image (
+    id              INT PRIMARY KEY AUTO_INCREMENT,
+    filename        VARCHAR(250) NOT NULL
+) ENGINE = InnoDB;
+
 CREATE TABLE utilizador (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
     email           VARCHAR(50) NOT NULL UNIQUE,
     nif             INT(9) NOT NULL UNIQUE,
     telemovel       INT(9) NOT NULL UNIQUE,
-    image           BLOB, -- Binary large object (verificar)
+    image           INT,
     pass_word       VARCHAR(250) NOT NULL,
-    morada          VARCHAR(250) NOT NULL
+    morada          VARCHAR(250) NOT NULL,
+    --
+    CONSTRAINT fk_image
+        FOREIGN KEY (image) REFERENCES image(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE consumidor (

@@ -30,6 +30,10 @@ function Register() {
         window.location.href = "https://ecomarket.works/login";
     }
 
+    const imageIsLoaded = (x) => {
+
+    }
+
     const handler = (x) => {
         switch(x.target.name) {
             case "nome":
@@ -45,8 +49,6 @@ function Register() {
                 setTelem(x.target.value);
                 break;
             case "profpic":
-                setProfPic(x.target.files[0]);
-                console.log(profpic);
                 break;
             case "password":
                 setPassword(x.target.value);

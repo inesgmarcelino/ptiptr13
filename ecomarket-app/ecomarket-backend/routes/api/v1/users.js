@@ -248,7 +248,33 @@ router.put('/edit/:uid', (req,res) => {
             }
         });
     });
-})
+});
+
+router.post('/uploadProfPic', (req,res) => {
+    const filename = req.body.filename;
+    var queryString = "INSERT INTO image (filename) VALUES (?)";
+
+    pool.getConnection((err,conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, (err, results) => {
+    
+            if (!err) {
+                queryString = "SELECT id FROM image";
+                conn.query(queryString, (err, results) => {
+                    conn.release();
+
+                    if (!err) {
+                        console.log("Imagem descarregada com sucesso");
+                        return res.status(200).send({message: results[results.size -1].id})
+                    }
+                })
+            }
+        })
+    });
+});
+
+
 
 
 // um user que seja só consumidor ou só fornecedor pode se tornar também fornecedor ou consumidor...
