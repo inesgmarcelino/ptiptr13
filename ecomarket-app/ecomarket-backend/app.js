@@ -105,7 +105,7 @@ const basePathV1 = '/api/v1/';
 const apiPathsV1 = ["users","admin","providers"/**<-'deletethis' "providers","products","carriers","transportation"/**,cadeialogistica?*/];
 for(var path in apiPathsV1){
   var filePath = basePathV1+apiPathsV1[path];
-  console.error(typeof(filePath));
+  // console.error(typeof(filePath));
   var apiRouterV1 = require('./routes'+filePath+'.js');
   app.use(filePath, apiRouterV1);
 } 

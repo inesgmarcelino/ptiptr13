@@ -24,7 +24,6 @@ router.post('/register', (req, res) => {
     const nif = req.body.nif;
     const tlm = req.body.tlm;
     const profpic = req.body.profpic;
-    console.log(profpic)
     const morada = req.body.morada;
     const pwd = req.body.pwd;
     const cons = req.body.cons;
@@ -269,8 +268,11 @@ router.post('/uploadProfPic', (req,res) => {
                         return res.status(200).send({message: results[results.size -1].id})
                     }
                 })
+            } else {
+                console.log("Não foi possível realizar essa operação. output 9");
+                return res.status(500).send({message:"fail"});
             }
-        })
+        });
     });
 });
 
