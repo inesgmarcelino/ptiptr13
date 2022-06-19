@@ -18,6 +18,12 @@ function Register() {
     const [checkFornecedor, setFornecedor]          = useState(false);
     const [checkTransportador, setTransportador]    = useState(false);
 
+    const tel = document.querySelector("#tel");
+    const telInput = window.intlTelInput(tel, {
+        utilsScript:
+        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+
     const handleShow = () => {
         $("#modal_register").css("display", "block");
     }
@@ -126,7 +132,7 @@ function Register() {
                             </div>
                             <div className="col-md-12">
                                 <label>NIF</label>
-                                <input className="form-control" type="number" maxLength={9} name="nif" size="50" onChange={handler} required />
+                                <input className="form-control" type="text" pattern="[0-9]{9}" name="nif" size="50" onChange={handler} required />
                             </div>
                             <div className="col-md-12">
                                 <label>Morada</label>
@@ -134,7 +140,7 @@ function Register() {
                             </div>
                             <div className="col-md-12">
                                 <label>Número de Telemóvel</label>
-                                <input className="form-control" type="tel" maxLength={9} name="telem" size="50" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="xxx xxx xxx" onChange={handler} required />
+                                <input className="form-control" type="text" name="telem" id="tel" size="50" pattern="^\d{3} \d{3} \d{3}?$" onChange={handler} required />
                             </div>
                             <div className="col-md-12">
                                 <label>Foto de Perfil</label>

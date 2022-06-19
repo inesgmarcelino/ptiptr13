@@ -87,9 +87,7 @@ function ArmazemRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Código Postal</label>
-                                <input className="form-control" type="number" max={9999} name="codigoPostal1" size="30" onChange={handler} required/>
-                                -
-                                <input className="form-control" type="number" max={999} name="codigoPostal2" size="20" onChange={handler} required/>
+                                <input className="form-control" type="text" pattern="^\d{4}-\d{3}?$" name="codigoPostal" size="50" onChange={handler} required/>
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>

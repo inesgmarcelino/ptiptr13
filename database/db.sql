@@ -273,6 +273,13 @@ CREATE TABLE emite_poluicao (
         FOREIGN KEY (poluicao)  REFERENCES poluicao(id)
 ) ENGINE = InnoDB;
 
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('fornecedor1','forn1@ecomarket.pt', 111111111,111111111, 'fornOK', 'Fornecedor 1');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('transportador1','trans1@ecomarket.pt', 222222222,222222222, 'transOK', 'Transportador 1');
+SELECT id FROM utilizador WHERE email = 'forn1@ecomarket.pt';
+SELECT id FROM utilizador WHERE email = 'trans1@ecomarket.pt';
+
+INSERT INTO fornecedor VALUES (3);
+INSERT INTO transportador VALUES (4);
 -- Inserts do Adminsitrador
 INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('Admin','admin@ecomarket.pt', 000000000,000000000, 'adminOK', 'Administração');
 
