@@ -23,7 +23,8 @@ router.post('/register', (req, res) => {
     const email = req.body.email;
     const nif = req.body.nif;
     const tlm = req.body.tlm;
-    // const image = req.body.image;
+    const profpic = req.body.profpic;
+    console.log(profpic)
     const morada = req.body.morada;
     const pwd = req.body.pwd;
     const cons = req.body.cons;
