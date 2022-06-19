@@ -50,7 +50,6 @@ services:
         #- DATA_SAVE_PATH=../data
       volumes:
         - ./database/db.sql:/docker-entrypoint-initdb.d/db.sql
-        - ./database/hello.sql:/docker-entrypoint-initdb.d/hello.sql
         - data:/var/lib/mysql
     
       stdin_open: true # docker run -i
