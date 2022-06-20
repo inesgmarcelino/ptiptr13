@@ -110,7 +110,7 @@ function ArmazemRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>
-                                <select className="form-select" name="distrito" id="distritos" onChange={handler} onLoad={distritos} required>
+                                <select className="form-select" name="distrito" id="distritos" onChange={handler} onMouseOver={distritos} required>
                                     <option value='' selected>Selecione um Distrito</option>
                                 </select>
                          </div>
@@ -118,7 +118,6 @@ function ArmazemRegister(){
                             <label>Concelho</label>
                                 <select className="form-select" name="concelho" id="concelhos" onChange={handler} required>
                                     <option value='' selected>Selecione um Concelho</option>
-                                    {/* loop para ir buscar as cenas à bd */}
                                 </select>
                          </div>
                         
