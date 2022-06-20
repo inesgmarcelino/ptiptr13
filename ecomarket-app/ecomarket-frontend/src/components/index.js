@@ -18,3 +18,4 @@ export { default as ArmazemRegister} from "./ArmazemRegister";
 export { default as ProductRegister} from "./ProductRegister";
 export { default as Album} from "./Album";
 export { default as AdminTipos} from "./AdminTipos";
+export { default as Cart } from "./Cart";
