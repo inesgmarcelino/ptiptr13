@@ -39,6 +39,24 @@ router.get('/distritos', (req,res) => {
     })
 });
 
+router.get('/concelhos', (req,res) => {
+    var queryString = "SELECT id, nome FROM concelho WHERE distrito = ?";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [req.body.dist], (err, results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results: results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 2");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    })
+});
+
 
 //exporta funções/"objetos"
 module.exports = router ;

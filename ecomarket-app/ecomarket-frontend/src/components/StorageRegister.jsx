@@ -79,13 +79,18 @@ function ArmazemRegister(){
         Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
             var dist = response.data.results;
             for (var i = 0; i < dist.length; i++) {
-                document.getElementById("distritos").innerHTML = "<option value='" + dist[i]["id"] + "' selected>" + dist[i]["nome"] + "</option>";
+                document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
             }
-        })
+        });
     }
 
     const concelhos = (x) => {
-
+        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", {dist: x}).then((response) => {
+            var conc = response.data.results;
+            for (var i = 0; i < conc.length; i++) {
+                document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
+            }
+        });
     }
 
     return(
