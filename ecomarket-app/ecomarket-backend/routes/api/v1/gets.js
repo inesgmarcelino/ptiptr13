@@ -38,3 +38,7 @@ router.get('/distritos', (req,res) => {
         });
     })
 });
+
+
+//exporta funções/"objetos"
+module.exports = router ;
