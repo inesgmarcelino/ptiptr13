@@ -13,6 +13,7 @@ const root = createRoot(
 
 root.render(
   <Router>
+    <Auth0ProviderWithHistory>
     <NavBar />
     <Routes>
       <Route path='/' element={<Home />} />
@@ -38,6 +39,7 @@ root.render(
 
     </Routes>
     {/* <Footer /> */}
+    </Auth0ProviderWithHistory>
   </Router>,
 
   document.getElementById('root')
