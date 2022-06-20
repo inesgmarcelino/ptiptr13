@@ -3,20 +3,26 @@ var router = express.Router();
 
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
-// var pool = require('../svlib/db/getPool');
-var pool = require('../svlib/db/connection');
+var pool = require('../svlib/db/getPool');
 
 
 /** auth0 */
 var auth = require('../svlib/auth0/tokenlib');
-const { query } = require('../svlib/db/getPool');
 /** */
 
 //probably very useful: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 
-router.get('/adminlogin', (req, res) => {
+router.post('/adminLogin', (req, res) => {
     const email = req.body.email;
     const pwd = req.body.pwd;
+
+    console.log(email,pwd);
+
+    if (email !== "admin@ecomarket.pt") {
+        console.log(email + " não pertence ao Adminstrador.");
+        return res.status(404).send({message:"no email"});
+    }
+
     const queryString = "SELECT pass_word from utilizador WHERE email = ?";
 
     pool.getConnection((err, conn) => {
@@ -25,26 +31,23 @@ router.get('/adminlogin', (req, res) => {
         conn.query(queryString, [email], (err, results) => {
             conn.release();
 
-            var message;
             if (!err) {
                 if (results.length > 0) {
-                    if (results.password === pwd) {
-                        res.status(200);
-                        message = "Admin autenticado";
+                    if (results[0].pass_word === pwd) {
+                        console.log("Admin autenticado");
+                        return res.status(200).send({message:"success"});
                     } else {
-                        res.send(401);
-                        message = "Não foi possível autenticar o admin.";
+                        console.log("Não foi possível autenticar o admin.");
+                        return res.status(401).send({message:"fail"});
                     }
                 } else {
-                    res.send(404);
-                    message = "Argumentos inválidos.";
+                    console.log(email + " não pretence ao Adminstrador.");
+                    return res.status(404).send({message:"no email"});
                 }
             } else {
-                res.status(500);
-                message = "Não foi possível realizar essa operação. output 1";
+                console.log("Não foi possível realizar essa operação. output 1");
+                return res.status(500).send({message:"fail"});
             }
-            res.type('json');
-            res.send({"message": message});
         });
     });
 

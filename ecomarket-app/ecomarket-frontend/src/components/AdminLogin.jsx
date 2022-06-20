@@ -9,11 +9,11 @@ function AdminLogin() {
     const [password, setPassword]   = useState('');
 
     const handleShow = () => {
-        $("#modal_login").css("display", "block");
+        $("#modal_admin").css("display", "block");
     }
 
     const handleHide = () => {
-        $("#modal_login").css("display", "none")
+        $("#modal_admin").css("display", "none")
     }
 
     const goHome = () => {
@@ -33,20 +33,17 @@ function AdminLogin() {
                 if ( email === '' || password === '') {
                         // setError(true);
                 } else {
-                    Axios.post("https://ecomarket.works/api/v1/admin/login", {
+                    Axios.post("https://ecomarket.works/api/v1/admin/adminLogin", {
                         email: email,
                         pwd: password
                     }).then((response) => {
-                        console.log(response);
-                        if (response.data === "success") {
+                        if (response.data.message === "success") {
                             goHome();
                         } else {
-                             if (response.data === "no email") {
-                            document.getElementById("modal_header_login").innerText = 'Início de Sessão Inválido';
-                            document.getElementById("modal_body_login").innerText = 'Não há nenuma conta registada com o email '+email;
+                             if (response.data.message === "no email") {
+                            document.getElementById("modal_body_login").innerText = 'Email do Administrador incorreto: '+email;
                             } else {
-                                document.getElementById("modal_header_login").innerText = 'Início de Sessão Inválido';
-                                document.getElementById("modal_body_login").innerText = 'Email e/ou password incorreto(s)';
+                                document.getElementById("modal_body_admin").innerText = 'Password incorreto.';
                             }
                             handleShow();
                         }
@@ -78,15 +75,15 @@ function AdminLogin() {
             </div>
 
             {/* MODAL */}
-             <div className="modal fade" id="modal_login" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+             <div className="modal fade" id="modal_admin" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                  <div className="modal-dialog modal-dialog-centered">
                      <div className="modal-content">
-                         <div className="modal-header" id="modal_header_login">~
-                             <button type="button" className="btn-close" aria-label="Close"></button>
+                         <div className="modal-header" id="modal_header_admin">
+                             Administrador Inválido
                          </div>
-                         <div className="modal-body" id="modal_body_login">
+                         <div className="modal-body" id="modal_body_admin">
                          </div>
-                         <div className="modal-footer" id="modal_footer_login">
+                         <div className="modal-footer" id="modal_footer_admin">
                          <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
                          </div>
                      </div>

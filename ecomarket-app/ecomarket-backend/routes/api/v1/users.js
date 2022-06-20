@@ -3,7 +3,6 @@ var router = express.Router();
 
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
-// var pool = require('../svlib/db/getPool');
 var pool = require('../svlib/db/getPool');
 
 
@@ -118,7 +117,7 @@ router.post('/login', (req, res) => {
                         return res.status(401).send({message:"fail"});
                     }
                 } else {
-                    console.log("Utilizador não se encontra na base de dados");
+                    console.log(email + " não se encontra na base de dados.");
                     return res.status(404).send({message:"no email"});
                 }
             } else {
@@ -155,7 +154,7 @@ router.get('/:uid', (req,res) => {
     });
 });
 
-router.post('/delete/:uid', (req,res) => {
+router.delete('/delete/:uid', (req,res) => {
     var userId = req.params.uid;
     var queryString = "DELETE FROM utilizador WHERE id = ?";
 
@@ -180,6 +179,75 @@ router.post('/delete/:uid', (req,res) => {
         });
     });
 });
+
+router.put('/edit/:uid', (req,res) => {
+    const nome = req.body.nome;
+    const email = req.body.email;
+    const tlm = req.body.tlm;
+    const morada = req.body.morada;
+    const pwd = req.body.pwd;
+    
+    var queryString = "UPDATE utilizador SET ";
+    if (nome !== '') {
+        queryString += "nome = '" + nome + "' ";
+    }
+
+    if (email !== '') {
+        if ('=' in queryString) {
+            queryString += "AND email = '" + email + "' ";
+        } else {
+            queryString += "email = '" + email + "' ";
+        }
+    }
+
+    if (tlm !== '') {
+        if ('=' in queryString) {
+            queryString += "AND telemovel = " + tlm + " ";
+        } else {
+            queryString += "telemovel = " + tlm + " ";
+        }
+    }
+
+    if (morada !== '') {
+        if ('=' in queryString) {
+            queryString += "AND morada = '" + morada + "' ";
+        } else {
+            queryString += "morada = '" + morada + "' ";
+        }
+    }
+
+    if (pwd !== '') {
+        if ('=' in queryString) {
+            queryString += "AND pass_word = '" + pwd + "' ";
+        } else {
+            queryString += "pass_word = '" + pwd + "' ";
+        }
+    }
+
+    var userId = req.params.uid;
+    queryString += "WHERE id = " +  userId;
+    
+    pool.getConnection((err,conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, (err, results) =>  {
+            conn.release();
+
+            if (!err) {
+                if(results.length > 0){
+                    console.log("Utilizador atualizado com sucesso");
+                    return res.status(200).send({message:"success"});
+                } else {
+                    console.log("Utilizador não se encontra na base de dados");
+                    return res.status(404).send({message:"fail"});
+                }
+            } else {
+                console.log("Não foi possível realizar essa operação. output 8");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+})
 
 
 // um user que seja só consumidor ou só fornecedor pode se tornar também fornecedor ou consumidor...
