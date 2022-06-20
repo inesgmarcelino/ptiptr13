@@ -20,3 +20,21 @@ var auth = require('../svlib/auth0/tokenlib');
 router.get('/profpic/:uid', (req,res) => {
 
 });
+
+router.get('/distritos', (req,res) => {
+    var queryString = "SELECT * FROM distrito";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, (err, results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results: results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 1");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    })
+});

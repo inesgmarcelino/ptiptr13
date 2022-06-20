@@ -49,6 +49,7 @@ function ArmazemRegister(){
                 break;
             case "distrito":
                 setDist(x.target.value);
+                concelhos(x.target.value);
                 break;
             case "concelho":
                 setConc(x.target.value);
@@ -74,6 +75,16 @@ function ArmazemRegister(){
         }
     }
 
+    const distritos = () => {
+        Axios.post("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
+            console.log(response);
+        })
+    }
+
+    const concelhos = (x) => {
+
+    }
+
     return(
         <div>
         <div className="cardForn position-absolute top-50 start-50 translate-middle">
@@ -91,14 +102,13 @@ function ArmazemRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>
-                                <select name="distrito" onChange={handler} required>
+                                <select className="form-select" name="distrito" onChange={handler} onClick={distritos} required>
                                     <option value='' selected>Selecione um Distrito</option>
-                                    {/* loop para ir buscar as cenas à bd */}
                                 </select>
                          </div>
                          <div className="col-md-12">
                             <label>Concelho</label>
-                                <select name="concelho" onChange={handler} required>
+                                <select className="form-select" name="concelho" onChange={handler} required>
                                     <option value='' selected>Selecione um Concelho</option>
                                     {/* loop para ir buscar as cenas à bd */}
                                 </select>
