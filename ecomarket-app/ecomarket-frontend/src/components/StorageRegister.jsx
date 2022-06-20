@@ -75,14 +75,14 @@ function ArmazemRegister(){
         }
     }
 
-    document.getElementById("distritos").innerHTML = "<option value='' selected>Selecione um Distrito</option>";
-    Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
-        var dist = response.data.results;
-        for (var i = 0; i < dist.length; i++) {
-            document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
-        }
-    });
-    
+    const distritos = () => {
+        Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
+            var dist = response.data.results;
+            for (var i = 0; i < dist.length; i++) {
+                document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
+            }
+        });
+    }
 
     const concelhos = (x) => {
         Axios.get("https://ecomarket.works/api/v1/gets/concelhos", {dist: x}).then((response) => {
@@ -110,7 +110,9 @@ function ArmazemRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>
-                                <select className="form-select" name="distrito" id="distritos" onChange={handler} required></select>
+                                <select className="form-select" name="distrito" id="distritos" onChange={handler} onLoad={distritos} required>
+                                    <option value='' selected>Selecione um Distrito</option>
+                                </select>
                          </div>
                          <div className="col-md-12">
                             <label>Concelho</label>
