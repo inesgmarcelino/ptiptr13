@@ -77,7 +77,10 @@ function ArmazemRegister(){
 
     const distritos = () => {
         Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
-            console.log(response);
+            var dist = response.data.results;
+            for (var i = 0; i < dist.length; i++) {
+                document.getElementById("distritos").innerHTML = "<option value='" + dist[i]["id"] + "' selected>" + dist[i]["nome"] + "</option>";
+            }
         })
     }
 
@@ -102,13 +105,13 @@ function ArmazemRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>
-                                <select className="form-select" name="distrito" onChange={handler} onClick={distritos} required>
+                                <select className="form-select" name="distrito" id="distritos" onChange={handler} onClick={distritos} required>
                                     <option value='' selected>Selecione um Distrito</option>
                                 </select>
                          </div>
                          <div className="col-md-12">
                             <label>Concelho</label>
-                                <select className="form-select" name="concelho" onChange={handler} required>
+                                <select className="form-select" name="concelho" id="concelhos" onChange={handler} required>
                                     <option value='' selected>Selecione um Concelho</option>
                                     {/* loop para ir buscar as cenas à bd */}
                                 </select>
