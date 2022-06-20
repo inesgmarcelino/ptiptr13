@@ -76,7 +76,7 @@ function ArmazemRegister(){
     }
 
     const distritos = () => {
-        Axios.post("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
+        Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
             console.log(response);
         })
     }
