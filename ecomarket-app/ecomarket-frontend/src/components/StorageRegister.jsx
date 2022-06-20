@@ -75,6 +75,7 @@ function ArmazemRegister(){
         }
     }
 
+    document.getElementById("distritos").innerHTML = "<option value='' selected>Selecione um Distrito</option>";
     Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
         var dist = response.data.results;
         for (var i = 0; i < dist.length; i++) {
@@ -109,9 +110,7 @@ function ArmazemRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>
-                                <select className="form-select" name="distrito" id="distritos" onChange={handler} required>
-                                    <option value='' selected>Selecione um Distrito</option>
-                                </select>
+                                <select className="form-select" name="distrito" id="distritos" onChange={handler} required></select>
                          </div>
                          <div className="col-md-12">
                             <label>Concelho</label>
