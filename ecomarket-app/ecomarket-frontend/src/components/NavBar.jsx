@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth0 } from '@auth0/auth0-react';
-import { Col, Container, Form, Navbar, Row, NavLink, Stack } from "react-bootstrap";
+import { Col, Container, Form, Navbar, Row, NavLink, Stack, NavDropdown } from "react-bootstrap";
 
 const logo = require('../images/icons/logo.png');
 const login = require('../images/icons/login.png');
@@ -9,39 +9,35 @@ const cart = require('../images/icons/cart.png');
 
 
 function SideBar() {
-    const { isAuth } = useAuth0();    
+    const { isAuthenticated } = useAuth0();    
     return (
-        <Navbar className="nav navbar fixed-top navbar-expand-lg p-md-3">
-            <Container type="div" fluid>
-                <Navbar.Brand href="/" className="nav navbar-brand">
+        <Navbar>
+            <Stack direction="horizontal" gap={1}>
+                <Navbar.Brand href="/" xs={12} xxl={4}>
                     <img src={logo} alt="" id="logo" />
                 </Navbar.Brand>
-            </Container>
-
-            <Container >
-                
                 <Form>
                     <Form.Group>
-                        <Form.Control type="" placeholder="Search" className="me-auto"/>
+                        <Form.Control type="" placeholder="Search" className="searchBar" />
                     </Form.Group>
                 </Form>
-            </Container>
-                <NavLink to="/Cart">
-                    <img src={cart} id="cart" alt=""/>
-                </NavLink>
-                <Container>
-                    {useLogin(isAuth)}
-                </Container>
-            
-            <Container>
-            </Container>
-        </Navbar>    
+                <Row className="logBox">
+                    <Col>
+                        <NavLink to="/Cart">
+                            <img src={cart} id="cart" alt="" className="d-inline-block align-center" />
+                        </NavLink>
+                    </Col>
+                    <Col >
+                        {useLogin(isAuthenticated)}
+                    </Col>
+                </Row>
+            </Stack>
+        </Navbar>
     );
 }
 
 function useLogin(logged) {
-    const { loginWithRedirect } = useAuth0();
-    const { logout } = useAuth0();
+    const { loginWithRedirect,logout,user } = useAuth0();
     if(!logged){
         return (
             <Row>
@@ -59,23 +55,17 @@ function useLogin(logged) {
         );
     } else {
         return (
-            <Row>
-                <Col>
-                    <NavLink className="nav-link text-white">
-                        {() => function getUserName(){
-                            return "Utilizador1";
-                        }}
-                    </NavLink>
-                </Col>
-                <Col>
-                    <NavLink className="nav-link text-white" onClick={() => logout({returnTo: window.location.origin,})}>
-                        Logout
-                    </NavLink>
-                </Col>
-            </Row>
+            /*Trocar para username mais tarde e talvez acrescentar a fotografia se quiserem*/ 
+            <NavDropdown title={user.email} id="basic-nav-dropdown" className="NavDrop">
+                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={() => logout({returnTo: window.location.origin,})}>Logout</NavDropdown.Item>
+            </NavDropdown>
         );
     }
 
 }
+
+
 
 export default SideBar;

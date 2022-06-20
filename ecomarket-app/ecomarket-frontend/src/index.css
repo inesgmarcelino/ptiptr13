@@ -14,24 +14,41 @@ body {
   display: flex; */
   position: fixed; 
   height: 70px;
+  z-index: 1;
 }
 
+.navbar-brand {
+  max-width: 17.5%;
+}
 
-#searchBar {
-  height: 25px;
-  width: 200px;
+.navbar-brand > img {
+  min-width: 194px;
+  min-height: 48px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.NavDrop {
+  vertical-align: middle;
+  color: white;
+}
+
+.logBox {
+  position: absolute;
+  right:0;
+}
+
+.searchBar {
+  height: 100%;
+  position:relative;
+  left:100%;
   margin-bottom: 7px;
-  /* position: fixed;  */
-
+  min-width: 400px;
+  max-width: 400px;
+  vertical-align: middle;
+ 
 }
 
- #logo {
-  max-width: 35%;
-  max-height: 35%;
-  /* margin: 15px 0 0 -5px; */
-  /* display: block;
-  position: absolute; */
-} 
 
 #icon {
   width: 25px;
