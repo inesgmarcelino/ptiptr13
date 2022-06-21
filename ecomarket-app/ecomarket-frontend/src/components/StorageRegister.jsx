@@ -89,6 +89,7 @@ function ArmazemRegister(){
     }
 
     const concelhos = () => {
+        document.getElementById("concelhos").innerHTML = "<option value='' selected>Selecione um Concelho</option>";
         Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { 
             params: { 
                 dist: dist
