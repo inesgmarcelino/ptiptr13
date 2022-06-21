@@ -51,7 +51,7 @@ router.post('/reg_storage', (req,res) => {
     
         var idloc;
         queryString = "SELECT id FROM localizacao";
-        conn.query(queryString, [], (err,results) => {
+        conn.query(queryString, (err,results) => {
             console.log(results);
             console.log(results[results.length -1]);
             if (!err) {

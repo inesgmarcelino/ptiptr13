@@ -290,15 +290,18 @@ CREATE TABLE emite_poluicao (
         FOREIGN KEY (poluicao)  REFERENCES poluicao(id)
 ) ENGINE = InnoDB;
 
-INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('fornecedor1','forn1@ecomarket.pt', 111111111,111111111, 'fornOK', 'Fornecedor 1');
-INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('transportador1','trans1@ecomarket.pt', 222222222,222222222, 'transOK', 'Transportador 1');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('Admin','admin@ecomarket.pt', 000000000,000000000, 'adminOK', 'Administração');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('consumidor','cons1@ecomarket.pt', 111111111,111111111, 'consOK', 'Consumidor 1');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('fornecedor1','forn1@ecomarket.pt', 222222222,222222222, 'fornOK', 'Fornecedor 1');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('transportador1','trans1@ecomarket.pt', 333333333,333333333, 'transOK', 'Transportador 1');
+SELECT id FROM utilizador WHERE email = 'cons1@ecomarket.pt';
 SELECT id FROM utilizador WHERE email = 'forn1@ecomarket.pt';
 SELECT id FROM utilizador WHERE email = 'trans1@ecomarket.pt';
 
+INSERT INTO fornecedor VALUES (2);
 INSERT INTO fornecedor VALUES (3);
-INSERT INTO transportador VALUES (4);
--- Inserts do Adminsitrador
-INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('Admin','admin@ecomarket.pt', 000000000,000000000, 'adminOK', 'Administração');
+INSERT INTO transportador (utilizador) VALUES (4);
+
 
 -- Inserts de Distritos e Concelhos
 INSERT INTO distrito VALUES (1, 'Aveiro');
