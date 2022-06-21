@@ -5,7 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 function ArmazemRegister(){
     const { user } = useAuth0();
-    const forn = user.email;
+    const forn = "forn1@ecomarket.pt"; //user.email;
     const [moradaArm, setMoradaArm]     = useState('');
     const [codpostal, setCodPostal]     = useState('');
     const [dist, setDist]               = useState('');
