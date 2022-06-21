@@ -16,6 +16,7 @@ exports.signup = function(req,res){
             name: "John Doe",
             nickname: "johnny",
             picture: "https://gumlet.assettype.com/afkgaming%2F2022-04%2Fedd0733d-feb1-4978-9378-1a7dbc13e2d5%2FUntitled_design___2022_04_18T161045_989__1_.jpg",
+            headers: "Content-Type: application/json"
         }
     };
 
