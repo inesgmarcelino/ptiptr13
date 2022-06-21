@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-str */
 import Axios from 'axios';
 import { useState } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
@@ -80,27 +81,32 @@ function ArmazemRegister(){
     }
 
     const distritos = () => {
+        document.getElementById("distritos").innerHTML = "<select className='form-select' name='distrito' onChange={handler} required>\
+                                                            <option value='' selected>Selecione um Distrito</option>";
         Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
             var dist = response.data.results;
             for (var i = 0; i < dist.length; i++) {
                 document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
             }
         });
+        document.getElementById("distritos").innerHTML += "</select>";
     }
 
     const concelhos = (x) => {
-        var dist = x.target.value;
-        document.getElementById("concelhos").innerHTML = "<option value='' selected>Selecione um Concelho</option>";
-        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { 
-            params: { 
-                dist: dist
-        }}).then((response) => {
-            var conc = response.data.results;
-            for (var i = 0; i < conc.length; i++) {
-                document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
-            }
-        });
-        handler(x);
+        document.getElementById("concelhos").innerHTML = "<select className='form-select' name='concelho' onChange={handler} required>\
+                                                            <option value='' selected>Selecione um Concelho</option>";
+        if (x !== '') {
+            Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { 
+                params: { 
+                    dist: x
+            }}).then((response) => {
+                var conc = response.data.results;
+                for (var i = 0; i < conc.length; i++) {
+                    document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
+                }
+            });
+        } 
+        document.getElementById("concelhos").innerHTML += "</select>";
     }
 
     return(
@@ -118,17 +124,13 @@ function ArmazemRegister(){
                             <label>Código Postal</label>
                                 <input className="form-control" type="text" pattern="^\d{4}-\d{3}?$" name="codigoPostal" size="50" onChange={handler} required/>
                          </div>
-                         <div className="col-md-12">
+                         <div className="col-md-12" id="distritos">
                             <label>Distrito</label>
-                                <select className="form-select" name="distrito" id="distritos" onChange={concelhos} onLoad={distritos} required>
-                                    <option value='' selected>Selecione um Distrito</option>
-                                </select>
+                                {distritos}
                          </div>
-                         <div className="col-md-12">
+                         <div className="col-md-12" id="concelhos">
                             <label>Concelho</label>
-                                <select className="form-select" name="concelho" id="concelhos" onChange={handler} required>
-                                    <option value='' selected>Selecione um Concelho</option>
-                                </select>
+                                {concelhos(dist)}
                          </div>
                         
                          <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
