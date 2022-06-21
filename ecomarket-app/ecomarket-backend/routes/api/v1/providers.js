@@ -25,7 +25,7 @@ router.post('/reg_storage', (req,res) => {
         var idprov;
         conn.query(queryString, [prov], (err,result) => {
             if (!err) {
-                idprov = results[0].id;
+                idprov = result[0].id;
             } else {
                 conn.release();
 
