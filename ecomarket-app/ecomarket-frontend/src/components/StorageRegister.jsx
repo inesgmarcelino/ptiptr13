@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 
 
-function ArmazemRegister(){
+function StorageRegister(){
     const { user } = useAuth0();
     const forn = "forn1@ecomarket.pt"; //user.email;
     const [moradaArm, setMoradaArm]     = useState('');
@@ -151,4 +151,4 @@ function concelhos(x) {
    elem.innerHTML += "</select>";
 }
 
-export default ArmazemRegister;
+export default StorageRegister;
