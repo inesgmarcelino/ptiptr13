@@ -36,31 +36,31 @@ services:
     #     - "frontend"
     #    # - "mysql_master"
 
-    frontend:
-      image: node:18-bullseye
-      volumes:
-        - ./ecomarket-app/ecomarket-frontend:/frontend
-      command: "npm start --prefix /frontend"
-      networks:
-        c-network:
-          aliases:
-            - frontend
-      restart: always
-      depends_on:
-        - "loadbalancer"
+    # frontend:
+    #   image: node:18-bullseye
+    #   volumes:
+    #     - ./ecomarket-app/ecomarket-frontend:/frontend
+    #   command: "npm start --prefix /frontend"
+    #   networks:
+    #     c-network:
+    #       aliases:
+    #         - frontend
+    #   restart: always
+    #   depends_on:
+    #     - "loadbalancer"
 
-    backend:
-      image: node:18-bullseye
-      volumes:
-        - ./ecomarket-app/ecomarket-backend:/backend
-      command: "node ./backend/bin/www"
-      networks:
-        c-network:
-          aliases:
-            - backend
-      restart: always
-      depends_on:
-        - "frontend"
+    # backend:
+    #   image: node:18-bullseye
+    #   volumes:
+    #     - ./ecomarket-app/ecomarket-backend:/backend
+    #   command: "node ./backend/bin/www"
+    #   networks:
+    #     c-network:
+    #       aliases:
+    #         - backend
+    #   restart: always
+    #   depends_on:
+    #     - "frontend"
 
     mysql_master:
       image: mysql:debian
@@ -69,6 +69,7 @@ services:
           aliases:
             - mysql
       restart: always
+      container_name: mysql
       environment:
         - MYSQL_ROOT_PASSWORD=S3cret
         - MYSQL_PASSWORD=An0thrS3crt
