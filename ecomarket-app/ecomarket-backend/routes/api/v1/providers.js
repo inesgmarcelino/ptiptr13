@@ -17,7 +17,7 @@ router.post('/reg_storage', (req,res) => {
     const cpostal = req.body.cpostal;
     const dist = req.body.dist;
     const conc = req.body.conc;
-    const prov = req.body.prov;
+    const prov = req.body.id;
 
     var queryString = "INSERT INTO localizacao (morada, c_postal, distrito, concelho) VALUES (?,?,?,?)";
     pool.getConnection((err, conn) => {
@@ -210,6 +210,7 @@ router.post('/reg_product', (req,res) => {
             }
         });
     
+        const prov = req.body.id;
         const nome = req.body.nome;
         const dataprod = req.body.dataprod;
         const preco = req.body.preco;
@@ -256,3 +257,6 @@ router.get('/orders/:pid', (req,res) => {
         });
     });
 });
+
+//exporta funções/"objetos"
+module.exports = router ;

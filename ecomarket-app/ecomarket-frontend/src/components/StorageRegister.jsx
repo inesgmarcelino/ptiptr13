@@ -49,6 +49,7 @@ function ArmazemRegister(){
                 break;
             case "distrito":
                 setDist(x.target.value);
+                concelhos(x.target.value);
                 break;
             case "concelho":
                 setConc(x.target.value);
@@ -59,6 +60,7 @@ function ArmazemRegister(){
                     // setError(true)
                 } else {
                     Axios.post("https://ecomarket.works/api/v1/providers/reg_storage", {
+                        // id: id,
                         morada: moradaArm,
                         codpostal: codpostal,
                         dist: dist,
@@ -71,6 +73,24 @@ function ArmazemRegister(){
             default:
                 console.log();
         }
+    }
+
+    const distritos = () => {
+        Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
+            var dist = response.data.results;
+            for (var i = 0; i < dist.length; i++) {
+                document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
+            }
+        });
+    }
+
+    const concelhos = (x) => {
+        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", {dist: x}).then((response) => {
+            var conc = response.data.results;
+            for (var i = 0; i < conc.length; i++) {
+                document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
+            }
+        });
     }
 
     return(
@@ -86,22 +106,18 @@ function ArmazemRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Código Postal</label>
-                                <input className="form-control" type="number" max={9999} name="codigoPostal1" size="30" onChange={handler} required/>
-                                -
-                                <input className="form-control" type="number" max={999} name="codigoPostal2" size="20" onChange={handler} required/>
+                                <input className="form-control" type="text" pattern="^\d{4}-\d{3}?$" name="codigoPostal" size="50" onChange={handler} required/>
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>
-                                <select name="distrito" onChange={handler} required>
+                                <select className="form-select" name="distrito" id="distritos" onChange={handler} onMouseOver={distritos} required>
                                     <option value='' selected>Selecione um Distrito</option>
-                                    {/* loop para ir buscar as cenas à bd */}
                                 </select>
                          </div>
                          <div className="col-md-12">
                             <label>Concelho</label>
-                                <select name="concelho" onChange={handler} required>
+                                <select className="form-select" name="concelho" id="concelhos" onChange={handler} required>
                                     <option value='' selected>Selecione um Concelho</option>
-                                    {/* loop para ir buscar as cenas à bd */}
                                 </select>
                          </div>
                         

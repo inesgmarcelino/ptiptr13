@@ -23,7 +23,7 @@ router.post('/register', (req, res) => {
     const email = req.body.email;
     const nif = req.body.nif;
     const tlm = req.body.tlm;
-    // const image = req.body.image;
+    const profpic = req.body.profpic;
     const morada = req.body.morada;
     const pwd = req.body.pwd;
     const cons = req.body.cons;
@@ -247,7 +247,36 @@ router.put('/edit/:uid', (req,res) => {
             }
         });
     });
-})
+});
+
+router.post('/uploadProfPic', (req,res) => {
+    const filename = req.body.filename;
+    var queryString = "INSERT INTO image (filename) VALUES (?)";
+
+    pool.getConnection((err,conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, (err, results) => {
+    
+            if (!err) {
+                queryString = "SELECT id FROM image";
+                conn.query(queryString, (err, results) => {
+                    conn.release();
+
+                    if (!err) {
+                        console.log("Imagem descarregada com sucesso");
+                        return res.status(200).send({message: results[results.size -1].id})
+                    }
+                })
+            } else {
+                console.log("Não foi possível realizar essa operação. output 9");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
+
+
 
 
 // um user que seja só consumidor ou só fornecedor pode se tornar também fornecedor ou consumidor...

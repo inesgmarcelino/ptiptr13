@@ -11,6 +11,7 @@ function Register() {
     const [nif, setNif]                             = useState('');
     const [telem, setTelem]                         = useState('');
     const [morada, setMorada]                       = useState('');
+    const [profpic, setProfPic]                     = useState(null);
     const [password, setPassword]                   = useState('');
     const [checkPassword, setCheckPassword]         = useState('');
     const [checkConsumidor, setConsumidor]          = useState(false);
@@ -42,6 +43,8 @@ function Register() {
                 break;
             case "telem":
                 setTelem(x.target.value);
+                break;
+            case "profpic":
                 break;
             case "password":
                 setPassword(x.target.value);
@@ -77,6 +80,7 @@ function Register() {
                         nif: nif, 
                         tlm: telem, 
                         morada: morada,
+                        profpic: profpic,
                         pwd: password,
                         cons: checkConsumidor,
                         forn: checkFornecedor,
@@ -122,7 +126,7 @@ function Register() {
                             </div>
                             <div className="col-md-12">
                                 <label>NIF</label>
-                                <input className="form-control" type="number" name="nif" size="50" onChange={handler} required />
+                                <input className="form-control" type="text" pattern="[0-9]{9}" name="nif" size="50" onChange={handler} required />
                             </div>
                             <div className="col-md-12">
                                 <label>Morada</label>
@@ -130,7 +134,11 @@ function Register() {
                             </div>
                             <div className="col-md-12">
                                 <label>Número de Telemóvel</label>
-                                <input className="form-control" type="tel" name="telem" size="50" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="xxx xxx xxx" onChange={handler} required />
+                                <input className="form-control" type="number" name="telem" size="50" onChange={handler} required />
+                            </div>
+                            <div className="col-md-12">
+                                <label>Foto de Perfil</label>
+                                <input className="form-control" type="file" name="profpic" size="50" onChange={handler} />
                             </div>
                             <div className="col-md-12">
                                 <label>Password</label>
