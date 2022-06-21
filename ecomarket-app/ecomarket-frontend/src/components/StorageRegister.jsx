@@ -115,7 +115,7 @@ function StorageRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Código Postal</label>
-                                <input className="form-control" type="text" pattern="^\d{4}-\d{3}?$" name="codigoPostal" size="50" onChange={handler} required/>
+                                <input className="form-control" type="number" name="codigoPostal" size="50" onChange={handler} required/>
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>
