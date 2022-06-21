@@ -53,8 +53,7 @@ function ArmazemRegister(){
                 break;
             case "distrito":
                 setDist(x.target.value);
-                console.log(x.target.value);
-                concelhos(x.target.value);
+                concelhos();
                 break;
             case "concelho":
                 setConc(x.target.value);
@@ -89,8 +88,8 @@ function ArmazemRegister(){
         });
     }
 
-    function concelhos(x) {
-        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", {dist: x}).then((response) => {
+    const concelhos = () => {
+        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", {dist: dist}).then((response) => {
             var conc = response.data.results;
             for (var i = 0; i < conc.length; i++) {
                 document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
