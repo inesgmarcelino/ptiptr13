@@ -38,7 +38,7 @@ router.post('/reg_storage', (req,res) => {
 
         queryString = "INSERT INTO localizacao (morada, c_postal, distrito, concelho) VALUES (?,?,?,?)";
 
-        conn.query(queryString, [morada, cpostal, dist, conc], (err, result) => {
+        conn.query(queryString, [morada, cpostal.toString(), dist, conc], (err, result) => {
             if (err) {
                 conn.release();
 
