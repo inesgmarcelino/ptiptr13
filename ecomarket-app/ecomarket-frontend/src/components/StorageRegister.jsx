@@ -88,7 +88,8 @@ function ArmazemRegister(){
         });
     }
 
-    const concelhos = () => {
+    const concelhos = (x) => {
+        var dist = x.target.value;
         document.getElementById("concelhos").innerHTML = "<option value='' selected>Selecione um Concelho</option>";
         Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { 
             params: { 
@@ -99,6 +100,7 @@ function ArmazemRegister(){
                 document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
             }
         });
+        handler(x);
     }
 
     return(
@@ -118,7 +120,7 @@ function ArmazemRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>
-                                <select className="form-select" name="distrito" id="distritos" onChange={handler} onMouseOver={distritos} required>
+                                <select className="form-select" name="distrito" id="distritos" onChange={concelhos} onLoad={distritos} required>
                                     <option value='' selected>Selecione um Distrito</option>
                                 </select>
                          </div>
