@@ -16,7 +16,7 @@ CREATE TABLE concelho (
 ) ENGINE = InnoDB;
 
 CREATE TABLE image (
-    id              INT NOT NULL,
+    id              INT PRIMARY KEY,
     filename        VARCHAR(250) NOT NULL
         --
     CONSTRAINT fk_image
