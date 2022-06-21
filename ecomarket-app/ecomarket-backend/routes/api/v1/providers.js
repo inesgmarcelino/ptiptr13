@@ -17,11 +17,27 @@ router.post('/reg_storage', (req,res) => {
     const cpostal = req.body.cpostal;
     const dist = req.body.dist;
     const conc = req.body.conc;
-    const prov = req.body.id;
+    const prov = req.body.email;
 
-    var queryString = "INSERT INTO localizacao (morada, c_postal, distrito, concelho) VALUES (?,?,?,?)";
+    var queryString = "SELECT utilizador.id FROM utilizador, fornecedor WHERE utilizador.email = ? AND utilizador.id = fornecedor.utilizador";
     pool.getConnection((err, conn) => {
         if (err) throw err;
+
+        var idprov;
+        conn.query(queryString, [prov], (err,result) => {
+            if (!err) {
+                idprov = results[0].id;
+            } else {
+                conn.release();
+
+                res.status(500);
+                res.type('json');
+                res.send({"message":"Não foi possível realizar essa operação. output 1"});
+                return;
+            }
+        })
+
+        queryString = "INSERT INTO localizacao (morada, c_postal, distrito, concelho) VALUES (?,?,?,?)";
 
         conn.query(queryString, [morada, cpostal, dist, conc], (err, result) => {
             if (err) {
@@ -77,7 +93,7 @@ router.post('/reg_storage', (req,res) => {
         });
     
         queryString = "INSERT INTO lista_armazens (fornecedor, armazem) VALUES (?,?)";
-        conn.query(queryString, [prov, idsto], (err, results) => {
+        conn.query(queryString, [idprov, idsto], (err, results) => {
             if (err) {
                 conn.release();
 

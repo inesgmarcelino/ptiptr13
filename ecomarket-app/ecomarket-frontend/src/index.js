@@ -3,7 +3,7 @@ import {createRoot} from 'react-dom/client';
 import './index.css';
 import Auth0ProviderWithHistory from './auth/auth0-hist-prov';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import {NavBar, Home, Login, Register, Cart, Footer, Profile, EditProfile, Catalog, Payment, ShoppingCart, Consumidor, 
+import {NavBar, Home, Login, Register, Cart, Footer, Profile, EditProfile, Catalog, Payment, Consumidor, 
    Fornecedor, ConfirmarEncomenda, Comparador, Product, StorageRegister, ProductRegister, AdminLogin, AdminTipos} from './components';
 
 

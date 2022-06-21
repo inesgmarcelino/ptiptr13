@@ -1,13 +1,17 @@
-import { useState } from "react";
 import Axios from 'axios';
+import { useState } from "react";
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 function ArmazemRegister(){
-    var cp = "xxxx-xxx";
+    const { user } = useAuth0();
+    const forn = user.email;
     const [moradaArm, setMoradaArm]     = useState('');
     const [codpostal, setCodPostal]     = useState('');
     const [dist, setDist]               = useState('');
     const [conc, setConc]               = useState('');
-
+    var cp = "xxxx-xxx";
+    
     const handler = (x) => {
         switch(x.target.name) {
             case "morada":
@@ -49,6 +53,7 @@ function ArmazemRegister(){
                 break;
             case "distrito":
                 setDist(x.target.value);
+                console.log(x.target.value);
                 concelhos(x.target.value);
                 break;
             case "concelho":
@@ -60,7 +65,7 @@ function ArmazemRegister(){
                     // setError(true)
                 } else {
                     Axios.post("https://ecomarket.works/api/v1/providers/reg_storage", {
-                        // id: id,
+                        email: forn,
                         morada: moradaArm,
                         codpostal: codpostal,
                         dist: dist,
@@ -84,7 +89,7 @@ function ArmazemRegister(){
         });
     }
 
-    const concelhos = (x) => {
+    function concelhos(x) {
         Axios.get("https://ecomarket.works/api/v1/gets/concelhos", {dist: x}).then((response) => {
             var conc = response.data.results;
             for (var i = 0; i < conc.length; i++) {
