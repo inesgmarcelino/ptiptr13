@@ -40,7 +40,7 @@ services:
       image: node:18-bullseye
       volumes:
         - ./ecomarket-app/ecomarket-frontend:/frontend
-      command: "cd /frontend && npm start"
+      command: "npm start --prefix /frontend"
       networks:
         c-network:
           aliases:
@@ -53,7 +53,7 @@ services:
       image: node:18-bullseye
       volumes:
         - ./ecomarket-app/ecomarket-backend:/backend
-      command: "cd /backend && npm start"
+      command: "node ./backend/bin/www"
       networks:
         c-network:
           aliases:
