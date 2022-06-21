@@ -80,6 +80,28 @@ function StorageRegister(){
         }
     }
 
+    const distritos = () => {
+        Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
+            var dist = response.data.results;
+            for (var i = 0; i < dist.length; i++) {
+                document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
+            }
+        });
+    }
+
+    const concelhos = () => {
+        document.getElementById("concelhos").innerHTML = "<option value='' selected>Selecione um Concelho</option>";
+        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { 
+            params: { 
+                dist: dist
+        }}).then((response) => {
+            var conc = response.data.results;
+            for (var i = 0; i < conc.length; i++) {
+                document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
+            }
+        });
+    }
+
     return(
         <div>
         <div className="cardForn position-absolute top-50 start-50 translate-middle">
@@ -95,13 +117,17 @@ function StorageRegister(){
                             <label>Código Postal</label>
                                 <input className="form-control" type="text" pattern="^\d{4}-\d{3}?$" name="codigoPostal" size="50" onChange={handler} required/>
                          </div>
-                         <div className="col-md-12" id="distritos">
+                         <div className="col-md-12">
                             <label>Distrito</label>
-                                {distritos}
+                                <select className="form-select" name="distrito" id="distritos" onChange={handler} onMouseOver={distritos} required>
+                                    <option value='' selected>Selecione um Distrito</option>
+                                </select>
                          </div>
-                         <div className="col-md-12" id="concelhos">
+                         <div className="col-md-12">
                             <label>Concelho</label>
-                                {concelhos(dist)}
+                                <select className="form-select" name="concelho" id="concelhos" onChange={handler} required>
+                                    <option value='' selected>Selecione um Concelho</option>
+                                </select>
                          </div>
                         
                          <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
@@ -110,45 +136,7 @@ function StorageRegister(){
         </div> 
         </div>
     );
-}
 
-function distritos() {
-    var elem; // declara a variável sem nenhum valor atribuído
-    document.addEventListener("DOMContentLoaded", function(){
-        elem = document.getElementById("distritos");
-    });
-
-    elem.innerHTML = "<select className='form-select' name='distrito' onChange={handler} required>\
-                                                        <option value='' selected>Selecione um Distrito</option>";
-    Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
-        var dist = response.data.results;
-        for (var i = 0; i < dist.length; i++) {
-            elem.innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
-        }
-    });
-    elem.innerHTML += "</select>";
-}
-
-function concelhos(x) {
-    var elem; // declara a variável sem nenhum valor atribuído
-    document.addEventListener("DOMContentLoaded", function(){
-        elem = document.getElementById("concelhos");
-    });
-    
-   elem.innerHTML = "<select className='form-select' name='concelho' onChange={handler} required>\
-                                                        <option value='' selected>Selecione um Concelho</option>";
-    if (x !== '') {
-        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { 
-            params: { 
-                dist: x
-        }}).then((response) => {
-            var conc = response.data.results;
-            for (var i = 0; i < conc.length; i++) {
-               elem.innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
-            }
-        });
-    } 
-   elem.innerHTML += "</select>";
 }
 
 export default StorageRegister;
