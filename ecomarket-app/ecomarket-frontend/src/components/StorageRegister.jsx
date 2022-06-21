@@ -11,46 +11,14 @@ function StorageRegister(){
     const [codpostal, setCodPostal]     = useState('');
     const [dist, setDist]               = useState('');
     const [conc, setConc]               = useState('');
-    var cp = "xxxx-xxx";
     
     const handler = (x) => {
         switch(x.target.name) {
             case "morada":
                 setMoradaArm(x.target.value);
                 break;
-            case "codigoPostal1":
-                var cod = 0;
-                if (x.target.value < 1000 && x.target.value > 99) {
-                    cod = parseInt('0'+ x.target.value);
-                } else if (x.target.value < 100 && x.target.value > 9) {
-                    cod = parseInt('00' + x.target.value);
-                } else if (x.target.value < 10) {
-                    cod = parseInt('000' +  x.target.value);
-                } else {
-                    cod = x.target.value;
-                }
-
-                var c = cp.split('-');
-                cp = cod + '-' + c[1];
-                if (c[1] !== "xxx") {
-                    setCodPostal(cp);
-                }
-                break;
-            case "codigoPostal2":
-                var cod1 = 0;
-                if (x.target.value < 100 && x.target.value > 9) {
-                    cod1 = parseInt^('0' + x.target.value);
-                } else if (x.target.value < 10) {
-                    cod1 = parseInt('00' + x.target.value);
-                } else {
-                    cod1 = x.target.value;
-                }
-
-                var c1 = cp.split('-');
-                cp = c1[0] + '-' + cod1;
-                if (c1[0] !== "xxxx") {
-                    setCodPostal(cp);
-                }
+            case "codigoPostal":
+                setCodPostal(x.target.value);
                 break;
             case "distrito":
                 setDist(x.target.value);
@@ -63,10 +31,9 @@ function StorageRegister(){
                 x.preventDefault();
                 console.log(moradaArm);
                 console.log(codpostal);
-                console.log('x' in codpostal)
                 console.log(dist);
                 console.log(conc);
-                if (moradaArm === '' || codpostal === '' || 'x' in codpostal || dist === '' || conc === '') {
+                if (moradaArm === '' || codpostal === '' || dist === '' || conc === '') {
                     // setError(true)
                     console.log("aqui");
                 } else {
