@@ -52,8 +52,13 @@ CREATE TABLE localizacao (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     morada          VARCHAR(250) NOT NULL,
     c_postal        VARCHAR(8) NOT NULL,
-    distrito        VARCHAR(20) NOT NULL,
-    concelho        VARCHAR(20) NOT NULL
+    distrito        INT NOT NULL,
+    concelho        INT NOT NULL,
+    --
+    CONSTRAINT fk_dist
+        FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE,
+    CONSTRAINT fk_conc
+        FOREIGN KEY (concelho) REFERENCES concelho(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE armazem (
@@ -71,9 +76,9 @@ CREATE TABLE lista_armazens (
     CONSTRAINT pk_armazens
         PRIMARY KEY (fornecedor,armazem),
     CONSTRAINT fk_forn_id
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador),
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_armazem_id
-        FOREIGN KEY (armazem) REFERENCES armazem(id)
+        FOREIGN KEY (armazem) REFERENCES armazem(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE transportador (
@@ -88,7 +93,18 @@ CREATE TABLE transportador (
 
 CREATE TABLE veiculo (
     id              INT PRIMARY KEY AUTO_INCREMENT,
-    condicoes       VARCHAR(250) NOT NULL
+    marca           VARCHAR(50),
+    ano             INT(4),
+    combustivel     INT(1), -- 1 -> Gasolina, 2 -> Gasóleo, 3 -> GPL, 4 -> Elétrico, 5 -> Híbrido
+    caixa           INT(1), -- 1 -> Manual, 2 -> Automática
+    co2             NUMERIC(3,2),
+    --
+    CONSTRAINT ck_comb
+		CHECK (combustivel = 1 OR combustivel = 2 OR combustivel = 3 
+			OR combustivel = 4 OR combustivel = 5),
+    CONSTRAINT ck_caixa
+		CHECK (caixa = 1 OR caixa = 2)
+    
 ) ENGINE = InnoDB;
 
 CREATE TABLE lista_veiculos (
@@ -98,7 +114,7 @@ CREATE TABLE lista_veiculos (
     CONSTRAINT pk_veiculos
         PRIMARY KEY (transportador,veiculo),
     CONSTRAINT fk_transp_id
-        FOREIGN KEY (transportador) REFERENCES transportador(utilizador),
+        FOREIGN KEY (transportador) REFERENCES transportador(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_veiculo_id
         FOREIGN KEY (veiculo) REFERENCES veiculo(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
