@@ -40,8 +40,9 @@ router.get('/distritos', (req,res) => {
 });
 
 router.get('/concelhos', (req,res) => {
+    console.log(req.query.dist)
+
     const dist = req.query.dist;
-    console.log(dist)
     var queryString = "SELECT id, nome FROM concelho WHERE distrito = ?";
     pool.getConnection((err, conn) => {
         if (err) throw err;
