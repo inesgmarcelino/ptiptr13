@@ -61,6 +61,11 @@ function StorageRegister(){
                 break;
             case "submit":
                 x.preventDefault();
+                console.log(moradaArm);
+                console.log(codpostal);
+                console.log('x' in codpostal)
+                console.log(dist);
+                console.log(conc);
                 if (moradaArm === '' || codpostal === '' || 'x' in codpostal || dist === '' || conc === '') {
                     // setError(true)
                     console.log("aqui");
