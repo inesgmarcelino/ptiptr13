@@ -80,35 +80,6 @@ function ArmazemRegister(){
         }
     }
 
-    const distritos = () => {
-        document.getElementById("distritos").innerHTML = "<select className='form-select' name='distrito' onChange={handler} required>\
-                                                            <option value='' selected>Selecione um Distrito</option>";
-        Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
-            var dist = response.data.results;
-            for (var i = 0; i < dist.length; i++) {
-                document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
-            }
-        });
-        document.getElementById("distritos").innerHTML += "</select>";
-    }
-
-    const concelhos = (x) => {
-        document.getElementById("concelhos").innerHTML = "<select className='form-select' name='concelho' onChange={handler} required>\
-                                                            <option value='' selected>Selecione um Concelho</option>";
-        if (x !== '') {
-            Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { 
-                params: { 
-                    dist: x
-            }}).then((response) => {
-                var conc = response.data.results;
-                for (var i = 0; i < conc.length; i++) {
-                    document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
-                }
-            });
-        } 
-        document.getElementById("concelhos").innerHTML += "</select>";
-    }
-
     return(
         <div>
         <div className="cardForn position-absolute top-50 start-50 translate-middle">
@@ -139,6 +110,35 @@ function ArmazemRegister(){
         </div> 
         </div>
     );
+}
+
+function distritos() {
+    document.getElementById("distritos").innerHTML = "<select className='form-select' name='distrito' onChange={handler} required>\
+                                                        <option value='' selected>Selecione um Distrito</option>";
+    Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
+        var dist = response.data.results;
+        for (var i = 0; i < dist.length; i++) {
+            document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
+        }
+    });
+    document.getElementById("distritos").innerHTML += "</select>";
+}
+
+function concelhos(x) {
+    document.getElementById("concelhos").innerHTML = "<select className='form-select' name='concelho' onChange={handler} required>\
+                                                        <option value='' selected>Selecione um Concelho</option>";
+    if (x !== '') {
+        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { 
+            params: { 
+                dist: x
+        }}).then((response) => {
+            var conc = response.data.results;
+            for (var i = 0; i < conc.length; i++) {
+                document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
+            }
+        });
+    } 
+    document.getElementById("concelhos").innerHTML += "</select>";
 }
 
 export default ArmazemRegister;
