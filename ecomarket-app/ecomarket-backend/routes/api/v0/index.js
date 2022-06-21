@@ -8,6 +8,7 @@ const hello = require('./hello.js');
 const json = require('./json.js');
 const pathexample = require('./pathexample.js'); 
 const testbd = require('./bdexample.js');
+const authtest = require('./authtest');
 
 /** o objeto router define as paths
  *  eh invocado como router.METODO_HTTP
@@ -78,4 +79,9 @@ router.get('/testbd/fetch/:id',function(req,res,next){
  * exports funciona basicamente como se quisesses colocar um objeto ou funcao
  * para ser lido/invocado fora do contexto do ficheiro onde ele esta
  */
+
+router.get('/authtest',function(req, res, next){
+	authtest.signup(req,res);
+});
+
 module.exports = router;
