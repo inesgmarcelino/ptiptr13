@@ -256,3 +256,6 @@ router.get('/orders/:pid', (req,res) => {
         });
     });
 });
+
+//exporta funções/"objetos"
+module.exports = router ;

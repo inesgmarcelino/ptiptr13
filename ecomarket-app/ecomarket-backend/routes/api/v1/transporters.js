@@ -87,3 +87,6 @@ router.get('/orders/:tid', (req,res) => {
         });
     });
 });
+
+//exporta funções/"objetos"
+module.exports = router ;
