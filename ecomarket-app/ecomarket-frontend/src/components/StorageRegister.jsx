@@ -63,7 +63,9 @@ function StorageRegister(){
                 x.preventDefault();
                 if (moradaArm === '' || codpostal === '' || 'x' in codpostal || dist === '' || conc === '') {
                     // setError(true)
+                    console.log("aqui");
                 } else {
+                    console.log("aqui 2");
                     Axios.post("https://ecomarket.works/api/v1/providers/reg_storage", {
                         email: forn,
                         morada: moradaArm,
