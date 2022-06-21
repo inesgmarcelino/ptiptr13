@@ -61,7 +61,6 @@ services:
       restart: always
       depends_on:
         - "frontend"
-       # - "mysql_master"
 
   mysql_master:
     image: mysql:debian
