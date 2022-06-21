@@ -89,7 +89,7 @@ function ArmazemRegister(){
     }
 
     const concelhos = () => {
-        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", {dist: dist}).then((response) => {
+        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { params: {dist: dist}}).then((response) => {
             var conc = response.data.results;
             for (var i = 0; i < conc.length; i++) {
                 document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";

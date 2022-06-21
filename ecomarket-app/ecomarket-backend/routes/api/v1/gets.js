@@ -40,6 +40,7 @@ router.get('/distritos', (req,res) => {
 });
 
 router.get('/concelhos', (req,res) => {
+    console.log(req);
     const dist = req.body.dist;
     console.log(dist)
     var queryString = "SELECT id, nome FROM concelho WHERE distrito = ?";
