@@ -77,3 +77,6 @@ router.get('/:pname', (req,res) => {
         });
     });
 });
+
+//exporta funções/"objetos"
+module.exports = router ;
