@@ -51,7 +51,7 @@ function Profile() {
                 <div className="modal-body" id="modal_body_admin">
                   <form method='post'>
                     <div className='col-md-12' id="formulario"></div>
-                    <button id='submit' type='submit' name='submit' onClick={handler} className='btn'>Adicionar</button>\
+                    <button id='submit' type='submit' name='submit' onClick={handler} className='btn'>Adicionar</button>
                   </form>
                 </div>
                 <div className="modal-footer" id="modal_footer_admin">
