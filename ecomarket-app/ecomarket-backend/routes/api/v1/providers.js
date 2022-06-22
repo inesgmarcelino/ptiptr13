@@ -31,10 +31,8 @@ router.post('/reg_storage', (req,res) => {
                     if (err) {
                         conn.release();
 
-                        res.status(500);
-                        res.type('json');
-                        res.send({"message":"Não foi possível realizar essa operação. output 1"});
-                        return;
+                        console.log("Não foi possível realizar essa operação. output 1");
+                        return res.status(500).send({message:"fail"});
                     }
                 });
     
@@ -47,11 +45,9 @@ router.post('/reg_storage', (req,res) => {
                         conn.query(queryString, [idloc], (err,result) => {
                             if (err) {
                                 conn.release();
-                
-                                res.status(500);
-                                res.type('json');
-                                res.send({"message":"Não foi possível realizar essa operação. output 2"});
-                                return;
+
+                                console.log("Não foi possível realizar essa operação. output 2");
+                                return res.status(500).send({message:"fail"});
                             }
                         });
                 
@@ -65,43 +61,33 @@ router.post('/reg_storage', (req,res) => {
                                         conn.release();
                                         
                                         if (err) {
-                                            res.status(500);
-                                            res.type('json');
-                                            res.send({"message":"Não foi possível realizar essa operação. output 3"});
-                                            return;
+                                            console.log("Não foi possível realizar essa operação. output 3");
+                                            return res.status(500).send({message:"fail"});
                                         } else {
-                                            res.status(200);
-                                            res.type('json');
-                                            res.send({"message":"Registo bem sucessido"});
-                                            return;
+                                            console.log("Registo bem sucessido");
+                                            return res.status(200).send({message:"success"});
                                         }
                                     });
                                 } else {
                                     conn.release();
-                    
-                                    res.status(500);
-                                    res.type('json');
-                                    res.send({"message":"Não foi possível realizar essa operação. output 4"});
-                                    return;
+
+                                    console.log("Não foi possível realizar essa operação. output 4");
+                                    return res.status(500).send({message:"fail"});
                                 }
                         });
 
                     } else {
                         conn.release();
 
-                        res.status(500);
-                        res.type('json');
-                        res.send({"message":"Não foi possível realizar essa operação. output 5"});
-                        return;
+                        console.log("Não foi possível realizar essa operação. output 5");
+                        return res.status(500).send({message:"fail"});
                     }
                 });
             } else {
                 conn.release();
 
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 6"});
-                return;
+                console.log("Não foi possível realizar essa operação. output 6");
+                return res.status(500).send({message:"fail"});
             }
         })
     });
