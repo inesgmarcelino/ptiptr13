@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-str */
 import React from 'react'
 import {Link } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
@@ -37,6 +38,22 @@ function Profile() {
           {isAdmin(email)}
         </table>
       </div>
+
+      {/* MODAL */}
+      <div className="modal fade" id="modal_admin" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+                <div className="modal-header" id="modal_header_admin">~
+                    <button type="button" class="btn-close" aria-label="Close"></button>
+                </div>
+                <div className="modal-body" id="modal_body_admin">
+                </div>
+                <div className="modal-footer" id="modal_footer_admin">
+                  <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
+                </div>
+            </div>
+        </div>
+      </div>
     </div>
   )
 }
@@ -53,17 +70,13 @@ function isAdmin(email) {
           </td>
         </tr>
         <tr>
-          <td className='card-profile'><h3>Lista de Tipos</h3>
-            <Link to ='/' id='profile'>
-              <button type="button" className="btn btn btn-primary">Ver</button>
-            </Link>
+          <td className='card-profile'><h3>Tipos</h3>
+            <button type="button" id='profile' onClick={addTipo} className="btn btn btn-primary">Adicionar</button>
           </td>
         </tr>
         <tr>
-          <td className='card-profile'><h3>Lista de Subtipos</h3>
-            <Link to ='/' id='profile'>
-              <button type="button" className="btn btn btn-primary">Ver</button>
-            </Link>
+          <td className='card-profile'><h3>Subtipos</h3>
+            <button type="button" id='profile' onClick={addSubtipo} className="btn btn btn-primary">Adicionar</button>
           </td>
         </tr>
       </tbody>
@@ -86,6 +99,34 @@ function isAdmin(email) {
         </tbody>
     );
   }
+}
+
+function addTipo() {
+  document.getElementById("modal_header_admin").innerText = "Adicionar novo Tipo";
+  document.getElementById("modal_body_admin").innerHTML = "<form method='post'>\
+                                                            <div className='col-md-12'>\
+                                                              <label>Tipo</label>\
+                                                              <input className='form-contro' type='text' name='tipo' size='50'/>\
+                                                            </div>\
+                                                            <button id='submit' type='submit' name='submit' className='btn'>Adicionar</button>\
+                                                          </form>";
+}
+
+function addSubtipo() {
+  document.getElementById("modal_header_admin").innerText = "Adicionar novo Subipo";
+  document.getElementById("modal_body_admin").innerHTML = "<form method='post'>\
+                                                            <div className='col-md-12'>\
+                                                              <label>Distrito</label>\
+                                                              <select className='form-select' name='distrito' id='distritos' onChange={handler} onMouseOver={distritos} required>\
+                                                                  <option value='' selected>Selecione um Distrito</option>\
+                                                              </select>\
+                                                            </div>\
+                                                            <div className='col-md-12'>\
+                                                              <label>Tipo</label>\
+                                                              <input className='form-contro' type='text' name='tipo' size='50'/>\
+                                                            </div>\
+                                                            <button id='submit' type='submit' name='submit' className='btn'>Adicionar</button>\
+                                                          </form>";
 }
 
 export default Profile;
