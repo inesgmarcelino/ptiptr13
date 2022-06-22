@@ -69,9 +69,9 @@ router.post('/admintipo', (req,res) => {
                 console.log("Registo bem sucessido");
                 return res.status(200).send({message:"success"});
             }
-        })
-    })
-})
+        });
+    });
+});
 
 
 router.get('/adminadd', (req, res) => {

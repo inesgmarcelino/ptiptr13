@@ -108,7 +108,7 @@ function addTipo() {
   document.getElementById("modal_body_admin").innerHTML = "<form method='post'>\
   <div className='col-md-12'>\
   <label>Tipo</label>\
-  <input className='form-control' type='text' id='newtipo' name='tipo' size='50'/>\
+  <input className='form-control' type='text' id='newtipo' name='tipo' size='30'/>\
   </div>\
   <button id='submit' type='submit' name='submit1' onClick={handler} className='btn'>Adicionar</button>\
   </form>";
