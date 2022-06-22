@@ -49,6 +49,10 @@ function Profile() {
                     <button type="button" className="btn-close" aria-label="Close"></button>
                 </div>
                 <div className="modal-body" id="modal_body_admin">
+                  <form method='post'>
+                    <div className='col-md-12' id="formulario"></div>
+                    <button id='submit' type='submit' name='submit' onClick={handler} className='btn'>Adicionar</button>\
+                  </form>
                 </div>
                 <div className="modal-footer" id="modal_footer_admin">
                   <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
@@ -105,31 +109,22 @@ function isAdmin(email) {
 
 function addTipo() {
   document.getElementById("modal_header_admin").innerText = "Adicionar novo Tipo";
-  document.getElementById("modal_body_admin").innerHTML = "<form method='post'>\
-  <div className='col-md-12'>\
-  <label>Tipo</label>\
+  document.getElementById("formulario").innerHTML = "<label>Tipo</label>\
   <input className='form-control' type='text' id='newtipo' name='tipo' size='30'/>\
-  </div>\
-  <button id='submit' type='submit' name='submit1' onClick={"+{handler}+"} className='btn'>Adicionar</button>\
-  </form>";
+  </div>";
   handleShow();
 }
 
 function addSubtipo() {
   document.getElementById("modal_header_admin").innerText = "Adicionar novo Subipo";
-  document.getElementById("modal_body_admin").innerHTML = "<form method='post'>\
-  <div className='col-md-12'>\
-    <label>Distrito</label>\
+  document.getElementById("modal_body_admin").innerHTML = "<label>Distrito</label>\
     <select className='form-select' name='distrito' id='distritos' onChange={handler} onMouseOver={distritos} required>\
         <option value='' selected>Selecione um Distrito</option>\
     </select>\
   </div>\
   <div className='col-md-12'>\
     <label>Tipo</label>\
-    <input className='form-control' type='text' name='tipo' size='50'/>\
-  </div>\
-  <button id='submit' type='submit' name='submit2' onClick={"+handler+"} className='btn'>Adicionar</button>\
-  </form>";
+    <input className='form-control' type='text' name='tipo' size='30'/>";
 handleShow();
 }
 
