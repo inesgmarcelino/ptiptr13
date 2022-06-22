@@ -65,28 +65,7 @@ function Profile() {
       );
     }
   }
-
-  const addTipo = () => {
-    document.getElementById("modal_header_admin").innerText = "Adicionar novo Tipo";
-    document.getElementById("formulario").innerHTML = "<label>Tipo</label>\
-    <input className='form-control' type='text' name='newtipo' onChange={handler} size='30'/>\
-    </div>";
-    handleShow();
-  }
-
-  const addSubtipo = () => {
-    document.getElementById("modal_header_admin").innerText = "Adicionar novo Subipo";
-    document.getElementById("modal_body_admin").innerHTML = "<label>Distrito</label>\
-      <select className='form-select' name='distrito' id='distritos' onChange={handler} onMouseOver={distritos} required>\
-          <option value='' selected>Selecione um Distrito</option>\
-      </select>\
-    </div>\
-    <div className='col-md-12'>\
-      <label>Tipo</label>\
-      <input className='form-control' type='text' name='tipo' size='30'/>";
-    handleShow();
-  }
-
+  
   const handler = (x) => {
     switch(x.target.name) {
       case "newtipo":
@@ -111,17 +90,38 @@ function Profile() {
             // Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
             //   console.log(response);
             //   if (response.data.message === "success") {
-            //     document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
-            //     document.getElementById("modal_body_admin").innerHTML = "";
-            //   }
-            // });
-        }
+              //     document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
+              //     document.getElementById("modal_body_admin").innerHTML = "";
+              //   }
+              // });
+         }
         break;
       default:
         console.log();
     }
   }
+          
+  const addTipo = () => {
+    document.getElementById("modal_header_admin").innerText = "Adicionar novo Tipo";
+    document.getElementById("formulario").innerHTML = "<label>Tipo</label>\
+    <input className='form-control' type='text' name='newtipo' onChange={handler} size='30'/>\
+    </div>";
+    handleShow();
+  }
 
+  const addSubtipo = () => {
+    document.getElementById("modal_header_admin").innerText = "Adicionar novo Subipo";
+    document.getElementById("modal_body_admin").innerHTML = "<label>Distrito</label>\
+      <select className='form-select' name='distrito' id='distritos' onChange={handler} onMouseOver={distritos} required>\
+          <option value='' selected>Selecione um Distrito</option>\
+      </select>\
+    </div>\
+    <div className='col-md-12'>\
+      <label>Tipo</label>\
+      <input className='form-control' type='text' name='tipo' size='30'/>";
+    handleShow();
+  }
+          
   return (
     <div className="position-absolute showItems">  {/* Aqui antes estava container inves de profile */}
       <div className="container">
