@@ -46,7 +46,7 @@ function Profile() {
         <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
                 <div className="modal-header" id="modal_header_admin">~
-                    <button type="button" class="btn-close" aria-label="Close"></button>
+                    <button type="button" className="btn-close" aria-label="Close"></button>
                 </div>
                 <div className="modal-body" id="modal_body_admin">
                 </div>
@@ -110,7 +110,7 @@ function addTipo() {
   <label>Tipo</label>\
   <input className='form-control' type='text' id='newtipo' name='tipo' size='30'/>\
   </div>\
-  <button id='submit' type='submit' name='submit1' onClick={handler} className='btn'>Adicionar</button>\
+  <button id='submit' type='submit' name='submit1' onClick={"+handler+"} className='btn'>Adicionar</button>\
   </form>";
   handleShow();
 }
@@ -128,7 +128,7 @@ function addSubtipo() {
     <label>Tipo</label>\
     <input className='form-control' type='text' name='tipo' size='50'/>\
   </div>\
-  <button id='submit' type='submit' name='submit2' onClick={handler} className='btn'>Adicionar</button>\
+  <button id='submit' type='submit' name='submit2' onClick={"+handler+"} className='btn'>Adicionar</button>\
   </form>";
 handleShow();
 }
