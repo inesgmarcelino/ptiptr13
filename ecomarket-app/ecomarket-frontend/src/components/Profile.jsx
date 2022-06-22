@@ -47,21 +47,21 @@ function isAdmin(email) {
       <tbody>
         <tr>
           <td className='card-profile'><h3>Lista de Utilizadores</h3>
-            <Link to ='/'>
+            <Link to ='/' id='profile'>
               <button type="button" className="btn btn btn-primary">Ver</button>
             </Link>
           </td>
         </tr>
         <tr>
           <td className='card-profile'><h3>Lista de Tipos</h3>
-            <Link to ='/'>
+            <Link to ='/' id='profile'>
               <button type="button" className="btn btn btn-primary">Ver</button>
             </Link>
           </td>
         </tr>
         <tr>
           <td className='card-profile'><h3>Lista de Subtipos</h3>
-            <Link to ='/'>
+            <Link to ='/' id='profile'>
               <button type="button" className="btn btn btn-primary">Ver</button>
             </Link>
           </td>
