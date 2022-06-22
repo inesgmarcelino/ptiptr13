@@ -100,19 +100,11 @@ function Profile() {
         console.log();
     }
   }
-
-  const formTipo = () => {
-    return (
-      "<div>\
-      <label>Tipo</label>\
-      <input className='form-control' type='text' name='newtipo' onChange={handler} size='30'/>\
-      </div>"
-    );
-  }
           
   const addTipo = () => {
     document.getElementById("modal_header_admin").innerText = "Adicionar novo Tipo";
-    document.getElementById("formulario").innerHTML = formTipo;
+    document.getElementById("formulario").innerHTML = "<label>Tipo</label>\
+    <input className='form-control' type='text' name='newtipo' onChange={handler} size='30'/>";
     handleShow();
   }
 
