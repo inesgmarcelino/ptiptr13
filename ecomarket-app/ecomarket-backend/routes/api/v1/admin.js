@@ -53,6 +53,26 @@ router.post('/adminLogin', (req, res) => {
 
 });
 
+router.post('/admintipo', (req,res) => {
+    var dist = req.body.dist;
+    var queryString ="INSERT INTO tipo_produto VALUESS (nome) VALUES (?)";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [dist], (err, result) => {
+            conn.release();
+
+            if (err) {
+                console.log("Não foi possível realizar essa operação. output 2");
+                return res.status(500).send({message:"fail"});
+            } else {
+                console.log("Registo bem sucessido");
+                return res.status(200).send({message:"success"});
+            }
+        })
+    })
+})
+
 
 router.get('/adminadd', (req, res) => {
     var tab = req.params.tab; //tipo ou subtipo

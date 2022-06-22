@@ -1,5 +1,7 @@
 /* eslint-disable no-multi-str */
+import $ from 'jquery';
 import React from 'react'
+import Axios from "axios";
 import {Link } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -104,29 +106,62 @@ function isAdmin(email) {
 function addTipo() {
   document.getElementById("modal_header_admin").innerText = "Adicionar novo Tipo";
   document.getElementById("modal_body_admin").innerHTML = "<form method='post'>\
-                                                            <div className='col-md-12'>\
-                                                              <label>Tipo</label>\
-                                                              <input className='form-contro' type='text' name='tipo' size='50'/>\
-                                                            </div>\
-                                                            <button id='submit' type='submit' name='submit' className='btn'>Adicionar</button>\
-                                                          </form>";
+  <div className='col-md-12'>\
+  <label>Tipo</label>\
+  <input className='form-control' type='text' id='newtipo' name='tipo' size='50'/>\
+  </div>\
+  <button id='submit' type='submit' name='submit1' onClick={handler} className='btn'>Adicionar</button>\
+  </form>";
+  handleShow();
 }
 
 function addSubtipo() {
   document.getElementById("modal_header_admin").innerText = "Adicionar novo Subipo";
   document.getElementById("modal_body_admin").innerHTML = "<form method='post'>\
-                                                            <div className='col-md-12'>\
-                                                              <label>Distrito</label>\
-                                                              <select className='form-select' name='distrito' id='distritos' onChange={handler} onMouseOver={distritos} required>\
-                                                                  <option value='' selected>Selecione um Distrito</option>\
-                                                              </select>\
-                                                            </div>\
-                                                            <div className='col-md-12'>\
-                                                              <label>Tipo</label>\
-                                                              <input className='form-contro' type='text' name='tipo' size='50'/>\
-                                                            </div>\
-                                                            <button id='submit' type='submit' name='submit' className='btn'>Adicionar</button>\
-                                                          </form>";
+  <div className='col-md-12'>\
+    <label>Distrito</label>\
+    <select className='form-select' name='distrito' id='distritos' onChange={handler} onMouseOver={distritos} required>\
+        <option value='' selected>Selecione um Distrito</option>\
+    </select>\
+  </div>\
+  <div className='col-md-12'>\
+    <label>Tipo</label>\
+    <input className='form-control' type='text' name='tipo' size='50'/>\
+  </div>\
+  <button id='submit' type='submit' name='submit2' onClick={handler} className='btn'>Adicionar</button>\
+  </form>";
+handleShow();
+}
+
+function handleShow() {
+  $("#modal_admin").css("display","block");
+}
+
+function handleHide() {
+  $("#modal_admin").css("display","none");
+}
+
+function handler(x) {
+  switch(x.targer.value) {
+    case "submit1":
+      var dist = document.getElementById("newtipo").value;
+      if (dist === '') {
+        // setError(true);
+      } else {
+        Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {dist: dist}).then((response) => {
+          console.log(response);
+          if (response.data.message === "success") {
+            document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
+            document.getElementById("modal_body_admin").innerHTML = "";
+          }
+        });
+      }
+      break;
+    case "submit2":
+      break;
+    default:
+      console.log();
+  }
 }
 
 export default Profile;
