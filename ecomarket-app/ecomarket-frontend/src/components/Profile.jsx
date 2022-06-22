@@ -2,28 +2,56 @@
 import $ from 'jquery';
 import React from 'react'
 import Axios from "axios";
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
+import { useState } from 'react';
 
 function Profile() {
   const { user } = useAuth0();
   const email = "admin@ecomarket.pt"; //testar admin
 
-  /* const goMyData = () => {
-    window.location.href = "http://localhost:3000/myData";
-  }
+  // var newtipo, tipo, newsubtipo;
+  const [newtipo, setNewTipo]         = useState('');
+  const [tipo, setTipo]               = useState('');
+  const [newsubtipo, setNewSubtipo]   = useState('');
 
-  const goConsumidor = () => {
-    window.location.href = "http://localhost:3000/consumidor";
+  const handler = (x) => {
+    switch(x.target.name) {
+      case "newtipo":
+        setNewTipo(x.target.value);
+        break;
+      case "submit1":
+        if (newtipo !== '') {
+          Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
+            console.log(response);
+            if (response.data.message === "success") {
+              document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
+              document.getElementById("modal_body_admin").innerHTML = "";
+            }
+          });
+        }
+        break;
+      case "tipo":
+        setTipo(x.target.value);
+        break;
+      case "newsubtipo":
+        setNewSubtipo(x.target.value);
+        break;
+      case "submit2":
+        if (tipo !== '' && newsubtipo !== '') {
+          // Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
+          //   console.log(response);
+          //   if (response.data.message === "success") {
+          //     document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
+          //     document.getElementById("modal_body_admin").innerHTML = "";
+          //   }
+          // });
+        }
+        break;
+      default:
+        console.log();
+    }
   }
-
-  const goFornecedor = () => {
-    window.location.href = "http://localhost:3000/fornecedor";
-  }
-
-  const goTransportador = () => {
-    window.location.href = "http://localhost:3000/trasnportador";
-  } */
 
   return (
     <div className="position-absolute showItems">  {/* Aqui antes estava container inves de profile */}
@@ -50,7 +78,7 @@ function Profile() {
                 </div>
                 <div className="modal-body" id="modal_body_admin">
                     <div className='col-md-12' id="formulario"></div>
-                    <button id='submit' type='submit' name='submit' onClick={handler(this)} className='btn'>Adicionar</button>
+                    <button id='submit' type='submit' name='submit' onClick={handler} className='btn'>Adicionar</button>
                 </div>
                 <div className="modal-footer" id="modal_footer_admin">
                   <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
@@ -108,7 +136,7 @@ function isAdmin(email) {
 function addTipo() {
   document.getElementById("modal_header_admin").innerText = "Adicionar novo Tipo";
   document.getElementById("formulario").innerHTML = "<label>Tipo</label>\
-  <input className='form-control' type='text' id='newtipo' name='tipo' size='30'/>\
+  <input className='form-control' type='text' name='newtipo' onChange={handler} size='30'/>\
   </div>";
   handleShow();
 }
@@ -134,29 +162,5 @@ function handleHide() {
   $("#modal_admin").css("display","none");
 }
 
-function handler(x) {
-  switch(x.target.value) {
-    case "submit1":
-      var dist = document.getElementById("newtipo").value;
-      if (dist === '') {
-        console.log("aqui");
-        // setError(true);
-      } else {
-        console.log(dist);
-        Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {dist: dist}).then((response) => {
-          console.log(response);
-          if (response.data.message === "success") {
-            document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
-            document.getElementById("modal_body_admin").innerHTML = "";
-          }
-        });
-      }
-      break;
-    case "submit2":
-      break;
-    default:
-      console.log();
-  }
-}
 
 export default Profile;
