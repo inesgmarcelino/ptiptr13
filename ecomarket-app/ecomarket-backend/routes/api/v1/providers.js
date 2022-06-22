@@ -58,7 +58,7 @@ router.post('/reg_storage', (req,res) => {
                         queryString = "SELECT id FROM armazem WHERE localizacao = ?";
                         conn.query(queryString, [idloc], (err, result) => {
                             if (!err) {
-                                var idsto = result.id //por verificar
+                                var idsto = result[result.length - 1].id //por verificar
 
                                 queryString = "INSERT INTO lista_armazens (fornecedor, armazem) VALUES (?,?)";
                                     conn.query(queryString, [idprov, idsto], (err, results) => {
