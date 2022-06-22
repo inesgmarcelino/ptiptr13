@@ -146,8 +146,10 @@ function handler(x) {
     case "submit1":
       var dist = document.getElementById("newtipo").value;
       if (dist === '') {
+        console.log("aqui");
         // setError(true);
       } else {
+        console.log(dist);
         Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {dist: dist}).then((response) => {
           console.log(response);
           if (response.data.message === "success") {
