@@ -112,7 +112,7 @@ function ProductRegister(){
 
     return(
         <div>
-        <div className="cardForn pr position-absolute top-50 start-50 translate-middle">
+        <div className="cardForn position-absolute top-50 start-50 translate-middle">
             <div className="card-body">
                 <h5 className="card-title">FORNECEDOR:</h5>
                 <h6 className="card-subtitle mb-2">Registe aqui os aspetos gerais do Produto</h6>
