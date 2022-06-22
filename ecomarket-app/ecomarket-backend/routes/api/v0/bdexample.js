@@ -12,14 +12,14 @@ exports.hello = function(req,res){
        
         pool.query("INSERT INTO users(email,password) VALUES('UHOHRAMDINGDONG','asijd1q2io4rj13526')");
         if(err){
-          res.json({"message":err.message});
+          console.error({"message":err.message});
           return;
+        } else {
+            console.error("No problem");
         }
         connection.release();
-
       });
-      res.status(200)
-      res.send("Se estás a ler isto é porque o ExpressJS se conectou à BD.");
+ 
 }
 
 exports.insert = function(req,res){
