@@ -54,12 +54,12 @@ router.post('/adminLogin', (req, res) => {
 });
 
 router.post('/admintipo', (req,res) => {
-    var dist = req.body.dist;
+    var tipo = req.body.newtipo;
     var queryString ="INSERT INTO tipo_produto (nome) VALUES (?)";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
-        conn.query(queryString, [dist], (err, result) => {
+        conn.query(queryString, [tipo], (err, result) => {
             conn.release();
 
             if (err) {

@@ -15,21 +15,82 @@ function Profile() {
   const [tipo, setTipo]               = useState('');
   const [newsubtipo, setNewSubtipo]   = useState('');
 
+  const handleShow = () => {
+    $("#modal_admin").css("display","block");
+  }
+
+  const handleHide = () => {
+    $("#modal_admin").css("display","none");
+  }
+
+  const isAdmin = () => {
+    if (email === "admin@ecomarket.pt") { // se for admin
+      return (
+        <tbody>
+          <tr>
+            <td className='card-profile'><h3>Lista de Utilizadores</h3>
+              <Link to ='/' id='profile'>
+                <button type="button" className="btn btn btn-primary">Ver</button>
+              </Link>
+            </td>
+          </tr>
+          <tr>
+            <td className='card-profile'><h3>Tipos</h3>
+              <button type="button" id='profile' onClick={addTipo} className="btn btn btn-primary">Adicionar</button>
+            </td>
+          </tr>
+          <tr>
+            <td className='card-profile'><h3>Subtipos</h3>
+              <button type="button" id='profile' onClick={addSubtipo} className="btn btn btn-primary">Adicionar</button>
+            </td>
+          </tr>
+        </tbody>
+      );
+    } else {
+      return (
+        <tbody> 
+          <tr>
+            <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/mydata' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
+          </tr>
+          <tr>
+            <td className='card-profile'><h3>Sou Consumidor</h3> <Link to ='/consumidor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>
+          </tr>
+          <tr>
+            <td className='card-profile'  ><h3>Sou Fornecedor</h3> <Link to ='/fornecedor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
+          </tr>
+          <tr>
+            <td className='card-profile'><h3>Sou Transportador</h3> <Link to ='/login' id='profile'> <button type="button" className="btn btn btn-primary" >Tornar-me</button></Link> </td>
+          </tr>
+          </tbody>
+      );
+    }
+  }
+
+  const addTipo = () => {
+    document.getElementById("modal_header_admin").innerText = "Adicionar novo Tipo";
+    document.getElementById("formulario").innerHTML = "<label>Tipo</label>\
+    <input className='form-control' type='text' name='newtipo' onChange={handler} size='30'/>\
+    </div>";
+    handleShow();
+  }
+
+  const addSubtipo = () => {
+    document.getElementById("modal_header_admin").innerText = "Adicionar novo Subipo";
+    document.getElementById("modal_body_admin").innerHTML = "<label>Distrito</label>\
+      <select className='form-select' name='distrito' id='distritos' onChange={handler} onMouseOver={distritos} required>\
+          <option value='' selected>Selecione um Distrito</option>\
+      </select>\
+    </div>\
+    <div className='col-md-12'>\
+      <label>Tipo</label>\
+      <input className='form-control' type='text' name='tipo' size='30'/>";
+    handleShow();
+  }
+
   const handler = (x) => {
     switch(x.target.name) {
       case "newtipo":
         setNewTipo(x.target.value);
-        break;
-      case "submit1":
-        if (newtipo !== '') {
-          Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
-            console.log(response);
-            if (response.data.message === "success") {
-              document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
-              document.getElementById("modal_body_admin").innerHTML = "";
-            }
-          });
-        }
         break;
       case "tipo":
         setTipo(x.target.value);
@@ -37,15 +98,23 @@ function Profile() {
       case "newsubtipo":
         setNewSubtipo(x.target.value);
         break;
-      case "submit2":
-        if (tipo !== '' && newsubtipo !== '') {
-          // Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
-          //   console.log(response);
-          //   if (response.data.message === "success") {
-          //     document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
-          //     document.getElementById("modal_body_admin").innerHTML = "";
-          //   }
-          // });
+      case "submit":
+        if (newtipo !== '' && tipo === '' && newsubtipo === '') {
+          Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
+            console.log(response);
+            if (response.data.message === "success") {
+              document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
+              document.getElementById("modal_body_admin").innerHTML = "";
+            }
+          });
+        } else if (tipo !== '' && newsubtipo !== '' && newtipo === '') {
+            // Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
+            //   console.log(response);
+            //   if (response.data.message === "success") {
+            //     document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
+            //     document.getElementById("modal_body_admin").innerHTML = "";
+            //   }
+            // });
         }
         break;
       default:
@@ -89,78 +158,5 @@ function Profile() {
     </div>
   )
 }
-
-function isAdmin(email) {
-  if (email === "admin@ecomarket.pt") { // se for admin
-    return (
-      <tbody>
-        <tr>
-          <td className='card-profile'><h3>Lista de Utilizadores</h3>
-            <Link to ='/' id='profile'>
-              <button type="button" className="btn btn btn-primary">Ver</button>
-            </Link>
-          </td>
-        </tr>
-        <tr>
-          <td className='card-profile'><h3>Tipos</h3>
-            <button type="button" id='profile' onClick={addTipo} className="btn btn btn-primary">Adicionar</button>
-          </td>
-        </tr>
-        <tr>
-          <td className='card-profile'><h3>Subtipos</h3>
-            <button type="button" id='profile' onClick={addSubtipo} className="btn btn btn-primary">Adicionar</button>
-          </td>
-        </tr>
-      </tbody>
-    );
-  } else {
-    return (
-      <tbody> 
-        <tr>
-          <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/mydata' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
-        </tr>
-        <tr>
-          <td className='card-profile'><h3>Sou Consumidor</h3> <Link to ='/consumidor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>
-        </tr>
-        <tr>
-          <td className='card-profile'  ><h3>Sou Fornecedor</h3> <Link to ='/fornecedor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
-        </tr>
-        <tr>
-          <td className='card-profile'><h3>Sou Transportador</h3> <Link to ='/login' id='profile'> <button type="button" className="btn btn btn-primary" >Tornar-me</button></Link> </td>
-        </tr>
-        </tbody>
-    );
-  }
-}
-
-function addTipo() {
-  document.getElementById("modal_header_admin").innerText = "Adicionar novo Tipo";
-  document.getElementById("formulario").innerHTML = "<label>Tipo</label>\
-  <input className='form-control' type='text' name='newtipo' onChange={handler} size='30'/>\
-  </div>";
-  handleShow();
-}
-
-function addSubtipo() {
-  document.getElementById("modal_header_admin").innerText = "Adicionar novo Subipo";
-  document.getElementById("modal_body_admin").innerHTML = "<label>Distrito</label>\
-    <select className='form-select' name='distrito' id='distritos' onChange={handler} onMouseOver={distritos} required>\
-        <option value='' selected>Selecione um Distrito</option>\
-    </select>\
-  </div>\
-  <div className='col-md-12'>\
-    <label>Tipo</label>\
-    <input className='form-control' type='text' name='tipo' size='30'/>";
-handleShow();
-}
-
-function handleShow() {
-  $("#modal_admin").css("display","block");
-}
-
-function handleHide() {
-  $("#modal_admin").css("display","none");
-}
-
 
 export default Profile;
