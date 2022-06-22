@@ -103,10 +103,10 @@ function Profile() {
 
   const formTipo = () => {
     return (
-      <div>
-      <label>Tipo</label>
-      <input className='form-control' type='text' name='newtipo' onChange={handler} size='30'/>
-      </div>
+      "<div>\
+      <label>Tipo</label>\
+      <input className='form-control' type='text' name='newtipo' onChange={handler} size='30'/>\
+      </div>"
     );
   }
           
