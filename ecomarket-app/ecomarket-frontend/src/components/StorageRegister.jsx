@@ -90,15 +90,15 @@ function StorageRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>
-                                <select className="form-select" name="distrito" id="distritos" onChange={handler} onMouseOver={distritos} required>
-                                    <option value='' selected>Selecione um Distrito</option>
-                                </select>
+                            <select className="form-select" name="distrito" id="distritos" onChange={handler} onMouseOver={distritos} required>
+                                <option value='' selected>Selecione um Distrito</option>
+                            </select>
                          </div>
                          <div className="col-md-12">
                             <label>Concelho</label>
-                                <select className="form-select" name="concelho" id="concelhos" onChange={handler} required>
-                                    <option value='' selected>Selecione um Concelho</option>
-                                </select>
+                            <select className="form-select" name="concelho" id="concelhos" onChange={handler} required>
+                                <option value='' selected>Selecione um Concelho</option>
+                            </select>
                          </div>
                         
                          <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
