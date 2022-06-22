@@ -9,12 +9,12 @@ exports.hello = function(req,res){
 
     pool.getConnection((err, connection) => {
 
-        if(err){
-          res.status(500);
-          res.type('json');
-          res.json({"message":err.message});
-        }
+       
         pool.query("INSERT INTO users(email,password) VALUES('UHOHRAMDINGDONG','asijd1q2io4rj13526')");
+        if(err){
+          res.json({"message":err.message});
+          return;
+        }
         connection.release();
 
       });
