@@ -110,7 +110,7 @@ function addTipo() {
   <label>Tipo</label>\
   <input className='form-control' type='text' id='newtipo' name='tipo' size='30'/>\
   </div>\
-  <button id='submit' type='submit' name='submit1' onClick={"+handler+"} className='btn'>Adicionar</button>\
+  <button id='submit' type='submit' name='submit1' onClick={"+{handler}+"} className='btn'>Adicionar</button>\
   </form>";
   handleShow();
 }
