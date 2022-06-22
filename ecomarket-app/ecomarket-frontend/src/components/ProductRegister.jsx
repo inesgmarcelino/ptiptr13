@@ -98,7 +98,7 @@ function ProductRegister(){
     }
 
     const subtipos = () => {
-        document.getElementById("concelhos").innerHTML = "<option value='' selected>Selecione um Subtipo</option>";
+        document.getElementById("subtipos").innerHTML = "<option value='' selected>Selecione um Subtipo</option>";
         Axios.get("https://ecomarket.works/api/v1/gets/subtipos", { 
             params: { 
                 tipo: tipo
