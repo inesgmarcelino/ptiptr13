@@ -49,63 +49,61 @@ router.post('/reg_storage', (req,res) => {
             }
         });
     
-        var idloc;
         queryString = "SELECT id FROM localizacao";
         conn.query(queryString, (err,results) => {
-            console.log(results);
-            console.log(results[results.length -1]);
             if (!err) {
-                idloc = results[results.length -1].id; //por verificar
+                var idloc = results[results.length -1].id; //por verificar
+
+                queryString = "INSERT INTO armazem (localizacao) VALUES (?)";
+                conn.query(queryString, [idloc], (err,result) => {
+                    if (err) {
+                        conn.release();
+        
+                        res.status(500);
+                        res.type('json');
+                        res.send({"message":"Não foi possível realizar essa operação. output 3"});
+                        return;
+                    }
+                });
+                
+                var idsto;
+                queryString = "SELECT id FROM armazem WHERE localizacao = ?";
+                conn.query(queryString, [idloc], (err, result) => {
+                    if (!err) {
+                        idsto = result.id //por verificar
+                    } else {
+                        conn.release();
+        
+                        res.status(500);
+                        res.type('json');
+                        res.send({"message":"Não foi possível realizar essa operação. output 4"});
+                        return;
+                    }
+                });
+            
+                queryString = "INSERT INTO lista_armazens (fornecedor, armazem) VALUES (?,?)";
+                conn.query(queryString, [idprov, idsto], (err, results) => {
+                    conn.release();
+                    
+                    if (err) {
+                        res.status(500);
+                        res.type('json');
+                        res.send({"message":"Não foi possível realizar essa operação. output 5"});
+                        return;
+                    } else {
+                        res.status(200);
+                        res.type('json');
+                        res.send({"message":"Registo bem sucessido"});
+                        return;
+                    }
+                });
+
             } else {
-                conn.release();
-
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 3"});
-                return;
-            }
-        });
-    
-        queryString = "INSERT INTO armazem (localizacao) VALUES (?)";
-        conn.query(queryString, [idloc], (err,result) => {
-            if (err) {
-                conn.release();
-
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 4"});
-                return;
-            }
-        });
-    
-        var idsto;
-        queryString = "SELECT id FROM armazem WHERE localizacao = ?";
-        conn.query(queryString, [idloc], (err, result) => {
-            if (!err) {
-                idsto = result.id //por verificar
-            } else {
-                conn.release();
-
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 5"});
-                return;
-            }
-        });
-    
-        queryString = "INSERT INTO lista_armazens (fornecedor, armazem) VALUES (?,?)";
-        conn.query(queryString, [idprov, idsto], (err, results) => {
-            if (err) {
                 conn.release();
 
                 res.status(500);
                 res.type('json');
                 res.send({"message":"Não foi possível realizar essa operação. output 6"});
-                return;
-            } else {
-                res.status(200);
-                res.type('json');
-                res.send({"message":"Registo bem sucessido"});
                 return;
             }
         });
