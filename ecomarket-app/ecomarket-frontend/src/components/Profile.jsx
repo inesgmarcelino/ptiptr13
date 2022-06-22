@@ -108,16 +108,26 @@ function Profile() {
     handleShow();
   }
 
+  const tipos = () => {
+    document.getElementById("tipos").innerHTML = "<option value='' selected>Selecione um Tipo</option>";
+    Axios.get("https://ecomarket.works/api/v1/gets/tipos").then((response) => {
+        var tipo = response.data.results;
+        for (var i = 0; i < tipo.length; i++) {
+            document.getElementById("tipos").innerHTML += "<option value='" + tipo[i]["id"] + "'>" + tipo[i]["nome"] + "</option>";
+        }
+    });
+  }
+
   const addSubtipo = () => {
     document.getElementById("modal_header_admin").innerText = "Adicionar novo Subipo";
-    document.getElementById("modal_body_admin").innerHTML = "<label>Distrito</label>\
-      <select className='form-select' name='distrito' id='distritos' onChange={handler} onMouseOver={distritos} required>\
-          <option value='' selected>Selecione um Distrito</option>\
+    document.getElementById("modal_body_admin").innerHTML = "<label>Tipo</label>\
+      <select className='form-select' name='tipo' id='tipos' onChange={handler} onMouseOver={tipos} required>\
+          <option value='' selected>Selecione um Tipo</option>\
       </select>\
     </div>\
     <div className='col-md-12'>\
-      <label>Tipo</label>\
-      <input className='form-control' type='text' name='tipo' size='30'/>";
+      <label>Subtipo</label>\
+      <input className='form-control' type='text' name='newsubtipo' size='30'/>";
     handleShow();
   }
           
