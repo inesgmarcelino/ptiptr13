@@ -53,81 +53,101 @@ router.post('/adminLogin', (req, res) => {
 
 });
 
-
-router.get('/adminadd', (req, res) => {
-    var tab = req.params.tab; //tipo ou subtipo
-    var nome = req.params.nome;
-    var message;
-
-    pool.getConnection((err,conn) => {
+router.post('/admintipo', (req,res) => {
+    var tipo = req.body.newtipo;
+    var queryString ="INSERT INTO tipo_produto (nome) VALUES (?)";
+    pool.getConnection((err, conn) => {
         if (err) throw err;
 
-        if (tab === "tipo") {
-            const queryString = "INSERT INTO tipo_produto VALUES (nome) VALUES (?)";
-            conn.query(queryString, [nome], (err, result) => {
-                conn.release();
+        conn.query(queryString, [tipo], (err, result) => {
+            conn.release();
 
-                if (err) {
-                    res.status(500);
-                    res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. output 2"});
-                    connection.release();
-                    return;
-                } else {
-                    res.status(200);
-                    message = "Novo tipo adicionado.";
-                }
-            });
-    
-        } else if (tab === "subtipo") {
-            var mae = req.params.mae; //tipo
-            const queryString = "INSERT INTO subtipo_produto VALUES (nome) VALUES (?)";
-            conn.query(queryString, [nome], (err,result) => {
-                if (err) {
-                    conn.release();
-
-                    res.status(500);
-                    res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. output 3"});
-                    connection.release();
-                    return;
-                }
-            });
-    
-            queryString = "SELECT id from subtipo_produto WHERE nome = ?";
-            var id;
-            conn.query(queryString, [nome], (err, results) => {
-                if (!err) {
-                    id = results.id;
-                } else {
-                    conn.release();
-
-                    res.status(500);
-                    res.type('json');
-                    res.send({"message":"Subtipo não se encontra na base de dados"});
-                    return;
-                }
-            });
-    
-            queryString = "INSERT INTO tipo_subtipo VALUES (?,?)";
-            conn.query(queryString, [mae, id], (err,result) => {
-                if (err) {
-                    conn.release();
-
-                    res.status(500);
-                    res.type('json');
-                    res.send({"message":"Não foi possível realizar essa operação. output 4"});
-                    return;
-                } else {
-                    res.status(200);
-                    message = "Novo subtipo adicionado."
-                }
-            });
-        }
+            if (err) {
+                console.log("Não foi possível realizar essa operação. output 2");
+                return res.status(500).send({message:"fail"});
+            } else {
+                console.log("Registo bem sucessido");
+                return res.status(200).send({message:"success"});
+            }
+        });
     });
-    res.type('json');
-    res.send({"message": message});
 });
+
+
+// router.get('/adminadd', (req, res) => {
+//     var tab = req.params.tab; //tipo ou subtipo
+//     var nome = req.params.nome;
+//     var message;
+
+//     pool.getConnection((err,conn) => {
+//         if (err) throw err;
+
+//         if (tab === "tipo") {
+//             const queryString = "INSERT INTO tipo_produto VALUES (nome) VALUES (?)";
+//             conn.query(queryString, [nome], (err, result) => {
+//                 conn.release();
+
+//                 if (err) {
+//                     res.status(500);
+//                     res.type('json');
+//                     res.send({"message":"Não foi possível realizar essa operação. output 2"});
+//                     connection.release();
+//                     return;
+//                 } else {
+//                     res.status(200);
+//                     message = "Novo tipo adicionado.";
+//                 }
+//             });
+    
+//         } else if (tab === "subtipo") {
+//             var mae = req.params.mae; //tipo
+//             const queryString = "INSERT INTO subtipo_produto VALUES (nome) VALUES (?)";
+//             conn.query(queryString, [nome], (err,result) => {
+//                 if (err) {
+//                     conn.release();
+
+//                     res.status(500);
+//                     res.type('json');
+//                     res.send({"message":"Não foi possível realizar essa operação. output 3"});
+//                     connection.release();
+//                     return;
+//                 }
+//             });
+    
+//             queryString = "SELECT id from subtipo_produto WHERE nome = ?";
+//             var id;
+//             conn.query(queryString, [nome], (err, results) => {
+//                 if (!err) {
+//                     id = results.id;
+//                 } else {
+//                     conn.release();
+
+//                     res.status(500);
+//                     res.type('json');
+//                     res.send({"message":"Subtipo não se encontra na base de dados"});
+//                     return;
+//                 }
+//             });
+    
+//             queryString = "INSERT INTO tipo_subtipo VALUES (?,?)";
+//             conn.query(queryString, [mae, id], (err,result) => {
+//                 if (err) {
+//                     conn.release();
+
+//                     res.status(500);
+//                     res.type('json');
+//                     res.send({"message":"Não foi possível realizar essa operação. output 4"});
+//                     return;
+//                 } else {
+//                     res.status(200);
+//                     message = "Novo subtipo adicionado."
+//                 }
+//             });
+//         }
+//     });
+//     res.type('json');
+//     res.send({"message": message});
+// });
 
 router.get('/edit/:uid', (req, res, next) => {
     const id = req.params.uid;

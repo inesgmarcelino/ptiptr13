@@ -126,7 +126,8 @@ function Register() {
                             </div>
                             <div className="col-md-12">
                                 <label>NIF</label>
-                                <input className="form-control" type="number" pattern="[0-9]{9}" name="nif" size="50" onChange={handler} required />
+                                <input className="form-control" type="number" maxlength='9' name="nif" size="50" onChange={handler} required />
+
                             </div>
                             <div className="col-md-12">
                                 <label>Morada</label>
@@ -134,7 +135,7 @@ function Register() {
                             </div>
                             <div className="col-md-12">
                                 <label>Número de Telemóvel</label>
-                                <input className="form-control" type="number" name="telem" size="50" onChange={handler} required />
+                                <input className="form-control" type="number" maxlength='9' name="telem" size="50" onChange={handler} required />
                             </div>
                             <div className="col-md-12">
                                 <label>Foto de Perfil</label>

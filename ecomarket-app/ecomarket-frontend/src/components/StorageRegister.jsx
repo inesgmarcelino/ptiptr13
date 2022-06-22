@@ -1,67 +1,35 @@
+/* eslint-disable no-multi-str */
 import Axios from 'axios';
 import { useState } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 
 
-function ArmazemRegister(){
+function StorageRegister(){
     const { user } = useAuth0();
-    const forn = user.email;
+    const forn = "forn1@ecomarket.pt"; //user.email;
     const [moradaArm, setMoradaArm]     = useState('');
     const [codpostal, setCodPostal]     = useState('');
     const [dist, setDist]               = useState('');
     const [conc, setConc]               = useState('');
-    var cp = "xxxx-xxx";
     
     const handler = (x) => {
         switch(x.target.name) {
             case "morada":
                 setMoradaArm(x.target.value);
                 break;
-            case "codigoPostal1":
-                var cod = 0;
-                if (x.target.value < 1000 && x.target.value > 99) {
-                    cod = parseInt('0'+ x.target.value);
-                } else if (x.target.value < 100 && x.target.value > 9) {
-                    cod = parseInt('00' + x.target.value);
-                } else if (x.target.value < 10) {
-                    cod = parseInt('000' +  x.target.value);
-                } else {
-                    cod = x.target.value;
-                }
-
-                var c = cp.split('-');
-                cp = cod + '-' + c[1];
-                if (c[1] !== "xxx") {
-                    setCodPostal(cp);
-                }
-                break;
-            case "codigoPostal2":
-                var cod1 = 0;
-                if (x.target.value < 100 && x.target.value > 9) {
-                    cod1 = parseInt^('0' + x.target.value);
-                } else if (x.target.value < 10) {
-                    cod1 = parseInt('00' + x.target.value);
-                } else {
-                    cod1 = x.target.value;
-                }
-
-                var c1 = cp.split('-');
-                cp = c1[0] + '-' + cod1;
-                if (c1[0] !== "xxxx") {
-                    setCodPostal(cp);
-                }
+            case "codigoPostal":
+                setCodPostal(x.target.value);
                 break;
             case "distrito":
                 setDist(x.target.value);
-                console.log(x.target.value);
-                concelhos(x.target.value);
+                concelhos();
                 break;
             case "concelho":
                 setConc(x.target.value);
                 break;
             case "submit":
                 x.preventDefault();
-                if (moradaArm === '' || codpostal === '' || 'x' in codpostal || dist === '' || conc === '') {
+                if (moradaArm === '' || codpostal === '' || dist === '' || conc === '') {
                     // setError(true)
                 } else {
                     Axios.post("https://ecomarket.works/api/v1/providers/reg_storage", {
@@ -72,6 +40,9 @@ function ArmazemRegister(){
                         conc: conc
                     }).then((response) => {
                         console.log(response);
+                        if (response.data.message === "success") {
+                            window.location.href = "https://ecomarket.works/fornecedor";
+                        }
                     })
                 }
                 break;
@@ -89,8 +60,12 @@ function ArmazemRegister(){
         });
     }
 
-    function concelhos(x) {
-        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", {dist: x}).then((response) => {
+    const concelhos = () => {
+        document.getElementById("concelhos").innerHTML = "<option value='' selected>Selecione um Concelho</option>";
+        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { 
+            params: { 
+                dist: dist
+        }}).then((response) => {
             var conc = response.data.results;
             for (var i = 0; i < conc.length; i++) {
                 document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
@@ -111,7 +86,7 @@ function ArmazemRegister(){
                          </div>
                          <div className="col-md-12">
                             <label>Código Postal</label>
-                                <input className="form-control" type="text" pattern="^\d{4}-\d{3}?$" name="codigoPostal" size="50" onChange={handler} required/>
+                                <input className="form-control" type="number" name="codigoPostal" size="50" onChange={handler} required/>
                          </div>
                          <div className="col-md-12">
                             <label>Distrito</label>
@@ -132,6 +107,7 @@ function ArmazemRegister(){
         </div> 
         </div>
     );
+
 }
 
-export default ArmazemRegister;
+export default StorageRegister;

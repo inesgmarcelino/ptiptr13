@@ -15,31 +15,31 @@ function ProductRegister(){
     const [nomePol, setNomePol]     = useState('');
     const [quantPol, setQuantPol]   = useState('');
 
-    const addRec = () => {
-        document.getElementsByClassName("recursos").innerHTML += "<div className='col-md-12'> \
-        <label>Nome:</label>\
-        <input className='form-control' type='text' name='nomeR'  size='50'/>\
-    </div>\
-    <div className='col-md-12'>\
-        <label>Medida:</label>\
-        <input className='form-control' type='text' name='medidaR' size='50'/>\
-    </div>\
-    <div className='col-md-12'>\
-        <label>Quantidade:</label>\
-        <input className='form-control' type='text' name='quantidadeR' size='50'/>\
-    </div>";
-    }
+    // const addRec = () => {
+    //     document.getElementsByClassName("recursos").innerHTML += "<div className='col-md-12'> \
+    //     <label>Nome:</label>\
+    //     <input className='form-control' type='text' name='nomeR'  size='50'/>\
+    // </div>\
+    // <div className='col-md-12'>\
+    //     <label>Medida:</label>\
+    //     <input className='form-control' type='text' name='medidaR' size='50'/>\
+    // </div>\
+    // <div className='col-md-12'>\
+    //     <label>Quantidade:</label>\
+    //     <input className='form-control' type='text' name='quantidadeR' size='50'/>\
+    // </div>";
+    // }
 
-    const addPol = () => {
-        document.getElementsByClassName("poluicao").innerHTML += "<div className='col-md-12'>\
-        <label>Nome:</label>\
-        <input className='form-control' type='text' name='nomeP' size='50'/>\
-    </div>\
-    <div className='col-md-12'>\
-        <label>Quantidade:</label>\
-        <input className='form-control' type='text' name='quantidadeP'  size='50'/>\
-    </div>";
-    }
+    // const addPol = () => {
+    //     document.getElementsByClassName("poluicao").innerHTML += "<div className='col-md-12'>\
+    //     <label>Nome:</label>\
+    //     <input className='form-control' type='text' name='nomeP' size='50'/>\
+    // </div>\
+    // <div className='col-md-12'>\
+    //     <label>Quantidade:</label>\
+    //     <input className='form-control' type='text' name='quantidadeP'  size='50'/>\
+    // </div>";
+    // }
 
     const handler = (x) => {
         switch(x.target.name) {
@@ -112,7 +112,7 @@ function ProductRegister(){
                         <input className="form-control" type="text" name="subtipo"  size="50"  onChange={handler} required/>
                     </div>
                     
-                    <h6 className="card-subtitle2 mb-2">Recursos</h6>
+                    {/* <h6 className="card-subtitle2 mb-2">Recursos</h6>
                     <div className="recursos">
                         <div className="col-md-12">
                             <label>Nome:</label>
@@ -127,7 +127,7 @@ function ProductRegister(){
                             <input className="form-control" type="number" name="quantidadeR" size="50"/>
                         </div>
                     </div>
-                    <input type="button" onClick={addRec}>Adicionar</input>
+                     <input type="button">Adicionar</input> onClick={addRec} 
                 
                     <h6 className="card-subtitle2 mb-2">Poluição</h6>
                     <div className="poluicao">
@@ -139,8 +139,8 @@ function ProductRegister(){
                             <label>Quantidade:</label>
                             <input className="form-control" type="number" name="quantidadeP"  size="50"/>
                         </div>
-                    </div>
-                    <input type="button" onClick={addPol}>Adicionar</input>
+                    </div> 
+                     <input type="button" >Adicionar</input> onClick={addPol} */}
                          
                     <button id="submit" type="submit" name="submit" className="btn" onChange={handler}>Registar</button>
                 </form>
