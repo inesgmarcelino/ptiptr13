@@ -22,81 +22,79 @@ router.post('/reg_storage', (req,res) => {
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
-        var idprov;
         conn.query(queryString, [prov], (err,result) => {
             if (!err) {
-                idprov = result[0].id;
-            } else {
-                conn.release();
+                var idprov = result[0].id;
 
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 1"});
-                return;
-            }
-        })
-
-        queryString = "INSERT INTO localizacao (morada, c_postal, distrito, concelho) VALUES (?,?,?,?)";
-
-        conn.query(queryString, [morada, cpostal, dist, conc], (err, result) => {
-            if (err) {
-                conn.release();
-
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 2"});
-                return;
-            }
-        });
-    
-        queryString = "SELECT id FROM localizacao";
-        conn.query(queryString, (err,results) => {
-            if (!err) {
-                var idloc = results[results.length -1].id; //por verificar
-
-                queryString = "INSERT INTO armazem (localizacao) VALUES (?)";
-                conn.query(queryString, [idloc], (err,result) => {
+                queryString = "INSERT INTO localizacao (morada, c_postal, distrito, concelho) VALUES (?,?,?,?)";
+                conn.query(queryString, [morada, cpostal, dist, conc], (err, result) => {
                     if (err) {
                         conn.release();
-        
+
                         res.status(500);
                         res.type('json');
-                        res.send({"message":"Não foi possível realizar essa operação. output 3"});
+                        res.send({"message":"Não foi possível realizar essa operação. output 1"});
                         return;
                     }
                 });
-                
-                queryString = "SELECT id FROM armazem WHERE localizacao = ?";
-                conn.query(queryString, [idloc], (err, result) => {
+    
+                queryString = "SELECT id FROM localizacao";
+                conn.query(queryString, (err,results) => {
                     if (!err) {
-                        var idsto = result.id //por verificar
+                        var idloc = results[results.length -1].id; //por verificar
 
-                        queryString = "INSERT INTO lista_armazens (fornecedor, armazem) VALUES (?,?)";
-                            conn.query(queryString, [idprov, idsto], (err, results) => {
+                        queryString = "INSERT INTO armazem (localizacao) VALUES (?)";
+                        conn.query(queryString, [idloc], (err,result) => {
+                            if (err) {
                                 conn.release();
-                                
-                                if (err) {
+                
+                                res.status(500);
+                                res.type('json');
+                                res.send({"message":"Não foi possível realizar essa operação. output 2"});
+                                return;
+                            }
+                        });
+                
+                        queryString = "SELECT id FROM armazem WHERE localizacao = ?";
+                        conn.query(queryString, [idloc], (err, result) => {
+                            if (!err) {
+                                var idsto = result.id //por verificar
+
+                                queryString = "INSERT INTO lista_armazens (fornecedor, armazem) VALUES (?,?)";
+                                    conn.query(queryString, [idprov, idsto], (err, results) => {
+                                        conn.release();
+                                        
+                                        if (err) {
+                                            res.status(500);
+                                            res.type('json');
+                                            res.send({"message":"Não foi possível realizar essa operação. output 3"});
+                                            return;
+                                        } else {
+                                            res.status(200);
+                                            res.type('json');
+                                            res.send({"message":"Registo bem sucessido"});
+                                            return;
+                                        }
+                                    });
+                                } else {
+                                    conn.release();
+                    
                                     res.status(500);
                                     res.type('json');
-                                    res.send({"message":"Não foi possível realizar essa operação. output 54"});
-                                    return;
-                                } else {
-                                    res.status(200);
-                                    res.type('json');
-                                    res.send({"message":"Registo bem sucessido"});
+                                    res.send({"message":"Não foi possível realizar essa operação. output 4"});
                                     return;
                                 }
-                            });
-                        } else {
-                            conn.release();
-            
-                            res.status(500);
-                            res.type('json');
-                            res.send({"message":"Não foi possível realizar essa operação. output 5"});
-                            return;
-                        }
-                });
+                        });
 
+                    } else {
+                        conn.release();
+
+                        res.status(500);
+                        res.type('json');
+                        res.send({"message":"Não foi possível realizar essa operação. output 5"});
+                        return;
+                    }
+                });
             } else {
                 conn.release();
 
@@ -105,7 +103,7 @@ router.post('/reg_storage', (req,res) => {
                 res.send({"message":"Não foi possível realizar essa operação. output 6"});
                 return;
             }
-        });
+        })
     });
 });
 
