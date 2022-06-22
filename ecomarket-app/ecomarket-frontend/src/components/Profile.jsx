@@ -49,10 +49,8 @@ function Profile() {
                     <button type="button" className="btn-close" aria-label="Close"></button>
                 </div>
                 <div className="modal-body" id="modal_body_admin">
-                  <form method='post'>
-                    <div className='col-md-12' id="formulario"></div>
-                    <button id='submit' type='submit' name='submit' onSubmit={handler} className='btn'>Adicionar</button>
-                  </form>
+                  <div className='col-md-12' id="formulario"></div>
+                  <button id='submit' type='submit' name='submit' onSubmit={handler} className='btn'>Adicionar</button>
                 </div>
                 <div className="modal-footer" id="modal_footer_admin">
                   <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
