@@ -13,7 +13,7 @@ const { response } = require('express');
 
 router.post('/reg_storage', (req,res) => {
     const morada = req.body.morada;
-    const cpostal = req.body.cpostal;
+    const cpostal = req.body.codpostal;
     const dist = req.body.dist;
     const conc = req.body.conc;
     const prov = req.body.email;
@@ -36,9 +36,9 @@ router.post('/reg_storage', (req,res) => {
             }
         })
 
-        queryString = "INSERT INTO localizacao (morada, c_postal, distrito, concelho) VALUES (?,'"+cpostal+"',?,?)";
+        queryString = "INSERT INTO localizacao (morada, c_postal, distrito, concelho) VALUES (?,?,?,?)";
 
-        conn.query(queryString, [morada, dist, conc], (err, result) => {
+        conn.query(queryString, [morada, cpostal, dist, conc], (err, result) => {
             if (err) {
                 conn.release();
 
