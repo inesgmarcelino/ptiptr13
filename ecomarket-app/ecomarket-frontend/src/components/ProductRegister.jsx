@@ -1,8 +1,11 @@
 /* eslint-disable no-multi-str */
-import { useState } from "react";
 import Axios from 'axios';
+import { useState } from "react";
+import { useAuth0 } from '@auth0/auth0-react';
 
 function ProductRegister(){
+    const { user } = useAuth0();
+    const id = 2; //testar forn
 
     const [nomeProd, setNomeProd]   = useState('');
     const [dataProd, setDataProd]   = useState('');
@@ -65,7 +68,7 @@ function ProductRegister(){
                     // setError(true);
                 } else {
                     Axios.post("https://ecomarket.works/api/v1/providers/reg_product", {
-                        // id: id
+                        id: id,
                         nome: nomeProd,
                         data: dataProd,
                         preco: preco,

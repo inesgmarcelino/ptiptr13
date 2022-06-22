@@ -94,11 +94,29 @@ router.post('/reg_storage', (req,res) => {
 });
 
 router.post('/reg_product', (req,res) => {
-    const nomerec = req.body.nomerec;
-    const medida = req.body.medida;
-    const quant = req.body.quant;
-    var queryString = "INSERT INTO recurso (nome, un_medida, quantidade) VALUES (?,?,?)";
-
+    const prov = req.body.id;
+    const nome = req.body.nome;
+    const dataprod = req.body.dataprod;
+    const preco = req.body.preco;
+    const tipo = req.body.tipo;
+    const subtipo = req.body.subtipo;
+    queryString = "INSERT INTO produto (nome, fornecedor, producao, preco, tipo, subtipo) VALUES (?,?,?,?,?,?,?)";
+    conn.query(queryString, [nome, prov, dataprod, preco, tipo, subtipo, idcad], (err, result) => {
+        conn.release();
+        
+        if(!err){
+            res.status(200);
+            res.type('json');
+            res.send({"message":"Registo bem sucessido"});
+            return;
+        } else {
+            res.status(500);
+            res.type('json');
+            res.send({"message":"Não foi possível realizar essa operação. output 15"});
+            return;
+        }
+    });
+    
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
