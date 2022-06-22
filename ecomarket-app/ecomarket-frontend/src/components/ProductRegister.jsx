@@ -112,7 +112,7 @@ function ProductRegister(){
                         <input className="form-control" type="text" name="subtipo"  size="50"  onChange={handler} required/>
                     </div>
                     
-                    <h6 className="card-subtitle2 mb-2">Recursos</h6>
+                    {/* <h6 className="card-subtitle2 mb-2">Recursos</h6>
                     <div className="recursos">
                         <div className="col-md-12">
                             <label>Nome:</label>
@@ -127,7 +127,7 @@ function ProductRegister(){
                             <input className="form-control" type="text" name="quantidadeR" size="50"/>
                         </div>
                     </div>
-                    {/* <input type="button">Adicionar</input> onClick={addRec} */}
+                     <input type="button">Adicionar</input> onClick={addRec} 
                 
                     <h6 className="card-subtitle2 mb-2">Poluição</h6>
                     <div className="poluicao">
@@ -139,8 +139,8 @@ function ProductRegister(){
                             <label>Quantidade:</label>
                             <input className="form-control" type="text" name="quantidadeP"  size="50"/>
                         </div>
-                    </div>
-                    {/* <input type="button" >Adicionar</input> onClick={addPol} */}
+                    </div> 
+                     <input type="button" >Adicionar</input> onClick={addPol} */}
                          
                     <button id="submit" type="submit" name="submit" className="btn" onChange={handler}>Registar</button>
                 </form>

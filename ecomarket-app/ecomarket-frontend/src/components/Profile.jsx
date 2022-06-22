@@ -1,19 +1,10 @@
 import React from 'react'
 import {Link } from "react-router-dom";
+import { useAuth0 } from '@auth0/auth0-react';
 
 function Profile() {
-
-  /* const style1 = {
-    'display': 'flex',
-  }
-
-  const style2 = {
-    'display='block', 
-    marginLeft='auto', 
-    marginRight='20px', 
-    width='150px'
-  }
- */
+  const { user } = useAuth0();
+  const email = "admin@ecomarket.pt"; //testar admin
 
   /* const goMyData = () => {
     window.location.href = "http://localhost:3000/myData";
@@ -40,27 +31,61 @@ function Profile() {
       <br />
       <br />
       <div className="container">
-      <table className="table table-bordered">
-        <thead>
-        </thead>
-        <tbody> 
-        <tr>
-          <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/mydata' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
-          </tr>
-          <tr>
-          <td className='card-profile'><h3>Sou Consumidor</h3> <Link to ='/consumidor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>
-          </tr>
-          <tr>
-          <td className='card-profile'  ><h3>Sou Fornecedor</h3> <Link to ='/fornecedor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
-          </tr>
-          <tr>
-          <td className='card-profile'><h3>Sou Transportador</h3> <Link to ='/login' id='profile'> <button type="button" className="btn btn btn-primary" >Tornar-me</button></Link> </td>
-          </tr>
-        </tbody>
+        <table className="table table-bordered">
+          <thead>
+          </thead>
+          {isAdmin(email)}
         </table>
       </div>
     </div>
   )
+}
+
+function isAdmin(email) {
+  if (email === "admin@ecomarket.pt") { // se for admin
+    return (
+      <tbody>
+        <tr>
+          <td className='card-profile'><h3>Lista de Utilizadores</h3>
+            <Link to ='/'>
+              <button type="button" className="btn btn btn-primary">Ver</button>
+            </Link>
+          </td>
+        </tr>
+        <tr>
+          <td className='card-profile'><h3>Lista de Tipos</h3>
+            <Link to ='/'>
+              <button type="button" className="btn btn btn-primary">Ver</button>
+            </Link>
+          </td>
+        </tr>
+        <tr>
+          <td className='card-profile'><h3>Lista de Subtipos</h3>
+            <Link to ='/'>
+              <button type="button" className="btn btn btn-primary">Ver</button>
+            </Link>
+          </td>
+        </tr>
+      </tbody>
+    );
+  } else {
+    return (
+      <tbody> 
+        <tr>
+          <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/mydata' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
+        </tr>
+        <tr>
+          <td className='card-profile'><h3>Sou Consumidor</h3> <Link to ='/consumidor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>
+        </tr>
+        <tr>
+          <td className='card-profile'  ><h3>Sou Fornecedor</h3> <Link to ='/fornecedor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
+        </tr>
+        <tr>
+          <td className='card-profile'><h3>Sou Transportador</h3> <Link to ='/login' id='profile'> <button type="button" className="btn btn btn-primary" >Tornar-me</button></Link> </td>
+        </tr>
+        </tbody>
+    );
+  }
 }
 
 export default Profile;
