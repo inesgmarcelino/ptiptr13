@@ -86,12 +86,9 @@ router.get('/subtipos', (req,res) => {
         conn.query(queryString, [tip], (err, results) => {
 
             if (!err) {
-                console.log(results);
                 results.forEach(r => {
-                    console.log(r);
-                    console.log(r.id);
                     queryString = "SELECT * FROM subtipo_produto WHERE id = ?"
-                    conn.query(queryString, [r.id], (err, result) => {
+                    conn.query(queryString, [r.subtipo], (err, result) => {
                         if (!err) {
                             subs[r.id] = result[0];
                         } else {
