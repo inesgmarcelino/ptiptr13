@@ -72,6 +72,39 @@ router.get('/tipos', (req,res) => {
                 console.log("Não foi possível realizar essa operação. output 3");
                 return res.status(500).send({message:"fail"});
             }
+        });
+    });
+});
+
+router.get('/subtipos', (req,res) => {
+    var tip = req.body.tipo;
+    var queryString = "SELECT subtipo FROM tipo_subtipo WHERE tipo = ?"
+    var subs = {};
+    pool.getConnection((err,conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [tip], (err, results) => {
+
+            if (!err) {
+                results.forEach(r => {
+                    queryString = "SELECT * FROM subtipo_produto WHERE id = ?"
+                    conn.query(queryString, [r.id], (err, result) => {
+                        if (!err) {
+                            subs[r.id] = result[0];
+                        } else {
+                            console.log("Não foi possível realizar essa operação. output 4");
+                            return res.status(500).send({message:"fail"});
+                        }
+                    });
+                });
+            } else {
+                conn.release();
+
+                console.log("Não foi possível realizar essa operação. output 4");
+                return res.status(500).send({message:"fail"});
+            }
+            conn.release();
+            return res.status(200).send({results: subs});
         })
     })
 })
