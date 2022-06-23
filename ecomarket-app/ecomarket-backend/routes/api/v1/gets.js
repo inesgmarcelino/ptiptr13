@@ -79,7 +79,7 @@ router.get('/tipos', (req,res) => {
 router.get('/subtipos', (req,res) => {
     var tip = req.query.tipo;
     var queryString = "SELECT subtipo FROM tipo_subtipo WHERE tipo = ?"
-    const subs = Object.create(null);
+    const subs = new Object();
     pool.getConnection((err,conn) => {
         if (err) throw err;
 
