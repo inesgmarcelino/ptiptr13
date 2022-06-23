@@ -90,7 +90,7 @@ router.get('/subtipos', (req,res) => {
                     queryString = "SELECT * FROM subtipo_produto WHERE id = ?"
                     conn.query(queryString, [r.subtipo], (err, result) => {
                         if (!err) {
-                            subs[r.id] = result[0];
+                            subs[r.subtipo] = result[0];
                         } else {
                             console.log("Não foi possível realizar essa operação. output 4");
                             return res.status(500).send({message:"fail"});
