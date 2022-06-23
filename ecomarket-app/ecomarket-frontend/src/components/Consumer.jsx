@@ -1,17 +1,35 @@
+/* eslint-disable no-multi-str */
 import React from 'react'
 import Axios from "axios";
 import {Link } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
+import { useState } from 'react';
 
 function Consumer () {
     const { user } = useAuth0();
     const cid = 2;
-    const encomendas = () => {
+    const [encomendas, setEncomendas]   = useState(null);
+
+    const enc = () => {
         Axios.get("https://ecomarket.works/api/v1/consumers/orders", {
             params: cid
         }).then ((response) => {
-            
+            if (response.data.message !== "fail") {
+                setEncomendas(response.data.results);
+            }
         })
+    }
+
+    const linhas = () => {
+        encomendas.forEach(encomenda => {
+            document.getElementById("linhas").innerHTML += "<tr>\
+                                                                <th>"+encomenda.id+"</th>\
+                                                                <th>"+encomenda.data+"</th>\
+                                                                <th>"+encomenda.fornecedor+"</th>\
+                                                                <th>"+encomenda.transportador+"</th>\
+                                                                <th>"+encomenda.total+"</th>\
+                                                            </tr>";
+        });
     }
 
     return(
@@ -28,21 +46,14 @@ function Consumer () {
                 <thead>
                     <tr>
                         <th>#ID</th>
-                        <th>Morada de Entrega</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Estado</th>
+                        <th>Data</th>
+                        <th>Fornecedor</th>
+                        <th>Transportador</th>
+                        <th>Valor</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {/* Aqui colocar um for que tem tantas linhas como as encomendas do Consumidor e o conteúdo das encomendas */}
-                    <tr>
-                        <td>1234</td>
-                        <td>Rua das Flores</td>
-                        <td>Cereais</td>
-                        <td>2</td>
-                        <td>Em trânsito</td>
-                    </tr>
+                <tbody id ="linhas">
+                    {linhas}
                 </tbody>
             </table>
             </div>

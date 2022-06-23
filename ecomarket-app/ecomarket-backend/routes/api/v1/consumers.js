@@ -157,24 +157,23 @@ router.post('/cancel/:oid', (req,res) => {
 
 router.get('/orders/:cid', (req,res) => {
     var consId = req.params.cid;
-    var queryString = "SELECT encomenda FROM lista_encomendas WHERE consumidor = ?";
+    var queryString = "SELECT encomenda.id AS id, encomenda.data AS data, lista_encomendas.fornecedor AS fornecedor,\
+                        transportar_encomendas.transportador AS transportador , SUM(produto.preco) AS total \
+                        FROM encomenda, lista_encomendas, transportar_encomendas, lista_produtos_encomenda produto WHERE lista_encomendas.consumidor = ? AND \
+                        transportar_encomendas.encomenda = lista_encomendas.encomenda AND encomenda.id = lista_encomendas.encomenda AND \
+                        lista_produtos_encomenda.encomenda = encomenda.id AND produto.id = lista_produtos_encomenda.produto"
+    // var queryString = "SELECT encomenda FROM lista_encomendas WHERE consumidor = ?";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
         conn.query(queryString, [consId], (err, results) => {
+            conn.release();
+
             if (!err) {
-                results.forEach(enc => {
-                    queryString = "SELECT p.* FROM produto p, lista_produtos_encomenda lpe WHERE p.id = lpe.produto AND lpe.encomenda = ?";
-                    conn.query(queryString, [enc], (err, results) => {
-                        // por acabar
-                    });
-                });
+                return res.status(200).send({results: results});
             } else {
-                conn.release();
-                
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 9"});
+                console.log("Não foi possível realizar essa operação. output 9");
+                return res.status(500).send({message:"fail"});
             }
         });
     });
