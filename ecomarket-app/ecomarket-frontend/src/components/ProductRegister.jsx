@@ -105,7 +105,7 @@ function ProductRegister(){
         }}).then((response) => {
             var sub = response.data.results;
             for (var i = 0; i < sub.length; i++) {
-                document.getElementById("subtipos").innerHTML += "<option value='" + sub[i]["id"] + "'>" + sub[i]["nome"] + "</option>";
+                document.getElementById("subtipos").innerHTML += "<option value='" + sub[i][0] + "'>" + sub[i][1] + "</option>";
             }
         });
     }
