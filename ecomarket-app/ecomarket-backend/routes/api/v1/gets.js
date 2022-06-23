@@ -40,11 +40,12 @@ router.get('/distritos', (req,res) => {
 });
 
 router.get('/concelhos', (req,res) => {
+    const dist = req.query.dist;
     var queryString = "SELECT id, nome FROM concelho WHERE distrito = ?";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
-        conn.query(queryString, [req.body.dist], (err, results) => {
+        conn.query(queryString, [dist], (err, results) => {
             conn.release();
 
             if (!err) {
@@ -54,7 +55,44 @@ router.get('/concelhos', (req,res) => {
                 return res.status(500).send({message:"fail"});
             }
         });
-    })
+    });
+});
+
+router.get('/tipos', (req,res) => {
+    var queryString = "SELECT * FROM tipo_produto";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, (err, results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results: results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 3");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
+
+router.get('/subtipos', (req,res) => {
+    var tip = req.query.tipo;
+    var queryString = "SELECT subtipo_produto.* FROM tipo_subtipo, subtipo_produto WHERE tipo_subtipo.tipo = ? AND subtipo_produto.id = tipo_subtipo.subtipo";
+    pool.getConnection((err,conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [tip], (err, results) => {
+            conn.release()
+
+            if (!err) {
+                return res.status(200).send({results: results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 4");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
 });
 
 

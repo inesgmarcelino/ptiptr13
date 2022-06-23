@@ -102,7 +102,7 @@ app.use(basePathTest, testAPIRouter);
  */
 
 const basePathV1 = '/api/v1/';
-const apiPathsV1 = ["users","admin","providers","products","carriers","transporters","consumers"/**,cadeialogistica?*/];
+const apiPathsV1 = ["users","admin","providers","products","carriers","transporters","consumers", "gets"/**,cadeialogistica?*/];
 for(var path in apiPathsV1){
   var filePath = basePathV1+apiPathsV1[path];
   var apiRouterV1 = require('./routes'+filePath+'.js');

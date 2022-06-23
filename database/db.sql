@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS ecodb CHARACTER SET utf8 COLLATE ut8_general_ci;
+CREATE DATABASE IF NOT EXISTS ecodb;
+ALTER DATABASE ecodb CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE ecodb;
 
 CREATE TABLE distrito (
@@ -52,8 +53,13 @@ CREATE TABLE localizacao (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     morada          VARCHAR(250) NOT NULL,
     c_postal        VARCHAR(8) NOT NULL,
-    distrito        VARCHAR(20) NOT NULL,
-    concelho        VARCHAR(20) NOT NULL
+    distrito        INT NOT NULL,
+    concelho        INT NOT NULL,
+    --
+    CONSTRAINT fk_dist
+        FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE,
+    CONSTRAINT fk_conc
+        FOREIGN KEY (concelho) REFERENCES concelho(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE armazem (
@@ -71,9 +77,9 @@ CREATE TABLE lista_armazens (
     CONSTRAINT pk_armazens
         PRIMARY KEY (fornecedor,armazem),
     CONSTRAINT fk_forn_id
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador),
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_armazem_id
-        FOREIGN KEY (armazem) REFERENCES armazem(id)
+        FOREIGN KEY (armazem) REFERENCES armazem(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE transportador (
@@ -88,7 +94,18 @@ CREATE TABLE transportador (
 
 CREATE TABLE veiculo (
     id              INT PRIMARY KEY AUTO_INCREMENT,
-    condicoes       VARCHAR(250) NOT NULL
+    marca           VARCHAR(50),
+    ano             INT(4),
+    combustivel     INT(1), -- 1 -> Gasolina, 2 -> Gasóleo, 3 -> GPL, 4 -> Elétrico, 5 -> Híbrido
+    caixa           INT(1), -- 1 -> Manual, 2 -> Automática
+    co2             NUMERIC(3,2),
+    --
+    CONSTRAINT ck_comb
+		CHECK (combustivel = 1 OR combustivel = 2 OR combustivel = 3 
+			OR combustivel = 4 OR combustivel = 5),
+    CONSTRAINT ck_caixa
+		CHECK (caixa = 1 OR caixa = 2)
+    
 ) ENGINE = InnoDB;
 
 CREATE TABLE lista_veiculos (
@@ -98,7 +115,7 @@ CREATE TABLE lista_veiculos (
     CONSTRAINT pk_veiculos
         PRIMARY KEY (transportador,veiculo),
     CONSTRAINT fk_transp_id
-        FOREIGN KEY (transportador) REFERENCES transportador(utilizador),
+        FOREIGN KEY (transportador) REFERENCES transportador(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_veiculo_id
         FOREIGN KEY (veiculo) REFERENCES veiculo(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
@@ -183,7 +200,7 @@ CREATE TABLE produto (
     preco           NUMERIC(5,2) NOT NULL,
     tipo            INT NOT NULL,
     subtipo         INT NOT NULL,
-    cadeia_logis    INT NOT NULL, -- verificar... não fará mais sentido na cadeia logistica chamar-mos o produto?
+    cadeia_logis    INT NOT, 
     --
     CONSTRAINT pk_produto
         PRIMARY KEY (id, fornecedor),
@@ -273,15 +290,18 @@ CREATE TABLE emite_poluicao (
         FOREIGN KEY (poluicao)  REFERENCES poluicao(id)
 ) ENGINE = InnoDB;
 
-INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('fornecedor1','forn1@ecomarket.pt', 111111111,111111111, 'fornOK', 'Fornecedor 1');
-INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('transportador1','trans1@ecomarket.pt', 222222222,222222222, 'transOK', 'Transportador 1');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('Admin','admin@ecomarket.pt', 000000000,000000000, 'adminOK', 'Administração');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('consumidor','cons1@ecomarket.pt', 111111111,111111111, 'consOK', 'Consumidor 1');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('fornecedor1','forn1@ecomarket.pt', 222222222,222222222, 'fornOK', 'Fornecedor 1');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('transportador1','trans1@ecomarket.pt', 333333333,333333333, 'transOK', 'Transportador 1');
+SELECT id FROM utilizador WHERE email = 'cons1@ecomarket.pt';
 SELECT id FROM utilizador WHERE email = 'forn1@ecomarket.pt';
 SELECT id FROM utilizador WHERE email = 'trans1@ecomarket.pt';
 
+INSERT INTO fornecedor VALUES (2);
 INSERT INTO fornecedor VALUES (3);
-INSERT INTO transportador VALUES (4);
--- Inserts do Adminsitrador
-INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('Admin','admin@ecomarket.pt', 000000000,000000000, 'adminOK', 'Administração');
+INSERT INTO transportador (utilizador) VALUES (4);
+
 
 -- Inserts de Distritos e Concelhos
 INSERT INTO distrito VALUES (1, 'Aveiro');
@@ -454,24 +474,22 @@ INSERT INTO concelho VALUES (1014, 'Peniche', 10);
 INSERT INTO concelho VALUES (1015, 'Pombal', 10);
 INSERT INTO concelho VALUES (1016, 'Porto de Mós', 10);
 
-INSERT INTO concelho VALUES (1101, 'Alcochete', 11);
-INSERT INTO concelho VALUES (1102, 'Almada', 11);
-INSERT INTO concelho VALUES (1103, 'Amadora', 11);
-INSERT INTO concelho VALUES (1104, 'Barreiro', 11);
-INSERT INTO concelho VALUES (1105, 'Cascais', 11);
-INSERT INTO concelho VALUES (1106, 'Lisboa', 11);
-INSERT INTO concelho VALUES (1107, 'Loures', 11);
-INSERT INTO concelho VALUES (1108, 'Mafra', 11);
-INSERT INTO concelho VALUES (1109, 'Moita', 11);
-INSERT INTO concelho VALUES (1110, 'Montijo', 11);
+INSERT INTO concelho VALUES (1101, 'Alenquer', 11);
+INSERT INTO concelho VALUES (1102, 'Amadora', 11);
+INSERT INTO concelho VALUES (1103, 'Arruda dos Vinhos', 11);
+INSERT INTO concelho VALUES (1104, 'Azambuja', 11);
+INSERT INTO concelho VALUES (1105, 'Cadaval', 11);
+INSERT INTO concelho VALUES (1106, 'Cascais', 11);
+INSERT INTO concelho VALUES (1107, 'Lisboa', 11);
+INSERT INTO concelho VALUES (1108, 'Loures', 11);
+INSERT INTO concelho VALUES (1109, 'Lourinhã', 11);
+INSERT INTO concelho VALUES (1110, 'Mafra', 11);
 INSERT INTO concelho VALUES (1111, 'Odivelas', 11);
 INSERT INTO concelho VALUES (1112, 'Oeiras', 11);
-INSERT INTO concelho VALUES (1113, 'Palmela', 11);
-INSERT INTO concelho VALUES (1114, 'Seixal', 11);
-INSERT INTO concelho VALUES (1115, 'Sesimbra', 11);
-INSERT INTO concelho VALUES (1116, 'Setúbal', 11);
-INSERT INTO concelho VALUES (1117, 'Sintra', 11);
-INSERT INTO concelho VALUES (1118, 'Vila Franca de Xira', 11);
+INSERT INTO concelho VALUES (1113, 'Sintra', 11);
+INSERT INTO concelho VALUES (1114, 'Sobral de Monte Agraço', 11);
+INSERT INTO concelho VALUES (1115, 'Torres Vedras', 11);
+INSERT INTO concelho VALUES (1116, 'Vila Franca de Xira', 11);
 
 INSERT INTO concelho VALUES (1201, 'Alter do Chão', 12);
 INSERT INTO concelho VALUES (1202, 'Arronches', 12);
@@ -626,3 +644,28 @@ INSERT INTO concelho VALUES (2021, 'Tondela', 20);
 INSERT INTO concelho VALUES (2022, 'Vila Nova de Paiva', 20);
 INSERT INTO concelho VALUES (2023, 'Viseu', 20);
 INSERT INTO concelho VALUES (2024, 'Vouzela', 20);
+
+--
+INSERT INTO tipo_produto (nome) VALUES ('Alimentao');
+INSERT INTO tipo_produto (nome) VALUES ('Livros');
+INSERT INTO tipo_produto (nome) VALUES ('Tecnologia');
+INSERT INTO tipo_produto (nome) VALUES ('Casa');
+INSERT INTO tipo_produto (nome) VALUES ('Crianas');
+INSERT INTO tipo_produto (nome) VALUES ('Beleza');
+INSERT INTO tipo_produto (nome) VALUES ('Desporto');
+INSERT INTO tipo_produto (nome) VALUES ('Animais');
+
+INSERT INTO subtipo_produto (nome) VALUES ('Legumes');
+INSERT INTO subtipo_produto (nome) VALUES ('Fruta');
+INSERT INTO subtipo_produto (nome) VALUES ('Congelados');
+
+INSERT INTO tipo_subtipo VALUES (1,1);
+INSERT INTO tipo_subtipo VALUES (1,2);
+INSERT INTO tipo_subtipo VALUES (1,3);
+INSERT INTO subtipo_produto (nome) VALUES ('Universitrio');
+INSERT INTO subtipo_produto (nome) VALUES ('Thriller');
+INSERT INTO subtipo_produto (nome) VALUES ('Romance');
+
+INSERT INTO tipo_subtipo VALUES (2,4);
+INSERT INTO tipo_subtipo VALUES (2,5);
+INSERT INTO tipo_subtipo VALUES (2,6);
