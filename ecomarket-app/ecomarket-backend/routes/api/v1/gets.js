@@ -78,37 +78,22 @@ router.get('/tipos', (req,res) => {
 
 router.get('/subtipos', (req,res) => {
     var tip = req.query.tipo;
-    var queryString = "SELECT subtipo FROM tipo_subtipo WHERE tipo = ?"
-    const subs = new Object();
+    var queryString = "SELECT subtipo_produto.* FROM tipo_subtipo, subtipo_produto WHERE tipo_subtipo.tipo = ? AND subtipo_produto.id = tipo_subtipo.subtipo";
     pool.getConnection((err,conn) => {
         if (err) throw err;
 
         conn.query(queryString, [tip], (err, results) => {
+            conn.release()
 
             if (!err) {
-                results.forEach(r => {
-                    queryString = "SELECT * FROM subtipo_produto WHERE id = ?"
-                    conn.query(queryString, [r.subtipo], (err, result) => {
-                        if (!err) {
-                            subs[r.subtipo] = [result[0].id, result[0].nome];
-                        } else {
-                            console.log("Não foi possível realizar essa operação. output 4");
-                            return res.status(500).send({message:"fail"});
-                        }
-                    });
-                });
+                return res.status(200).send({results: results});
             } else {
-                conn.release();
-
                 console.log("Não foi possível realizar essa operação. output 4");
                 return res.status(500).send({message:"fail"});
             }
-            conn.release();
-            console.log(subs);
-            return res.status(200).send({results: subs});
-        })
-    })
-})
+        });
+    });
+});
 
 
 //exporta funções/"objetos"
