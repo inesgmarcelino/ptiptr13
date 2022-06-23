@@ -8,7 +8,7 @@ const signin = require('../images/icons/signin.png');
 const cart = require('../images/icons/cart.png');
 
 
-function SideBar() {
+function SideBar(props) {
     const { isAuthenticated } = useAuth0();    
     return (
         <Navbar>
@@ -56,7 +56,7 @@ function useLogin(logged) {
     } else {
         return (
             /*Trocar para username mais tarde e talvez acrescentar a fotografia se quiserem*/ 
-            <NavDropdown title={user.email} id="basic-nav-dropdown" className="NavDrop">
+            <NavDropdown title={user.name} id="basic-nav-dropdown" className="NavDrop">
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={() => logout({returnTo: window.location.origin,})}>Logout</NavDropdown.Item>

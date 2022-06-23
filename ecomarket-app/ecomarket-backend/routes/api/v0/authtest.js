@@ -6,14 +6,16 @@ exports.signup = function(req,res){
         {
             client_id: '8d3hjpCHdNoQWDGJk2g4MNSeGNPZZs5R',
             connection: 'Username-Password-Authentication',
-            email: 'mail@mail.to',
-            password: 'M3G4Bl4Z1K3n#',
-            username: "johndoe",
-            given_name: "John",
-            family_name: "Doe",
-            name: "John Doe",
-            nickname: "johnny",
-            picture: "https://gumlet.assettype.com/afkgaming%2F2022-04%2Fedd0733d-feb1-4978-9378-1a7dbc13e2d5%2FUntitled_design___2022_04_18T161045_989__1_.jpg"
+            email: "mail@mail.mail.to",
+            password: "1!qWty56",
+            name:"Test Testeson",
+            picture: "https://digimedia.web.ua.pt/wp-content/uploads/2017/05/default-user-image.png",
+            user_metadata: { cons: "false", 
+                             forn: "false", 
+                             trans: "false",
+                             nif:"222343990",
+                             tlm:"919119191", 
+                             morada:"Street Road 95"}
         }, {
         headers: {
             'content-type': 'application/json'

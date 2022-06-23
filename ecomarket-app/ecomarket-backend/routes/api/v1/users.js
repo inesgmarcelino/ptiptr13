@@ -99,6 +99,8 @@ router.post('/register', (req, res) => {
   });*/
 
 router.post('/register', (req,res,next) => {
+
+    /** Meter aqui correção dos dados do utilizador */
     const reply = axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
         {
             client_id: '8d3hjpCHdNoQWDGJk2g4MNSeGNPZZs5R',
