@@ -126,7 +126,7 @@ router.post('/register', (req,res,next) => {
     });
 });
 
-
+/*
 router.post('/login', (req, res) => {
     const email = req.body.email;
     const pwd = req.body.pwd;
@@ -159,7 +159,7 @@ router.post('/login', (req, res) => {
         });
     });
   
-});
+});*/
 
 router.get('/:uid', (req,res) => {
     var userId = req.params.uid;
