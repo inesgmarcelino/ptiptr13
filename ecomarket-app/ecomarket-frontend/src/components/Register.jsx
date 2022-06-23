@@ -170,7 +170,7 @@ function Register() {
              <div className="modal fade" id="modal_register" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                  <div className="modal-dialog modal-dialog-centered">
                      <div className="modal-content">
-                         <div className="modal-header" id="modal_header_register">~
+                         <div className="modal-header" id="modal_header_register">
                              <button type="button" class="btn-close" aria-label="Close"></button>
                          </div>
                          <div className="modal-body" id="modal_body_register">
