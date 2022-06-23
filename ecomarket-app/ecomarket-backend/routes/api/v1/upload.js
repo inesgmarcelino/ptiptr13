@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const multer = require('multer');
-const {Storage} = require('@google-cloud/storage');
+
 
 const uupload = multer({ dest: './temp/user/' });
 router.get('/images/user',uupload.single(),function(req,res,next){

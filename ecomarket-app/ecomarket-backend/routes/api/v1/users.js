@@ -107,7 +107,12 @@ router.post('/register', (req,res,next) => {
             password: req.body.pwd,
             name:req.body.nome,
             picture: "https://digimedia.web.ua.pt/wp-content/uploads/2017/05/default-user-image.png",
-            user_metadata: { cons: req.body.cons, forn: req.body.forn, trans: req.body.trans,nif:req.body.nif,tlm:req.body.tlm, morada:req.body.morada,}
+            user_metadata: { cons: req.body.cons, 
+                             forn: req.body.forn, 
+                             trans: req.body.trans,
+                             nif:req.body.nif,
+                             tlm:req.body.tlm, 
+                             morada:req.body.morada}
         }, {
         headers: {
             'content-type': 'application/json'
