@@ -21,7 +21,7 @@ function SideBar(props) {
                         <Form.Control type="" placeholder="Search" className="searchBar" />
                     </Form.Group>
                 </Form>
-                <Row className="logBox">
+                <Row className="logBox align-items-center">
                     <Col>
                         <NavLink to="/Cart">
                             <img src={cart} id="cart" alt="" className="d-inline-block align-center" />
@@ -40,18 +40,16 @@ function useLogin(logged) {
     const { loginWithRedirect,logout,user } = useAuth0();
     if(!logged){
         return (
-            <Row>
-                <Col>
-                    <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({}) }>
-                        Inicie Sessão
-                    </NavLink>
-                </Col>
-                <Col>
-                    <NavLink className="nav-link text-white" to="/register">
-                        Registar
-                    </NavLink>
-                </Col>
-            </Row>
+            <Stack direction="horizontal" gap={1}>
+                <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({})}>
+                    Inicie Sessão
+                </NavLink>
+
+                <NavLink className="nav-link text-white" onClick={() => { window.location = "/register" }} >
+                    Registar
+                </NavLink>
+
+            </Stack>
         );
     } else {
         return (
