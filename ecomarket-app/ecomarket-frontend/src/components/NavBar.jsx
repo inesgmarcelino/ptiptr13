@@ -47,7 +47,7 @@ function useLogin(logged) {
                     </NavLink>
                 </Col>
                 <Col>
-                    <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({screen_hint: 'signup',}) }>
+                    <NavLink className="nav-link text-white" to="/register">
                         Registar
                     </NavLink>
                 </Col>
