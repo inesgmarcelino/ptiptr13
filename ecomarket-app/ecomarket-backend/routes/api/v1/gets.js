@@ -79,7 +79,7 @@ router.get('/tipos', (req,res) => {
 router.get('/subtipos', (req,res) => {
     var tip = req.query.tipo;
     var queryString = "SELECT subtipo FROM tipo_subtipo WHERE tipo = ?"
-    var subs = [];
+    const subs = Object.create(null);
     pool.getConnection((err,conn) => {
         if (err) throw err;
 
@@ -90,7 +90,7 @@ router.get('/subtipos', (req,res) => {
                     queryString = "SELECT * FROM subtipo_produto WHERE id = ?"
                     conn.query(queryString, [r.subtipo], (err, result) => {
                         if (!err) {
-                            subs.push([result[0].id, result[0].nome]);
+                            subs[r.subtipo] = [result[0].id, result[0].nome];
                         } else {
                             console.log("Não foi possível realizar essa operação. output 4");
                             return res.status(500).send({message:"fail"});
