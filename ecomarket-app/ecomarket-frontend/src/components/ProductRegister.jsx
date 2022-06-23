@@ -76,9 +76,9 @@ function ProductRegister(){
                         subtipo: subtipo
                     }).then((response) => {
                         console.log(response);
-                        // if (response.data.message === "success") {
-                        //     window.location.href = "https://ecomarket.works/";
-                        // }
+                        if (response.data.message === "success") {
+                            window.location.href = "https://ecomarket.works/";
+                        }
                     })
                 }
                 break;

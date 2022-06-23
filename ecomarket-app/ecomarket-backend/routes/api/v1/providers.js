@@ -106,15 +106,11 @@ router.post('/reg_product', (req,res) => {
             conn.release();
             
             if(!err){
-                res.status(200);
-                res.type('json');
-                res.send({"message":"Registo bem sucessido"});
-                return;
+                console.log("Registo bem sucessido");
+                return res.status(200).send({message:"success"});
             } else {
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 15"});
-                return;
+                console.log("Não foi possível realizar essa operação. output 7");
+                return res.status(500).send({message:"fail"});
             }
         });
     });
