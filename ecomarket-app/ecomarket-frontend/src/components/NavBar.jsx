@@ -41,14 +41,12 @@ function useLogin(logged) {
     if(!logged){
         return (
             <Stack direction="horizontal" gap={1}>
-                <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({})}>
-                    Inicie Sessão
-                </NavLink>
-
                 <NavLink className="nav-link text-white" onClick={() => { window.location = "/register" }} >
                     Registar
                 </NavLink>
-
+                <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({})}>
+                    Inicie Sessão
+                </NavLink>
             </Stack>
         );
     } else {
