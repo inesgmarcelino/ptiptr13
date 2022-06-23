@@ -1,7 +1,18 @@
 import React from 'react'
+import Axios from "axios";
 import {Link } from "react-router-dom";
+import { useAuth0 } from '@auth0/auth0-react';
 
-function Consumidor () {
+function Consumer () {
+    const { user } = useAuth0();
+    const cid = 2;
+    const encomendas = () => {
+        Axios.get("https://ecomarket.works/api/v1/consumers/orders", {
+            params: cid
+        }).then ((response) => {
+            
+        })
+    }
 
     return(
         <div className="position-absolute showItems">
@@ -41,5 +52,5 @@ function Consumidor () {
 
 }
 
-export default Consumidor;
+export default Consumer;
 

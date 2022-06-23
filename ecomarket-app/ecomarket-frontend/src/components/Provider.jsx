@@ -2,7 +2,7 @@ import React from 'react'
 import {Link } from "react-router-dom";
 
 
-function Fornecedor () {
+function Provider () {
 
 
     return(
@@ -43,4 +43,4 @@ function Fornecedor () {
 
 }
 
-export default Fornecedor;
+export default Provider;
