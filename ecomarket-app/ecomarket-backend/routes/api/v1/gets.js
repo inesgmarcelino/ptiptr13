@@ -90,6 +90,7 @@ router.get('/subtipos', (req,res) => {
                     queryString = "SELECT * FROM subtipo_produto WHERE id = ?"
                     conn.query(queryString, [r.subtipo], (err, result) => {
                         if (!err) {
+                            console.log(result);
                             console.log("aqui");
                             subs.push(result[0]);
                         } else {
