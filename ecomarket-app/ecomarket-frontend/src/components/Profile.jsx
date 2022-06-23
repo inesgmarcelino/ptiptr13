@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 function Profile() {
   const { user } = useAuth0();
-  const email = "admin@ecomarket.pt"; //testar admin
+  // const email = "admin@ecomarket.pt"; //testar admin
 
   // var newtipo, tipo, newsubtipo;
   const [newtipo, setNewTipo]         = useState('');
