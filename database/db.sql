@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS ecodb;
-ALTER DATABASE CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER DATABASE ecodb CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE ecodb;
 
 CREATE TABLE distrito (
@@ -200,7 +200,7 @@ CREATE TABLE produto (
     preco           NUMERIC(5,2) NOT NULL,
     tipo            INT NOT NULL,
     subtipo         INT NOT NULL,
-    cadeia_logis    INT NOT NULL, -- verificar... não fará mais sentido na cadeia logistica chamar-mos o produto?
+    cadeia_logis    INT NOT, 
     --
     CONSTRAINT pk_produto
         PRIMARY KEY (id, fornecedor),
@@ -644,3 +644,28 @@ INSERT INTO concelho VALUES (2021, 'Tondela', 20);
 INSERT INTO concelho VALUES (2022, 'Vila Nova de Paiva', 20);
 INSERT INTO concelho VALUES (2023, 'Viseu', 20);
 INSERT INTO concelho VALUES (2024, 'Vouzela', 20);
+
+--
+INSERT INTO tipo_produto (nome) VALUES ('Alimentao');
+INSERT INTO tipo_produto (nome) VALUES ('Livros');
+INSERT INTO tipo_produto (nome) VALUES ('Tecnologia');
+INSERT INTO tipo_produto (nome) VALUES ('Casa');
+INSERT INTO tipo_produto (nome) VALUES ('Crianas');
+INSERT INTO tipo_produto (nome) VALUES ('Beleza');
+INSERT INTO tipo_produto (nome) VALUES ('Desporto');
+INSERT INTO tipo_produto (nome) VALUES ('Animais');
+
+INSERT INTO subtipo_produto (nome) VALUES ('Legumes');
+INSERT INTO subtipo_produto (nome) VALUES ('Fruta');
+INSERT INTO subtipo_produto (nome) VALUES ('Congelados');
+
+INSERT INTO tipo_subtipo VALUES (1,1);
+INSERT INTO tipo_subtipo VALUES (1,2);
+INSERT INTO tipo_subtipo VALUES (1,3);
+INSERT INTO subtipo_produto (nome) VALUES ('Universitrio');
+INSERT INTO subtipo_produto (nome) VALUES ('Thriller');
+INSERT INTO subtipo_produto (nome) VALUES ('Romance');
+
+INSERT INTO tipo_subtipo VALUES (2,4);
+INSERT INTO tipo_subtipo VALUES (2,5);
+INSERT INTO tipo_subtipo VALUES (2,6);

@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 function Profile() {
   const { user } = useAuth0();
-  const email = "admin@ecomarket.pt"; //testar admin
+  const email = ""; //testar admin
 
   // var newtipo, tipo, newsubtipo;
   const [newtipo, setNewTipo]         = useState('');
@@ -50,7 +50,7 @@ function Profile() {
       return (
         <tbody> 
           <tr>
-            <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/mydata' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
+            <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
           </tr>
           <tr>
             <td className='card-profile'><h3>Sou Consumidor</h3> <Link to ='/consumidor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>

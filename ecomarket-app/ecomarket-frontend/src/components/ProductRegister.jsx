@@ -1,19 +1,22 @@
 /* eslint-disable no-multi-str */
-import { useState } from "react";
 import Axios from 'axios';
+import { useState } from "react";
+import { useAuth0 } from '@auth0/auth0-react';
 
 function ProductRegister(){
+    const { user } = useAuth0();
+    const id = 2; //testar forn
 
     const [nomeProd, setNomeProd]   = useState('');
     const [dataProd, setDataProd]   = useState('');
     const [preco, setPreco]         = useState('');
     const [tipo, setTipo]           = useState('');
     const [subtipo, setSubtipo]     = useState('');
-    const [nomeRec, setNomeRec]     = useState('');
-    const [medidaRec, setMedRec]    = useState('');
-    const [quantRec, setQuantRec]   = useState('');
-    const [nomePol, setNomePol]     = useState('');
-    const [quantPol, setQuantPol]   = useState('');
+    // const [nomeRec, setNomeRec]     = useState('');
+    // const [medidaRec, setMedRec]    = useState('');
+    // const [quantRec, setQuantRec]   = useState('');
+    // const [nomePol, setNomePol]     = useState('');
+    // const [quantPol, setQuantPol]   = useState('');
 
     // const addRec = () => {
     //     document.getElementsByClassName("recursos").innerHTML += "<div className='col-md-12'> \
@@ -54,6 +57,7 @@ function ProductRegister(){
                 break;
             case "tipo":
                 setTipo(x.target.value);
+                subtipos();
                 break;
             case "subtipo":
                 setSubtipo(x.target.value);
@@ -64,7 +68,7 @@ function ProductRegister(){
                     // setError(true);
                 } else {
                     Axios.post("https://ecomarket.works/api/v1/providers/reg_product", {
-                        // id: id
+                        id: id,
                         nome: nomeProd,
                         data: dataProd,
                         preco: preco,
@@ -72,6 +76,9 @@ function ProductRegister(){
                         subtipo: subtipo
                     }).then((response) => {
                         console.log(response);
+                        if (response.data.message === "success") {
+                            window.location.href = "https://ecomarket.works/";
+                        }
                     })
                 }
                 break;
@@ -79,6 +86,28 @@ function ProductRegister(){
                 console.log();
             
         }
+    }
+
+    const tipos = () => {
+        Axios.get("https://ecomarket.works/api/v1/gets/tipos").then((response) => {
+            var tip = response.data.results;
+            for (var i = 0; i < tip.length; i++) {
+                document.getElementById("tipos").innerHTML += "<option value='" + tip[i]["id"] + "'>" + tip[i]["nome"] + "</option>";
+            }
+        });
+    }
+
+    const subtipos = () => {
+        document.getElementById("subtipos").innerHTML = "<option value='' selected>Selecione um Subtipo</option>";
+        Axios.get("https://ecomarket.works/api/v1/gets/subtipos", { 
+            params: { 
+                tipo: tipo
+        }}).then((response) => {
+            var sub = response.data.results;
+            for (var i = 0; i < sub.length; i++) {
+                document.getElementById("subtipos").innerHTML += "<option value='" + sub[i]['id'] + "'>" + sub[i]['nome'] + "</option>";
+            }
+        });
     }
 
     return(
@@ -104,12 +133,16 @@ function ProductRegister(){
 
                     <div className="col-md-12">
                         <label>Tipo</label>
-                        <input className="form-control" type="text" name="tipo"  size="50"  onChange={handler} required/>
+                        <select className="form-select" name="tipo" id="tipos" onChange={handler} onMouseOver={tipos} required>
+                            <option value='' selected>Selecione um Tipo</option>
+                        </select>
                     </div>
 
                     <div className="col-md-12">
                         <label>Subtipo</label>
-                        <input className="form-control" type="text" name="subtipo"  size="50"  onChange={handler} required/>
+                        <select className="form-select" name="subtipo" id="subtipos" onChange={handler} required>
+                            <option value='' selected>Selecione um Subtipo</option>
+                        </select>
                     </div>
                     
                     {/* <h6 className="card-subtitle2 mb-2">Recursos</h6>

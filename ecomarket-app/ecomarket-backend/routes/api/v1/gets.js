@@ -72,9 +72,28 @@ router.get('/tipos', (req,res) => {
                 console.log("Não foi possível realizar essa operação. output 3");
                 return res.status(500).send({message:"fail"});
             }
-        })
-    })
-})
+        });
+    });
+});
+
+router.get('/subtipos', (req,res) => {
+    var tip = req.query.tipo;
+    var queryString = "SELECT subtipo_produto.* FROM tipo_subtipo, subtipo_produto WHERE tipo_subtipo.tipo = ? AND subtipo_produto.id = tipo_subtipo.subtipo";
+    pool.getConnection((err,conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [tip], (err, results) => {
+            conn.release()
+
+            if (!err) {
+                return res.status(200).send({results: results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 4");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
 
 
 //exporta funções/"objetos"
