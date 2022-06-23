@@ -151,7 +151,7 @@ function Profile() {
       <div className="modal fade" id="modal_admin" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
-                <div className="modal-header" id="modal_header_admin">~
+                <div className="modal-header" id="modal_header_admin">
                     <button type="button" className="btn-close" aria-label="Close"></button>
                 </div>
                 <div className="modal-body" id="modal_body_admin">
@@ -159,7 +159,7 @@ function Profile() {
                     <button id='submit' type='submit' name='submit' onClick={handler} className='btn'>Adicionar</button>
                 </div>
                 <div className="modal-footer" id="modal_footer_admin">
-                  <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
+                  <button type="button" onClick={handleHide} className="btn" id="cancelar1">Cancelar</button>
                 </div>
             </div>
         </div>
