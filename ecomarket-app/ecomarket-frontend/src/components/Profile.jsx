@@ -159,7 +159,7 @@ function Profile() {
                     <button id='submit' type='submit' name='submit' onClick={handler} className='btn'>Adicionar</button>
                 </div>
                 <div className="modal-footer" id="modal_footer_admin">
-                  <button type="button" onClick={handleHide} className="btn">Cancelar</button>
+                  <button type="button" onClick={handleHide} className="btn" id="cancelar2">Cancelar</button>
                 </div>
             </div>
         </div>
