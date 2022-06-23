@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const multer = require('multer');
+const {Storage} = require('@google-cloud/storage');
+const axios = require('axios');
 
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
@@ -18,12 +21,13 @@ var auth = require('../svlib/auth0/tokenlib');
 // })
 
 /* GET users listing. */
+/*
 router.post('/register', (req, res) => {
     const nome = req.body.nome;
     const email = req.body.email;
     const nif = req.body.nif;
     const tlm = req.body.tlm;
-    const profpic = req.body.profpic;
+    //const profpic = req.body.profpic;
     const morada = req.body.morada;
     const pwd = req.body.pwd;
     const cons = req.body.cons;
@@ -92,7 +96,28 @@ router.post('/register', (req, res) => {
             }
         });
     });
-  });
+  });*/
+
+router.post('/register', (req,res,next) => {
+    const reply = axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
+        {
+            client_id: '8d3hjpCHdNoQWDGJk2g4MNSeGNPZZs5R',
+            connection: 'Username-Password-Authentication',
+            email: req.body.email,
+            password: req.body.pwd,
+            name:req.body.nome,
+            picture: "https://digimedia.web.ua.pt/wp-content/uploads/2017/05/default-user-image.png",
+            user_metadata: { cons: req.body.cons, forn: req.body.forn, trans: req.body.trans,nif:req.body.nif,tlm:req.body.tlm, morada:req.body.morada,}
+        }, {
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(function (response) {
+        res.send(response)
+    }).catch(function (error) {
+        res.send(error);
+    });
+});
 
 
 router.post('/login', (req, res) => {

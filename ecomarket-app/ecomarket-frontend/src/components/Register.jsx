@@ -45,7 +45,7 @@ function Register() {
                 setTelem(x.target.value);
                 break;
             case "profpic":
-                break;
+                setProfPic(x.target.files[0]);
             case "password":
                 setPassword(x.target.value);
                 break;
