@@ -49,7 +49,7 @@ router.post('/register', (req,res,next) => {
             var queryString = "SELECT id FROM utilizador WHERE email = ?";
             conn.query(queryString, [req.body.email], (err,results) => {
                 if(err){
-                    console.log("Não foi possível registar, erro no registo do consumidor");
+                    console.log(err.message);
                     error = true;
                 }else {
                     id = results.id;
@@ -63,7 +63,7 @@ router.post('/register', (req,res,next) => {
                     queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
                     conn.query(queryString, [id], (err,results) => {
                         if(err){
-                            console.log("Não foi possível registar, erro no registo do consumidor");
+                            console.log(err.message);
                             error = true;
                         } 
                     });
@@ -72,7 +72,7 @@ router.post('/register', (req,res,next) => {
                     queryString = "INSERT INTO fornecedor (utilizador) VALUES (?)";
                     conn.query(queryString, [id], (err,results) => {
                         if(err){
-                            console.log("Não foi possível registar, erro no registo do fornecedor");
+                            console.log(err.message);
                             error = true;
                         } 
                     });
