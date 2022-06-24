@@ -18,24 +18,18 @@ function Consumer () {
                 cid: cid
         }}).then ((response) => {
             if (response.data.message !== "fail") {
-                console.log("aqui")
-                setEncomendas(response.data.results);
-                linhas();
+                var encomendas = response.data.results;
+                for (var i = 0; i < encomendas.length; i++) {
+                    document.getElementById("linhas").innerHTML += "<tr>\
+                                                                        <th>"+encomendas[i].id+"</th>\
+                                                                        <th>"+encomendas[i].data+"</th>\
+                                                                        <th>"+encomendas[i].fornecedor+"</th>\
+                                                                        <th>"+encomendas[i].transportador+"</th>\
+                                                                        <th>"+encomendas[i].total+"</th>\
+                                                                    </tr>";
+                }
             }
         })
-    }
-
-    const linhas = () => {
-        console.log(encomendas);
-        for (var i = 0; i < encomendas.length; i++) {
-            document.getElementById("linhas").innerHTML += "<tr>\
-                                                                <th>"+encomendas[i].id+"</th>\
-                                                                <th>"+encomendas[i].data+"</th>\
-                                                                <th>"+encomendas[i].fornecedor+"</th>\
-                                                                <th>"+encomendas[i].transportador+"</th>\
-                                                                <th>"+encomendas[i].total+"</th>\
-                                                            </tr>";
-        }
     }
 
     return(
