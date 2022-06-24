@@ -8,10 +8,12 @@ var pool = require('mysql2/promise').createPool({
 
 exports.teste = function(req,res){
     pool.getConnection().then((conn) => {
+        console.log("primeira query")
         const insert = "INSERT INTO us(value) VALUES (?)";
         conn.query(insert,["primeiro"],(err) => {
             if(err) throw err;
         }).then((conn,results) => {
+            console.log("segunda query")
             const select = "SELECT MAX(id) AS id FROM us";
             conn.query(select, (err,results) => {
                 if(err) throw err;
@@ -19,6 +21,7 @@ exports.teste = function(req,res){
                 return results;
             })
         }).then((conn,results) => {
+            console.log("terceira query")
             const update = "UPDATE us SET value = ? WHERE id = ?";
             conn.query(update, ["Mudanca para segundo",results.id],() => {
                 if(err) throw err;
