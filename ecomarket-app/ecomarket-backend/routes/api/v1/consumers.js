@@ -154,7 +154,7 @@ router.post('/cancel/:oid', (req,res) => {
     });
 });
 
-router.get('/orders/:cid', (req,res) => {
+router.get('/orders', (req,res) => {
     var consId = req.params.cid;
     var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS fornecedor, u2.nome AS transportador, \
                             SUM(lpe.quantidade * p.preco) AS total \
