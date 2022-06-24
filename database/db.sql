@@ -199,10 +199,10 @@ CREATE TABLE IF NOT EXISTS produto (
     preco           NUMERIC(5,2) NOT NULL,
     tipo            INT NOT NULL,
     subtipo         INT NOT NULL,
-    cadeia_logis    INT NOT, 
+    cadeia_logis    INT NOT NULL, 
     --
     CONSTRAINT pk_produto
-        PRIMARY KEY (id, fornecedor),
+PRIMARY KEY (id, fornecedor),
     CONSTRAINT fk_fornecedor_produto
         FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador),
     CONSTRAINT fk_tipo
