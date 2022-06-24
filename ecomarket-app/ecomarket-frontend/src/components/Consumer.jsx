@@ -10,17 +10,19 @@ function Consumer () {
     const cid = 2;
     const [encomendas, setEncomendas]   = useState(null);
 
+    document.body.onload = function(){enc()};
+
     const enc = () => {
         Axios.get("https://ecomarket.works/api/v1/consumers/orders", {
             params: cid
         }).then ((response) => {
             if (response.data.message !== "fail") {
                 setEncomendas(response.data.results);
+                linhas();
             }
         })
     }
 
-    document.body.onload = function(){linhas()};
     const linhas = () => {
         encomendas.forEach(encomenda => {
             document.getElementById("linhas").innerHTML += "<tr>\
