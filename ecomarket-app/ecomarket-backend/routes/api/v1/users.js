@@ -100,6 +100,8 @@ router.post('/register', (req, res) => {
 
 router.post('/register', (req,res,next) => {
 
+    console.error(req.body);
+
     /** Meter aqui correção dos dados do utilizador */
     const reply = axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
         {

@@ -30,7 +30,24 @@ function Register() {
         window.location.href = "https://ecomarket.works/login";
     }
 
+    function check(){
+        let forncheck = document.getElementById("check-fornecedor");
+        let conscheck = document.getElementById("check-consumidor");
+        let trancheck = document.getElementById("check-transportador");
+        if(forncheck.checked || conscheck.checked){
+            trancheck.disabled = true;
+        } else if(trancheck.checked){
+            forncheck.disabled = true;
+            conscheck.disabled = true;
+        } else {
+            trancheck.disabled = false;
+            forncheck.disabled = false;
+            conscheck.disabled = false;
+        }
+    }
+
     const handler = (x) => {
+        check();
         switch(x.target.name) {
             case "nome":
                 setNome(x.target.value);
