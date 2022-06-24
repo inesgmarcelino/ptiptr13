@@ -18,7 +18,7 @@ CREATE TABLE concelho (
 
 CREATE TABLE image (
     id              INT PRIMARY KEY,
-    filename        VARCHAR(250) NOT NULL
+    filename        VARCHAR(250) NOT NULL,
         --
     CONSTRAINT fk_image
         FOREIGN KEY (id) REFERENCES utilizador(id)
