@@ -157,12 +157,13 @@ router.post('/cancel/:oid', (req,res) => {
 
 router.get('/orders/:cid', (req,res) => {
     var consId = req.params.cid;
-    var queryString = "SELECT encomenda.id AS id, encomenda.data AS data, lista_encomendas.fornecedor AS fornecedor,\
-                        transportar_encomendas.transportador AS transportador , SUM(produto.preco) AS total \
-                        FROM encomenda, lista_encomendas, transportar_encomendas, lista_produtos_encomenda produto WHERE lista_encomendas.consumidor = ? AND \
-                        transportar_encomendas.encomenda = lista_encomendas.encomenda AND encomenda.id = lista_encomendas.encomenda AND \
-                        lista_produtos_encomenda.encomenda = encomenda.id AND produto.id = lista_produtos_encomenda.produto"
-    // var queryString = "SELECT encomenda FROM lista_encomendas WHERE consumidor = ?";
+    var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS fornecedor, u2.nome AS transportador, \
+                            SUM(lpe.quantidade * p.preco) AS total \
+                        FROM encomenda e, lista_encomendas le, transportar_encomendas te, utilizador u1, \
+                            utilizador u2, lista_produtos_encomenda lpe, produto p \
+                        WHERE (le.consumidor = 2) AND (le.encomenda = e.id) AND (le.fornecedor = u1.id) \
+                            AND (te.encomenda = e.id) AND (te.transportador = u2.id) AND (lpe.encomenda = e.id) \
+                            AND (lpe.produto = p.id) GROUP BY e.id, u1.nome, u2.nome;";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 

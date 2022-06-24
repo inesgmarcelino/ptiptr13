@@ -145,7 +145,7 @@ CREATE TABLE lista_encomendas (
     fornecedor      INT,
     --
     CONSTRAINT pk_encomendas
-        PRIMARY KEY (consumidor,encomenda,fornecedor),
+        PRIMARY KEY (consumidor,encomenda),
     CONSTRAINT fk_consumidor_id
         FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_encomenda_id
@@ -299,10 +299,9 @@ SELECT id FROM utilizador WHERE email = 'cons1@ecomarket.pt';
 SELECT id FROM utilizador WHERE email = 'forn1@ecomarket.pt';
 SELECT id FROM utilizador WHERE email = 'trans1@ecomarket.pt';
 
-INSERT INTO fornecedor VALUES (2);
+INSERT INTO consumidor VALUES (2);
 INSERT INTO fornecedor VALUES (3);
 INSERT INTO transportador (utilizador) VALUES (4);
-
 
 -- Inserts de Distritos e Concelhos
 INSERT INTO distrito VALUES (1, 'Aveiro');
