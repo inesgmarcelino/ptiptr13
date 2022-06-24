@@ -23,8 +23,7 @@ CREATE TABLE utilizador (
     nif             INT(9) NOT NULL UNIQUE,
     telemovel       INT(9) NOT NULL UNIQUE,
     pass_word       VARCHAR(250) NOT NULL,
-    morada          VARCHAR(250) NOT NULL,
-
+    morada          VARCHAR(250) NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE image (
