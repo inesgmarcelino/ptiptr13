@@ -11,9 +11,9 @@ exports.teste = function(req,res){
         console.log("primeira query")
         const insert = "INSERT INTO us(value) VALUES (?)";
         conn.query(insert,["primeiro"],(err) => {
-            if(err) throw err;
-            
+            if(err) throw err;  
         })
+        return conn;
     }).then((conn) => {
         console.log("segunda query")
         const select = "SELECT MAX(id) AS id FROM us";
