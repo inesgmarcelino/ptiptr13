@@ -20,88 +20,11 @@ var auth = require('../svlib/auth0/tokenlib');
 //     res.send({});
 // })
 
-/* GET users listing. */
-/*
-router.post('/register', (req, res) => {
-    const nome = req.body.nome;
-    const email = req.body.email;
-    const nif = req.body.nif;
-    const tlm = req.body.tlm;
-    //const profpic = req.body.profpic;
-    const morada = req.body.morada;
-    const pwd = req.body.pwd;
-    const cons = req.body.cons;
-    const forn = req.body.forn;
-    const trans = req.body.trans;
-  
-    var queryString = "INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES (?,?,?,?,?,?)";
-
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
-        
-        conn.query(queryString, [nome, email, nif, tlm, pwd, morada], (err, result) => {
-            if (err) {
-                conn.release();
-                console.log("Não foi possível realizar essa operação. output 1");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-
-        queryString = "SELECT id FROM utilizador WHERE email = ?";
-        conn.query(queryString, [email], (err,results) => {
-            if(err){
-                conn.release();
-                console.log("Não foi possível realizar essa operação. output 2");
-                return res.status(500).send({message:"fail"});
-            } else {
-                var id = results[0].id;
-
-                if(cons){
-                    queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
-                    conn.query(queryString, [id], (err,results) => {
-                        conn.release();
-        
-                        if(err){
-                            console.log("Não foi possível realizar essa operação. output 3");
-                            return res.status(500).send({message:"fail"});
-                        }
-                        console.log("Registo bem sucessido");
-                        return res.status(200).send({message:"success"});
-                    });
-            
-                } else {
-                    if (trans){
-                        queryString = "INSERT INTO transportador (utilizador) VALUES (?)";
-                    } else if (forn) {
-                        queryString = "INSERT INTO fornecedor (utilizador) VALUES (?)";
-                    } else {
-                        conn.release();
-        
-                        console.log("Bad Request");
-                        return res.status(400).send({message:"fail"});
-                    }
-            
-                    conn.query(queryString, [id], (err,results) => {
-                        conn.release();
-        
-                        if(!err){
-                            console.log("Registo bem sucessido");
-                            return res.status(200).send({message:"success"});
-                        } else {
-                            console.log("Não foi possível realizar essa operação. output 4");
-                            return res.status(500).send({message:"fail"});
-                        }
-                    });
-                }
-            }
-        });
-    });
-  });*/
 
 router.post('/register', (req,res,next) => {
 
     console.error(req.body);
-
+    var error = false;
     /** Meter aqui correção dos dados do utilizador */
     const reply = axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
         {
@@ -119,9 +42,41 @@ router.post('/register', (req,res,next) => {
             'content-type': 'application/json'
         }
     }).then(function (response) {
-        res.send(response)
+        pool.getConnection((err, conn) => {
+            if (err) throw err;
+            if (req.body.trans) {
+                /** Código pra registo do transportador (como tratar da localização e afins) */
+                console.log("would be");
+            } else {
+                if(req.body.cons){
+                    queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
+                    conn.query(queryString, [id], (err,results) => {
+                        if(err){
+                            console.log("Não foi possível registar, erro no registo do consumidor");
+                            error = true;
+                        } 
+                    });
+                }
+                if (req.body.forn && !error) {
+                    queryString = "INSERT INTO fornecedor (utilizador) VALUES (?)";
+                    conn.query(queryString, [id], (err,results) => {
+                        if(err){
+                            console.log("Não foi possível registar, erro no registo do fornecedor");
+                            error = true;
+                        } 
+                    });
+                } 
+            }
+            conn.release();
+        });
+        if(error){
+            res.status(500).send({message:"fail"});
+        } else {
+            console.log("Registo bem sucessido");
+            res.status(200).send({message:"success"}); 
+        }
     }).catch(function (error) {
-        res.send(error);
+        res.status(400).send("Malformed Request");
     });
 });
 
