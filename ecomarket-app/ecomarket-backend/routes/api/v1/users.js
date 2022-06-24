@@ -52,6 +52,10 @@ router.post('/register', (req,res,next) => {
                     error = true;
                 }
             }).then((results) => {
+                console.log("hi!");
+                console.log("error");
+                console.log(error);
+                console.log("id");
                 console.log(results.id);
             });
             if (req.body.trans && !error) {
