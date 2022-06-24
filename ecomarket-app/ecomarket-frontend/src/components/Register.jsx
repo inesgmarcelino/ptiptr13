@@ -22,7 +22,7 @@ function Register() {
         $("#modal_register").css("display", "block");
     }
 
-    const handleHide = () => {
+    function handleHide(){
         $("#modal_register").css("display", "none");
     }
     
@@ -104,7 +104,7 @@ function Register() {
                         trans: checkTransportador
                     }).then((response) => {
                         console.log(response);
-                        if (response.data.message === "success") {
+                        if (response.status == 200) {
                             document.getElementById("modal_header_register").innerText = 'Registo bem sucedido!';
                             document.getElementById("modal_body_register").innerHTML = "<p>Clique em 'Continuar' para proseguir para o início de sessão";
                             document.getElementById("continue").onclick = goLogin;
@@ -114,6 +114,7 @@ function Register() {
                             <ul><li>Já existe uma conta com o email "+email+".</li> \
                             <li>Já existe uma conta com o NIF "+nif+".</li> \
                             <li>Já existe uma conta com o número de telemóvel "+telem+".</li></ul>";
+                            document.getElementById("continue").onclick = handleHide;
                             // document.getElementById("modal_footer").innerHTML 
                             // = '<button type="button" onClick={handleHide} className="btn btn-secondary">Cancelar</button><button type="button" className="btn">Continuar</button>';
                         }
@@ -193,7 +194,7 @@ function Register() {
                          <div className="modal-body" id="modal_body_register">
                          </div>
                          <div className="modal-footer" id="modal_footer_register">
-                         <button className="btn" type="button" onClick={handleHide} id="continue">OK</button>
+                         <button className="btn" type="button" id="continue">OK</button>
                          </div>
                      </div>
                  </div>
