@@ -42,13 +42,24 @@ router.post('/register', (req,res,next) => {
             'content-type': 'application/json'
         }
     }).then(function (response) {
+        
         pool.getConnection((err, conn) => {
             if (err) throw err;
-            if (req.body.trans) {
+            var id = undefined;
+            var queryString = "SELECT id FROM utilizador WHERE email = ?";
+            conn.query(queryString, [req.body.email], (err,results) => {
+                if(err){
+                    console.log("Não foi possível registar, erro no registo do consumidor");
+                    error = true;
+                }else {
+                    id = results.id;
+                }
+            });
+            if (req.body.trans && !error) {
                 /** Código pra registo do transportador (como tratar da localização e afins) */
                 console.log("would be");
             } else {
-                if(req.body.cons){
+                if(req.body.cons && !error){
                     queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
                     conn.query(queryString, [id], (err,results) => {
                         if(err){
