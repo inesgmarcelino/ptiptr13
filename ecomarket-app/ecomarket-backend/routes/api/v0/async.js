@@ -12,23 +12,24 @@ exports.teste = function(req,res){
         const insert = "INSERT INTO us(value) VALUES (?)";
         conn.query(insert,["primeiro"],(err) => {
             if(err) throw err;
-        }).then((conn,results) => {
-            console.log("segunda query")
-            const select = "SELECT MAX(id) AS id FROM us";
-            conn.query(select, (err,results) => {
-                if(err) throw err;
-                console.log(results);
-                return results;
-            })
-        }).then((conn,results) => {
-            console.log("terceira query")
-            const update = "UPDATE us SET value = ? WHERE id = ?";
-            conn.query(update, ["Mudanca para segundo",results.id],() => {
-                if(err) throw err;
-            })
-        }).catch((err) => {
-            console.error(err.message);
+            
         })
+    }).then((conn) => {
+        console.log("segunda query")
+        const select = "SELECT MAX(id) AS id FROM us";
+        conn.query(select, (err,results) => {
+            if(err) throw err;
+            console.log(results);
+            return results;
+        })
+    }).then((conn,results) => {
+        console.log("terceira query")
+        const update = "UPDATE us SET value = ? WHERE id = ?";
+        conn.query(update, ["Mudanca para segundo",results.id],() => {
+            if(err) throw err;
+        })
+    }).catch((err) => {
+        console.error(err.message);
     })
         
         
