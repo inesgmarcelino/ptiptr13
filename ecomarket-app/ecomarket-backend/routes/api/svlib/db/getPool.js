@@ -18,7 +18,7 @@ var pool = mysql.createPool({
     database: "ecodb",
   });
   
-module.exports = pool;
+module.exports = pool.promise();
 
 /**Codigo para obter uma ligacao
  * deve ser invocado dentro das paths

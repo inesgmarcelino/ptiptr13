@@ -8,7 +8,6 @@ const axios = require('axios');
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
 var pool = require('../svlib/db/getPool');
 
-
 /** auth0 */
 var auth = require('../svlib/auth0/tokenlib');
 /** */
@@ -47,20 +46,14 @@ router.post('/register', (req,res,next) => {
             if (err) throw err;
             var id = undefined;
             var queryString = "SELECT id FROM utilizador WHERE email = ?";
-            await conn.query(queryString, [req.body.email], (err,results) => {
+            conn.query(queryString, [req.body.email], (err,results) => {
                 if(err){
                     console.log(err.message);
                     error = true;
-                }else {
-                    console.log("O resultado");
-                    console.log(results);
-                    id = results.id;
-                    console.log("O id");
-                    console.log(id);
                 }
+            }).then((results) => {
+                console.log(results.id);
             });
-            console.log("O id");
-            console.log(id);
             if (req.body.trans && !error) {
                 /** Código pra registo do transportador (como tratar da localização e afins) */
                 console.log("would be");
