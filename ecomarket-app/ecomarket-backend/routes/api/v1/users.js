@@ -47,7 +47,7 @@ router.post('/register', (req,res,next) => {
             if (err) throw err;
             var id = undefined;
             var queryString = "SELECT id FROM utilizador WHERE email = ?";
-            conn.query(queryString, [req.body.email], (err,results) => {
+            await conn.query(queryString, [req.body.email], (err,results) => {
                 if(err){
                     console.log(err.message);
                     error = true;
