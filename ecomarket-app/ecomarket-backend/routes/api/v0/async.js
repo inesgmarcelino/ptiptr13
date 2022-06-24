@@ -1,19 +1,37 @@
-var mysql = require('mysql2');
-const PoolConnection = require('mysql2/typings/mysql/lib/PoolConnection');
-
-var pool = mysql.createPool({
+var pool = require('mysql2/promise').createPool({
     connectionLimit:10,
     host: "10.0.0.5",
     user: "ecobackend",
     password: "Y1nGJ14Ng",
     database: "teste",
-  }).promise();;
+  });
 
 exports.teste = function(req,res){
-    pool.getConnection((err,connection) => {
+    pool.getConnection().then((conn) => {
+        const insert = "INSERT INTO us VALUES (?)";
+        conn.query(insert,["primeiro"],(err) => {
+            if(err) throw err;
+        }).then((conn,results) => {
+            const select = "SELECT MAX(id) AS id FROM us";
+            conn.query(select, (err,results) => {
+                if(err) throw err;
+                return results;
+            })
+        }).then((conn,results) => {
+            const update = "UPDATE us SET value = ? WHERE id = ?";
+            conn.query(update, ["Mudanca para segundo",results.id],() => {
+                if(err) throw err;
+            })
+        }).catch((err) => {
+            console.error(err.message);
+        })
+    })
+        
+        
+        /*(err,connection) => {
         var queryString = "SELECT MAX(id) FROM us";
         var res;
-        await connection.query(queryString, [],(err, results)=>{
+        connection.query(queryString, [],(err, results)=>{
             if(err){
                 console.log(err.message);
                 error = true;
@@ -23,5 +41,5 @@ exports.teste = function(req,res){
             console.log(res);
             console.log(results);
         });
-    })
+    })*/
 }
