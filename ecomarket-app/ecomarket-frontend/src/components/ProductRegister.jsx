@@ -93,6 +93,7 @@ function ProductRegister(){
 
 
     const subtipos = (type) => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
         document.getElementById("subtipos").innerHTML = "<option value='' selected>Selecione um Subtipo</option>";
         Axios.get(url+"/api/v1/gets/subtipos", { 
             params: { 
