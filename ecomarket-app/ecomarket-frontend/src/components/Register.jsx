@@ -103,7 +103,6 @@ function Register() {
                         forn: checkFornecedor,
                         trans: checkTransportador
                     }).then((response) => {
-                        console.log(response);
                         if (response.status == 200) {
                             document.getElementById("modal_header_register").innerText = 'Registo bem sucedido!';
                             document.getElementById("modal_body_register").innerHTML = "<p>Clique em 'Continuar' para proseguir para o início de sessão";
