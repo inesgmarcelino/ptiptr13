@@ -38,6 +38,7 @@ services:
 
     frontend:
       image: node:18-bullseye
+      container_name: frontend
       volumes:
         - ./ecomarket-app/ecomarket-frontend:/frontend
       command: "npm start --prefix /frontend"
@@ -51,6 +52,7 @@ services:
 
     backend:
       image: node:18-bullseye
+      container_name: backend
       volumes:
         - ./ecomarket-app/ecomarket-backend:/backend
       command: "node ./backend/bin/www"
