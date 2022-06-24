@@ -52,9 +52,12 @@ router.post('/register', (req,res,next) => {
                     console.log(err.message);
                     error = true;
                 }else {
+                    console.log(results);
                     id = results.id;
+                    console.log(id);
                 }
             });
+            console.log(id);
             if (req.body.trans && !error) {
                 /** Código pra registo do transportador (como tratar da localização e afins) */
                 console.log("would be");
