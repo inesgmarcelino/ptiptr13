@@ -7,7 +7,6 @@ const login = require('../images/icons/login.png');
 const signin = require('../images/icons/signin.png');
 const cart = require('../images/icons/cart.png');
 
-
 function SideBar(props) {
     const { isAuthenticated } = useAuth0();    
     return (

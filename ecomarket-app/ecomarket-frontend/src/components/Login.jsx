@@ -17,7 +17,8 @@ function Login() {
     }
 
     const goHome = () => {
-        window.location.href = "https://ecomarket.works/";
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        window.location.href = url;
     }
 
     const handler = (x) => {
@@ -33,7 +34,8 @@ function Login() {
                 if ( email === '' || password === '') {
                         // setError(true);
                 } else {
-                    Axios.post("https://ecomarket.works/api/v1/users/login", {
+                    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+                    Axios.post(url+"/api/v1/users/login", {
                         email: email,
                         pwd: password
                     }).then((response) => {

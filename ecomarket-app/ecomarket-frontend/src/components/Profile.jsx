@@ -67,6 +67,7 @@ function Profile() {
   }
   
   const handler = (x) => {
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     switch(x.target.name) {
       case "newtipo":
         setNewTipo(x.target.value);
@@ -79,7 +80,7 @@ function Profile() {
         break;
       case "submit":
         if (newtipo !== '' && tipo === '' && newsubtipo === '') {
-          Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
+          Axios.post(url+"/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
             console.log(response);
             if (response.data.message === "success") {
               document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
@@ -109,8 +110,9 @@ function Profile() {
   }
 
   const tipos = () => {
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     document.getElementById("tipos").innerHTML = "<option value='' selected>Selecione um Tipo</option>";
-    Axios.get("https://ecomarket.works/api/v1/gets/tipos").then((response) => {
+    Axios.get(url+"/api/v1/gets/tipos").then((response) => {
         var tipo = response.data.results;
         for (var i = 0; i < tipo.length; i++) {
             document.getElementById("tipos").innerHTML += "<option value='" + tipo[i]["id"] + "'>" + tipo[i]["nome"] + "</option>";

@@ -27,7 +27,8 @@ function Register() {
     }
     
     const goLogin = () => {
-        window.location.href = "https://ecomarket.works/login";
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        window.location.href = url;
     }
 
     function check(){
@@ -47,6 +48,7 @@ function Register() {
     }
 
     const handler = (x) => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
         check();
         switch(x.target.name) {
             case "nome":
@@ -91,7 +93,7 @@ function Register() {
                     (checkTransportador && (checkConsumidor || checkFornecedor))) {
                         // setError(true);
                 } else {
-                    Axios.post("https://ecomarket.works/api/v1/users/register", {
+                    Axios.post(url+"/api/v1/users/register", {
                         nome: nome, 
                         email: email, 
                         nif: nif, 
