@@ -20,6 +20,7 @@ function Consumer () {
         })
     }
 
+    document.body.onload = function(){linhas()};
     const linhas = () => {
         encomendas.forEach(encomenda => {
             document.getElementById("linhas").innerHTML += "<tr>\
@@ -53,7 +54,6 @@ function Consumer () {
                     </tr>
                 </thead>
                 <tbody id ="linhas">
-                    {linhas()}
                 </tbody>
             </table>
             </div>
