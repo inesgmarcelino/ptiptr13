@@ -53,7 +53,7 @@ function Consumer () {
                     </tr>
                 </thead>
                 <tbody id ="linhas">
-                    {linhas}
+                    {linhas()}
                 </tbody>
             </table>
             </div>
