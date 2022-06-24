@@ -8,7 +8,7 @@ var pool = require('mysql2/promise').createPool({
 
 exports.teste = function(req,res){
     pool.getConnection().then((conn) => {
-        const insert = "INSERT INTO us VALUES (?)";
+        const insert = "INSERT INTO us(value) VALUES (?)";
         conn.query(insert,["primeiro"],(err) => {
             if(err) throw err;
         }).then((conn,results) => {
