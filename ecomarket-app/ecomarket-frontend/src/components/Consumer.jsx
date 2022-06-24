@@ -25,15 +25,15 @@ function Consumer () {
     }
 
     const linhas = () => {
-        encomendas.forEach(encomenda => {
+        for (var i = 0; i < encomendas.size; i++) {
             document.getElementById("linhas").innerHTML += "<tr>\
-                                                                <th>"+encomenda.id+"</th>\
-                                                                <th>"+encomenda.data+"</th>\
-                                                                <th>"+encomenda.fornecedor+"</th>\
-                                                                <th>"+encomenda.transportador+"</th>\
-                                                                <th>"+encomenda.total+"</th>\
+                                                                <th>"+encomendas[i].id+"</th>\
+                                                                <th>"+encomendas[i].data+"</th>\
+                                                                <th>"+encomendas[i].fornecedor+"</th>\
+                                                                <th>"+encomendas[i].transportador+"</th>\
+                                                                <th>"+encomendas[i].total+"</th>\
                                                             </tr>";
-        });
+        }
     }
 
     return(
@@ -49,11 +49,11 @@ function Consumer () {
             <table className="table table-bordered" id='centrar'>
                 <thead>
                     <tr>
-                        <th>#ID</th>
+                        <th>ID</th>
                         <th>Data</th>
                         <th>Fornecedor</th>
                         <th>Transportador</th>
-                        <th>Valor</th>
+                        <th>Valor Total</th>
                     </tr>
                 </thead>
                 <tbody id ="linhas">
