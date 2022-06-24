@@ -8,7 +8,7 @@ import { useState } from 'react';
 function Consumer () {
     const { user } = useAuth0();
     const cid = 2;
-    const [encomendas, setEncomendas]   = useState(null);
+    const [encomendas, setEncomendas]   = useState('');
 
     document.body.onload = function(){enc()};
 
