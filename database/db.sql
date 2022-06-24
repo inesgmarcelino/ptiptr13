@@ -200,7 +200,7 @@ CREATE TABLE produto (
     preco           NUMERIC(5,2) NOT NULL,
     tipo            INT NOT NULL,
     subtipo         INT NOT NULL,
-    cadeia_logis    INT NOT NULL, 
+    cadeia_logis    INT, 
     --
     CONSTRAINT pk_produto
         PRIMARY KEY (id, fornecedor),
