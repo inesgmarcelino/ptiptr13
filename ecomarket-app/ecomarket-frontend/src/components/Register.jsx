@@ -193,8 +193,7 @@ function Register() {
                          <div className="modal-body" id="modal_body_register">
                          </div>
                          <div className="modal-footer" id="modal_footer_register">
-                         <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
-                         <button className="btn" id="continue">Continuar</button>
+                         <button className="btn" type="button" onClick={handleHide} id="continue">OK</button>
                          </div>
                      </div>
                  </div>
