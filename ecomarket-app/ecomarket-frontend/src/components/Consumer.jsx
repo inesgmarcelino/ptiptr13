@@ -25,7 +25,7 @@ function Consumer () {
     }
 
     const linhas = () => {
-        for (var i = 0; i < encomendas.size; i++) {
+        for (var i = 0; i < encomendas.length; i++) {
             document.getElementById("linhas").innerHTML += "<tr>\
                                                                 <th>"+encomendas[i].id+"</th>\
                                                                 <th>"+encomendas[i].data+"</th>\
