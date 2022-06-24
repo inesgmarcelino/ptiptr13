@@ -13,7 +13,7 @@ CREATE TABLE concelho (
     distrito        INT NOT NULL,
     --
     CONSTRAINT fk_concelho
-        FOREIGN KEY (distrito) REFERENCES distrito(id)
+        FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE image (
@@ -147,11 +147,11 @@ CREATE TABLE lista_encomendas (
     CONSTRAINT pk_encomendas
         PRIMARY KEY (consumidor,encomenda,fornecedor),
     CONSTRAINT fk_consumidor_id
-        FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador),
+        FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_encomenda_id
         FOREIGN KEY (encomenda) REFERENCES encomenda(id) ON DELETE CASCADE,
     CONSTRAINT fk_fornecedor_id
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador)
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE transportar_encomendas (
@@ -205,7 +205,7 @@ CREATE TABLE produto (
     CONSTRAINT pk_produto
         PRIMARY KEY (id, fornecedor),
     CONSTRAINT fk_fornecedor_produto
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador),
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador)ON DELETE CASCADE,
     CONSTRAINT fk_tipo
         FOREIGN KEY (tipo) REFERENCES tipo_produto(id),
     CONSTRAINT fk_subtipo
@@ -286,7 +286,7 @@ CREATE TABLE emite_poluicao (
     CONSTRAINT pk_emite_poluicao
         PRIMARY KEY (veiculo,poluicao),
     CONSTRAINT fk_veiculo_polui
-        FOREIGN KEY (veiculo) REFERENCES veiculo(id),
+        FOREIGN KEY (veiculo) REFERENCES veiculo(id) ON DELETE CASCADE,
     CONSTRAINT fk_poluicao_emitida
         FOREIGN KEY (poluicao)  REFERENCES poluicao(id)
 ) ENGINE = InnoDB;
