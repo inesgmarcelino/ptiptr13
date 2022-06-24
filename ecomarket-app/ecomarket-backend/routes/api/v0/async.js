@@ -15,6 +15,7 @@ exports.teste = function(req,res){
             const select = "SELECT MAX(id) AS id FROM us";
             conn.query(select, (err,results) => {
                 if(err) throw err;
+                console.log(results);
                 return results;
             })
         }).then((conn,results) => {
