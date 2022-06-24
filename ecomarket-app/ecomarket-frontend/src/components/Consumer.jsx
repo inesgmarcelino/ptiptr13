@@ -14,8 +14,9 @@ function Consumer () {
 
     const enc = () => {
         Axios.get("https://ecomarket.works/api/v1/consumers/orders", {
-            params: cid
-        }).then ((response) => {
+            params: {
+                cid: cid
+        }}).then ((response) => {
             if (response.data.message !== "fail") {
                 setEncomendas(response.data.results);
                 linhas();
