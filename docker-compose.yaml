@@ -36,65 +36,34 @@ services:
     #     - "frontend"
     #    # - "mysql_master"
 
-    # frontend:
-    #   image: node:18-bullseye
-    #   volumes:
-    #     - ./ecomarket-app/ecomarket-frontend:/frontend
-    #   command: "npm start --prefix /frontend"
-    #   networks:
-    #     c-network:
-    #       aliases:
-    #         - frontend
-    #   restart: always
-    #   depends_on:
-    #     - "loadbalancer"
-
-    # backend:
-    #   image: node:18-bullseye
-    #   volumes:
-    #     - ./ecomarket-app/ecomarket-backend:/backend
-    #   command: "node ./backend/bin/www"
-    #   networks:
-    #     c-network:
-    #       aliases:
-    #         - backend
-    #   restart: always
-    #   depends_on:
-    #     - "frontend"
-
-    mysql_master:
-      image: mysql:debian
+    frontend:
+      image: node:18-bullseye
+      volumes:
+        - ./ecomarket-app/ecomarket-frontend:/frontend
+      command: "npm start --prefix /frontend"
       networks:
         c-network:
           aliases:
-            - mysql
+            - frontend
       restart: always
-      container_name: mysql
-      environment:
-        - MYSQL_ROOT_PASSWORD=S3cret
-        - MYSQL_PASSWORD=An0thrS3crt
-        - MYSQL_USER=user
-        #- DATA_SAVE_PATH=../data
+      depends_on:
+        - "loadbalancer"
+
+    backend:
+      image: node:18-bullseye
       volumes:
-        - ./database/db.sql:/docker-entrypoint-initdb.d/db.sql
-        - ./database/hello.sql:/docker-entrypoint-initdb.d/hello.sql
-        - data:/var/lib/mysql
-      
-      stdin_open: true # docker run -i
-      tty: true        # docker run -t
-
-
-      # mysql_slave:
-      #   image: mysql:debian
-      #   networks:
-      #     - "c-network"
-      #   #restart: always
-      #   depends_on:
-      #     - "mysql_master"
+        - ./ecomarket-app/ecomarket-backend:/backend
+      command: "node ./backend/bin/www"
+      networks:
+        c-network:
+          aliases:
+            - backend
+      restart: always
+      depends_on:
+        - "frontend"
 
 networks:
     c-network:
-    auth-service:
 
 volumes:
     #volume for where sql data is stored
