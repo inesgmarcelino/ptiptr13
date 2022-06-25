@@ -18,9 +18,13 @@ function query(connection, queryString, queryValues,){
 exports.teste = async function(req,res){
     const conn = await pool.getConnection();
     try{
+        console.log("First query");
         const insert = await query(conn,"INSERT INTO us(value) VALUES (?)",["primeiro"]);
+        console.log("2 query");
         const select = await query(conn,"SELECT MAX(id) AS id FROM us", null);
+        console.log("3 query");
         const update = await query(conn, "UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select.id]);
+        console.log("END");
     } catch(err) {
         console.log(err);
         res.send("OH  NOE");
