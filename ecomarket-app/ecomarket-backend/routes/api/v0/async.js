@@ -26,18 +26,20 @@ function queryResults(connection, queryString, queryValues,){
 
 exports.teste = function(req,res){
     pool.getConnection().then((conn) => {
+        console.log("first Query");
         query(conn,"INSERT INTO us(value) VALUES (?)",["primeiro"])
         .then((conn) => {
+            console.log("second Query");
             queryResults(conn,"SELECT MAX(id) AS id FROM us", null)
             .then((conn, results) => {
                 console.log(results);
                 query(conn, "UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",results.id]).
                 then((conn) => {
                     conn.release();
-                },(err) => {console.error(err)});
+                },(err) => {console.error(err)})
             },(err) => {console.error(err)})
         },(err) => {console.error(err)})
-    })
+    },(err) => {console.error(err)})
 }
 
 
