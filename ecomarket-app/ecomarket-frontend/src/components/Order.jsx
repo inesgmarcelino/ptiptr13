@@ -22,7 +22,7 @@ function Order(){
                                                                         <th>"+produtos[i].id+"</th>\
                                                                         <th>"+produtos[i].nome+"</th>\
                                                                         <th>"+produtos[i].quant+"</th>\
-                                                                        <th>"+produtos[i].total+"</th>\
+                                                                        <th>"+produtos[i].total+"€</th>\
                                                                     </tr>";
                 }
             }

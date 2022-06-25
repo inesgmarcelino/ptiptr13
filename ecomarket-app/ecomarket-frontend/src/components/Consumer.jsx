@@ -1,5 +1,5 @@
 /* eslint-disable no-multi-str */
-import React from 'react'
+import React from 'react';
 import Axios from "axios";
 import {Link } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
@@ -24,12 +24,12 @@ function Consumer () {
                                                                         <th>"+encomendas[i].fornecedor+"</th>\
                                                                         <th>"+encomendas[i].transportador+"</th>\
                                                                         <th>"+status(encomendas[i].cons, encomendas[i].forn, encomendas[i].transp)+"</th>\
-                                                                        <th>"+encomendas[i].total+"</th>\
+                                                                        <th>"+encomendas[i].total+"€</th>\
                                                                         <th> Botão para a order.jsx respetiva</th>\
                                                                     </tr>";
                 }
             }
-        })
+        });
     }
 
     const status = (c,f,t) => {
@@ -65,7 +65,7 @@ function Consumer () {
                         <th>Transportador</th>
                         <th>Estado</th>
                         <th>Valor Total</th>
-                        <th> -- --</th> {/* botão */}
+                        <th>-- --</th> {/* botão */}
                     </tr>
                 </thead>
                 <tbody id ="linhas">

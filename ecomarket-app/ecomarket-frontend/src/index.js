@@ -24,7 +24,7 @@ root.render(
       <Route path='/editProfile' element={<EditProfile />} />
       <Route path='/payment' element={<Payment />} />
       <Route path='/consumer' element={<Consumer />} />
-      <Route path='/providder' element={<Provider />} />
+      <Route path='/provider' element={<Provider />} />
       <Route path='/confirmarEncomenda' element={<ConfirmarEncomenda />} />
       <Route path='/comparador' element={<Comparador />} />
       <Route path='/adminLogin' element={<AdminLogin />} />

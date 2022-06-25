@@ -250,27 +250,45 @@ router.post('/reg_product', (req,res) => {
     // });
 });
 
-router.put('/product/', (req,res) => {
-    
-})
-
-router.get('/orders/:pid', (req,res) => {
-    var provId = req.params.pid;
-    var queryString = "SELECT encomenda FROM lista_encomendas WHERE fornecedor = ?";
+router.put('/products/', (req,res) => {
+    var provId = req.query.pid;
+    var queryString = "SELECT p.id AS id, p.nome AS nome, p.producao  AS producao, tp.nome AS tipo, stp.nome AS subtipo, p.preco \
+                        FROM produto p, tipo_produto tp, subtipo_produto stp \
+                        WHERE (p.fornecedor = 3) AND (tp.id = p.tipo) AND (stp.id = p.subtipo)";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
-        conn.query(queryString, [provId], (err, results) =>{ 
-            if (!err) {
-                results.forEach(enc => {
-                    queryString = ""; //por acabar
-                });
-            } else {
-                conn.release();
+        conn.query(queryString, [provId], (err, results) => {
+            conn.release();
 
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 16"});
+            if (!err) {
+                return res.status(200).send({results: results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 15");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
+
+
+router.get('/orders', (req,res) => {
+    var provId = req.query.pid;
+    var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS transportador, SUM(lpe.quantidade * p.preco) AS total \
+                        FROM encomenda e, utilizador u1, lista_produtos_encomenda lpe, produto p, lista_encomendas le, transportar_encomendas te \
+                        WHERE (le.fornecedor = ?) AND (le.encomenda = e.id) AND (te.encomenda = e.id) AND (te.transportador = u1.id) \
+                            AND (lpe.encomenda = e.id) AND (lpe.produto = p.id) GROUP BY e.id, u1.nome, ee.status_fornec";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [provId], (err, results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results: results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 16");
+                return res.status(500).send({message:"fail"});
             }
         });
     });
