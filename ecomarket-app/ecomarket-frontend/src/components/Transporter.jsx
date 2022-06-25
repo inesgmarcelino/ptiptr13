@@ -23,7 +23,7 @@ function Transporter () {
             if (response.data.message !== "fail") {
                 var encomendas = response.data.results;
                 for (var i = 0; i < encomendas.length; i++) {
-                    document.getElementById("prov_enc").innerHTML += "<tr>\
+                    document.getElementById("trans_enc").innerHTML += "<tr>\
                                                                         <th>"+encomendas[i].id+"</th>\
                                                                         <th>"+encomendas[i].data+"</th>\
                                                                         <th>"+status(encomendas[i].transp)+"</th>\
@@ -51,7 +51,7 @@ function Transporter () {
             if (response.data.message !== "fail") {
                 var produtos = response.data.results;
                 for (var i = 0; i < produtos.length; i++) {
-                    document.getElementById("prov_prod").innerHTML += "<tr>\
+                    document.getElementById("trans_car").innerHTML += "<tr>\
                                                                         <th>"+produtos[i].id+"</th>\
                                                                         <th>"+produtos[i].marca+"</th>\
                                                                         <th>"+produtos[i].ano+"</th>\
