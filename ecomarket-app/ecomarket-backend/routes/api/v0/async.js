@@ -4,7 +4,7 @@ var pool = require('mysql2/promise').createPool({
     user: "ecobackend",
     password: "Y1nGJ14Ng",
     database: "teste",
-    multipleStatements: true;
+    multipleStatements: true
   });
 
 function query(connection, queryString, queryValues,){
