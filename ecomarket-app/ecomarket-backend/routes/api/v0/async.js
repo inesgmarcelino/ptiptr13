@@ -10,20 +10,28 @@ function query(connection, queryString, queryValues,){
     return new Promise(function(resolve, reject){
         connection.query(queryString,queryValues, (err,results) => {
             if(err) return reject(err);
-            resolve(connection);
+            resolve(results);
         })
     });
 }
 
-function queryResults(connection, queryString, queryValues,){
-    return new Promise(function(resolve, reject){
-        connection.query(queryString,queryValues, (err,results) => {
-            if(err) return reject(err);
-            resolve(connection, results);
-        })
-    });
+exports.teste = async function(req,res){
+    const conn = await pool.getConnection();
+    try{
+        const insert = await query(conn,"INSERT INTO us(value) VALUES (?)",["primeiro"]);
+        const select = await query(conn,"SELECT MAX(id) AS id FROM us", null);
+        const update = await query(conn, "UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select.id]);
+    } catch(err) {
+        console.log(err);
+        res.send("OH  NOE");
+    } finally{
+        conn.release();
+        res.send("Success");
+    }
 }
 
+
+/*
 exports.teste = function(req,res){
     pool.getConnection().then((conn) => {
         console.log("first Query");
@@ -40,7 +48,7 @@ exports.teste = function(req,res){
             },(err) => {console.error(err)})
         },(err) => {console.error(err)})
     },(err) => {console.error(err)})
-}
+}*/
 
 
 
