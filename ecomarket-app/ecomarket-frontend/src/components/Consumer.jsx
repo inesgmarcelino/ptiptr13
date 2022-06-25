@@ -20,7 +20,7 @@ function Consumer () {
                 for (var i = 0; i < encomendas.length; i++) {
                     document.getElementById("linhas").innerHTML += "<tr>\
                                                                         <th>"+encomendas[i].id+"</th>\
-                                                                        <th>"+encomendas[i].data.substring(0,9)+"</th>\
+                                                                        <th>"+encomendas[i].data.substring(0,10)+"</th>\
                                                                         <th>"+encomendas[i].fornecedor+"</th>\
                                                                         <th>"+encomendas[i].transportador+"</th>\
                                                                         <th>"+status(encomendas[i].cons, encomendas[i].forn, encomendas[i].transp)+"</th>\

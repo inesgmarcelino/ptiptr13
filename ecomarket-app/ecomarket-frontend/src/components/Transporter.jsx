@@ -26,7 +26,7 @@ function Transporter () {
                     document.getElementById("trans_enc").innerHTML += "<tr>\
                                                                         <th>"+encomendas[i].id+"</th>\
                                                                         <th>"+encomendas[i].consumidor+"</th>\
-                                                                        <th>"+encomendas[i].data.substring(0,9)+"</th>\
+                                                                        <th>"+encomendas[i].data.substring(0,10)+"</th>\
                                                                         <th>"+status(encomendas[i].transp)+"</th>\
                                                                         <th>"+encomendas[i].total+"</th>\
                                                                         <th> Botão para a order.jsx respetiva</th>\
