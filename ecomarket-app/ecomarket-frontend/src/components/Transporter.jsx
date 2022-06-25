@@ -55,14 +55,42 @@ function Transporter () {
                                                                         <th>"+produtos[i].id+"</th>\
                                                                         <th>"+produtos[i].marca+"</th>\
                                                                         <th>"+produtos[i].ano+"</th>\
-                                                                        <th>"+produtos[i].combustivel+"</th>\
-                                                                        <th>"+produtos[i].caixa+"</th>\
-                                                                        <th>"+produtos[i].emissao+"€</th>\
+                                                                        <th>"+comb(produtos[i].combustivel)+"</th>\
+                                                                        <th>"+caixa(produtos[i].caixa)+"</th>\
+                                                                        <th>"+produtos[i].emissao+"g/km</th>\
                                                                         <th> Botão para a product.jsx respetiva</th>\
                                                                     </tr>";
                 }
             }
         });
+    }
+
+    const comb = (x) => {
+        switch (x) {
+            case 1:
+                return "Gasolina";
+            case 2:
+                return "Gasóleo";
+            case 3:
+                return "GPL";
+            case 4:
+                return "Elétrico";
+            case 5:
+                return "Híbrido";
+            default:
+                break;
+        }
+    }
+
+    const caixa = (x) => {
+        switch (x) {
+            case 1:
+                return "Gasolina";
+            case 2:
+                return "Gasóleo";
+            default:
+                break;
+        }
     }
 
     return(
