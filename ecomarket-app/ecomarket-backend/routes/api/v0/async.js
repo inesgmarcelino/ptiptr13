@@ -34,9 +34,9 @@ exports.teste = function(req,res){
                 query(conn, "UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",results.id]).
                 then((conn) => {
                     conn.release();
-                });
-            })
-        })
+                },(err) => {console.error(err)});
+            },(err) => {console.error(err)})
+        },(err) => {console.error(err)})
     })
 }
 
