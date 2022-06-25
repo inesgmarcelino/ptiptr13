@@ -250,7 +250,7 @@ router.post('/reg_product', (req,res) => {
     // });
 });
 
-router.put('/products/', (req,res) => {
+router.get('/products', (req,res) => {
     var provId = req.query.pid;
     var queryString = "SELECT p.id AS id, p.nome AS nome, p.producao  AS producao, tp.nome AS tipo, stp.nome AS subtipo, p.preco \
                         FROM produto p, tipo_produto tp, subtipo_produto stp \
