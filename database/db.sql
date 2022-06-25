@@ -16,11 +16,6 @@ CREATE TABLE concelho (
         FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE image (
-    id              INT PRIMARY KEY AUTO_INCREMENT,
-    filename        VARCHAR(250) NOT NULL
-) ENGINE = InnoDB;
-
 CREATE TABLE utilizador (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
@@ -29,11 +24,17 @@ CREATE TABLE utilizador (
     telemovel       INT(9) NOT NULL UNIQUE,
     image           INT,
     pass_word       VARCHAR(250) NOT NULL,
-    morada          VARCHAR(250) NOT NULL,
-    --
-    CONSTRAINT fk_image
-        FOREIGN KEY (image) REFERENCES image(id)
+    morada          VARCHAR(250) NOT NULL
 ) ENGINE = InnoDB;
+
+CREATE TABLE image (
+    id              INT PRIMARY KEY AUTO_INCREMENT,
+    filename        VARCHAR(250) NOT NULL,
+    
+    CONSTRAINT fk_image
+        FOREIGN KEY (id) REFERENCES utilizador(id)
+) ENGINE = InnoDB;
+
 
 CREATE TABLE consumidor (
     utilizador      INT PRIMARY KEY,

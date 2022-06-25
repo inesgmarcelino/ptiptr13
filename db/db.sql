@@ -4,8 +4,17 @@ CREATE TABLE utilizador (
     email           VARCHAR(50) NOT NULL UNIQUE,
     nif             INT(9) NOT NULL UNIQUE,
     telemovel       INT(9) NOT NULL UNIQUE,
-    image           BLOB, -- Binary large object (verificar)
-    pass_word       VARCHAR(250) NOT NULL
+    image           INT,
+    pass_word       VARCHAR(250) NOT NULL,
+    morada          VARCHAR(250) NOT NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE image (
+    id              INT PRIMARY KEY AUTO_INCREMENT,
+    filename        VARCHAR(250) NOT NULL,
+    
+    CONSTRAINT fk_image
+        FOREIGN KEY (id) REFERENCES utilizador(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE consumidor (
