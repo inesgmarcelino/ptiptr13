@@ -11,9 +11,7 @@ const promisePool = pool.promise()
 
 promisePool.getConnection().then( async (conn) => {
     try{
-        const value = await conn.query("SELECT MAX(id) AS id FROM us", (err, results) => {
-            return results;
-        });
+        const value = await conn.query("SELECT MAX(id) AS id FROM us");
         console.log(value);
     } catch(err){
         console.log(err);
@@ -28,8 +26,8 @@ exports.teste = async function(req,res){
         const select = await promisePool.query("SELECT MAX(id) AS id FROM us", () => {
 
         });
-        console.log(select);
-        const update = await promisePool.query("UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select[0].id]);
+        console.log(select[0][0]);
+        const update = await promisePool.query("UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select[0][0].id]);
         console.log("END");
     } catch(err) {
         console.log(err);
