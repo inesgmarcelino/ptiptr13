@@ -1,1 +1,0 @@
-docker-compose up -d --scale backend=1 frontend=1
