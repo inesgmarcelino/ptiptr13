@@ -79,6 +79,7 @@ router.get('/:pname', (req,res) => {
 
 router.get('/order', (req,res) => {
     var order = req.query.order;
+    console.log(order);
     var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
                         FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
                         GROUP BY p.id, p.nome";
@@ -89,19 +90,11 @@ router.get('/order', (req,res) => {
             conn.release();
 
             if (!err) {
-                // return res.status(200).send({results: results});
-                res.status(200);
-                res.type('json');
-                res.send({results:results});
-                return;
+                return res.status(200).send({results: results});
 
             } else {
                 console.log("Não foi possível realizar essa operação. output 4");
-                // return res.status(500).send({message:"fail"});
-                res.status(500);
-                res.type('json');
-                res.send({message:"fail"});
-                return;
+                return res.status(500).send({message:"fail"});
             }
         });
     });
