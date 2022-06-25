@@ -20,7 +20,7 @@ var auth = require('../svlib/auth0/tokenlib');
 // })
 
 
-router.post('/register', (req,res,next) => {
+router.post('/register', (req, res, next) => {
 
     console.error(req.body);
     var error = false;
@@ -31,103 +31,38 @@ router.post('/register', (req,res,next) => {
             connection: 'Username-Password-Authentication',
             email: req.body.email,
             password: req.body.pwd,
-            name:req.body.nome,
+            name: req.body.nome,
             picture: "https://digimedia.web.ua.pt/wp-content/uploads/2017/05/default-user-image.png",
-            user_metadata: { nif:req.body.nif,
-                             tlm:req.body.tlm, 
-                             morada:req.body.morada}
+            user_metadata: {
+                nif: req.body.nif,
+                tlm: req.body.tlm,
+                morada: req.body.morada
+            }
         }, {
         headers: {
             'content-type': 'application/json'
         }
-    }).then(function (response) {
-        
-        pool.getConnection((err, conn) => {
-            if (err) throw err;
-            var id = undefined;
-            var queryString = "SELECT id FROM utilizador WHERE email = ?";
-            conn.query(queryString, [req.body.email], (err,results) => {
-                if(err){
-                    console.log(err.message);
-                    error = true;
-                }
-            }).then((results) => {
-                console.log("hi!");
-                console.log("error");
-                console.log(error);
-                console.log("id");
-                console.log(results.id);
-            });
-            if (req.body.trans && !error) {
-                /** Código pra registo do transportador (como tratar da localização e afins) */
-                console.log("would be");
+    }).then(async function (response) {
+
+        try {
+            const id = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
+            if (req.body.trans) {
+                /** por implementar localizacao */
             } else {
-                if(req.body.cons && !error){
-                    queryString = "INSERT INTO consumidor (utilizador) VALUES (?)";
-                    conn.query(queryString, [id], (err,results) => {
-                        if(err){
-                            console.log(err.message);
-                            error = true;
-                        } 
-                    });
+                if (req.body.cons) {
+                    const cons = await pool.query("INSERT INTO consumidor (utilizador) VALUES (?)", [id]);
                 }
-                if (req.body.forn && !error) {
-                    queryString = "INSERT INTO fornecedor (utilizador) VALUES (?)";
-                    conn.query(queryString, [id], (err,results) => {
-                        if(err){
-                            console.log(err.message);
-                            error = true;
-                        } 
-                    });
-                } 
+                if (req.body.forn) {
+                    const forn = await pool.query("INSERT INTO fornecedor (utilizador) VALUES (?)", [id]);
+                }
             }
-            conn.release();
-        });
-        if(error){
-            res.status(500).send({message:"fail"});
-        } else {
-            console.log("Registo bem sucessido");
-            res.status(200).send({message:"success"}); 
+            res.status(200).send({ message: "success" });
+        } catch (err) {
+            console.error(err);
+            res.status(500).send({ message: "fail" });
         }
-    }).catch(function (error) {
-        res.status(400).send("Malformed Request");
     });
 });
-
-/*
-router.post('/login', (req, res) => {
-    const email = req.body.email;
-    const pwd = req.body.pwd;
-
-    const queryString = "SELECT pass_word FROM utilizador WHERE email = ?";
-
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, [email], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                if(results.length > 0){
-                    if(results[0].pass_word === pwd){
-                        console.log("Utilizador autenticado");
-                        return res.status(200).send({message:"success"});
-                    } else {
-                        console.log("Não foi possível autenticar o utilizador.");
-                        return res.status(401).send({message:"fail"});
-                    }
-                } else {
-                    console.log(email + " não se encontra na base de dados.");
-                    return res.status(404).send({message:"no email"});
-                }
-            } else {
-                console.log("Não foi possível realizar essa operação. output 5");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
-  
-});*/
 
 router.get('/:uid', (req,res) => {
     var userId = req.params.uid;
