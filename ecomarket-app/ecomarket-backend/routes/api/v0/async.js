@@ -16,7 +16,7 @@ function query(connection, queryString, queryValues,){
 }
 
 
-pool.getConnection.then((conn) => {
+pool.getConnection().then((conn) => {
     return new Promise( (resolve,reject) => {
         conn.query("INSERT INTO us(value) VALUES (?)", 
         ["primeiro"], (err, results) => {
