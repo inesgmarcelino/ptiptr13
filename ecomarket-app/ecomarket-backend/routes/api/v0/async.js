@@ -24,7 +24,7 @@ function queryResults(connection, queryString, queryValues,){
     });
 }
 
-exports.teste = function(){
+exports.teste = function(req,res){
     pool.getConnection().then((conn) => {
         query(conn,"INSERT INTO us(value) VALUES (?)",["primeiro"])
         .then((conn) => {
