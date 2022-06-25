@@ -8,10 +8,10 @@ function AdminUsersList(){
     document.body.onload = function(){users()};
 
     const users = () => {
-        document.getElementById("admin_users").innerHTML += "<tr> \
-                                                                <td colspan='7'>Consumidores</td> \
-                                                            </tr>";
         Axios.get("https://ecomarket.works/api/v1/admin/cons").then ((response) => {
+            document.getElementById("admin_users").innerHTML += "<tr> \
+                                                                    <td colspan='7'>Consumidores</td> \
+                                                                </tr>";
             if (response.data.message !== "fail") {
                 var c = response.data.results;
                 for (var i = 0; i < c.length; i++) {
@@ -28,10 +28,10 @@ function AdminUsersList(){
             }
         });
 
-        document.getElementById("admin_users").innerHTML += "<tr> \
-                                                                <td colspan='7'>Fornecedores</td> \
-                                                            </tr>";
         Axios.get("https://ecomarket.works/api/v1/admin/prov").then ((response) => {
+            document.getElementById("admin_users").innerHTML += "<tr> \
+                                                                    <td colspan='7'>Fornecedores</td> \
+                                                                </tr>";
             if (response.data.message !== "fail") {
                 var p = response.data.results;
                 for (var i = 0; i < p.length; i++) {
@@ -48,10 +48,10 @@ function AdminUsersList(){
             }
         });
 
-        document.getElementById("admin_users").innerHTML += "<tr> \
-                                                                <td colspan='7'>Transportadores</td> \
-                                                            </tr>";
         Axios.get("https://ecomarket.works/api/v1/admin/transp").then ((response) => {
+            document.getElementById("admin_users").innerHTML += "<tr> \
+                                                                    <td colspan='7'>Transportadores</td> \
+                                                                </tr>";
             if (response.data.message !== "fail") {
                 var t = response.data.results;
                 for (var i = 0; i < t.length; i++) {
