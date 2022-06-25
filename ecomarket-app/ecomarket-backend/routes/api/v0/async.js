@@ -23,18 +23,14 @@ exports.teste = async function(req,res){
         console.log("First query");
         const insert = await promisePool.query("INSERT INTO us(value) VALUES (?)",["primeiro"]);
         console.log("2 query");
-        const select = await promisePool.query("SELECT MAX(id) AS id FROM us", () => {
-
-        });
+        const select = await promisePool.query("SELECT MAX(id) AS id FROM us");
         console.log(select[0][0]);
         const update = await promisePool.query("UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select[0][0].id]);
         console.log("END");
+        res.send("OH  YES");
     } catch(err) {
         console.log(err);
         res.send("OH  NOE");
-    } finally{
-        res.send("OH  YES");
-    }
 }
 
 
