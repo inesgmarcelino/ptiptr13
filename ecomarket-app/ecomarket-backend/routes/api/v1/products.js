@@ -12,6 +12,7 @@ const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
 router.get('/:cid', (req,res) => {
+    console.log("Uh oh wrong place wrong time mr freeman");
     const cid = req.params.cid;
     var queryString = "SELECT * FROM produto WHERE tipo = ?";
 
