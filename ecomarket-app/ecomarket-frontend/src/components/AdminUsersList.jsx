@@ -16,13 +16,13 @@ function AdminUsersList(){
                 var c = response.data.results;
                 for (var i = 0; i < c.length; i++) {
                     document.getElementById("admin_users").innerHTML += "<tr>\
-                                                                        <th>"+c[i].id+"</th>\
-                                                                        <th>"+c[i].nome+"</th>\
-                                                                        <th>"+c[i].email+"</th>\
-                                                                        <th>"+c[i].nif+"</th>\
-                                                                        <th>"+c[i].morada+"</th>\
-                                                                        <th>"+c[i].telemovel+"</th>\
-                                                                        <th> Botão para o editprofile.jsx respetivo</th>\
+                                                                        <td>"+c[i].id+"</td>\
+                                                                        <td>"+c[i].nome+"</td>\
+                                                                        <td>"+c[i].email+"</td>\
+                                                                        <td>"+c[i].nif+"</td>\
+                                                                        <td>"+c[i].morada+"</td>\
+                                                                        <td>"+c[i].telemovel+"</td>\
+                                                                        <td> Botão para o editprofile.jsx respetivo</td>\
                                                                     </tr>";
                 }
             }
@@ -36,13 +36,13 @@ function AdminUsersList(){
                 var p = response.data.results;
                 for (var i = 0; i < p.length; i++) {
                     document.getElementById("admin_users").innerHTML += "<tr>\
-                                                                        <th>"+p[i].id+"</th>\
-                                                                        <th>"+p[i].nome+"</th>\
-                                                                        <th>"+p[i].email+"</th>\
-                                                                        <th>"+p[i].nif+"</th>\
-                                                                        <th>"+p[i].morada+"</th>\
-                                                                        <th>"+p[i].telemovel+"</th>\
-                                                                        <th> Botão para o editprofile.jsx respetivo</th>\
+                                                                        <td>"+p[i].id+"</td>\
+                                                                        <td>"+p[i].nome+"</td>\
+                                                                        <td>"+p[i].email+"</td>\
+                                                                        <td>"+p[i].nif+"</td>\
+                                                                        <td>"+p[i].morada+"</td>\
+                                                                        <td>"+p[i].telemovel+"</td>\
+                                                                        <td> Botão para o editprofile.jsx respetivo</td>\
                                                                     </tr>";
                 }
             }
@@ -56,13 +56,13 @@ function AdminUsersList(){
                 var t = response.data.results;
                 for (var i = 0; i < t.length; i++) {
                     document.getElementById("admin_users").innerHTML += "<tr>\
-                                                                        <th>"+t[i].id+"</th>\
-                                                                        <th>"+t[i].nome+"</th>\
-                                                                        <th>"+t[i].email+"</th>\
-                                                                        <th>"+t[i].nif+"</th>\
-                                                                        <th>"+t[i].morada+"</th>\
-                                                                        <th>"+t[i].telemovel+"</th>\
-                                                                        <th> Botão para o editprofile.jsx respetivo</th>\
+                                                                        <td>"+t[i].id+"</td>\
+                                                                        <td>"+t[i].nome+"</td>\
+                                                                        <td>"+t[i].email+"</td>\
+                                                                        <td>"+t[i].nif+"</td>\
+                                                                        <td>"+t[i].morada+"</td>\
+                                                                        <td>"+t[i].telemovel+"</td>\
+                                                                        <td> Botão para o editprofile.jsx respetivo</td>\
                                                                     </tr>";
                 }
             }

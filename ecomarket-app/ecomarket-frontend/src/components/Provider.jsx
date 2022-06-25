@@ -25,12 +25,12 @@ function Provider () {
                 var encomendas = response.data.results;
                 for (var i = 0; i < encomendas.length; i++) {
                     document.getElementById("prov_enc").innerHTML += "<tr>\
-                                                                        <th>"+encomendas[i].id+"</th>\
-                                                                        <th>"+encomendas[i].consumidor+"</th>\
-                                                                        <th>"+encomendas[i].data.substring(0,10)+"</th>\
-                                                                        <th>"+transp(encomendas[i].transportador)+"</th>\
-                                                                        <th>"+encomendas[i].total+"</th>\
-                                                                        <th> Botão para a order.jsx respetiva</th>\
+                                                                        <td>"+encomendas[i].id+"</td>\
+                                                                        <td>"+encomendas[i].consumidor+"</td>\
+                                                                        <td>"+encomendas[i].data.substring(0,10)+"</td>\
+                                                                        <td>"+transp(encomendas[i].transportador)+"</td>\
+                                                                        <td>"+encomendas[i].total+"</td>\
+                                                                        <td> Botão para a order.jsx respetiva</td>\
                                                                     </tr>";
                 }
             }
@@ -55,13 +55,13 @@ function Provider () {
                 var produtos = response.data.results;
                 for (var i = 0; i < produtos.length; i++) {
                     document.getElementById("prov_prod").innerHTML += "<tr>\
-                                                                        <th>"+produtos[i].id+"</th>\
-                                                                        <th>"+produtos[i].nome+"</th>\
-                                                                        <th>"+produtos[i].producao+"</th>\
-                                                                        <th>"+produtos[i].tipo+"</th>\
-                                                                        <th>"+produtos[i].subtipo+"</th>\
-                                                                        <th>"+produtos[i].preco+"€</th>\
-                                                                        <th> Botão para a product.jsx respetiva</th>\
+                                                                        <td>"+produtos[i].id+"</td>\
+                                                                        <td>"+produtos[i].nome+"</td>\
+                                                                        <td>"+produtos[i].producao+"</td>\
+                                                                        <td>"+produtos[i].tipo+"</td>\
+                                                                        <td>"+produtos[i].subtipo+"</td>\
+                                                                        <td>"+produtos[i].preco+"€</td>\
+                                                                        <td> Botão para a product.jsx respetiva</td>\
                                                                     </tr>";
                 }
             }
@@ -77,11 +77,11 @@ function Provider () {
                 var storages = response.data.results;
                 for (var i = 0; i < storages.length; i++) {
                     document.getElementById("prov_stor").innerHTML += "<tr>\
-                                                                        <th>"+storages[i].id+"</th>\
-                                                                        <th>"+storages[i].morada+"</th>\
-                                                                        <th>"+cpostal(storages[i].cpostal)+"</th>\
-                                                                        <th>"+storages[i].distrito+"</th>\
-                                                                        <th>"+storages[i].concelho+"</th>\
+                                                                        <td>"+storages[i].id+"</td>\
+                                                                        <td>"+storages[i].morada+"</td>\
+                                                                        <td>"+cpostal(storages[i].cpostal)+"</td>\
+                                                                        <td>"+storages[i].distrito+"</td>\
+                                                                        <td>"+storages[i].concelho+"</td>\
                                                                     </tr>";
                 }
             }

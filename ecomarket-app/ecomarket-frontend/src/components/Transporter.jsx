@@ -24,12 +24,12 @@ function Transporter () {
                 var encomendas = response.data.results;
                 for (var i = 0; i < encomendas.length; i++) {
                     document.getElementById("trans_enc").innerHTML += "<tr>\
-                                                                        <th>"+encomendas[i].id+"</th>\
-                                                                        <th>"+encomendas[i].consumidor+"</th>\
-                                                                        <th>"+encomendas[i].data.substring(0,10)+"</th>\
-                                                                        <th>"+status(encomendas[i].transp)+"</th>\
-                                                                        <th>"+encomendas[i].total+"</th>\
-                                                                        <th> Botão para a order.jsx respetiva</th>\
+                                                                        <td>"+encomendas[i].id+"</td>\
+                                                                        <td>"+encomendas[i].consumidor+"</td>\
+                                                                        <td>"+encomendas[i].data.substring(0,10)+"</td>\
+                                                                        <td>"+status(encomendas[i].transp)+"</td>\
+                                                                        <td>"+encomendas[i].total+"</td>\
+                                                                        <td> Botão para a order.jsx respetiva</td>\
                                                                     </tr>";
                 }
             }
@@ -53,13 +53,13 @@ function Transporter () {
                 var produtos = response.data.results;
                 for (var i = 0; i < produtos.length; i++) {
                     document.getElementById("trans_car").innerHTML += "<tr>\
-                                                                        <th>"+produtos[i].id+"</th>\
-                                                                        <th>"+produtos[i].marca+"</th>\
-                                                                        <th>"+produtos[i].ano+"</th>\
-                                                                        <th>"+comb(produtos[i].combustivel)+"</th>\
-                                                                        <th>"+caixa(produtos[i].caixa)+"</th>\
-                                                                        <th>"+produtos[i].emissao+"g/km</th>\
-                                                                        <th> Botão para a product.jsx respetiva</th>\
+                                                                        <td>"+produtos[i].id+"</td>\
+                                                                        <td>"+produtos[i].marca+"</td>\
+                                                                        <td>"+produtos[i].ano+"</td>\
+                                                                        <td>"+comb(produtos[i].combustivel)+"</td>\
+                                                                        <td>"+caixa(produtos[i].caixa)+"</td>\
+                                                                        <td>"+produtos[i].emissao+"g/km</td>\
+                                                                        <td> Botão para a product.jsx respetiva</td>\
                                                                     </tr>";
                 }
             }
