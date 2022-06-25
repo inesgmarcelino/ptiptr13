@@ -1,5 +1,77 @@
+/* eslint-disable no-multi-str */
+import React from 'react';
+import Axios from "axios";
+import {Link } from "react-router-dom";
+import { useAuth0 } from '@auth0/auth0-react';
 
 function AdminUsersList(){
+    document.body.onload = function(){users()};
+
+    const users = () => {
+        cons();
+        prov();
+        transp();
+    }
+
+    const cons = () => {
+        Axios.get("https://ecomarket.works/api/v1/admin/cons").then ((response) => {
+            if (response.data.message !== "fail") {
+                var c = response.data.results;
+                for (var i = 0; i < c.length; i++) {
+                    document.getElementById("consumers").innerHTML += "<tr>\
+                                                                        <th>"+c[i].id+"</th>\
+                                                                        <th>"+c[i].nome+"</th>\
+                                                                        <th>"+c[i].email+"</th>\
+                                                                        <th>"+c[i].nif+"</th>\
+                                                                        <th>"+c[i].morada+"</th>\
+                                                                        <th>"+c[i].telemovel+"</th>\
+                                                                        <th>"+c[i].total+"€</th>\
+                                                                        <th> Botão para o editprofile.jsx respetivo</th>\
+                                                                    </tr>";
+                }
+            }
+        });
+    }
+
+    const prov = () => {
+        Axios.get("https://ecomarket.works/api/v1/admin/prov").then ((response) => {
+            if (response.data.message !== "fail") {
+                var p = response.data.results;
+                for (var i = 0; i < p.length; i++) {
+                    document.getElementById("providers").innerHTML += "<tr>\
+                                                                        <th>"+p[i].id+"</th>\
+                                                                        <th>"+p[i].nome+"</th>\
+                                                                        <th>"+p[i].email+"</th>\
+                                                                        <th>"+p[i].nif+"</th>\
+                                                                        <th>"+p[i].morada+"</th>\
+                                                                        <th>"+p[i].telemovel+"</th>\
+                                                                        <th>"+p[i].total+"€</th>\
+                                                                        <th> Botão para o editprofile.jsx respetivo</th>\
+                                                                    </tr>";
+                }
+            }
+        });
+    }
+
+    const transp = () => {
+        Axios.get("https://ecomarket.works/api/v1/admin/transp").then ((response) => {
+            if (response.data.message !== "fail") {
+                var t = response.data.results;
+                for (var i = 0; i < t.length; i++) {
+                    document.getElementById("transporters").innerHTML += "<tr>\
+                                                                        <th>"+t[i].id+"</th>\
+                                                                        <th>"+t[i].nome+"</th>\
+                                                                        <th>"+t[i].email+"</th>\
+                                                                        <th>"+t[i].nif+"</th>\
+                                                                        <th>"+t[i].morada+"</th>\
+                                                                        <th>"+t[i].telemovel+"</th>\
+                                                                        <th>"+t[i].total+"€</th>\
+                                                                        <th> Botão para o editprofile.jsx respetivo</th>\
+                                                                    </tr>";
+                }
+            }
+        });
+    }
 
     return(
         <div className="position-absolute showItems">
@@ -15,26 +87,24 @@ function AdminUsersList(){
                         <th>Nome</th>
                         <th>Email</th>
                         <th>NIF</th>
+                        <th>Morada</th>
                         <th>Contacto</th>
-                        <th>Produtor</th>
-                        <th>Consumidor</th>
-                        <th>Transportador</th>
                         <th>-- --</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {/* Aqui colocar um for que tem tantas linhas como o numero de users */}
+                <tbody id="admin_users">
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <div class="d-flex justify-content-center"> 
-                            {/* reencaminhar para uma página onde o admin consiga alterar os dados dos users */}
-                            <td><Link to ='/EditProfile'> <button type="button" class="btn btn-success">Editar</button></Link></td>
-                        </div>
+                        <td colSpan={10}>Consumidores</td>
                     </tr>
+                    <div id="consumers"></div>
+                    <tr>
+                        <td colSpan={10}>Fornecedores</td>
+                    </tr>
+                    <div id="providers"></div>
+                    <tr>
+                        <td colSpan={10}>Transportadores</td>
+                    </tr>
+                    <div id="transporters"></div>
                 </tbody>
             </table>
             </div>
