@@ -78,6 +78,11 @@ router.get('/:pname', (req,res) => {
 });
 
 router.get('/order', (req,res) => {
+    console.error("ping");
+    console.log(req);
+});
+
+router.get('/order', (req,res) => {
     var order = req.query.order;
     console.log(order);
     var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
@@ -98,7 +103,7 @@ router.get('/order', (req,res) => {
             }
         });
     });
-})
+});
 
 //exporta funções/"objetos"
 module.exports = router ;
