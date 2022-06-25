@@ -24,14 +24,14 @@ pool.getConnection().then((conn) => {
         });
         resolve(conn);
     })
-}).then((conn) => {
+},(err)=>{console.log(err)}).then((conn) => {
     return new Promise( (resolve, reject) => {
         conn.query("SELECT MAX(id) AS id FROM us", (err, results) => {
             if(err) return reject(err);
             resolve(conn, results)
         });
     })
-}).then((conn, results) => {
+},(err)=>{console.log(err)}).then((conn, results) => {
     return new Promise( (resolve, reject) => {
         conn.query( "UPDATE us SET value = ? WHERE id = ?",
         ["o valor nao eh primeiro",results.id], (err, results) => {
@@ -39,9 +39,9 @@ pool.getConnection().then((conn) => {
             resolve("success");
         });
     });
-}).then((result) => {
+},(err)=>{console.log(err)}).then((result) => {
     console.log(result);
-}).catch((err) => {
+},(err)=>{console.log(err)})/*.catch((err) => {
     console.log(err);
 });
 
