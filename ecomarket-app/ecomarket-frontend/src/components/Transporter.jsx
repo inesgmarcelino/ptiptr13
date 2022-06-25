@@ -4,7 +4,7 @@ import Axios from "axios";
 import {Link } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
 
-function Provider () {
+function Transporter () {
     const { user } = useAuth0();
     const pid = 3;
     
@@ -66,27 +66,7 @@ function Provider () {
     }
 
     const store = () => {
-        Axios.get("https://ecomarket.works/api/v1/providers/storages", {
-            params: {
-                pid: pid
-        }}).then ((response) => {
-            if (response.data.message !== "fail") {
-                var storages = response.data.results;
-                for (var i = 0; i < storages.length; i++) {
-                    document.getElementById("prov_stor").innerHTML += "<tr>\
-                                                                        <th>"+storages[i].id+"</th>\
-                                                                        <th>"+storages[i].morada+"</th>\
-                                                                        <th>"+cpostal(storages[i].cpostal)+"</th>\
-                                                                        <th>"+storages[i].distrito+"</th>\
-                                                                        <th>"+storages[i].concelho+"</th>\
-                                                                    </tr>";
-                }
-            }
-        });
-    }
 
-    const cpostal = (cp) => {
-        return cp.substring(0,4) + "-" + cp.substring(4);
     }
 
     return(
@@ -146,10 +126,7 @@ function Provider () {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Morada</th>
-                        <th>Código Postal</th>
-                        <th>Distrito</th>
-                        <th>Concelho</th>
+                        <th>Localização</th>
                     </tr>
                 </thead>
                 <tbody id="prov_stor">
@@ -162,4 +139,4 @@ function Provider () {
 
 }
 
-export default Provider;
+export default Transporter;

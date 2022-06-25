@@ -294,5 +294,27 @@ router.get('/orders', (req,res) => {
     });
 });
 
+
+router.get('/storages', (req,res) => {
+    var provId = req.query.pid;
+    var queryString = "SELECT a.id AS id, l.morada AS morada, l.c_postal AS cpostal, d.nome AS distrito, c.nome AS concelho \
+                        FROM armazem a, localizacao l, distrito d, concelho c, lista_armazens la \
+                        WHERE (la.fornecedor = ?) AND (la.armazem = a.id) AND (a.localizacao = l.id) AND (l.distrito = d.id) AND (l.concelho = c.id) GROUP BY a.id";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [provId], (err, results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results: results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 17");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
+
 //exporta funções/"objetos"
 module.exports = router ;

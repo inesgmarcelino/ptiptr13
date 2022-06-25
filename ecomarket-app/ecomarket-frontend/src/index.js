@@ -34,6 +34,7 @@ root.render(
       <Route path='/catalog' element={<Catalog />} />
       <Route path='/admintipos' element={<AdminTipos />} />
       <Route path='/order' element={<Order />} />
+      <Route path='/transporter' element={<Order />} />
 
 
     </Routes>
