@@ -12,11 +12,11 @@ const promisePool = pool.promise()
 exports.teste = async function(req,res){
     try{
         console.log("First query");
-        const insert = await promisePool.execute("INSERT INTO us(value) VALUES (?)",["primeiro"]);
+        const insert = await promisePool.query("INSERT INTO us(value) VALUES (?)",["primeiro"]);
         console.log("2 query");
-        const select = await promisePool.execute("SELECT MAX(id) AS id FROM us");
+        const select = await promisePool.query("SELECT MAX(id) AS id FROM us");
         console.log("3 query");
-        const update = await promisePool.execute("UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select.id]);
+        const update = await promisePool.query("UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select.id]);
         console.log("END");
     } catch(err) {
         console.log(err);
