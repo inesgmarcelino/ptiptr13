@@ -277,7 +277,8 @@ router.get('/orders', (req,res) => {
     var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS transportador, SUM(lpe.quantidade * p.preco) AS total \
                         FROM encomenda e, utilizador u1, lista_produtos_encomenda lpe, produto p, lista_encomendas le, transportar_encomendas te \
                         WHERE (le.fornecedor = ?) AND (le.encomenda = e.id) AND (te.encomenda = e.id) AND (te.transportador = u1.id) \
-                            AND (lpe.encomenda = e.id) AND (lpe.produto = p.id) GROUP BY e.id, u1.nome";
+                            AND (lpe.encomenda = e.id) AND (lpe.produto = p.id) \
+                        GROUP BY e.id, u1.nome";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
@@ -299,7 +300,8 @@ router.get('/storages', (req,res) => {
     var provId = req.query.pid;
     var queryString = "SELECT a.id AS id, l.morada AS morada, l.c_postal AS cpostal, d.nome AS distrito, c.nome AS concelho \
                         FROM armazem a, localizacao l, distrito d, concelho c, lista_armazens la \
-                        WHERE (la.fornecedor = ?) AND (la.armazem = a.id) AND (a.localizacao = l.id) AND (l.distrito = d.id) AND (l.concelho = c.id) GROUP BY a.id";
+                        WHERE (la.fornecedor = ?) AND (la.armazem = a.id) AND (a.localizacao = l.id) AND (l.distrito = d.id) AND (l.concelho = c.id) \
+                        GROUP BY a.id";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 

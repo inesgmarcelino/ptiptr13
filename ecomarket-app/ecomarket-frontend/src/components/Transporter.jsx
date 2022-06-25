@@ -6,20 +6,19 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 function Transporter () {
     const { user } = useAuth0();
-    const pid = 3;
+    const tid = 4;
     
-    document.body.onload = function(){prov()};
+    document.body.onload = function(){transp()};
 
-    const prov = () => {
+    const transp = () => {
         enc();
-        prod();
-        store();
+        car();
     }
 
     const enc = () => {
-        Axios.get("https://ecomarket.works/api/v1/providers/orders", {
+        Axios.get("https://ecomarket.works/api/v1/transporters/orders", {
             params: {
-                pid: pid
+                tid: tid
         }}).then ((response) => {
             if (response.data.message !== "fail") {
                 var encomendas = response.data.results;
@@ -27,7 +26,7 @@ function Transporter () {
                     document.getElementById("prov_enc").innerHTML += "<tr>\
                                                                         <th>"+encomendas[i].id+"</th>\
                                                                         <th>"+encomendas[i].data+"</th>\
-                                                                        <th>"+transp(encomendas[i].transportador)+"</th>\
+                                                                        <th>"+status(encomendas[i].transp)+"</th>\
                                                                         <th>"+encomendas[i].total+"</th>\
                                                                         <th> Botão para a order.jsx respetiva</th>\
                                                                     </tr>";
@@ -36,37 +35,34 @@ function Transporter () {
         });
     }
 
-    const transp = (t) => {
-        if (t === null) {
-            return (
-                <button></button> //botão para escolher transportador
-            ); 
+    const status = (t) => {
+        if (t === 'NO') {
+            return "Em trânsito";
+        } else {
+            return "Entregue";
         }
     }
-    const prod = () => {
-        Axios.get("https://ecomarket.works/api/v1/providers/products", {
+
+    const car = () => {
+        Axios.get("https://ecomarket.works/api/v1/transporters/cars", {
             params: {
-                pid: pid
+                tid: tid
         }}).then ((response) => {
             if (response.data.message !== "fail") {
                 var produtos = response.data.results;
                 for (var i = 0; i < produtos.length; i++) {
                     document.getElementById("prov_prod").innerHTML += "<tr>\
                                                                         <th>"+produtos[i].id+"</th>\
-                                                                        <th>"+produtos[i].nome+"</th>\
-                                                                        <th>"+produtos[i].producao+"</th>\
-                                                                        <th>"+produtos[i].tipo+"</th>\
-                                                                        <th>"+produtos[i].subtipo+"</th>\
-                                                                        <th>"+produtos[i].preco+"€</th>\
+                                                                        <th>"+produtos[i].marca+"</th>\
+                                                                        <th>"+produtos[i].ano+"</th>\
+                                                                        <th>"+produtos[i].combustivel+"</th>\
+                                                                        <th>"+produtos[i].caixa+"</th>\
+                                                                        <th>"+produtos[i].emissao+"€</th>\
                                                                         <th> Botão para a product.jsx respetiva</th>\
                                                                     </tr>";
                 }
             }
         });
-    }
-
-    const store = () => {
-
     }
 
     return(
@@ -81,12 +77,12 @@ function Transporter () {
                     <tr>
                         <th>ID</th>
                         <th>Data</th>
-                        <th>Transportador</th>
+                        <th>Estado</th>
                         <th>Valor Total</th>
                         <th>-- --</th>
                     </tr>
                 </thead>
-                <tbody id="prov_enc">
+                <tbody id="trans_enc">
                 </tbody>
             </table>
             </div>
@@ -94,7 +90,7 @@ function Transporter () {
             <div className="container">
                 <Link to ='' ><button className="btn">Adicionar</button></Link>
                 <br />
-                <h3>Produtos</h3>     
+                <h3>Veículos</h3>     
             </div>
             <br />
             <div className="container">
@@ -102,34 +98,14 @@ function Transporter () {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome</th>
-                        <th>Data de Produção</th>
-                        <th>Tipo</th>
-                        <th>Subtipo</th>
-                        <th>Preço</th>
-                        <th>-- --</th>
+                        <th>Marca</th>
+                        <th>Ano</th>
+                        <th>Combustível</th>
+                        <th>Caixa</th>
+                        <th>Emissão CO2</th>
                     </tr>
                 </thead>
-                <tbody id="prov_prod">
-                </tbody>
-            </table>
-            </div>
-
-            <div className="container">
-                <Link to ='' ><button className="btn">Adicionar</button></Link>
-                <br />
-                <h3>Armazéns</h3>
-            </div>
-            <br />
-            <div className="container">
-            <table className="table table-bordered" id='centrar'>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Localização</th>
-                    </tr>
-                </thead>
-                <tbody id="prov_stor">
+                <tbody id="trans_car">
                 </tbody>
             </table>
             </div>

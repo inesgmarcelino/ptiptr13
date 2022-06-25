@@ -33,28 +33,6 @@ router.get('/order', (req,res) => {
     });
 });
 
-router.get('/provider', (req, res) => {
-    var pid = req.query.pid;
-    // var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
-    //                     FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
-    //                     GROUP BY p.id, p.nome";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, [pid], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-
-            } else {
-                console.log("Não foi possível realizar essa operação. output 5");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
-});
-
 
 // router.get('/:cid', (req,res) => {
 //     console.log("Uh oh wrong place wrong time mr freeman");
