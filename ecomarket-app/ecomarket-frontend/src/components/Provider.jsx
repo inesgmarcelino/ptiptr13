@@ -24,7 +24,7 @@ function Provider () {
             if (response.data.message !== "fail") {
                 var encomendas = response.data.results;
                 for (var i = 0; i < encomendas.length; i++) {
-                    document.getElementById("linhas").innerHTML += "<tr>\
+                    document.getElementById("prov_enc").innerHTML += "<tr>\
                                                                         <th>"+encomendas[i].id+"</th>\
                                                                         <th>"+encomendas[i].data+"</th>\
                                                                         <th>"+transp(encomendas[i].transportador)+"</th>\
@@ -51,7 +51,7 @@ function Provider () {
             if (response.data.message !== "fail") {
                 var produtos = response.data.results;
                 for (var i = 0; i < produtos.length; i++) {
-                    document.getElementById("linhas").innerHTML += "<tr>\
+                    document.getElementById("prov_prod").innerHTML += "<tr>\
                                                                         <th>"+produtos[i].id+"</th>\
                                                                         <th>"+produtos[i].nome+"</th>\
                                                                         <th>"+produtos[i].producao+"</th>\
