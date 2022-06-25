@@ -15,33 +15,36 @@ function query(connection, queryString, queryValues,){
     });
 }
 
+exports.teste = function(){
+    pool.getConnection().then((conn) => {
+        return new Promise( (resolve,reject) => {
+            conn.query("INSERT INTO us(value) VALUES (?)", 
+            ["primeiro"], (err, results) => {
+                if(err) return reject(err);
+            });
+            resolve(conn);
+        })
+    },(err)=>{console.log(err)}).then((conn) => {
+        return new Promise( (resolve, reject) => {
+            conn.query("SELECT MAX(id) AS id FROM us", (err, results) => {
+                if(err) return reject(err);
+                resolve(conn, results)
+            });
+        })
+    },(err)=>{console.log(err)}).then((conn, results) => {
+        return new Promise( (resolve, reject) => {
+            conn.query( "UPDATE us SET value = ? WHERE id = ?",
+            ["o valor nao eh primeiro",results.id], (err, results) => {
+                if(err) return reject(err);
+                resolve("success");
+            });
+        });
+    },(err)=>{console.log(err)}).then((result) => {
+        console.log(result);
+    },(err)=>{console.log(err)})
+}
 
-pool.getConnection().then((conn) => {
-    return new Promise( (resolve,reject) => {
-        conn.query("INSERT INTO us(value) VALUES (?)", 
-        ["primeiro"], (err, results) => {
-            if(err) return reject(err);
-        });
-        resolve(conn);
-    })
-},(err)=>{console.log(err)}).then((conn) => {
-    return new Promise( (resolve, reject) => {
-        conn.query("SELECT MAX(id) AS id FROM us", (err, results) => {
-            if(err) return reject(err);
-            resolve(conn, results)
-        });
-    })
-},(err)=>{console.log(err)}).then((conn, results) => {
-    return new Promise( (resolve, reject) => {
-        conn.query( "UPDATE us SET value = ? WHERE id = ?",
-        ["o valor nao eh primeiro",results.id], (err, results) => {
-            if(err) return reject(err);
-            resolve("success");
-        });
-    });
-},(err)=>{console.log(err)}).then((result) => {
-    console.log(result);
-},(err)=>{console.log(err)})/*.catch((err) => {
+/*.catch((err) => {
     console.log(err);
 });
 
