@@ -9,6 +9,15 @@ const pool = require('mysql2').createPool({
 
 const promisePool = pool.promise()
 
+promisePool.getConnection().then((conn) => {
+    try{
+        const value = await conn.query("SELECT MAX(id) AS id FROM us");
+        console.log(value);
+    } catch(err){
+        console.log(err);
+    }
+});
+
 exports.teste = async function(req,res){
     try{
         console.log("First query");
@@ -16,12 +25,14 @@ exports.teste = async function(req,res){
         console.log("2 query");
         const select = await promisePool.query("SELECT MAX(id) AS id FROM us");
         console.log(select);
-        const update = await promisePool.query("UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select.id]);
+        const update = await promisePool.query("UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select[0].id]);
         console.log("END");
     } catch(err) {
         console.log(err);
         res.send("OH  NOE");
-    } 
+    } finally{
+        res.send("OH  YES");
+    }
 }
 
 
