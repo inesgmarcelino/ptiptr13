@@ -155,12 +155,12 @@ router.post('/cancel/:oid', (req,res) => {
 });
 
 router.get('/orders', (req,res) => {
-    var consId = req.params.cid;
+    var consId = req.query.cid;
     var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS fornecedor, u2.nome AS transportador, \
                             SUM(lpe.quantidade * p.preco) AS total, st.status_consum AS cons, st.status_fornec AS forn, st.status_transp AS transp \
                         FROM encomenda e, lista_encomendas le, transportar_encomendas te, utilizador u1, \
                             utilizador u2, lista_produtos_encomenda lpe, produto p, estado_encomenda st \
-                        WHERE (le.consumidor = 2) AND (le.encomenda = e.id) AND (le.fornecedor = u1.id) \
+                        WHERE (le.consumidor = ?) AND (le.encomenda = e.id) AND (le.fornecedor = u1.id) \
                             AND (te.encomenda = e.id) AND (te.transportador = u2.id) AND (lpe.encomenda = e.id) \
                             AND (lpe.produto = p.id) AND (st.encomenda = e.id) GROUP BY e.id, u1.nome, u2.nome;";
     pool.getConnection((err, conn) => {

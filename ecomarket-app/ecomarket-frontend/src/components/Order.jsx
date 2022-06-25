@@ -11,7 +11,7 @@ function Order(){
     document.body.onload = function(){prod()};
 
     const prod = () => {
-        Axios.get("https://ecomarket.works/api/v1/products/order?", {
+        Axios.get("https://ecomarket.works/api/v1/products/order", {
             params: {
                 order: order
         }}).then ((response) => {
