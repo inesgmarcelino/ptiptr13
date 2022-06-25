@@ -86,9 +86,9 @@ function Transporter () {
     const caixa = (x) => {
         switch (x) {
             case 1:
-                return "Gasolina";
+                return "Manual";
             case 2:
-                return "Gasóleo";
+                return "Automática";
             default:
                 break;
         }
