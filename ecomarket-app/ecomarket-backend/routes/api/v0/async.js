@@ -16,7 +16,36 @@ function query(connection, queryString, queryValues,){
 }
 
 
+pool.getConnection.then((conn) => {
+    return new Promise( (resolve,reject) => {
+        conn.query("INSERT INTO us(value) VALUES (?)", 
+        ["primeiro"], (err, results) => {
+            if(err) return reject(err);
+        });
+        resolve(conn);
+    })
+}).then((conn) => {
+    return new Promise( (resolve, reject) => {
+        conn.query("SELECT MAX(id) AS id FROM us", (err, results) => {
+            if(err) return reject(err);
+            resolve(conn, results)
+        });
+    })
+}).then((conn, results) => {
+    return new Promise( (resolve, reject) => {
+        conn.query( "UPDATE us SET value = ? WHERE id = ?",
+        ["o valor nao eh primeiro",results.id], (err, results) => {
+            if(err) return reject(err);
+            resolve("success");
+        });
+    });
+}).then((result) => {
+    console.log(result);
+}).catch((err) => {
+    console.log(err);
+});
 
+/*
 pool.getConnection().then(query(conn,
     "INSERT INTO us(value) VALUES (?)", 
     ["primeiro"]).then(
@@ -34,7 +63,7 @@ pool.getConnection().then(query(conn,
     ).catch((err) => {
         console.log(err);
     })
-;
+;*/
 
 /*var pool = require('mysql2/promise').createPool({
     connectionLimit:10,
