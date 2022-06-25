@@ -23,11 +23,16 @@ function Consumer () {
                                                                         <th>"+encomendas[i].data+"</th>\
                                                                         <th>"+encomendas[i].fornecedor+"</th>\
                                                                         <th>"+encomendas[i].transportador+"</th>\
+                                                                        <th>"+status(encomendas[i].cons, encomendas[i].forn, encomendas[i].transp)+"</th>\
                                                                         <th>"+encomendas[i].total+"</th>\
                                                                     </tr>";
                 }
             }
         })
+    }
+
+    const status = (c,f,t) => {
+
     }
 
     return(

@@ -89,10 +89,19 @@ router.get('/order', (req,res) => {
             conn.release();
 
             if (!err) {
-                return res.status(200).send({results: results});
+                // return res.status(200).send({results: results});
+                res.status(200);
+                res.type('json');
+                res.send({results:results});
+                return;
+
             } else {
                 console.log("Não foi possível realizar essa operação. output 4");
-                return res.status(500).send({message:"fail"});
+                // return res.status(500).send({message:"fail"});
+                res.status(500);
+                res.type('json');
+                res.send({message:"fail"});
+                return;
             }
         });
     });
