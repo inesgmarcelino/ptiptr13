@@ -9,7 +9,7 @@ const pool = require('mysql2').createPool({
 
 const promisePool = pool.promise()
 
-promisePool.getConnection().then((conn) => {
+promisePool.getConnection().then( async (conn) => {
     try{
         const value = await conn.query("SELECT MAX(id) AS id FROM us");
         console.log(value);
