@@ -82,7 +82,6 @@ function Provider () {
                         <th>ID</th>
                         <th>Data</th>
                         <th>Transportador</th>
-                        <th>Estado</th>
                         <th>Valor Total</th>
                         <th>-- --</th>
                     </tr>
