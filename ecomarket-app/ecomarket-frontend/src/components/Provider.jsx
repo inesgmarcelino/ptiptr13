@@ -42,6 +42,8 @@ function Provider () {
             return (
                 <button></button> //botão para escolher transportador
             ); 
+        } else {
+            return t;
         }
     }
     const prod = () => {
