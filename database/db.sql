@@ -13,7 +13,7 @@ CREATE TABLE concelho (
     distrito        INT NOT NULL,
     --
     CONSTRAINT fk_concelho
-        FOREIGN KEY (distrito) REFERENCES distrito(id)
+        FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE image (
@@ -145,13 +145,13 @@ CREATE TABLE lista_encomendas (
     fornecedor      INT,
     --
     CONSTRAINT pk_encomendas
-        PRIMARY KEY (consumidor,encomenda,fornecedor),
+        PRIMARY KEY (consumidor,encomenda),
     CONSTRAINT fk_consumidor_id
-        FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador),
+        FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_encomenda_id
         FOREIGN KEY (encomenda) REFERENCES encomenda(id) ON DELETE CASCADE,
     CONSTRAINT fk_fornecedor_id
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador)
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE transportar_encomendas (
@@ -200,12 +200,12 @@ CREATE TABLE produto (
     preco           NUMERIC(5,2) NOT NULL,
     tipo            INT NOT NULL,
     subtipo         INT NOT NULL,
-    cadeia_logis    INT NOT, 
+    cadeia_logis    INT, 
     --
     CONSTRAINT pk_produto
         PRIMARY KEY (id, fornecedor),
     CONSTRAINT fk_fornecedor_produto
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador),
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador)ON DELETE CASCADE,
     CONSTRAINT fk_tipo
         FOREIGN KEY (tipo) REFERENCES tipo_produto(id),
     CONSTRAINT fk_subtipo
@@ -231,6 +231,7 @@ CREATE TABLE cesto_compras (
 CREATE TABLE lista_produtos_encomenda (
     encomenda       INT,
     produto         INT,
+    quantidade      INT NOT NULL,
     --
     CONSTRAINT pk_lista_produtos_encomenda
         PRIMARY KEY (encomenda,produto),
@@ -285,7 +286,7 @@ CREATE TABLE emite_poluicao (
     CONSTRAINT pk_emite_poluicao
         PRIMARY KEY (veiculo,poluicao),
     CONSTRAINT fk_veiculo_polui
-        FOREIGN KEY (veiculo) REFERENCES veiculo(id),
+        FOREIGN KEY (veiculo) REFERENCES veiculo(id) ON DELETE CASCADE,
     CONSTRAINT fk_poluicao_emitida
         FOREIGN KEY (poluicao)  REFERENCES poluicao(id)
 ) ENGINE = InnoDB;
@@ -298,10 +299,9 @@ SELECT id FROM utilizador WHERE email = 'cons1@ecomarket.pt';
 SELECT id FROM utilizador WHERE email = 'forn1@ecomarket.pt';
 SELECT id FROM utilizador WHERE email = 'trans1@ecomarket.pt';
 
-INSERT INTO fornecedor VALUES (2);
+INSERT INTO consumidor VALUES (2);
 INSERT INTO fornecedor VALUES (3);
 INSERT INTO transportador (utilizador) VALUES (4);
-
 
 -- Inserts de Distritos e Concelhos
 INSERT INTO distrito VALUES (1, 'Aveiro');

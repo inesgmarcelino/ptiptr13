@@ -250,6 +250,10 @@ router.post('/reg_product', (req,res) => {
     // });
 });
 
+router.put('/product/', (req,res) => {
+    
+})
+
 router.get('/orders/:pid', (req,res) => {
     var provId = req.params.pid;
     var queryString = "SELECT encomenda FROM lista_encomendas WHERE fornecedor = ?";
