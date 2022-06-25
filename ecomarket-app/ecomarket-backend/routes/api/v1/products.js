@@ -80,8 +80,8 @@ router.get('/:pname', (req,res) => {
 router.get('/order', (req,res) => {
     var order = req.params.order;
     var queryString = "SELECT p.id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
-                       FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = 1) AND (lpe.produto = p.id) \
-                       GROUP BY p.id, p.nome;";
+                       FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
+                       GROUP BY p.id, p.nome";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
