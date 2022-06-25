@@ -24,19 +24,23 @@ function queryResults(connection, queryString, queryValues,){
     });
 }
 
-pool.getConnection().then((conn) => {
-    query(conn,"INSERT INTO us(value) VALUES (?)",["primeiro"])
-    .then((conn) => {
-        queryResults(conn,"SELECT MAX(id) AS id FROM us", null)
-        .then((conn, results) => {
-            console.log(results);
-            query(conn, "UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",results.id]).
-            then((conn) => {
-                conn.release();
-            });
+exports.teste = function(){
+    pool.getConnection().then((conn) => {
+        query(conn,"INSERT INTO us(value) VALUES (?)",["primeiro"])
+        .then((conn) => {
+            queryResults(conn,"SELECT MAX(id) AS id FROM us", null)
+            .then((conn, results) => {
+                console.log(results);
+                query(conn, "UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",results.id]).
+                then((conn) => {
+                    conn.release();
+                });
+            })
         })
     })
-})
+}
+
+
 
 
 
