@@ -25,7 +25,6 @@ function AdminUsersList(){
                                                                         <th>"+c[i].nif+"</th>\
                                                                         <th>"+c[i].morada+"</th>\
                                                                         <th>"+c[i].telemovel+"</th>\
-                                                                        <th>"+c[i].total+"€</th>\
                                                                         <th> Botão para o editprofile.jsx respetivo</th>\
                                                                     </tr>";
                 }
@@ -45,7 +44,6 @@ function AdminUsersList(){
                                                                         <th>"+p[i].nif+"</th>\
                                                                         <th>"+p[i].morada+"</th>\
                                                                         <th>"+p[i].telemovel+"</th>\
-                                                                        <th>"+p[i].total+"€</th>\
                                                                         <th> Botão para o editprofile.jsx respetivo</th>\
                                                                     </tr>";
                 }
@@ -65,7 +63,6 @@ function AdminUsersList(){
                                                                         <th>"+t[i].nif+"</th>\
                                                                         <th>"+t[i].morada+"</th>\
                                                                         <th>"+t[i].telemovel+"</th>\
-                                                                        <th>"+t[i].total+"€</th>\
                                                                         <th> Botão para o editprofile.jsx respetivo</th>\
                                                                     </tr>";
                 }
@@ -94,15 +91,15 @@ function AdminUsersList(){
                 </thead>
                 <tbody id="admin_users">
                     <tr>
-                        <td colSpan={10}>Consumidores</td>
+                        <td colspan="7">Consumidores</td>
                     </tr>
                     <div id="consumers"></div>
                     <tr>
-                        <td colSpan={10}>Fornecedores</td>
+                        <td colspan="7">Fornecedores</td>
                     </tr>
                     <div id="providers"></div>
                     <tr>
-                        <td colSpan={10}>Transportadores</td>
+                        <td colspan="7">Transportadores</td>
                     </tr>
                     <div id="transporters"></div>
                 </tbody>
