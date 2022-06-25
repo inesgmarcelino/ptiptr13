@@ -11,6 +11,30 @@ var auth = require('../svlib/auth0/tokenlib');
 const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
+router.get('/order', (req,res) => {
+    var order = req.query.order;
+    console.log(order);
+    var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
+                        FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
+                        GROUP BY p.id, p.nome";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [order], (err, results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results: results});
+
+            } else {
+                console.log("Não foi possível realizar essa operação. output 4");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
+
+
 router.get('/:cid', (req,res) => {
     console.log("Uh oh wrong place wrong time mr freeman");
     const cid = req.params.cid;
@@ -73,34 +97,6 @@ router.get('/:pname', (req,res) => {
                 return;
             } else {
                 // por acabar
-            }
-        });
-    });
-});
-
-router.get('/order', (req,res) => {
-    console.error("ping");
-    console.log(req);
-});
-
-router.get('/order', (req,res) => {
-    var order = req.query.order;
-    console.log(order);
-    var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
-                        FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
-                        GROUP BY p.id, p.nome";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, [order], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-
-            } else {
-                console.log("Não foi possível realizar essa operação. output 4");
-                return res.status(500).send({message:"fail"});
             }
         });
     });
