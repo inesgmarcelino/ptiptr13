@@ -1,22 +1,25 @@
 
-function AdminListaUsers(){
+function AdminUsersList(){
 
     return(
         <div className="position-absolute showItems">
             <div className="container">
-                <h3>Lista de Utilizadores</h3>     
+                <h3>Utilizadores</h3>     
             </div>
             <br />
             <div className="container">
             <table className="table table-bordered" id='centrar'>
                 <thead>
                     <tr>
-                        <th>id</th>
+                        <th>ID</th>
                         <th>Nome</th>
+                        <th>Email</th>
+                        <th>NIF</th>
+                        <th>Contacto</th>
                         <th>Produtor</th>
                         <th>Consumidor</th>
                         <th>Transportador</th>
-                        <th></th>
+                        <th>-- --</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,3 +41,5 @@ function AdminListaUsers(){
         </div>
     )
 }
+
+export default AdminUsersList;

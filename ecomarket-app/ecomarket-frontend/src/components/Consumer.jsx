@@ -20,7 +20,7 @@ function Consumer () {
                 for (var i = 0; i < encomendas.length; i++) {
                     document.getElementById("linhas").innerHTML += "<tr>\
                                                                         <th>"+encomendas[i].id+"</th>\
-                                                                        <th>"+encomendas[i].data+"</th>\
+                                                                        <th>"+encomendas[i].data.substring(0,9)+"</th>\
                                                                         <th>"+encomendas[i].fornecedor+"</th>\
                                                                         <th>"+encomendas[i].transportador+"</th>\
                                                                         <th>"+status(encomendas[i].cons, encomendas[i].forn, encomendas[i].transp)+"</th>\
@@ -49,8 +49,6 @@ function Consumer () {
     return(
         <div className="position-absolute showItems">
             <div className="container">
-                <Link to ='/profile' ><button type="button" className="btn">Voltar</button></Link>
-                <br />
                 <h3>As minhas encomendas</h3>     
                 
             </div>
