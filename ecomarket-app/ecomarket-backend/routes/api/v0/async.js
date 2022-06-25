@@ -6,6 +6,43 @@ var pool = require('mysql2/promise').createPool({
     database: "teste",
   });
 
+function query(connection, queryString, queryValues){
+    return new Promise(function(resolve, reject){
+        connection.query(queryString,queryValues, (err,results) => {
+            if(err) return reject(err);
+            resolve(connection, results);
+        })
+    });
+}
+
+pool.getConnection().then(query(conn,
+    "INSERT INTO us(value) VALUES (?)", 
+    ["primeiro"]).then(
+        (conn, results) => {
+            query(conn,
+            "SELECT MAX(id) AS id FROM us", null
+            ).then(
+                (conn, results) => {
+                    query(conn,
+                        "UPDATE us SET value = ? WHERE id = ?",
+                        ["o valor nao eh primeiro",results.id]
+                        )
+                }
+            )
+        }
+    )).catch((err) => {
+        console.log(err);
+    })
+;
+
+/*var pool = require('mysql2/promise').createPool({
+    connectionLimit:10,
+    host: "10.0.0.5",
+    user: "ecobackend",
+    password: "Y1nGJ14Ng",
+    database: "teste",
+  });
+
 exports.teste = function(req,res){
     pool.getConnection().then((conn) => {
         console.log("primeira query")
@@ -46,5 +83,5 @@ exports.teste = function(req,res){
             console.log(res);
             console.log(results);
         });
-    })*/
-}
+    })
+}*/
