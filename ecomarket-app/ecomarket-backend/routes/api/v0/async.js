@@ -1,4 +1,4 @@
-var pool = require('mysql2/promise').createPool({
+const pool = require('mysql2').createPool({
     connectionLimit:10,
     host: "10.0.0.5",
     user: "ecobackend",
@@ -7,32 +7,17 @@ var pool = require('mysql2/promise').createPool({
     multipleStatements: true
   });
 
-function query(connection, queryString, queryValues,){
-    return new Promise(function(resolve, reject){
-        if(queryValues === null){
-            connection.query(queryString, (err,results) => {
-                if(err) return reject(err);
-                resolve(results);
-            })
-        } else {
-            connection.query(queryString,queryValues, (err,results) => {
-                if(err) return reject(err);
-                resolve(results);
-            })
-        }
-    });
-}
-
+const promisePool = pool.promise()
 
 exports.teste = async function(req,res){
     const conn = await pool.getConnection();
     try{
         console.log("First query");
-        const insert = await query(conn,"INSERT INTO us(value) VALUES (?)",["primeiro"]);
+        const insert = await promisePool.query("INSERT INTO us(value) VALUES (?)",["primeiro"]);
         console.log("2 query");
-        const select = await query(conn,"SELECT MAX(id) AS id FROM us", null);
+        const select = await promisePool.query("SELECT MAX(id) AS id FROM us");
         console.log("3 query");
-        const update = await query(conn, "UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select.id]);
+        const update = await promisePool.query("UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select.id]);
         console.log("END");
     } catch(err) {
         console.log(err);
