@@ -15,16 +15,13 @@ exports.teste = async function(req,res){
         const insert = await promisePool.query("INSERT INTO us(value) VALUES (?)",["primeiro"]);
         console.log("2 query");
         const select = await promisePool.query("SELECT MAX(id) AS id FROM us");
-        console.log("3 query");
+        console.log(select);
         const update = await promisePool.query("UPDATE us SET value = ? WHERE id = ?",["o valor nao eh primeiro",select.id]);
         console.log("END");
     } catch(err) {
         console.log(err);
         res.send("OH  NOE");
-    } finally{
-        conn.release();
-        res.send("Success");
-    }
+    } 
 }
 
 
