@@ -3,12 +3,10 @@ import React from 'react'
 import Axios from "axios";
 import {Link } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
-import { useState } from 'react';
 
 function Consumer () {
     const { user } = useAuth0();
     const cid = 2;
-    const [encomendas, setEncomendas]   = useState('');
 
     document.body.onload = function(){enc()};
 
@@ -49,6 +47,7 @@ function Consumer () {
                         <th>Data</th>
                         <th>Fornecedor</th>
                         <th>Transportador</th>
+                        <th>Estado</th>
                         <th>Valor Total</th>
                     </tr>
                 </thead>
