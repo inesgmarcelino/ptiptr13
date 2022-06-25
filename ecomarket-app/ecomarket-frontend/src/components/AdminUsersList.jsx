@@ -8,17 +8,14 @@ function AdminUsersList(){
     document.body.onload = function(){users()};
 
     const users = () => {
-        cons();
-        prov();
-        transp();
-    }
-
-    const cons = () => {
+        document.getElementById("admin_users").innerHTML += "<tr> \
+                                                                <td colspan='7'>Consumidores</td> \
+                                                            </tr>";
         Axios.get("https://ecomarket.works/api/v1/admin/cons").then ((response) => {
             if (response.data.message !== "fail") {
                 var c = response.data.results;
                 for (var i = 0; i < c.length; i++) {
-                    document.getElementById("consumers").innerHTML += "<tr>\
+                    document.getElementById("admin_users").innerHTML += "<tr>\
                                                                         <th>"+c[i].id+"</th>\
                                                                         <th>"+c[i].nome+"</th>\
                                                                         <th>"+c[i].email+"</th>\
@@ -30,14 +27,15 @@ function AdminUsersList(){
                 }
             }
         });
-    }
 
-    const prov = () => {
+        document.getElementById("admin_users").innerHTML += "<tr> \
+                                                                <td colspan='7'>Fornecedores</td> \
+                                                            </tr>";
         Axios.get("https://ecomarket.works/api/v1/admin/prov").then ((response) => {
             if (response.data.message !== "fail") {
                 var p = response.data.results;
                 for (var i = 0; i < p.length; i++) {
-                    document.getElementById("providers").innerHTML += "<tr>\
+                    document.getElementById("admin_users").innerHTML += "<tr>\
                                                                         <th>"+p[i].id+"</th>\
                                                                         <th>"+p[i].nome+"</th>\
                                                                         <th>"+p[i].email+"</th>\
@@ -49,14 +47,15 @@ function AdminUsersList(){
                 }
             }
         });
-    }
 
-    const transp = () => {
+        document.getElementById("admin_users").innerHTML += "<tr> \
+                                                                <td colspan='7'>Transportadores</td> \
+                                                            </tr>";
         Axios.get("https://ecomarket.works/api/v1/admin/transp").then ((response) => {
             if (response.data.message !== "fail") {
                 var t = response.data.results;
                 for (var i = 0; i < t.length; i++) {
-                    document.getElementById("transporters").innerHTML += "<tr>\
+                    document.getElementById("admin_users").innerHTML += "<tr>\
                                                                         <th>"+t[i].id+"</th>\
                                                                         <th>"+t[i].nome+"</th>\
                                                                         <th>"+t[i].email+"</th>\
@@ -69,7 +68,6 @@ function AdminUsersList(){
             }
         });
     }
-
     return(
         <div className="position-absolute showItems">
             <div className="container">
@@ -90,18 +88,6 @@ function AdminUsersList(){
                     </tr>
                 </thead>
                 <tbody id="admin_users">
-                    <tr>
-                        <td colspan="7">Consumidores</td>
-                    </tr>
-                    <div id="consumers"></div>
-                    <tr>
-                        <td colspan="7">Fornecedores</td>
-                    </tr>
-                    <div id="providers"></div>
-                    <tr>
-                        <td colspan="7">Transportadores</td>
-                    </tr>
-                    <div id="transporters"></div>
                 </tbody>
             </table>
             </div>
