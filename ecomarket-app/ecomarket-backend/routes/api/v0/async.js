@@ -10,7 +10,7 @@ function query(connection, queryString, queryValues,){
     return new Promise(function(resolve, reject){
         connection.query(queryString,queryValues, (err,results) => {
             if(err) return reject(err);
-            return resolve(connection);
+            resolve(connection);
         })
     });
 }
@@ -19,7 +19,7 @@ function queryResults(connection, queryString, queryValues,){
     return new Promise(function(resolve, reject){
         connection.query(queryString,queryValues, (err,results) => {
             if(err) return reject(err);
-            return resolve(connection, results);
+            resolve(connection, results);
         })
     });
 }
