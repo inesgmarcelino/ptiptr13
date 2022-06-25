@@ -25,6 +25,7 @@ function Transporter () {
                 for (var i = 0; i < encomendas.length; i++) {
                     document.getElementById("trans_enc").innerHTML += "<tr>\
                                                                         <th>"+encomendas[i].id+"</th>\
+                                                                        <th>"+encomendas[i].consumidor+"</th>\
                                                                         <th>"+encomendas[i].data+"</th>\
                                                                         <th>"+status(encomendas[i].transp)+"</th>\
                                                                         <th>"+encomendas[i].total+"</th>\
@@ -104,6 +105,7 @@ function Transporter () {
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Consumidor</th>
                         <th>Data</th>
                         <th>Estado</th>
                         <th>Valor Total</th>

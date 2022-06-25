@@ -26,6 +26,7 @@ function Provider () {
                 for (var i = 0; i < encomendas.length; i++) {
                     document.getElementById("prov_enc").innerHTML += "<tr>\
                                                                         <th>"+encomendas[i].id+"</th>\
+                                                                        <th>"+encomendas[i].consumidor+"</th>\
                                                                         <th>"+encomendas[i].data+"</th>\
                                                                         <th>"+transp(encomendas[i].transportador)+"</th>\
                                                                         <th>"+encomendas[i].total+"</th>\
@@ -100,6 +101,7 @@ function Provider () {
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Consumidor</th>
                         <th>Data</th>
                         <th>Transportador</th>
                         <th>Valor Total</th>

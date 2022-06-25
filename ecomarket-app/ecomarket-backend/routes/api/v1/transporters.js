@@ -67,9 +67,10 @@ router.post('/reg_car', (req,res) => {
 
 router.get('/orders', (req,res) => {
     var transId = req.query.tid;
-    var queryString = "SELECT e.id AS id, e.data AS data, ee.status_transp AS transp, SUM(lpe.quantidade * p.preco) AS total \
-                        FROM encomenda e, estado_encomenda ee, lista_produtos_encomenda lpe, produto p, transportar_encomendas te \
-                        WHERE (te.transportador = 4) AND (te.encomenda = e.id) AND (ee.encomenda = e.id) AND (lpe.encomenda = e.id) AND (p.id = lpe.produto) \
+    var queryString = "SELECT e.id AS id, e.data AS data, ee.status_transp AS transp, SUM(lpe.quantidade * p.preco) AS total, u1.nome AS consumidor \
+                        FROM encomenda e, estado_encomenda ee, lista_produtos_encomenda lpe, produto p, transportar_encomendas te, utlizador u1 \
+                        WHERE (te.transportador = 4) AND (te.encomenda = e.id) AND (ee.encomenda = e.id) AND (lpe.encomenda = e.id) \
+                            AND (p.id = lpe.produto) AND (lpe.consumidor = u1.id) \
                         GROUP BY e.id";
     pool.getConnection((err, conn) => {
         if (err) throw err;

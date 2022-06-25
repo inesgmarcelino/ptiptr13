@@ -274,10 +274,10 @@ router.get('/products', (req,res) => {
 
 router.get('/orders', (req,res) => {
     var provId = req.query.pid;
-    var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS transportador, SUM(lpe.quantidade * p.preco) AS total \
-                        FROM encomenda e, utilizador u1, lista_produtos_encomenda lpe, produto p, lista_encomendas le, transportar_encomendas te \
+    var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS transportador, SUM(lpe.quantidade * p.preco) AS total, u2.nome AS consumidor \
+                        FROM encomenda e, utilizador u1, lista_produtos_encomenda lpe, produto p, lista_encomendas le, transportar_encomendas te, utilizador u2 \
                         WHERE (le.fornecedor = ?) AND (le.encomenda = e.id) AND (te.encomenda = e.id) AND (te.transportador = u1.id) \
-                            AND (lpe.encomenda = e.id) AND (lpe.produto = p.id) \
+                            AND (lpe.encomenda = e.id) AND (lpe.produto = p.id) AND (le.consumidor = u2.id)\
                         GROUP BY e.id, u1.nome";
     pool.getConnection((err, conn) => {
         if (err) throw err;
