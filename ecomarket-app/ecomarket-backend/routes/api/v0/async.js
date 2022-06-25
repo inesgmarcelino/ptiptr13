@@ -8,12 +8,20 @@ var pool = require('mysql2/promise').createPool({
 
 function query(connection, queryString, queryValues,){
     return new Promise(function(resolve, reject){
-        connection.query(queryString,queryValues, (err,results) => {
-            if(err) return reject(err);
-            resolve(results);
-        })
+        if(queryValues === null){
+            connection.query(queryString, (err,results) => {
+                if(err) return reject(err);
+                resolve(results);
+            })
+        } else {
+            connection.query(queryString,queryValues, (err,results) => {
+                if(err) return reject(err);
+                resolve(results);
+            })
+        }
     });
 }
+
 
 exports.teste = async function(req,res){
     const conn = await pool.getConnection();
