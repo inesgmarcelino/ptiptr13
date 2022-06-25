@@ -25,7 +25,7 @@ exports.teste = async function (req, res) {
         console.log("2 query");
         const select = await promisePool.query("SELECT MAX(id) AS id FROM us");
         console.log(select[0][0]);
-        const update = await promisePool.query("UPDATE us SET value = ? WHERE id = ?", ["o valor nao eh primeiro", select[0][0].id]);
+        const update = await promisePool.query("UPDATE us SET value = ? WHERE id = ?", ["changed!", select[0][0].id]);
         console.log("END");
         res.send("OH  YES");
     } catch (err) {
