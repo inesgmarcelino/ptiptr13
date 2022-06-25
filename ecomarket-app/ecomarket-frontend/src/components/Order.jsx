@@ -7,6 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 function Order(){
     const { user } = useAuth0();
     const order = 1;
+    var provider;
 
     document.body.onload = function(){prod()};
 
@@ -38,8 +39,8 @@ function Order(){
             </div> */}
 
             <div className="details">
-                <h2 className="product-brand">Encomenda #</h2>
-                <span className="product-price">Fornecedor ?</span>
+                <h2 className="product-brand">Encomenda {order}</h2>
+                <span className="product-price">Fornecedor </span>
                 {/* lista dos produtos */}
                 <div className="container">
                     <table className="table table-bordered" id='centrar'>
