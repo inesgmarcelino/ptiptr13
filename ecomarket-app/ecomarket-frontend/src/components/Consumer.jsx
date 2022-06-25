@@ -25,6 +25,7 @@ function Consumer () {
                                                                         <th>"+encomendas[i].transportador+"</th>\
                                                                         <th>"+status(encomendas[i].cons, encomendas[i].forn, encomendas[i].transp)+"</th>\
                                                                         <th>"+encomendas[i].total+"</th>\
+                                                                        <th> Botão para a order.jsx respetiva</th>\
                                                                     </tr>";
                 }
             }
@@ -32,7 +33,17 @@ function Consumer () {
     }
 
     const status = (c,f,t) => {
-
+        if (c === 'YES') {
+            if (f === 'NO') {
+                return "A aguardar pela confirmação do Fornecedor";
+            } else if (t === 'NO') {
+                return "Em trânsito";
+            } else {
+                return "Entregue";
+            }
+        } else {
+            return "A aguardar o pagamento";
+        }
     }
 
     return(
@@ -54,6 +65,7 @@ function Consumer () {
                         <th>Transportador</th>
                         <th>Estado</th>
                         <th>Valor Total</th>
+                        <th> -- --</th> {/* botão */}
                     </tr>
                 </thead>
                 <tbody id ="linhas">

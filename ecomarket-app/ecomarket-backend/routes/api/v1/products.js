@@ -35,72 +35,72 @@ router.get('/order', (req,res) => {
 });
 
 
-router.get('/:cid', (req,res) => {
-    console.log("Uh oh wrong place wrong time mr freeman");
-    const cid = req.params.cid;
-    var queryString = "SELECT * FROM produto WHERE tipo = ?";
+// router.get('/:cid', (req,res) => {
+//     console.log("Uh oh wrong place wrong time mr freeman");
+//     const cid = req.params.cid;
+//     var queryString = "SELECT * FROM produto WHERE tipo = ?";
 
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
+//     pool.getConnection((err, conn) => {
+//         if (err) throw err;
 
-        conn.query(queryString, [cid], (err, rows) => {
-            conn.release();
+//         conn.query(queryString, [cid], (err, rows) => {
+//             conn.release();
 
-            if (err) {
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 1"});
-                return;
-            } else {
-                // por acabar
-            }
-        });
-    });
-});
+//             if (err) {
+//                 res.status(500);
+//                 res.type('json');
+//                 res.send({"message":"Não foi possível realizar essa operação. output 1"});
+//                 return;
+//             } else {
+//                 // por acabar
+//             }
+//         });
+//     });
+// });
 
-router.get('/:pid', (req,res) => {
-    const pid = req.params.pid;
-    var queryString = "SELECT * FROM produto WHERE id = ?";
+// router.get('/:pid', (req,res) => {
+//     const pid = req.params.pid;
+//     var queryString = "SELECT * FROM produto WHERE id = ?";
 
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
+//     pool.getConnection((err, conn) => {
+//         if (err) throw err;
 
-        conn.query(queryString, [pid], (err, rows) => {
-            conn.release();
+//         conn.query(queryString, [pid], (err, rows) => {
+//             conn.release();
 
-            if (err) {
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 2"});
-                return;
-            } else {
-                // por acabar
-            }
-        });
-    });
-});
+//             if (err) {
+//                 res.status(500);
+//                 res.type('json');
+//                 res.send({"message":"Não foi possível realizar essa operação. output 2"});
+//                 return;
+//             } else {
+//                 // por acabar
+//             }
+//         });
+//     });
+// });
 
-router.get('/:pname', (req,res) => {
-    const pname = req.params.pname;
-    var queryString = "SELECT * FROM produto WHERE nome = '%?%'";
+// router.get('/:pname', (req,res) => {
+//     const pname = req.params.pname;
+//     var queryString = "SELECT * FROM produto WHERE nome = '%?%'";
 
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
+//     pool.getConnection((err, conn) => {
+//         if (err) throw err;
 
-        conn.query(queryString, [pname], (err, rows) => {
-            conn.release();
+//         conn.query(queryString, [pname], (err, rows) => {
+//             conn.release();
             
-            if (err) {
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 3"});
-                return;
-            } else {
-                // por acabar
-            }
-        });
-    });
-});
+//             if (err) {
+//                 res.status(500);
+//                 res.type('json');
+//                 res.send({"message":"Não foi possível realizar essa operação. output 3"});
+//                 return;
+//             } else {
+//                 // por acabar
+//             }
+//         });
+//     });
+// });
 
 //exporta funções/"objetos"
 module.exports = router ;
