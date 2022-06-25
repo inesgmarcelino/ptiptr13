@@ -6,20 +6,21 @@ var pool = require('mysql2/promise').createPool({
     database: "teste",
   });
 
-function query(connection, queryString, queryValues){
+function query(connection, queryString, queryValues,){
     return new Promise(function(resolve, reject){
-        connection.query(queryString,queryValues, (err,results) => {
+        connection.query(queryString.shift(),queryValues.shift(), (err,results) => {
             if(err) return reject(err);
-            resolve(connection, results);
+            return resolve(connection, results);
         })
     });
 }
 
+
+
 pool.getConnection().then(query(conn,
     "INSERT INTO us(value) VALUES (?)", 
     ["primeiro"]).then(
-        (conn, results) => {
-            query(conn,
+        query(conn,
             "SELECT MAX(id) AS id FROM us", null
             ).then(
                 (conn, results) => {
@@ -29,8 +30,8 @@ pool.getConnection().then(query(conn,
                         )
                 }
             )
-        }
-    )).catch((err) => {
+        )
+    ).catch((err) => {
         console.log(err);
     })
 ;
