@@ -277,7 +277,7 @@ router.get('/orders', (req,res) => {
     var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS transportador, SUM(lpe.quantidade * p.preco) AS total \
                         FROM encomenda e, utilizador u1, lista_produtos_encomenda lpe, produto p, lista_encomendas le, transportar_encomendas te \
                         WHERE (le.fornecedor = ?) AND (le.encomenda = e.id) AND (te.encomenda = e.id) AND (te.transportador = u1.id) \
-                            AND (lpe.encomenda = e.id) AND (lpe.produto = p.id) GROUP BY e.id, u1.nome, ee.status_fornec";
+                            AND (lpe.encomenda = e.id) AND (lpe.produto = p.id) GROUP BY e.id, u1.nome";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
