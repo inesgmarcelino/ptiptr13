@@ -2,53 +2,54 @@ CREATE DATABASE IF NOT EXISTS ecodb;
 ALTER DATABASE ecodb CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE ecodb;
 
-CREATE TABLE IF NOT EXISTS distrito (
+CREATE TABLE distrito (
     id              INT PRIMARY KEY,
     nome            VARCHAR(50) NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS concelho (
+CREATE TABLE concelho (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
     distrito        INT NOT NULL,
     --
     CONSTRAINT fk_concelho
-        FOREIGN KEY (distrito) REFERENCES distrito(id)
+        FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS utilizador (
+CREATE TABLE image (
+    id              INT PRIMARY KEY AUTO_INCREMENT,
+    filename        VARCHAR(250) NOT NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE utilizador (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
     email           VARCHAR(50) NOT NULL UNIQUE,
     nif             INT(9) NOT NULL UNIQUE,
     telemovel       INT(9) NOT NULL UNIQUE,
+    image           INT,
     pass_word       VARCHAR(250) NOT NULL,
-    morada          VARCHAR(250) NOT NULL
-) ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS image (
-    id              INT PRIMARY KEY,
-    filename        VARCHAR(250) NOT NULL,
-        --
+    morada          VARCHAR(250) NOT NULL,
+    --
     CONSTRAINT fk_image
-        FOREIGN KEY (id) REFERENCES utilizador(id)
+        FOREIGN KEY (image) REFERENCES image(id)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS consumidor (
+CREATE TABLE consumidor (
     utilizador      INT PRIMARY KEY,
     --
     CONSTRAINT fk_consumidor
         FOREIGN KEY (utilizador) REFERENCES utilizador(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS fornecedor (
+CREATE TABLE fornecedor (
     utilizador      INT PRIMARY KEY,
     --
     CONSTRAINT fk_fornecedor
         FOREIGN KEY (utilizador) REFERENCES utilizador(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS localizacao (
+CREATE TABLE localizacao (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     morada          VARCHAR(250) NOT NULL,
     c_postal        VARCHAR(8) NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE IF NOT EXISTS localizacao (
         FOREIGN KEY (concelho) REFERENCES concelho(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS armazem (
+CREATE TABLE armazem (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     localizacao     INT NOT NULL,
     --
@@ -69,7 +70,7 @@ CREATE TABLE IF NOT EXISTS armazem (
         FOREIGN KEY (localizacao) REFERENCES localizacao(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS lista_armazens (
+CREATE TABLE lista_armazens (
     fornecedor      INT,
     armazem         INT,
     --
@@ -81,7 +82,7 @@ CREATE TABLE IF NOT EXISTS lista_armazens (
         FOREIGN KEY (armazem) REFERENCES armazem(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS transportador (
+CREATE TABLE transportador (
     utilizador      INT PRIMARY KEY,
     localizacao     INT,
     --
@@ -91,7 +92,7 @@ CREATE TABLE IF NOT EXISTS transportador (
         FOREIGN KEY (localizacao) REFERENCES localizacao(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS veiculo (
+CREATE TABLE veiculo (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     marca           VARCHAR(50),
     ano             INT(4),
@@ -107,7 +108,7 @@ CREATE TABLE IF NOT EXISTS veiculo (
     
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS lista_veiculos (
+CREATE TABLE lista_veiculos (
     transportador   INT,
     veiculo         INT,
     --
@@ -119,12 +120,12 @@ CREATE TABLE IF NOT EXISTS lista_veiculos (
         FOREIGN KEY (veiculo) REFERENCES veiculo(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS encomenda (
+CREATE TABLE encomenda (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     data            DATE NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS estado_encomenda (
+CREATE TABLE estado_encomenda (
     encomenda       INT PRIMARY KEY,
     status_consum   VARCHAR(3) NOT NULL, 
     status_fornec   VARCHAR(3) NOT NULL, 
@@ -138,22 +139,22 @@ CREATE TABLE IF NOT EXISTS estado_encomenda (
             AND (status_transp = 'NO' OR status_transp = 'YES'))
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS lista_encomendas (
+CREATE TABLE lista_encomendas (
     consumidor      INT,
     encomenda       INT,
     fornecedor      INT,
     --
     CONSTRAINT pk_encomendas
-        PRIMARY KEY (consumidor,encomenda,fornecedor),
+        PRIMARY KEY (consumidor,encomenda),
     CONSTRAINT fk_consumidor_id
-        FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador),
+        FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_encomenda_id
         FOREIGN KEY (encomenda) REFERENCES encomenda(id) ON DELETE CASCADE,
     CONSTRAINT fk_fornecedor_id
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador)
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS transportar_encomendas (
+CREATE TABLE transportar_encomendas (
     encomenda       INT,
     transportador   INT,
     --
@@ -165,17 +166,17 @@ CREATE TABLE IF NOT EXISTS transportar_encomendas (
         FOREIGN KEY (transportador) REFERENCES transportador(utilizador) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS tipo_produto (
+CREATE TABLE tipo_produto (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(150) NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS subtipo_produto (
+CREATE TABLE subtipo_produto (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(150) NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS tipo_subtipo (
+CREATE TABLE tipo_subtipo (
     tipo            INT,
     subtipo         INT,
     --
@@ -187,11 +188,11 @@ CREATE TABLE IF NOT EXISTS tipo_subtipo (
         FOREIGN KEY (subtipo) REFERENCES subtipo_produto(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS cadeia_logistica (
+CREATE TABLE cadeia_logistica (
     id              INT PRIMARY KEY AUTO_INCREMENT
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS produto (
+CREATE TABLE produto (
     id              INT NOT NULL AUTO_INCREMENT,
     nome            VARCHAR(150) NOT NULL,
     fornecedor      INT NOT NULL,
@@ -199,12 +200,12 @@ CREATE TABLE IF NOT EXISTS produto (
     preco           NUMERIC(5,2) NOT NULL,
     tipo            INT NOT NULL,
     subtipo         INT NOT NULL,
-    cadeia_logis    INT NOT NULL, 
+    cadeia_logis    INT, 
     --
     CONSTRAINT pk_produto
-PRIMARY KEY (id, fornecedor),
+        PRIMARY KEY (id, fornecedor),
     CONSTRAINT fk_fornecedor_produto
-        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador),
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador)ON DELETE CASCADE,
     CONSTRAINT fk_tipo
         FOREIGN KEY (tipo) REFERENCES tipo_produto(id),
     CONSTRAINT fk_subtipo
@@ -215,7 +216,7 @@ PRIMARY KEY (id, fornecedor),
         CHECK (preco > 0.0)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS cesto_compras (
+CREATE TABLE cesto_compras (
     consumidor      INT,
     produto         INT,
     --
@@ -227,9 +228,10 @@ CREATE TABLE IF NOT EXISTS cesto_compras (
         FOREIGN KEY (produto) REFERENCES produto(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS lista_produtos_encomenda (
+CREATE TABLE lista_produtos_encomenda (
     encomenda       INT,
     produto         INT,
+    quantidade      INT NOT NULL,
     --
     CONSTRAINT pk_lista_produtos_encomenda
         PRIMARY KEY (encomenda,produto),
@@ -239,14 +241,14 @@ CREATE TABLE IF NOT EXISTS lista_produtos_encomenda (
         FOREIGN KEY (produto) REFERENCES produto(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS recurso (
+CREATE TABLE recurso (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(150) NOT NULL,
     un_medida       VARCHAR(25) NOT NULL,
     quantidade      NUMERIC(10,3) NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS lista_recursos (
+CREATE TABLE lista_recursos (
     cadeia_logis    INT,
     recurso         INT,
     --
@@ -258,12 +260,12 @@ CREATE TABLE IF NOT EXISTS lista_recursos (
         FOREIGN KEY (recurso) REFERENCES recurso(id)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS poluicao (
+CREATE TABLE poluicao (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(150) NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS poluicao_cadeia (
+CREATE TABLE poluicao_cadeia (
     cadeia_logis    INT,
     poluicao        INT,
     quantidade      NUMERIC(10,3) NOT NULL,
@@ -276,7 +278,7 @@ CREATE TABLE IF NOT EXISTS poluicao_cadeia (
         FOREIGN KEY (poluicao)  REFERENCES poluicao(id)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS emite_poluicao (
+CREATE TABLE emite_poluicao (
     veiculo         INT,
     poluicao        INT,
     quantidade      NUMERIC(10,3),
@@ -284,7 +286,7 @@ CREATE TABLE IF NOT EXISTS emite_poluicao (
     CONSTRAINT pk_emite_poluicao
         PRIMARY KEY (veiculo,poluicao),
     CONSTRAINT fk_veiculo_polui
-        FOREIGN KEY (veiculo) REFERENCES veiculo(id),
+        FOREIGN KEY (veiculo) REFERENCES veiculo(id) ON DELETE CASCADE,
     CONSTRAINT fk_poluicao_emitida
         FOREIGN KEY (poluicao)  REFERENCES poluicao(id)
 ) ENGINE = InnoDB;
@@ -297,10 +299,9 @@ SELECT id FROM utilizador WHERE email = 'cons1@ecomarket.pt';
 SELECT id FROM utilizador WHERE email = 'forn1@ecomarket.pt';
 SELECT id FROM utilizador WHERE email = 'trans1@ecomarket.pt';
 
-INSERT INTO fornecedor VALUES (2);
+INSERT INTO consumidor VALUES (2);
 INSERT INTO fornecedor VALUES (3);
 INSERT INTO transportador (utilizador) VALUES (4);
-
 
 -- Inserts de Distritos e Concelhos
 INSERT INTO distrito VALUES (1, 'Aveiro');

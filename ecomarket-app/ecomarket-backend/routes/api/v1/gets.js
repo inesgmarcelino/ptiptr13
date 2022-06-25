@@ -83,7 +83,7 @@ router.get('/subtipos', (req,res) => {
         if (err) throw err;
 
         conn.query(queryString, [tip], (err, results) => {
-            conn.release()
+            conn.release();
 
             if (!err) {
                 return res.status(200).send({results: results});

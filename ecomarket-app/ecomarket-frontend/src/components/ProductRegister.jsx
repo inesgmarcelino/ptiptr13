@@ -125,7 +125,7 @@ function ProductRegister(){
                         
                     <div className="col-md-12">
                         <label>Preço Unitário:</label>
-                        <input className="form-control" type="text" name="preco"  size="50" onChange={handler} required/>
+                        <input className="form-control" type="number" name="preco"  size="50" onChange={handler} required/>
                     </div>
 
                     <div className="col-md-12">
@@ -155,7 +155,7 @@ function ProductRegister(){
                         </div>
                         <div className="col-md-12">
                             <label>Quantidade:</label>
-                            <input className="form-control" type="text" name="quantidadeR" size="50"/>
+                            <input className="form-control" type="number" name="quantidadeR" size="50"/>
                         </div>
                     </div>
                      <input type="button">Adicionar</input> onClick={addRec} 
@@ -168,7 +168,7 @@ function ProductRegister(){
                         </div>
                         <div className="col-md-12">
                             <label>Quantidade:</label>
-                            <input className="form-control" type="text" name="quantidadeP"  size="50"/>
+                            <input className="form-control" type="number" name="quantidadeP"  size="50"/>
                         </div>
                     </div> 
                      <input type="button" >Adicionar</input> onClick={addPol} */}
