@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS fornecedor (
 
 CREATE TABLE IF NOT EXISTS localizacao (
     id              INT PRIMARY KEY AUTO_INCREMENT,
-    morada          VARCHAR(250) NOT NULL,
+    rua          VARCHAR(250) NOT NULL,
     c_postal        VARCHAR(8) NOT NULL,
     distrito        INT NOT NULL,
     concelho        INT NOT NULL,
@@ -363,7 +363,7 @@ INSERT INTO concelho VALUES (304, 'Cabeceiras de Basto', 3);
 INSERT INTO concelho VALUES (305, 'Celorico de Basto', 3);
 INSERT INTO concelho VALUES (306, 'Esposende', 3);
 INSERT INTO concelho VALUES (307, 'Fafe', 3);
-INSERT INTO concelho VALUES (308, 'Guimardes', 3);
+INSERT INTO concelho VALUES (308, 'Guimarães', 3);
 INSERT INTO concelho VALUES (309, 'Povoa de Lanhoso', 3);
 INSERT INTO concelho VALUES (310, 'Terras de Boura', 3);
 INSERT INTO concelho VALUES (311, 'Vieira do Minho', 3);
