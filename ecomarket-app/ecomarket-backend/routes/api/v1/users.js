@@ -23,6 +23,7 @@ var auth = require('../svlib/auth0/tokenlib');
 
 router.post('/register', (req, res, next) => {
     try {
+        if(!req.body.trans && !req.body.cons && !req.body.forn) throw new Error("Utilizador deve ter um tipo");
         console.error(req.body);
         /** Meter aqui correção dos dados do utilizador */
         const reply = axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
