@@ -57,9 +57,8 @@ CREATE TABLE IF NOT EXISTS localizacao (
     distrito        INT NOT NULL,
     concelho        INT NOT NULL,
     lati            INT NOT NULL,
-    long            INT NOT NULL,
+    longi            INT NOT NULL,
 
-    --
     CONSTRAINT fk_dist
         FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE,
     CONSTRAINT fk_conc
