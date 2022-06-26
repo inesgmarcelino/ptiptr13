@@ -45,7 +45,8 @@ router.post('/register', (req, res, next) => {
     }).then(async function (response) {
 
         try {
-            const id = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email])[0][0].id;
+            var id = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
+            id = id[0][0].id;
             if (req.body.trans) {
                 var address = escaper.escape(req.body.morada);
                 address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
