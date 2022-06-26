@@ -29,7 +29,7 @@ function Profile() {
         <tbody>
           <tr>
             <td className='card-profile'><h3>Lista de Utilizadores</h3>
-              <Link to ='/' id='profile'>
+              <Link to ='/adminUsersList' id='profile'>
                 <button type="button" className="btn btn btn-primary">Ver</button>
               </Link>
             </td>

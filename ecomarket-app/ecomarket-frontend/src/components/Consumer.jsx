@@ -1,5 +1,5 @@
 /* eslint-disable no-multi-str */
-import React from 'react'
+import React from 'react';
 import Axios from "axios";
 import {Link } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
@@ -19,27 +19,36 @@ function Consumer () {
                 var encomendas = response.data.results;
                 for (var i = 0; i < encomendas.length; i++) {
                     document.getElementById("linhas").innerHTML += "<tr>\
-                                                                        <th>"+encomendas[i].id+"</th>\
-                                                                        <th>"+encomendas[i].data+"</th>\
-                                                                        <th>"+encomendas[i].fornecedor+"</th>\
-                                                                        <th>"+encomendas[i].transportador+"</th>\
-                                                                        <th>"+status(encomendas[i].cons, encomendas[i].forn, encomendas[i].transp)+"</th>\
-                                                                        <th>"+encomendas[i].total+"</th>\
+                                                                        <td>"+encomendas[i].id+"</td>\
+                                                                        <td>"+encomendas[i].data.substring(0,10)+"</td>\
+                                                                        <td>"+encomendas[i].fornecedor+"</td>\
+                                                                        <td>"+encomendas[i].transportador+"</td>\
+                                                                        <td>"+status(encomendas[i].cons, encomendas[i].forn, encomendas[i].transp)+"</td>\
+                                                                        <td>"+encomendas[i].total+"€</td>\
+                                                                        <td> Botão para a order.jsx respetiva</td>\
                                                                     </tr>";
                 }
             }
-        })
+        });
     }
 
     const status = (c,f,t) => {
-
+        if (c === 'YES') {
+            if (f === 'NO') {
+                return "A aguardar pela confirmação do Fornecedor";
+            } else if (t === 'NO') {
+                return "Em trânsito";
+            } else {
+                return "Entregue";
+            }
+        } else {
+            return "A aguardar o pagamento";
+        }
     }
 
     return(
         <div className="position-absolute showItems">
             <div className="container">
-                <Link to ='/profile' ><button type="button" className="btn">Voltar</button></Link>
-                <br />
                 <h3>As minhas encomendas</h3>     
                 
             </div>
@@ -54,6 +63,7 @@ function Consumer () {
                         <th>Transportador</th>
                         <th>Estado</th>
                         <th>Valor Total</th>
+                        <th>-- --</th> {/* botão */}
                     </tr>
                 </thead>
                 <tbody id ="linhas">

@@ -181,5 +181,68 @@ router.get('/edit/:uid', (req, res, next) => {
     });
 });
 
+router.get('/cons', (req,res) => {
+    var queryString = "SELECT u.* \
+                        FROM utilizador u, consumidor c \
+                        WHERE (c.utilizador = u.id) and not (u.email = 'admin@ecomarket.pt')";
+
+    pool.getConnection((err,conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, (err,results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results:results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 6");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
+
+router.get('/prov', (req,res) => {
+    var queryString = "SELECT u.* \
+                        FROM utilizador u, fornecedor f \
+                        WHERE (f.utilizador = u.id) and not (u.email = 'admin@ecomarket.pt')";
+
+    pool.getConnection((err,conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, (err,results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results:results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 6");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
+
+router.get('/transp', (req,res) => {
+    var queryString = "SELECT u.* \
+                        FROM utilizador u, transportador t \
+                        WHERE (t.utilizador = u.id) and not (u.email = 'admin@ecomarket.pt')";
+
+    pool.getConnection((err,conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, (err,results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results:results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 6");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
+
 //exporta funções/"objetos"
 module.exports = router ;

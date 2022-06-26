@@ -162,7 +162,8 @@ router.get('/orders', (req,res) => {
                             utilizador u2, lista_produtos_encomenda lpe, produto p, estado_encomenda st \
                         WHERE (le.consumidor = ?) AND (le.encomenda = e.id) AND (le.fornecedor = u1.id) \
                             AND (te.encomenda = e.id) AND (te.transportador = u2.id) AND (lpe.encomenda = e.id) \
-                            AND (lpe.produto = p.id) AND (st.encomenda = e.id) GROUP BY e.id, u1.nome, u2.nome;";
+                            AND (lpe.produto = p.id) AND (st.encomenda = e.id) \
+                        GROUP BY e.id, u1.nome, u2.nome";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 

@@ -18,3 +18,5 @@ export { default as ProductRegister } from "./ProductRegister";
 export { default as AdminTipos} from "./AdminTipos";
 export { default as Cart } from "./Cart";
 export { default as Order } from "./Order";
+export { default as Transporter } from "./Transporter";
+export { default as AdminUsersList } from "./AdminUsersList";

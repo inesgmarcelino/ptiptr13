@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS veiculo (
     ano             INT(4),
     combustivel     INT(1), -- 1 -> Gasolina, 2 -> Gasóleo, 3 -> GPL, 4 -> Elétrico, 5 -> Híbrido
     caixa           INT(1), -- 1 -> Manual, 2 -> Automática
-    co2             NUMERIC(3,2),
+    co2             FLOAT(5),
     --
     CONSTRAINT ck_comb
 		CHECK (combustivel = 1 OR combustivel = 2 OR combustivel = 3 
