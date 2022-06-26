@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS concelho (
 CREATE TABLE IF NOT EXISTS papeis ( 
     id INT PRIMARY KEY,
     nome VARCHAR(22)
-)
+) ENGINE = InnoDB;
 
 INSERT INTO papeis(id,nome) VALUES (1,"Consumidor");
 INSERT INTO papeis(id,nome) VALUES (2,"Fornecedor");
