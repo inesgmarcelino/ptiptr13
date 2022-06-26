@@ -88,6 +88,32 @@ router.get('/orders', (req,res) => {
     });
 });
 
+//Fornecedor atribui transportador a encomendas
+router.post('trans_enc', (req,res) => {  // por testar
+    var transpId = req.body.transpId;
+    var encId = req.body,encId;
+    var queryString = "INSERT INTO transportar_encomendas (encomenda,transportador) VALUES (?)";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+        conn.query(queryString, [transpId, encId], (err, result) => {
+            if (err) {
+                conn.release();
+                
+                res.status(500);
+                res.type('json');
+                res.send({"message":"Não foi possível realizar essa operação. output 5"});
+                return;
+            } else {
+                res.status(200);
+                res.type('json');
+                res.send({"message":"Transportador atribuido a uma encomenda com sucesso."});
+                return;
+            }
+        });
+    });
+
+});
+
 router.get('/cars', (req,res) => {
     var transId = req.query.tid;
     var queryString = "SELECT v.id AS id, v.marca AS marca, v.ano AS ano, v.combustivel AS combustivel, v.caixa AS caixa, v.co2 AS emissao \
@@ -103,7 +129,7 @@ router.get('/cars', (req,res) => {
             if (!err) {
                 return res.status(200).send({results: results});
             } else {
-                console.log("Não foi possível realizar essa operação. output 5");
+                console.log("Não foi possível realizar essa operação. output 6");
                 return res.status(500).send({message:"fail"});
             }
         });
