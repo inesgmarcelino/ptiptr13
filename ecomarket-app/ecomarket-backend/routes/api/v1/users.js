@@ -3,7 +3,7 @@ var router = express.Router();
 const multer = require('multer');
 const {Storage} = require('@google-cloud/storage');
 const axios = require('axios');
-const escaper = require('queryString');
+const escaper = require('querystring');
 
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
@@ -76,7 +76,7 @@ router.post('/register', (req, res, next) => {
 
                 const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id,locid[0][0].id]);
             } else {
-                console.log(req.body.cons);
+                console.error(req.body.cons);
                 if (req.body.cons) {
                     const cons = await pool.query("INSERT INTO consumidor (utilizador) VALUES (?)", [id]);
                 }
