@@ -1,0 +1,10 @@
+TO DO
+
+filtrar o header
+retornar um 404 quando a aceder a um utilizador não coiso
+
+Route para registar um utilizador
+Route para autenticar um utilizador
+Auth0 para autenticar um utilizador
+
+restantes operações que conseguires implementar.

@@ -3,8 +3,8 @@ import {createRoot} from 'react-dom/client';
 import './index.css';
 import Auth0ProviderWithHistory from './auth/auth0-hist-prov';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import {NavBar, Home, Login, Register, Cart, Footer, Profile, EditProfile, Catalog, Payment, Consumidor, 
-   Fornecedor, ConfirmarEncomenda, Comparador, Product, StorageRegister, ProductRegister, AdminLogin, AdminTipos} from './components';
+import {NavBar, Home, Login, Register, Cart, Footer, Profile, EditProfile, Catalog, Payment, Consumer, Provider,
+    ConfirmarEncomenda, Comparador, Product, StorageRegister, ProductRegister, AdminLogin, AdminTipos, Order, Transporter, AdminUsersList} from './components';
 
 
 const root = createRoot(
@@ -23,8 +23,8 @@ root.render(
       <Route path='/profile' element={<Profile />} />
       <Route path='/editProfile' element={<EditProfile />} />
       <Route path='/payment' element={<Payment />} />
-      <Route path='/consumidor' element={<Consumidor />} />
-      <Route path='/fornecedor' element={<Fornecedor />} />
+      <Route path='/consumer' element={<Consumer />} />
+      <Route path='/provider' element={<Provider />} />
       <Route path='/confirmarEncomenda' element={<ConfirmarEncomenda />} />
       <Route path='/comparador' element={<Comparador />} />
       <Route path='/adminLogin' element={<AdminLogin />} />
@@ -33,6 +33,9 @@ root.render(
       <Route path='/productRegister' element={<ProductRegister />} />
       <Route path='/catalog' element={<Catalog />} />
       <Route path='/admintipos' element={<AdminTipos />} />
+      <Route path='/order' element={<Order />} />
+      <Route path='/transporter' element={<Transporter />} />
+      <Route path='/adminUsersList' element={<AdminUsersList />} />
 
 
     </Routes>

@@ -3,8 +3,7 @@ var router = express.Router();
 
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
-// var pool = require('../svlib/db/getPool');
-var pool = require('../svlib/db/connection');
+var pool = require('../svlib/db/getPool');
 
 
 /** auth0 */
@@ -155,26 +154,27 @@ router.post('/cancel/:oid', (req,res) => {
     });
 });
 
-router.get('/orders/:cid', (req,res) => {
-    var consId = req.params.cid;
-    var queryString = "SELECT encomenda FROM lista_encomendas WHERE consumidor = ?";
+router.get('/orders', (req,res) => {
+    var consId = req.query.cid;
+    var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS fornecedor, u2.nome AS transportador, \
+                            SUM(lpe.quantidade * p.preco) AS total, st.status_consum AS cons, st.status_fornec AS forn, st.status_transp AS transp \
+                        FROM encomenda e, lista_encomendas le, transportar_encomendas te, utilizador u1, \
+                            utilizador u2, lista_produtos_encomenda lpe, produto p, estado_encomenda st \
+                        WHERE (le.consumidor = ?) AND (le.encomenda = e.id) AND (le.fornecedor = u1.id) \
+                            AND (te.encomenda = e.id) AND (te.transportador = u2.id) AND (lpe.encomenda = e.id) \
+                            AND (lpe.produto = p.id) AND (st.encomenda = e.id) \
+                        GROUP BY e.id, u1.nome, u2.nome";
     pool.getConnection((err, conn) => {
         if (err) throw err;
 
         conn.query(queryString, [consId], (err, results) => {
+            conn.release();
+
             if (!err) {
-                results.forEach(enc => {
-                    queryString = "SELECT p.* FROM produto p, lista_produtos_encomenda lpe WHERE p.id = lpe.produto AND lpe.encomenda = ?";
-                    conn.query(queryString, [enc], (err, results) => {
-                        // por acabar
-                    });
-                });
+                return res.status(200).send({results: results});
             } else {
-                conn.release();
-                
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 9"});
+                console.log("Não foi possível realizar essa operação. output 9");
+                return res.status(500).send({message:"fail"});
             }
         });
     });
