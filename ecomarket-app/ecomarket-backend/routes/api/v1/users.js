@@ -22,76 +22,75 @@ var auth = require('../svlib/auth0/tokenlib');
 
 
 router.post('/register', (req, res, next) => {
-
-    console.error(req.body);
-    /** Meter aqui correção dos dados do utilizador */
-    const reply = axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
-        {
-            client_id: '8d3hjpCHdNoQWDGJk2g4MNSeGNPZZs5R',
-            connection: 'Username-Password-Authentication',
-            email: req.body.email,
-            password: req.body.pwd,
-            name: req.body.nome,
-            picture: "https://digimedia.web.ua.pt/wp-content/uploads/2017/05/default-user-image.png",
-            user_metadata: {
-                nif: req.body.nif,
-                tlm: req.body.tlm,
-                morada: req.body.morada
+    try {
+        console.error(req.body);
+        /** Meter aqui correção dos dados do utilizador */
+        const reply = axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
+            {
+                client_id: '8d3hjpCHdNoQWDGJk2g4MNSeGNPZZs5R',
+                connection: 'Username-Password-Authentication',
+                email: req.body.email,
+                password: req.body.pwd,
+                name: req.body.nome,
+                picture: "https://digimedia.web.ua.pt/wp-content/uploads/2017/05/default-user-image.png",
+                user_metadata: {
+                    nif: req.body.nif,
+                    tlm: req.body.tlm,
+                    morada: req.body.morada
+                }
+            }, {
+            headers: {
+                'content-type': 'application/json'
             }
-        }, {
-        headers: {
-            'content-type': 'application/json'
-        }
-    }).then(async function (response) {
-
-        try {
+        }).then(async function (response) {
             var id = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
             id = id[0][0].id;
             if (req.body.trans) {
                 var address = escaper.escape(req.body.morada);
                 address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-                const location = await axios.post("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt");
-                if(location.results.status !== "OK") throw new Error("Location Invalid");
+                const location = await axios.post("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt");
+                if (location.results.status !== "OK") throw new Error("Location Invalid");
                 var parts = {};
-                for(var element in location.results.address_components){
+                for (var element in location.results.address_components) {
                     var key;
-                    if(element.types.length > 1){
-                        key = element.types[0] === "political" ? element.types[1] : element.types[0] ;
+                    if (element.types.length > 1) {
+                        key = element.types[0] === "political" ? element.types[1] : element.types[0];
                     } else {
                         key = element.types[0];
                     }
                     parts[key] = element.long_name;
                 }
-                
-                
                 const concid = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?"[parts.locality]);
-                if(concid[0][0].length == 0) throw new Error("concelho not found");
+                if (concid[0][0].length == 0) throw new Error("concelho not found");
                 const insert = await pool.query("INSERT INTO localizacao(rua, c_postal, distrito, concelho, lati, long) VALUES (?,?,?,?,?,?)",
-                                                [parts.route+" "+parts.street_number,
-                                                parts.postal_code,
-                                                concid[0][0].distrito,
-                                                concid[0][0].id,
-                                                location.results.geometry.location.lat,
-                                                location.results.geometry.location.lng]);
-                const locid = await pool.query("SELECT id FROM localizacao WHERE lati = ?, long = ?",[location.results.geometry.location.lat, location.results.geometry.location.lng]);
+                    [parts.route + " " + parts.street_number,
+                    parts.postal_code,
+                    concid[0][0].distrito,
+                    concid[0][0].id,
+                    location.results.geometry.location.lat,
+                    location.results.geometry.location.lng]);
+                const locid = await pool.query("SELECT id FROM localizacao WHERE lati = ?, long = ?", [location.results.geometry.location.lat, location.results.geometry.location.lng]);
 
-                const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id,locid[0][0].id]);
+                const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, locid[0][0].id]);
             } else {
                 console.error(req.body.cons);
                 if (req.body.cons) {
-                    const cons = await pool.query("INSERT INTO consumidor (utilizador) VALUES (?)", [id]);
+                    const cons = await pool.query("INSERT INTO consumidor(utilizador) VALUES (?)", [id]);
                 }
                 if (req.body.forn) {
-                    const forn = await pool.query("INSERT INTO fornecedor (utilizador) VALUES (?)", [id]);
+                    const forn = await pool.query("INSERT INTO fornecedor(utilizador) VALUES (?)", [id]);
                 }
             }
             res.status(200).send({ message: "success" });
-        } catch (err) {
-            console.error(err);
-            res.status(500).send({ message: "fail" });
-        }
-    });
+
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "fail" });
+    }
 });
+
+
 
 router.get('/:uid', (req,res) => {
     var userId = req.params.uid;
