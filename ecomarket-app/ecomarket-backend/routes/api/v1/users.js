@@ -3,6 +3,7 @@ var router = express.Router();
 const multer = require('multer');
 const {Storage} = require('@google-cloud/storage');
 const axios = require('axios');
+const escaper = require('queryString');
 
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
@@ -47,7 +48,14 @@ router.post('/register', (req, res, next) => {
         try {
             const id = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
             if (req.body.trans) {
-                /** por implementar localizacao */
+                var address = escaper.escape(req.body.morada);
+                address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                const location = await axios.post("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt");
+                if(location.results.status !== "OK") throw new Error("Location Invalid");
+
+                const cons = await pool.query("INSERT INTO transportador (utilizador) VALUES (?)", [id]);
+
+
             } else {
                 if (req.body.cons) {
                     const cons = await pool.query("INSERT INTO consumidor (utilizador) VALUES (?)", [id]);
