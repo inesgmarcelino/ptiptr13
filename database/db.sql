@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS utilizador (
     passwd       VARCHAR(250) NOT NULL,
     papeis       ENUM(1,2,3,4) NOT NULL,
     
-    CONSTRAINT f_role FOREIGN KEY(roles) REFERENCES roles(id)
+    CONSTRAINT f_role FOREIGN KEY(papeis) REFERENCES papeis(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS image (
