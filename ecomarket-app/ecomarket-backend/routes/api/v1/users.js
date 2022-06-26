@@ -76,6 +76,7 @@ router.post('/register', (req, res, next) => {
 
                 const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id,locid[0][0].id]);
             } else {
+                console.log(req.body.cons);
                 if (req.body.cons) {
                     const cons = await pool.query("INSERT INTO consumidor (utilizador) VALUES (?)", [id]);
                 }
