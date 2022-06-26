@@ -11,9 +11,7 @@ CREATE TABLE IF NOT EXISTS concelho (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
     distrito        INT NOT NULL,
-    --
-    CONSTRAINT fk_concelho
-        FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE
+    -- CONSTRAINT fk_concelho FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS papeis ( 
