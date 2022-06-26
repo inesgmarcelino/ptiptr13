@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS utilizador (
     nif             INT(9) NOT NULL UNIQUE,
     phone       INT(9) NOT NULL UNIQUE,
     passwd       VARCHAR(250) NOT NULL,
-    papeis       ENUM(1,2,3,4) NOT NULL,
+    papeis       INT(1) NOT NULL,
     
     CONSTRAINT f_role FOREIGN KEY(papeis) REFERENCES papeis(id)
 ) ENGINE = InnoDB;
