@@ -10,30 +10,21 @@ CREATE TABLE IF NOT EXISTS distrito (
 CREATE TABLE IF NOT EXISTS concelho (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
-    distrito        INT NOT NULL
-    -- CONSTRAINT fk_concelho FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE
+    distrito        INT NOT NULL,
+    --
+    CONSTRAINT fk_concelho
+        FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS papeis ( 
-    id INT PRIMARY KEY,
-    nome VARCHAR(22)
-) ENGINE = InnoDB;
-
-INSERT INTO papeis(id,nome) VALUES (1,"Consumidor");
-INSERT INTO papeis(id,nome) VALUES (2,"Fornecedor");
-INSERT INTO papeis(id,nome) VALUES (3, "Consumidor&Fornecedor");
-INSERT INTO papeis(id,nome) VALUES (4, "Transportadora");
 
 CREATE TABLE IF NOT EXISTS utilizador (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
     email           VARCHAR(50) NOT NULL UNIQUE,
     nif             INT(9) NOT NULL UNIQUE,
-    phone       INT(9) NOT NULL UNIQUE,
-    passwd       VARCHAR(250) NOT NULL,
-    papeis       INT(1) NOT NULL,
-    
-    CONSTRAINT f_role FOREIGN KEY(papeis) REFERENCES papeis(id)
+    telemovel       INT(9) NOT NULL UNIQUE,
+    image           INT,
+    pass_word       VARCHAR(250) NOT NULL,
+    morada          VARCHAR(250) NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS image (
@@ -45,15 +36,30 @@ CREATE TABLE IF NOT EXISTS image (
 ) ENGINE = InnoDB;
 
 
+CREATE TABLE IF NOT EXISTS consumidor (
+    utilizador      INT PRIMARY KEY,
+    --
+    CONSTRAINT fk_consumidor
+        FOREIGN KEY (utilizador) REFERENCES utilizador(id) ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS fornecedor (
+    utilizador      INT PRIMARY KEY,
+    --
+    CONSTRAINT fk_fornecedor
+        FOREIGN KEY (utilizador) REFERENCES utilizador(id) ON DELETE CASCADE
+) ENGINE = InnoDB;
+
 CREATE TABLE IF NOT EXISTS localizacao (
     id              INT PRIMARY KEY AUTO_INCREMENT,
-    rua          VARCHAR(250) NOT NULL,
+    morada          VARCHAR(250) NOT NULL,
     c_postal        VARCHAR(8) NOT NULL,
     distrito        INT NOT NULL,
     concelho        INT NOT NULL,
     lati            INT NOT NULL,
-    longi            INT NOT NULL,
+    long            INT NOT NULL,
 
+    --
     CONSTRAINT fk_dist
         FOREIGN KEY (distrito) REFERENCES distrito(id) ON DELETE CASCADE,
     CONSTRAINT fk_conc
@@ -75,7 +81,7 @@ CREATE TABLE IF NOT EXISTS lista_armazens (
     CONSTRAINT pk_armazens
         PRIMARY KEY (fornecedor,armazem),
     CONSTRAINT fk_forn_id
-        FOREIGN KEY (fornecedor) REFERENCES utilizador(id) ON DELETE CASCADE,
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_armazem_id
         FOREIGN KEY (armazem) REFERENCES armazem(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
@@ -145,11 +151,11 @@ CREATE TABLE IF NOT EXISTS lista_encomendas (
     CONSTRAINT pk_encomendas
         PRIMARY KEY (consumidor,encomenda),
     CONSTRAINT fk_consumidor_id
-        FOREIGN KEY (consumidor) REFERENCES utilizador(id) ON DELETE CASCADE,
+        FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_encomenda_id
         FOREIGN KEY (encomenda) REFERENCES encomenda(id) ON DELETE CASCADE,
     CONSTRAINT fk_fornecedor_id
-        FOREIGN KEY (fornecedor) REFERENCES utilizador(id) ON DELETE CASCADE
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS transportar_encomendas (
@@ -203,7 +209,7 @@ CREATE TABLE IF NOT EXISTS produto (
     CONSTRAINT pk_produto
         PRIMARY KEY (id, fornecedor),
     CONSTRAINT fk_fornecedor_produto
-        FOREIGN KEY (fornecedor) REFERENCES utilizador(id)ON DELETE CASCADE,
+        FOREIGN KEY (fornecedor) REFERENCES fornecedor(utilizador)ON DELETE CASCADE,
     CONSTRAINT fk_tipo
         FOREIGN KEY (tipo) REFERENCES tipo_produto(id),
     CONSTRAINT fk_subtipo
@@ -221,7 +227,7 @@ CREATE TABLE IF NOT EXISTS cesto_compras (
     CONSTRAINT pk_cesto_compras
         PRIMARY KEY (consumidor,produto),
     CONSTRAINT fk_cesto_consumidor
-        FOREIGN KEY (consumidor) REFERENCES utilizador(id) ON DELETE CASCADE,
+        FOREIGN KEY (consumidor) REFERENCES consumidor(utilizador) ON DELETE CASCADE,
     CONSTRAINT fk_cesto_produto
         FOREIGN KEY (produto) REFERENCES produto(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
@@ -288,6 +294,18 @@ CREATE TABLE IF NOT EXISTS emite_poluicao (
     CONSTRAINT fk_poluicao_emitida
         FOREIGN KEY (poluicao)  REFERENCES poluicao(id)
 ) ENGINE = InnoDB;
+
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('Admin','admin@ecomarket.pt', 000000000,000000000, 'adminOK', 'Administração');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('consumidor','cons1@ecomarket.pt', 111111111,111111111, 'consOK', 'Consumidor 1');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('fornecedor1','forn1@ecomarket.pt', 222222222,222222222, 'fornOK', 'Fornecedor 1');
+INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('transportador1','trans1@ecomarket.pt', 333333333,333333333, 'transOK', 'Transportador 1');
+SELECT id FROM utilizador WHERE email = 'cons1@ecomarket.pt';
+SELECT id FROM utilizador WHERE email = 'forn1@ecomarket.pt';
+SELECT id FROM utilizador WHERE email = 'trans1@ecomarket.pt';
+
+INSERT INTO consumidor VALUES (2);
+INSERT INTO fornecedor VALUES (3);
+INSERT INTO transportador (utilizador) VALUES (4);
 
 -- Inserts de Distritos e Concelhos
 INSERT INTO distrito VALUES (1, 'Aveiro');
