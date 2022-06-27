@@ -83,7 +83,9 @@ router.post('/register', (req, res, next) => {
                 }
             }
             res.status(200).send({ message: "success" });
-
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).send({ message: "fail" });
         });
     } catch (err) {
         console.error(err);
