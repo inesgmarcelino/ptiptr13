@@ -2,9 +2,9 @@ const pool = require('mysql2').createPool({
     connectionLimit:10,
     host: "10.0.0.5",
     user: "ecobackend",
-    password: "Y1nGJ14Ng",
-    database: "teste",
-    multipleStatements: true
+    password: "Y1nGJ14Ng#",
+    database: "ecodb",
+    port: 6033
   });
 
 const promisePool = pool.promise()
