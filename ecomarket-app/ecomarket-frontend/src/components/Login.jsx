@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import $ from "jquery";
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 function Login() {
-
+/*  
     // states for login
     const [email, setEmail]         = useState('');
     const [password, setPassword]   = useState('');
@@ -80,7 +82,7 @@ function Login() {
                 </div>
             </div>
 
-            {/* MODAL */}
+            {/* MODAL }
              <div className="modal fade" id="modal_login" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                  <div className="modal-dialog modal-dialog-centered">
                      <div className="modal-content">
@@ -96,7 +98,7 @@ function Login() {
                  </div>
              </div>
         </div>
-    );
+    );*/
 }
 
 export default Login;
