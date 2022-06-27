@@ -36,7 +36,7 @@ root.render(
       <Route path='/order' element={<Order />} />
       <Route path='/transporter' element={<Transporter />} />
       <Route path='/adminUsersList' element={<AdminUsersList />} />
-      <Route path='/catalog2' element={<Catalog2 /}> />
+      <Route path='/catalog2' element={<Catalog2 />} />
 
 
     </Routes>

@@ -3,6 +3,7 @@ const img2 = require('../images/cereaisChocolateNegro.jpg')
 function Album(){
     return(
         <div>
+            <div className='col-sm-4'>
         <section id="sidebar">
             <div id="mobile-filter">
                 <div class="border-bottom pb-2 ml-2">
@@ -61,7 +62,7 @@ function Album(){
                 <label for="25">25% off</label>
             </div>
             <div class="form-group">
-                <input type="checkbox" id="5off">
+                <input type="checkbox" id="5off"/>
                 <label for="5off" id="off">5% off on artisan breads</label>
             </div>                                           
         </form>
@@ -69,22 +70,13 @@ function Album(){
 </div>
         </section>
         <div class="product-container">
-        <div class="d-flex flex-row">
-            <div class="product-card">
-                <div class="product-image">
-                    <img src={img1} class="product-thumb" alt="" />
-                </div>
-            
-                <div class="product-info">
-                    <h2 class="product-name">brand</h2>
-                    <p class="product-short-des">cereais</p>
-                    <span class="price">2€</span>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src={img2} class="product-thumb" alt="" />
+            <div class="d-flex flex-row">
+                <div class="product-card">
+                    <div class="product-info">
+                        <h2 class="product-name">brand</h2>
+                        <p class="product-short-des">cereais</p>
+                        <span class="price">2€</span>
+                    </div>
                 </div>
             
                 <div class="product-info">
@@ -93,9 +85,7 @@ function Album(){
                     <span class="price">1,5€</span>
                 </div>
             </div>
-
-
-        
+        </div>
         </div>
         </div>
     </div>
