@@ -8,7 +8,7 @@ function Album(){
     document.body.onload = function(){prods()};
 
     const prods = () => {
-        Axios.get("https://ecomarket.works/api/v1/products", {
+        Axios.get("https://ecomarket.works/api/v1/products/get", {
             params: {
                 tipo: tp,
                 subtipo: st
@@ -19,9 +19,9 @@ function Album(){
                 var i = Math.floor(lista.length/3);
                 var j = lista.length%3;
 
-                for (var k = 0; k < lista; k++) {
-                    if (i > 0) {
-                        document.getElementById("produtos").innerHTML += "<div className=row mx-5'> \
+                for (var k = 0; k < lista.length; k++) {
+                    if (i > 0 && k+2 < lista.length) {
+                        document.getElementById("produtos").innerHTML += "<div className='row mx-5'> \
                                                                             <div className='card mb-3'>\
                                                                                 <div className='product-info'>\
                                                                                     <h2 className='product-name'>"+lista[k].nome+"</h2>\
@@ -31,13 +31,42 @@ function Album(){
                                                                             </div>\
                                                                             <div className='card mb-3'>\
                                                                                 <div className='product-info'>\
-                                                                                    <h2 className='product-name'>"+lista[k].nome+"</h2>\
-                                                                                    <p className='product-short-des'>"+lista[k].fornecedor+"</p>\
-                                                                                    <span className='price'>"+lista[k].preco+"</span>\
+                                                                                    <h2 className='product-name'>"+lista[k+1].nome+"</h2>\
+                                                                                    <p className='product-short-des'>"+lista[k+1].fornecedor+"</p>\
+                                                                                    <span className='price'>"+lista[k+1].preco+"</span>\
+                                                                                </div>\
+                                                                            </div>\
+                                                                            <div className='card mb-3'>\
+                                                                                <div className='product-info'>\
+                                                                                    <h2 className='product-name'>"+lista[k+2].nome+"</h2>\
+                                                                                    <p className='product-short-des'>"+lista[k+2].fornecedor+"</p>\
+                                                                                    <span className='price'>"+lista[k+2].preco+"</span>\
                                                                                 </div>\
                                                                             </div>\
                                                                         </div>";
+                        i--;
+                        k += 2;
                     }
+
+                    // if (i === 0 && j > 0) {
+                    //     document.getElementById("produtos").innerHTML += "<div className='row mx-5'> \
+                    //                                                         <div className='card mb-3'>\
+                    //                                                             <div className='product-info'>\
+                    //                                                                 <h2 className='product-name'>"+lista[k].nome+"</h2>\
+                    //                                                                 <p className='product-short-des'>"+lista[k].fornecedor+"</p>\
+                    //                                                                 <span className='price'>"+lista[k].preco+"</span>\
+                    //                                                             </div>\
+                    //                                                         </div>\
+                    //                                                         <div className='card mb-3'>\
+                    //                                                             <div className='product-info'>\
+                    //                                                                 <h2 className='product-name'>"+lista[k].nome+"</h2>\
+                    //                                                                 <p className='product-short-des'>"+lista[k].fornecedor+"</p>\
+                    //                                                                 <span className='price'>"+lista[k].preco+"</span>\
+                    //                                                             </div>\
+                    //                                                         </div>\
+                    //                                                     </div>";
+                    //     j--;
+                    // }
                 }
             }
         })
