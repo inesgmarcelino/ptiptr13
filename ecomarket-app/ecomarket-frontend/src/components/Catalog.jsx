@@ -2,19 +2,19 @@ const img1 =  require('../images/cereaisGoldenGraham.jpg');
 const img2 = require('../images/cereaisChocolateNegro.jpg')
 function Album(){
     return(
-        <div id="mobile-filter">
- 
-        <div class="border-bottom pb-2 ml-2">
-        <h4 id="burgundy">Filters</h4>
-    </div>
-    <div class="py-2 border-bottom ml-3">
-        <h6 class="font-weight-bold">Categories</h6>
-        <div id="orange"><span class="fa fa-minus"></span></div>
-        <form>
-            <div class="form-group">
-                <input type="checkbox" id="artisan">
-                <label for="artisan">Fresh Artisan Breads</label>
+        <section id="sidebar">
+            <div id="mobile-filter">
+                <div class="border-bottom pb-2 ml-2">
+                <h4 id="burgundy">Filters</h4>
             </div>
+            <div class="py-2 border-bottom ml-3">
+             <h6 class="font-weight-bold">Categories</h6>
+             <div id="orange"><span class="fa fa-minus"></span></div>
+             <form>
+                <div class="form-group">
+                 <input type="checkbox" id="artisan">
+                    <label for="artisan">Fresh Artisan Breads</label>
+                </div>
             <div class="form-group">
                 <input type="checkbox" id="breakfast">
                 <label for="breakfast">Breakfast Breads</label>
@@ -66,7 +66,9 @@ function Album(){
         </form>
     </div>
 </div>
+        </section>
         <div class="product-container">
+        <div class="d-flex flex-row">
             <div class="product-card">
                 <div class="product-image">
                     <img src={img1} class="product-thumb" alt="" />
@@ -93,7 +95,7 @@ function Album(){
 
 
         
-
+        </div>
         </div>
     );
 
