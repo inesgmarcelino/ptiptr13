@@ -142,7 +142,7 @@ function Catalog2(){
             </section>
 		</div>
         </div>
-        )
+        );
                     }
 
 export default Catalog2;
