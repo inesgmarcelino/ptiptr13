@@ -13,14 +13,8 @@ const { response } = require('express');
 
 router.get('/get', (req,res) => {
     console.log(req.query);
-    var tipo = null;
-    var subtipo = null;
-    if (req.query.size > 0) {
-        tipo = req.query.tipo;
-        if (req.query.size > 1) {
-            subtipo = req.query.subtipo;
-        }
-    }
+    var tipo = req.query.tipo;
+    var subtipo = req.query.subtipo;
 
     var queryString;
     if (tipo !== null && subtipo !== null) {
