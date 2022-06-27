@@ -2,8 +2,11 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import $ from 'jquery';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function Register() {
+
+    const { loginWithRedirect} = useAuth0();
 
     // states for registration
     const [nome, setNome]                           = useState('');
@@ -108,7 +111,7 @@ function Register() {
                         if (response.status == 200) {
                             document.getElementById("modal_header_register").innerText = 'Registo bem sucedido!';
                             document.getElementById("modal_body_register").innerHTML = "<p>Clique em 'Continuar' para proseguir para o início de sessão";
-                            document.getElementById("continue").onclick = goLogin;
+                            document.getElementById("continue").onclick = loginWithRedirect;
                         } else {
                             document.getElementById("modal_header_register").innerText = 'Registo Inválido';
                             document.getElementById("modal_body_register").innerHTML = "<p>A(s) razão(ões) pode(m) ser das seguintes:</p> \
