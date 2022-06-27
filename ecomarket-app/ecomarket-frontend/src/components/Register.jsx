@@ -120,6 +120,13 @@ function Register() {
                             // = '<button type="button" onClick={handleHide} className="btn btn-secondary">Cancelar</button><button type="button" className="btn">Continuar</button>';
                         }
                         handleShow();
+                    }).catch((err) => {
+                        document.getElementById("modal_header_register").innerText = 'Registo Inválido';
+                        document.getElementById("modal_body_register").innerHTML = "<p>A(s) razão(ões) pode(m) ser das seguintes:</p> \
+                        <ul><li>Já existe uma conta com o email "+email+".</li> \
+                        <li>Já existe uma conta com o NIF "+nif+".</li> \
+                        <li>Já existe uma conta com o número de telemóvel "+telem+".</li></ul>";
+                        document.getElementById("continue").onclick = handleHide;
                     });
                 }
                 break;
