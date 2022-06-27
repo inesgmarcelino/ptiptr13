@@ -16,6 +16,7 @@ var pool = mysql.createPool({
     user: "ecobackend",
     password: "Y1nGJ14Ng",
     database: "ecodb",
+    port: 6033
   });
   
 module.exports = pool.promise();
