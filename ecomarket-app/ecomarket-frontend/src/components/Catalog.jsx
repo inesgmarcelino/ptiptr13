@@ -8,7 +8,7 @@ function Album(){
     document.body.onload = function(){prods()};
 
     const prods = () => {
-        Axios.get("https://ecomarket.works/api/products", {
+        Axios.get("https://ecomarket.works/api/v1/products", {
             params: {
                 tipo: tp,
                 subtipo: st
@@ -23,17 +23,17 @@ function Album(){
                     if (i > 0) {
                         document.getElementById("produtos").innerHTML += "<div className=row mx-5'> \
                                                                             <div className='card mb-3'>\
-                                                                                <div class='product-info'>\
-                                                                                    <h2 class='product-name'>"+lista[k].nome+"</h2>\
-                                                                                    <p class='product-short-des'>"+lista[k].fornecedor+"</p>\
-                                                                                    <span class='price'>"+lista[k].preco+"</span>\
+                                                                                <div className='product-info'>\
+                                                                                    <h2 className='product-name'>"+lista[k].nome+"</h2>\
+                                                                                    <p className='product-short-des'>"+lista[k].fornecedor+"</p>\
+                                                                                    <span className='price'>"+lista[k].preco+"</span>\
                                                                                 </div>\
                                                                             </div>\
                                                                             <div className='card mb-3'>\
-                                                                                <div class='product-info'>\
-                                                                                    <h2 class='product-name'>"+lista[k].nome+"</h2>\
-                                                                                    <p class='product-short-des'>"+lista[k].fornecedor+"</p>\
-                                                                                    <span class='price'>"+lista[k].preco+"</span>\
+                                                                                <div className='product-info'>\
+                                                                                    <h2 className='product-name'>"+lista[k].nome+"</h2>\
+                                                                                    <p className='product-short-des'>"+lista[k].fornecedor+"</p>\
+                                                                                    <span className='price'>"+lista[k].preco+"</span>\
                                                                                 </div>\
                                                                             </div>\
                                                                         </div>";
@@ -46,7 +46,7 @@ function Album(){
 
     return(
         <div>
-            <div class="product-container" id="produtos">
+            <div className="product-container" id="produtos">
             </div>
         </div>
     );
