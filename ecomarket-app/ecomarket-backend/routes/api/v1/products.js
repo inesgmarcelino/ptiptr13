@@ -8,16 +8,15 @@ var pool = require('../svlib/db/getPool');
 
 /** auth0 */
 var auth = require('../svlib/auth0/tokenlib');
-const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
 
 router.get('/get', (req,res) => {
     var tipo;
     var subtipo;
-    if (query.length > 0) {
+    if (req.query.length > 0) {
         tipo = req.query.tipo;
-        if (query.length > 1) {
+        if (req.query.length > 1) {
             subtipo = req.query.subtipo;
         }
     }
