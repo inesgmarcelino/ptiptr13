@@ -2,11 +2,12 @@ const img1 =  require('../images/cereaisGoldenGraham.jpg');
 const img2 = require('../images/cereaisChocolateNegro.jpg')
 function Album(){
     return(
+        <div>
         <section id="sidebar">
             <div id="mobile-filter">
                 <div class="border-bottom pb-2 ml-2">
                 <h4 id="burgundy">Filters</h4>
-            </div>
+                </div>
             <div class="py-2 border-bottom ml-3">
              <h6 class="font-weight-bold">Categories</h6>
              <div id="orange"><span class="fa fa-minus"></span></div>
@@ -97,6 +98,7 @@ function Album(){
         
         </div>
         </div>
+    </div>
     );
 
 }
