@@ -11,27 +11,6 @@ var auth = require('../svlib/auth0/tokenlib');
 const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
-router.get('/order', (req,res) => {
-    var order = req.query.order;
-    var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
-                        FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
-                        GROUP BY p.id, p.nome";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, [order], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-
-            } else {
-                console.log("Não foi possível realizar essa operação. output 1");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
-});
 
 router.get('/', (req,res) => {
     var tipo = req.query.tipo;
@@ -58,9 +37,31 @@ router.get('/', (req,res) => {
                 console.log("Não foi possível realizar essa operação. output 2");
                 return res.status(500).send({message:"fail"});
             }
-        })
-    })
-})
+        });
+    });
+});
+
+router.get('/order', (req,res) => {
+    var order = req.query.order;
+    var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
+                        FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
+                        GROUP BY p.id, p.nome";
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [order], (err, results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results: results});
+
+            } else {
+                console.log("Não foi possível realizar essa operação. output 1");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
 
 
 // router.get('/:cid', (req,res) => {
