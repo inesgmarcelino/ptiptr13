@@ -4,13 +4,13 @@ import Axios from "axios";
 function EditProfile () {
     const [nome, setNome]                   = useState('');
     const [email, setEmail]                 = useState('');
+    const [nif, setNif]                     = useState('');
     const [telem, setTelem]                 = useState('');
-    const [morada, setMorada]                       = useState('');
+    /* const [morada, setMorada]               = useState(''); */
     const [password, setPassword]           = useState('');
     const [checkPassword, setCheckPassword] = useState('');
 
     const handler = (x) => {
-        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
         switch(x.target.name) {
             case "nome":
                 setNome(x.target.value);
@@ -27,39 +27,64 @@ function EditProfile () {
             case "checkPassword":
                 setCheckPassword(x.target.value);
                 break;
-            case "morada":
-                setMorada(x.target.value);
+            case "nif":
+                setNif(x.target.value);
                 break;
+            /* case "morada":
+                setMorada(x.target.value);
+                break; */
             case "submit":
                 x.preventDefault();
                 if (password !== '' && checkPassword !== '' && password !== checkPassword){
                         // setError(true);
                 } else{
-                    Axios.put(url+"/api/v1/users/edit", {
+                    /* Axios.put("https://ecomarket.works/api/v1/users/edit", { */
+                    Axios.put("https://localhost:3000/api/v1/users/edit", {
                         // params: {
                         //     id: id
                         // },
                         nome: nome,
                         email: email,
                         tlm: telem,
-                        morada: morada,
+                        nif: nif,
+                        /* morada: morada, */
                         pwd: password
                     }).then((response) => {
                         console.log(response);
+                        if (response.data.message === "success") {
+                            document.getElementById("guardardados").innerText = 'Dados da conta alterados com sucesso!';
+                        }
+                        else {
+                            document.getElementById("guardardados").innerText = 'Alteração de dados da conta inválido.';
+                        }
+
                     })
                 }
                 break;
             case "delete":
-                Axios.delete(url+"/api/v1/users/delete", {
+                /* Axios.delete("https://ecomarket.works/api/v1/users/delete", { */
+                Axios.delete("https://localhost:3000/api/v1/users/delete", {
                     // params: {
                     //     id: id
                     // }
+                    nome: nome,
+                    email: email,
+                    tlm: telem,
+                    nif: nif,
+                    /* morada: morada, */
+                    pwd: password
                 }).then ((response) => {
                     console.log(response);
+                    if (response.data.message === "success") {
+                        document.getElementById("removerconta").innerText = 'Conta removida com sucesso!';
+                    }
+                    else {
+                        document.getElementById("removerconta").innerText = 'Conta não foi removida com sucesso.';
+                    }
                 })
                 break;
             default:
-                console.log();
+                console.log("Algum erro");
         }
     }
 
@@ -95,8 +120,8 @@ function EditProfile () {
                                 <input className="form-control" type="password" name="checkPassword" size="50" onChange={handler}/>
                             </div>
                             
-                            <button name="delete" className="btn" onClick={handler}>Remover Conta</button>
-                            <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Guardar</button>
+                            <button id="removerconta" name="delete" className="btn" onClick={handler}>Remover Conta</button>
+                            <button id="guardardados" type="submit" name="submit" className="btn" onClick={handler}>Guardar</button>
                         </form>
                 </div>
             </div>

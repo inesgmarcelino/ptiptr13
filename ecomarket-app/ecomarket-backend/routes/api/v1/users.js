@@ -148,7 +148,8 @@ router.put('/edit/:uid', (req,res) => {
     const nome = req.body.nome;
     const email = req.body.email;
     const tlm = req.body.tlm;
-    const morada = req.body.morada;
+    const nif = req.body.nif;
+    /* const morada = req.body.morada; */
     const pwd = req.body.pwd;
     
     var queryString = "UPDATE utilizador SET ";
@@ -172,11 +173,19 @@ router.put('/edit/:uid', (req,res) => {
         }
     }
 
-    if (morada !== '') {
+    /* if (morada !== '') {
         if ('=' in queryString) {
             queryString += "AND morada = '" + morada + "' ";
         } else {
             queryString += "morada = '" + morada + "' ";
+        }
+    } */
+
+    if (nif !== '') {
+        if ('=' in queryString) {
+            queryString += "AND nif = '" + nif + "' ";
+        } else {
+            queryString += "nif = '" + nif + "' ";
         }
     }
 
