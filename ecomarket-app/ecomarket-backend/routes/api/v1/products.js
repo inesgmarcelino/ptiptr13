@@ -12,6 +12,7 @@ const { response } = require('express');
 
 
 router.get('/get', (req,res) => {
+    console.log(req.query);
     var tipo;
     var subtipo;
     if (req.query.length > 0) {
