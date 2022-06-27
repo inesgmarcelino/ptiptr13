@@ -8,7 +8,7 @@ function Album(){
     document.body.onload = function(){prods()};
 
     const prods = () => {
-        Axios.get("https://ecomarket.works/api/v1/products/get", {
+        Axios.get("https://ecomarket.works/api/v1/products", {
             params: {
                 tipo: tp,
                 subtipo: st
