@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS localizacao (
     c_postal        VARCHAR(8) NOT NULL,
     distrito        INT NOT NULL,
     concelho        INT NOT NULL,
-    lati            INT NOT NULL,
-    long            INT NOT NULL,
+    lat            INT NOT NULL,
+    lng            INT NOT NULL,
 
     --
     CONSTRAINT fk_dist
