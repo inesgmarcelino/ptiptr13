@@ -1,5 +1,5 @@
 
-function catalog2(){
+function Catalog2(){
     return(
         <div>
             <section id="sidebar">
@@ -143,4 +143,4 @@ function catalog2(){
         )
                     }
 
-export default catalog2;
+export default Catalog2;
