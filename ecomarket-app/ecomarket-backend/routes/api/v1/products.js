@@ -26,12 +26,41 @@ router.get('/order', (req,res) => {
                 return res.status(200).send({results: results});
 
             } else {
-                console.log("Não foi possível realizar essa operação. output 4");
+                console.log("Não foi possível realizar essa operação. output 1");
                 return res.status(500).send({message:"fail"});
             }
         });
     });
 });
+
+router.get('/', (req,res) => {
+    var tipo = req.query.tipo;
+    var subtipo = req.query.subtipo;
+
+    var queryString;
+    if (tipo !== null && subtipo !== null) {
+        queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (p.tipo = ?) AND (p.subtipo = ?) AND (u.id = p.fornecedor)";
+    } else if (tipo !== null) {
+        queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (p.tipo = ?) AND (u.id = p.fornecedor)";
+    } else {
+        queryString = "SELECT p.*, u.nome FROM produto WHERE (u.id = p.fornecedor)";
+    }
+
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+
+        conn.query(queryString, [tipo, subtipo], (err,results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results: results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 2");
+                return res.status(500).send({message:"fail"});
+            }
+        })
+    })
+})
 
 
 // router.get('/:cid', (req,res) => {
