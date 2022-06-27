@@ -63,7 +63,7 @@ router.post('/register', (req, res, next) => {
                 }
                 const concid = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?"[parts.locality]);
                 if (concid[0][0].length == 0) throw new Error("concelho not found");
-                const insert = await pool.query("INSERT INTO localizacao(rua, c_postal, distrito, concelho, lati, long) VALUES (?,?,?,?,?,?)",
+                const insert = await pool.query("INSERT INTO localizacao(rua, c_postal, distrito, concelho, lati, lng) VALUES (?,?,?,?,?,?)",
                     [parts.route + " " + parts.street_number,
                     parts.postal_code,
                     concid[0][0].distrito,
