@@ -12,13 +12,14 @@ var mysql = require('mysql2');
 
 var pool = mysql.createPool({
     connectionLimit:10,
-    host: "mysql",
-    user: "root",
-    password: "S3cret",
+    host: "10.0.0.5",
+    user: "ecobackend",
+    password: "Y1nGJ14Ng#",
     database: "ecodb",
+    port: 6033
   });
   
-module.exports = pool;
+module.exports = pool.promise();
 
 /**Codigo para obter uma ligacao
  * deve ser invocado dentro das paths

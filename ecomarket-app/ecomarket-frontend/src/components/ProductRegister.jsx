@@ -6,6 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 function ProductRegister(){
     const { user } = useAuth0();
     const id = 2; //testar forn
+    
 
     const [nomeProd, setNomeProd]   = useState('');
     const [dataProd, setDataProd]   = useState('');
@@ -45,6 +46,7 @@ function ProductRegister(){
     // }
 
     const handler = (x) => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
         switch(x.target.name) {
             case "nomeProd":
                 setNomeProd(x.target.value);
@@ -56,8 +58,9 @@ function ProductRegister(){
                 setPreco(x.target.value);
                 break;
             case "tipo":
-                setTipo(x.target.value);
-                subtipos();
+                var type = x.target[x.target.selectedIndex].text;
+                setTipo(type);
+                subtipos(type);
                 break;
             case "subtipo":
                 setSubtipo(x.target.value);
@@ -67,7 +70,7 @@ function ProductRegister(){
                 if (nomeProd === '' || dataProd === '' || preco === '' || tipo === '' || subtipo === '') {
                     // setError(true);
                 } else {
-                    Axios.post("https://ecomarket.works/api/v1/providers/reg_product", {
+                    Axios.post(url+"/api/v1/providers/reg_product", {
                         id: id,
                         nome: nomeProd,
                         data: dataProd,
@@ -77,33 +80,27 @@ function ProductRegister(){
                     }).then((response) => {
                         console.log(response);
                         if (response.data.message === "success") {
-                            window.location.href = "https://ecomarket.works/";
+                            window.location.href = url;
                         }
                     })
                 }
                 break;
             default:
                 console.log();
-            
         }
     }
 
-    const tipos = () => {
-        Axios.get("https://ecomarket.works/api/v1/gets/tipos").then((response) => {
-            var tip = response.data.results;
-            for (var i = 0; i < tip.length; i++) {
-                document.getElementById("tipos").innerHTML += "<option value='" + tip[i]["id"] + "'>" + tip[i]["nome"] + "</option>";
-            }
-        });
-    }
 
-    const subtipos = () => {
+
+    const subtipos = (type) => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
         document.getElementById("subtipos").innerHTML = "<option value='' selected>Selecione um Subtipo</option>";
-        Axios.get("https://ecomarket.works/api/v1/gets/subtipos", { 
+        Axios.get(url+"/api/v1/gets/subtipos", { 
             params: { 
-                tipo: tipo
+                tipo: type
         }}).then((response) => {
             var sub = response.data.results;
+            document.getElementById("subtipos").innerHTML = "<option value='' selected>Selecione um Tipo</option>";
             for (var i = 0; i < sub.length; i++) {
                 document.getElementById("subtipos").innerHTML += "<option value='" + sub[i]['id'] + "'>" + sub[i]['nome'] + "</option>";
             }
@@ -133,8 +130,9 @@ function ProductRegister(){
 
                     <div className="col-md-12">
                         <label>Tipo</label>
-                        <select className="form-select" name="tipo" id="tipos" onChange={handler} onMouseOver={tipos} required>
+                        <select className="form-select" name="tipo" id="tipos" onChange={handler} /*onMouseOver={tipos}*/ required>
                             <option value='' selected>Selecione um Tipo</option>
+                            {useLoad()}
                         </select>
                     </div>
 
@@ -181,6 +179,21 @@ function ProductRegister(){
         </div> 
         </div>
     );
+}
+
+function useLoad(){
+
+    function tipos(){
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        Axios.get(url+"/api/v1/gets/tipos").then((response) => {
+            var tip = response.data.results;
+            for (var i = 0; i < tip.length; i++) {
+                document.getElementById("tipos").innerHTML += "<option value='" + tip[i]["id"] + "'>" + tip[i]["nome"] + "</option>";
+            }
+        });
+    }
+
+    document.body.onload = function(){tipos()};
 }
 
 export default ProductRegister;

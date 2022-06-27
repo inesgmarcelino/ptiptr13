@@ -13,6 +13,7 @@ function StorageRegister(){
     const [conc, setConc]               = useState('');
     
     const handler = (x) => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
         switch(x.target.name) {
             case "morada":
                 setMoradaArm(x.target.value);
@@ -32,7 +33,7 @@ function StorageRegister(){
                 if (moradaArm === '' || codpostal === '' || dist === '' || conc === '') {
                     // setError(true)
                 } else {
-                    Axios.post("https://ecomarket.works/api/v1/providers/reg_storage", {
+                    Axios.post(url+"/api/v1/providers/reg_storage", {
                         email: forn,
                         morada: moradaArm,
                         codpostal: codpostal,
@@ -41,7 +42,7 @@ function StorageRegister(){
                     }).then((response) => {
                         console.log(response);
                         if (response.data.message === "success") {
-                            window.location.href = "https://ecomarket.works/fornecedor";
+                            window.location.href = url+"/fornecedor";
                         }
                     })
                 }
@@ -52,7 +53,8 @@ function StorageRegister(){
     }
 
     const distritos = () => {
-        Axios.get("https://ecomarket.works/api/v1/gets/distritos").then((response) => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        Axios.get(url+"/api/v1/gets/distritos").then((response) => {
             var dist = response.data.results;
             for (var i = 0; i < dist.length; i++) {
                 document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
@@ -61,8 +63,9 @@ function StorageRegister(){
     }
 
     const concelhos = () => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
         document.getElementById("concelhos").innerHTML = "<option value='' selected>Selecione um Concelho</option>";
-        Axios.get("https://ecomarket.works/api/v1/gets/concelhos", { 
+        Axios.get(url+"/api/v1/gets/concelhos", { 
             params: { 
                 dist: dist
         }}).then((response) => {

@@ -3,6 +3,7 @@ services:
 
     loadbalancer:
       image: nginx:latest
+      container_name: nginx
       ports:
         - "80:80"
       volumes:
@@ -38,6 +39,7 @@ services:
 
     frontend:
       image: node:18-bullseye
+      container_name: frontend
       volumes:
         - ./ecomarket-app/ecomarket-frontend:/frontend
       command: "npm start --prefix /frontend"
@@ -51,6 +53,7 @@ services:
 
     backend:
       image: node:18-bullseye
+      container_name: backend
       volumes:
         - ./ecomarket-app/ecomarket-backend:/backend
       command: "node ./backend/bin/www"
@@ -62,38 +65,8 @@ services:
       depends_on:
         - "frontend"
 
-    mysql_master:
-      image: mysql:debian
-      networks:
-        c-network:
-          aliases:
-            - mysql
-      restart: always
-      environment:
-        - MYSQL_ROOT_PASSWORD=S3cret
-        - MYSQL_PASSWORD=An0thrS3crt
-        - MYSQL_USER=user
-        #- DATA_SAVE_PATH=../data
-      volumes:
-        - ./database/db.sql:/docker-entrypoint-initdb.d/db.sql
-        - ./database/hello.sql:/docker-entrypoint-initdb.d/hello.sql
-        - data:/var/lib/mysql
-      
-      stdin_open: true # docker run -i
-      tty: true        # docker run -t
-
-
-      # mysql_slave:
-      #   image: mysql:debian
-      #   networks:
-      #     - "c-network"
-      #   #restart: always
-      #   depends_on:
-      #     - "mysql_master"
-
 networks:
     c-network:
-    auth-service:
 
 volumes:
     #volume for where sql data is stored

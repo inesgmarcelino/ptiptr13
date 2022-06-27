@@ -1,33 +1,25 @@
 /** Ficheiro para exemplificar queries do backend */
 
 var mysql = require('mysql2');
+const pool = require('../svlib/db/getPool');
 
 //from example: https://stackoverflow.com/questions/37102364/how-do-i-create-a-mysql-connection-pool-while-working-with-nodejs-and-express
 
 exports.hello = function(req,res){
 
-  /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
-  var pool = mysql.createPool({
-    connectionLimit:10,
-    host: "mysql",
-    user: "root",
-    password: "S3cret",
-    database: "hello"
-  });
-  /**Esta parte estaria no getPool.js mas isto é para poder testar a base de dados */
-
     pool.getConnection((err, connection) => {
 
+       
+        pool.query("INSERT INTO users(email,password) VALUES('UHOHRAMDINGDONG','asijd1q2io4rj13526')");
         if(err){
-          res.status(500);
-          res.type('json');
-          res.json({"message":err.message});
+          console.error({"message":err.message});
+          return;
+        } else {
+            console.error("No problem");
         }
         connection.release();
-
       });
-      res.status(200)
-      res.send("Se estás a ler isto é porque o ExpressJS se conectou à BD.");
+ 
 }
 
 exports.insert = function(req,res){

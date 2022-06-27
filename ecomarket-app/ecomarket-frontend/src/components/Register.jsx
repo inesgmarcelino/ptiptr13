@@ -2,8 +2,11 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import $ from 'jquery';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function Register() {
+
+    const { loginWithRedirect} = useAuth0();
 
     // states for registration
     const [nome, setNome]                           = useState('');
@@ -22,15 +25,34 @@ function Register() {
         $("#modal_register").css("display", "block");
     }
 
-    const handleHide = () => {
+    function handleHide(){
         $("#modal_register").css("display", "none");
     }
     
     const goLogin = () => {
-        window.location.href = "https://ecomarket.works/login";
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        window.location.href = url;
+    }
+
+    function check(){
+        let forncheck = document.getElementById("check-fornecedor");
+        let conscheck = document.getElementById("check-consumidor");
+        let trancheck = document.getElementById("check-transportador");
+        if(forncheck.checked || conscheck.checked){
+            trancheck.disabled = true;
+        } else if(trancheck.checked){
+            forncheck.disabled = true;
+            conscheck.disabled = true;
+        } else {
+            trancheck.disabled = false;
+            forncheck.disabled = false;
+            conscheck.disabled = false;
+        }
     }
 
     const handler = (x) => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        check();
         switch(x.target.name) {
             case "nome":
                 setNome(x.target.value);
@@ -45,7 +67,7 @@ function Register() {
                 setTelem(x.target.value);
                 break;
             case "profpic":
-                break;
+                setProfPic(x.target.files[0]);
             case "password":
                 setPassword(x.target.value);
                 break;
@@ -74,7 +96,7 @@ function Register() {
                     (checkTransportador && (checkConsumidor || checkFornecedor))) {
                         // setError(true);
                 } else {
-                    Axios.post("https://ecomarket.works/api/v1/users/register", {
+                    Axios.post(url+"/api/v1/users/register", {
                         nome: nome, 
                         email: email, 
                         nif: nif, 
@@ -86,21 +108,28 @@ function Register() {
                         forn: checkFornecedor,
                         trans: checkTransportador
                     }).then((response) => {
-                        console.log(response);
-                        if (response.data.message === "success") {
+                        if (response.status == 200) {
                             document.getElementById("modal_header_register").innerText = 'Registo bem sucedido!';
                             document.getElementById("modal_body_register").innerHTML = "<p>Clique em 'Continuar' para proseguir para o início de sessão";
-                            document.getElementById("continue").onclick = goLogin;
+                            document.getElementById("continue").onclick = loginWithRedirect;
                         } else {
                             document.getElementById("modal_header_register").innerText = 'Registo Inválido';
                             document.getElementById("modal_body_register").innerHTML = "<p>A(s) razão(ões) pode(m) ser das seguintes:</p> \
                             <ul><li>Já existe uma conta com o email "+email+".</li> \
                             <li>Já existe uma conta com o NIF "+nif+".</li> \
                             <li>Já existe uma conta com o número de telemóvel "+telem+".</li></ul>";
+                            document.getElementById("continue").onclick = handleHide;
                             // document.getElementById("modal_footer").innerHTML 
                             // = '<button type="button" onClick={handleHide} className="btn btn-secondary">Cancelar</button><button type="button" className="btn">Continuar</button>';
                         }
                         handleShow();
+                    }).catch((err) => {
+                        document.getElementById("modal_header_register").innerText = 'Registo Inválido';
+                        document.getElementById("modal_body_register").innerHTML = "<p>A(s) razão(ões) pode(m) ser das seguintes:</p> \
+                        <ul><li>Já existe uma conta com o email "+email+".</li> \
+                        <li>Já existe uma conta com o NIF "+nif+".</li> \
+                        <li>Já existe uma conta com o número de telemóvel "+telem+".</li></ul>";
+                        document.getElementById("continue").onclick = handleHide;
                     });
                 }
                 break;
@@ -177,8 +206,7 @@ function Register() {
                          <div className="modal-body" id="modal_body_register">
                          </div>
                          <div className="modal-footer" id="modal_footer_register">
-                         <button type="button" onClick={handleHide} className="btn" id="cancelar">Cancelar</button>
-                         <button className="btn" id="continue">Continuar</button>
+                         <button className="btn" type="button" id="continue">OK</button>
                          </div>
                      </div>
                  </div>

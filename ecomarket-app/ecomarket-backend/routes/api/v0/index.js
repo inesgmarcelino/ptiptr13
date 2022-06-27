@@ -9,6 +9,7 @@ const json = require('./json.js');
 const pathexample = require('./pathexample.js'); 
 const testbd = require('./bdexample.js');
 const authtest = require('./authtest');
+const asyn = require('./async');
 
 /** o objeto router define as paths
  *  eh invocado como router.METODO_HTTP
@@ -83,5 +84,9 @@ router.get('/testbd/fetch/:id',function(req,res,next){
 router.get('/authtest',function(req, res, next){
 	authtest.signup(req,res);
 });
+
+router.get('/async', function(req,res,next){
+	asyn.teste(req,res);
+})
 
 module.exports = router;

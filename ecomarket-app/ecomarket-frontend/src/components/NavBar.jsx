@@ -7,8 +7,7 @@ const login = require('../images/icons/login.png');
 const signin = require('../images/icons/signin.png');
 const cart = require('../images/icons/cart.png');
 
-
-function SideBar() {
+function SideBar(props) {
     const { isAuthenticated } = useAuth0();    
     return (
         <Navbar>
@@ -21,7 +20,7 @@ function SideBar() {
                         <Form.Control type="" placeholder="Search" className="searchBar" />
                     </Form.Group>
                 </Form>
-                <Row className="logBox">
+                <Row className="logBox align-items-center">
                     <Col>
                         <NavLink to="/Cart">
                             <img src={cart} id="cart" alt="" className="d-inline-block align-center" />
@@ -40,23 +39,19 @@ function useLogin(logged) {
     const { loginWithRedirect,logout,user } = useAuth0();
     if(!logged){
         return (
-            <Row>
-                <Col>
-                    <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({}) }>
-                        Inicie Sessão
-                    </NavLink>
-                </Col>
-                <Col>
-                    <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({screen_hint: 'signup',}) }>
-                        Registar
-                    </NavLink>
-                </Col>
-            </Row>
+            <Stack direction="horizontal" gap={1}>
+                <NavLink className="nav-link text-white" onClick={() => { window.location = "/register" }} >
+                    Registar
+                </NavLink>
+                <NavLink className="nav-link text-white" onClick={() => loginWithRedirect({})}>
+                    Inicie Sessão
+                </NavLink>
+            </Stack>
         );
     } else {
         return (
             /*Trocar para username mais tarde e talvez acrescentar a fotografia se quiserem*/ 
-            <NavDropdown title={user.email} id="basic-nav-dropdown" className="NavDrop">
+            <NavDropdown title={user.name} id="basic-nav-dropdown" className="NavDrop">
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={() => logout({returnTo: window.location.origin,})}>Logout</NavDropdown.Item>

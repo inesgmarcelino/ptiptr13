@@ -64,6 +64,7 @@ app.use(session({
  * Mais exemplos em:
  * https://expressjs.com/en/starter/examples.html
  */
+/*
 const basePathTest = '/api/v0';
 const testAPIRouter = require('./routes/api/v0/index.js');
 app.use(basePathTest, testAPIRouter);
