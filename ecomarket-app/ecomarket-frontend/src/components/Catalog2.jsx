@@ -2,6 +2,7 @@
 function Catalog2(){
     return(
         <div>
+			<div className = 'container'>
             <section id="sidebar">
                 <p> Home | <b>All Breads</b></p>
                 <div class="border-bottom pb-2 ml-2">
@@ -139,6 +140,7 @@ function Catalog2(){
                     </div>
                 </div>    
             </section>
+		</div>
         </div>
         )
                     }
