@@ -12,7 +12,7 @@ var mysql = require('mysql2');
 
 var pool = mysql.createPool({
     connectionLimit:10,
-    host: "10.0.0.5",
+    host: "10.0.0.3",
     user: "ecobackend",
     password: "Y1nGJ14Ng",
     database: "ecodb",
