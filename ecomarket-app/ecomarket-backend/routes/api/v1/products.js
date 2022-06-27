@@ -17,9 +17,9 @@ router.get('/get', (req,res) => {
     var subtipo = req.query.subtipo;
 
     var queryString;
-    if (tipo !== null && subtipo !== null) {
+    if (tipo && subtipo) {
         queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (p.tipo = ?) AND (p.subtipo = ?) AND (u.id = p.fornecedor)";
-    } else if (tipo !== null) {
+    } else if (tipo) {
         queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (p.tipo = ?) AND (u.id = p.fornecedor)";
     } else {
         queryString = "SELECT p.*, u.nome FROM produto WHERE (u.id = p.fornecedor)";
