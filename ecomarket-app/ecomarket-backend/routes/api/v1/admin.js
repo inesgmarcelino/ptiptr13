@@ -189,7 +189,7 @@ router.get('/cons', async (req,res) => {
 
     try{
         const result = await pool.query(queryString);     
-        return res.status(200).send({results:result[0][0]});
+        return res.status(200).send({results:result});
     } catch(err){
         console.log(err);
         return res.status(500).send({message:"fail"});
