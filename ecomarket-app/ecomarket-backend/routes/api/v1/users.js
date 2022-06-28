@@ -55,7 +55,7 @@ router.post('/register', (req, res, next) => {
                 const location = await axios.post(link).then( async (response) => {
                     var location = response.data;
                     if (location.status !== "OK") throw new Error("Location Invalid");
-                    console.log(location);
+                    console.log(location.results.address_components);
                     var parts = {};
                     console.error("before4loop");
                     location.results.address_components.forEach(element => {
