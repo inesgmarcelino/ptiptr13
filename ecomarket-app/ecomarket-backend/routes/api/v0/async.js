@@ -12,9 +12,9 @@ const pool = require('mysql2').createPool({
 exports.teste = async function (req, res) {
     
     try {
-        const rows = await pool.query("SELECT id, morada AS addr FROM utilizador WHERE id = 15");
-        console.log(rows);
-        const person = rows;
+        const [results,fields] = await pool.query("SELECT id, morada AS addr FROM utilizador WHERE id = 15");
+        console.log(results);
+        const person = results[0];
         const address = encodeURIComponent(person.morada);
         //address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         console.log(address);
