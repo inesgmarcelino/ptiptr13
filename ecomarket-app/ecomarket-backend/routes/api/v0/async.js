@@ -15,9 +15,9 @@ const pool = require('mysql2').createPool({
 exports.teste = async function (req, res) {
     
     try {
-        const [results, fields] = pool.query("SELECT id, morada AS addr FROM ecodb.utilizador WHERE id = 15");
-        console.log(results);
-        const person = results[0];
+        const [rows, fields] = pool.query("SELECT id, morada AS addr FROM ecodb.utilizador WHERE id = 15");
+        console.log(rows);
+        const person = rows;
         const address = encodeURIComponent(person.morada);
         //address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         console.log(address);
