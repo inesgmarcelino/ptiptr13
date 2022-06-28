@@ -25,8 +25,8 @@ router.get('/get', async (req,res) => {
     }
 
     try {
-        const result = await pool.query(queryString, [tipo,subtipo]);
-        return res.status(200).send({results: result}); 
+        const [rows, fields] = await pool.query(queryString, [tipo,subtipo]);
+        return res.status(200).send({results: rows}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
     }
@@ -39,8 +39,8 @@ router.get('/order', async (req,res) => {
                         GROUP BY p.id, p.nome";
 
     try {
-        const result = await pool.query(queryString, [order]);
-        return res.status(200).send({results: result}); 
+        const [rows, fields] = await pool.query(queryString, [order]);
+        return res.status(200).send({results: rows}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
     }
