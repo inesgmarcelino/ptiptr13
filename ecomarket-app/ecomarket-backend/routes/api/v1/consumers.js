@@ -167,8 +167,8 @@ router.get('/orders', async (req,res) => {
                         GROUP BY e.id, u1.nome, u2.nome";
 
     try {
-        const result = await pool.query(queryString, [consId]);
-        return res.status(200).send({results: result}); 
+        const [rows, fields] = await pool.query(queryString, [consId]);
+        return res.status(200).send({results: rows}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
     }

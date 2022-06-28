@@ -258,8 +258,8 @@ router.get('/products', async (req,res) => {
                         WHERE (p.fornecedor = 3) AND (tp.id = p.tipo) AND (stp.id = p.subtipo)";
 
     try {
-        const result = await pool.query(queryString, [provId]);
-        return res.status(200).send({results: result}); 
+        const [rows, fields] = await pool.query(queryString, [provId]);
+        return res.status(200).send({results: rows}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
     }
@@ -275,8 +275,8 @@ router.get('/orders', async (req,res) => {
                         GROUP BY e.id, u1.nome, u2.nome";
 
     try {
-        const result = await pool.query(queryString, [provId]);
-        return res.status(200).send({results: result}); 
+        const [rows, fields] = await pool.query(queryString, [provId]);
+        return res.status(200).send({results: rows}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
     }
@@ -291,8 +291,8 @@ router.get('/storages', async (req,res) => {
                         GROUP BY a.id";
 
     try {
-        const result = await pool.query(queryString, [provId]);
-        return res.status(200).send({results: result}); 
+        const [rows, fields] = await pool.query(queryString, [provId]);
+        return res.status(200).send({results: rows}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
     }
