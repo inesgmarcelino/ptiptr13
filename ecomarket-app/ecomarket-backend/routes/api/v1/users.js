@@ -57,7 +57,7 @@ router.post('/register', (req, res, next) => {
 
                     if (location.status !== "OK") throw new Error("Location Invalid");
                     var components = location.results[0].address_components;
-                    var coords = location.results[0].geometry;
+                    var coords = location.results[0].geometry.location;
                     console.log(coords);
                     var parts = {};
 
@@ -82,8 +82,8 @@ router.post('/register', (req, res, next) => {
                         parts.postal_code,
                         concelho[0].distrito,
                         concelho[0].id,
-                        location.results[0].geometry.location.lat,
-                        location.results[0].geometry.location.lng]);
+                        coords.lat,
+                        coords.lng]);
                     const [cords, o] = await pool.query("SELECT id FROM localizacao WHERE lat = ?, lng = ?", [location.results.geometry.location.lat, location.results.geometry.location.lng]);
     
                     const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, cords[0].id]);
