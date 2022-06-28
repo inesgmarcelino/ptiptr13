@@ -54,28 +54,26 @@ router.post('/register', (req, res, next) => {
                 console.log(link);
                 const location = await axios.post(link).then( async (response) => {
                     var location = response.data;
-                    console.log(location);
-                    console.log(location.results);
+
                     if (location.status !== "OK") throw new Error("Location Invalid");
                     var components = location.results[0].address_components;
-                    console.log(components);
+ 
                     var parts = {};
-                    console.error("before4loop");
+
                     components.forEach(element => {
-                        console.error("1 iteration");
-                        console.log(element);
+ 
                         var key;
                         if (element.types.length > 1) {
                             key = element.types[0] === "political" ? element.types[1] : element.types[0];
                         } else {
                             key = element.types[0];
                         }
-                        console.log(key)
+
                         parts[key] = element.long_name;
                     });
 
                     console.log(parts);
-                    const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?"[parts.locality]);
+                    const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?",[parts.locality]);
                     if (concelho.length == 0) throw new Error("concelho not found");
                     console.log(concelho);
                     const insert = await pool.query("INSERT INTO localizacao(morada, c_postal, distrito, concelho, lat, lng) VALUES (?,?,?,?,?,?)",
@@ -88,7 +86,10 @@ router.post('/register', (req, res, next) => {
                     const [coords, o] = await pool.query("SELECT id FROM localizacao WHERE lat = ?, lng = ?", [location.results.geometry.location.lat, location.results.geometry.location.lng]);
     
                     const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, coords[0].id]);
-                }).catch((err) => {throw err});
+                }).catch( async (err) => {
+                    const del = await pool.query("DELETE FROM utilizador WHERE id=?", id);
+                    throw err.message;
+                });
             } else {
                 console.error(req.body.cons);
                 if (req.body.cons) {
