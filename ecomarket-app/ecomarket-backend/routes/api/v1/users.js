@@ -57,7 +57,8 @@ router.post('/register', (req, res, next) => {
 
                     if (location.status !== "OK") throw new Error("Location Invalid");
                     var components = location.results[0].address_components;
- 
+                    var coords = location.results[0].geometry;
+                    console.log(coords);
                     var parts = {};
 
                     components.forEach(element => {
@@ -83,9 +84,9 @@ router.post('/register', (req, res, next) => {
                         concelho[0].id,
                         location.results[0].geometry.location.lat,
                         location.results[0].geometry.location.lng]);
-                    const [coords, o] = await pool.query("SELECT id FROM localizacao WHERE lat = ?, lng = ?", [location.results.geometry.location.lat, location.results.geometry.location.lng]);
+                    const [cords, o] = await pool.query("SELECT id FROM localizacao WHERE lat = ?, lng = ?", [location.results.geometry.location.lat, location.results.geometry.location.lng]);
     
-                    const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, coords[0].id]);
+                    const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, cords[0].id]);
                 }).catch( async (err) => {
                     const del = await pool.query("DELETE FROM utilizador WHERE id=?", id);
                     throw err.message;
