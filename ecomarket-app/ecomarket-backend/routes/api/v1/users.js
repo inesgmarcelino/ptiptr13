@@ -78,14 +78,14 @@ router.post('/register', (req, res, next) => {
                     const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?"[parts.locality]);
                     if (concelho.length == 0) throw new Error("concelho not found");
                     console.log(concelho);
-                    const insert = await pool.query("INSERT INTO localizacao(rua, c_postal, distrito, concelho, lat, lng) VALUES (?,?,?,?,?,?)",
+                    const insert = await pool.query("INSERT INTO localizacao(morada, c_postal, distrito, concelho, lat, lng) VALUES (?,?,?,?,?,?)",
                         [parts.route + " " + parts.street_number,
                         parts.postal_code,
                         concelho[0].distrito,
                         concelho[0].id,
                         location.results[0].geometry.location.lat,
                         location.results[0].geometry.location.lng]);
-                    const [coords, o] = await pool.query("SELECT id FROM localizacao WHERE lati = ?, long = ?", [location.results.geometry.location.lat, location.results.geometry.location.lng]);
+                    const [coords, o] = await pool.query("SELECT id FROM localizacao WHERE lat = ?, lng = ?", [location.results.geometry.location.lat, location.results.geometry.location.lng]);
     
                     const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, coords[0].id]);
                 }).catch((err) => {throw err});
