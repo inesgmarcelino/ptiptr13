@@ -16,53 +16,28 @@ router.post('/reg_car', async (req,res) => {
     const cond = req.body.cond;
 
     var queryString = "INSERT INTO veiculo (condicoes) VALUES (?)";
-
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, [cond], (err, result) => {
-            if (err) {
-                conn.release();
-
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 1"});
-                return;
-            }
-        });
+    try{
+        const [insert,fields] = await pool.query(queryString, [cond]);
     
-        var idveic;
-        queryString = "SELECT id FROM veiculo";
-        conn.query(queryString, [], (err,results) => {
-            if (!err) {
-                idveic = results[results.length -1].id; //por verificar
-            } else {
-                conn.release();
-                
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 2"});
-                return;
-            }
-        });
-    
-        queryString = "INSERT INTO lista_veiculos (transportador, veiculo) VALUES (?)";
-        conn.query(queryString, [transp, idveic], (err, result) => {
-            if (err) {
-                conn.release();
-                
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 3"});
-                return;
-            } else {
-                res.status(200);
-                res.type('json');
-                res.send({"message":"Registo bem sucessido"});
-                return;
-            }
-        });
-    });
+        queryString = "SELECT MAX(id) AS id FROM veiculo";
+
+        const [result, field] = await pool.query(queryString);
+        var idveic = result[0].id;
+
+        queryString = "INSERT INTO lista_veiculos (transportador, veiculo) VALUES (?,?)";
+
+        const [results, fiel] = await pool.query(queryString, [transp, idveic]);
+
+
+        res.status(200);
+        res.type('json');
+        res.send({"message":"Registo bem sucessido"});
+
+    } catch(err){
+        res.status(500);
+        res.type('json');
+        res.send({"message":"Não foi possível realizar essa operação. output 1"});
+    }
 });
 
 // OPERACIONAL
@@ -75,8 +50,8 @@ router.get('/orders', async (req,res) => {
                         GROUP BY e.id, u1.nome";
 
     try {
-        const [rows, fields] = await pool.query(queryString, [transId]);
-        return res.status(200).send({results: rows}); 
+        const [result,fields] = await pool.query(queryString, [transId]);
+        return res.status(200).send({results: result}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
     }
@@ -90,8 +65,8 @@ router.get('/cars', async (req,res) => {
                         GROUP BY v.id;";
 
     try {
-        const [rows, fields] = await pool.query(queryString, [transId]);
-        return res.status(200).send({results: rows}); 
+        const [result,fields] = await pool.query(queryString, [transId]);
+        return res.status(200).send({results: result}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
     }

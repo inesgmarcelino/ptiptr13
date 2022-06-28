@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS localizacao (
     c_postal        VARCHAR(8) NOT NULL,
     distrito        INT NOT NULL,
     concelho        INT NOT NULL,
-    lat            INT NOT NULL,
-    lng            INT NOT NULL,
+    lat            DECIMAL(9,7) NOT NULL,
+    lng            DECIMAL(10,7) NOT NULL,
 
     --
     CONSTRAINT fk_dist
@@ -296,16 +296,7 @@ CREATE TABLE IF NOT EXISTS emite_poluicao (
 ) ENGINE = InnoDB;
 
 INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('Admin','admin@ecomarket.pt', 000000000,000000000, 'adminOK', 'Administração');
-INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('consumidor','cons1@ecomarket.pt', 111111111,111111111, 'consOK', 'Consumidor 1');
-INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('fornecedor1','forn1@ecomarket.pt', 222222222,222222222, 'fornOK', 'Fornecedor 1');
-INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('transportador1','trans1@ecomarket.pt', 333333333,333333333, 'transOK', 'Transportador 1');
-SELECT id FROM utilizador WHERE email = 'cons1@ecomarket.pt';
-SELECT id FROM utilizador WHERE email = 'forn1@ecomarket.pt';
-SELECT id FROM utilizador WHERE email = 'trans1@ecomarket.pt';
 
-INSERT INTO consumidor VALUES (2);
-INSERT INTO fornecedor VALUES (3);
-INSERT INTO transportador (utilizador) VALUES (4);
 
 -- Inserts de Distritos e Concelhos
 INSERT INTO distrito VALUES (1, 'Aveiro');
