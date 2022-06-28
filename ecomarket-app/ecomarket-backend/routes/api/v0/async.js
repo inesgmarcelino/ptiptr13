@@ -15,7 +15,7 @@ exports.teste = async function (req, res) {
         const [results,fields] = await pool.query("SELECT id, morada AS addr FROM utilizador WHERE id = 15");
         console.log(results);
         const person = results[0];
-        const address = encodeURIComponent(person.morada);
+        const address = encodeURIComponent(person.addr);
         //address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         console.log(address);
         const link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt";
