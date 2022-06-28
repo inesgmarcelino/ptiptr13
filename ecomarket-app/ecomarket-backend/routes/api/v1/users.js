@@ -15,7 +15,7 @@ var auth = require('../svlib/auth0/tokenlib');
 
 //probably very useful: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 
-// router.get('register', (req,res) =>{
+// router.get('register', async (req,res) =>{
 //     res.status(404);
 //     res.send({});
 // })
@@ -98,7 +98,7 @@ router.post('/register', (req, res, next) => {
 
 
 
-router.get('/:uid', (req,res) => {
+router.get('/:uid', async (req,res) => {
     var userId = req.params.uid;
     var queryString = "SELECT * FROM utilizador WHERE id = ?";
 
@@ -123,7 +123,7 @@ router.get('/:uid', (req,res) => {
     });
 });
 
-router.delete('/delete/:uid', (req,res) => {
+router.delete('/delete/:uid', async (req,res) => {
     var userId = req.params.uid;
     var queryString = "DELETE FROM utilizador WHERE id = ?";
 
@@ -149,7 +149,7 @@ router.delete('/delete/:uid', (req,res) => {
     });
 });
 
-router.put('/edit/:uid', (req,res) => {
+router.put('/edit/:uid', async (req,res) => {
     const nome = req.body.nome;
     const email = req.body.email;
     const tlm = req.body.tlm;
@@ -227,7 +227,7 @@ router.put('/edit/:uid', (req,res) => {
     });
 });
 
-router.post('/uploadProfPic', (req,res) => {
+router.post('/uploadProfPic', async (req,res) => {
     const filename = req.body.filename;
     var queryString = "INSERT INTO image (filename) VALUES (?)";
 

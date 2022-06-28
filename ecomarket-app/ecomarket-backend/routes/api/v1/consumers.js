@@ -11,7 +11,7 @@ var auth = require('../svlib/auth0/tokenlib');
 const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
-router.post('/add_prod_shbag', (req,res) => {
+router.post('/add_prod_shbag', async (req,res) => {
     const cons = req.body.cons;
     const prod = req.body.prod;
 
@@ -37,7 +37,7 @@ router.post('/add_prod_shbag', (req,res) => {
     });
 });
 
-router.post('/order', (req,res) => {
+router.post('/order', async (req,res) => {
     var queryString = "INSERT INTO encomenda (data) VALUES (" + new Date().toISOString().slice(0, 10) + ")";
 
     pool.getConnection((err, conn) => {
@@ -126,7 +126,7 @@ router.post('/order', (req,res) => {
     });
 });
 
-router.post('/cancel/:oid', (req,res) => {
+router.post('/cancel/:oid', async (req,res) => {
     var orderId = req.params.oid;
     var queryString = "DELETE FROM encomenda WHERE id = ?";
     pool.getConnection((err, conn) => {
@@ -154,7 +154,8 @@ router.post('/cancel/:oid', (req,res) => {
     });
 });
 
-router.get('/orders', (req,res) => {
+// OPERACIONAL
+router.get('/orders', async (req,res) => {
     var consId = req.query.cid;
     var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS fornecedor, u2.nome AS transportador, \
                             SUM(lpe.quantidade * p.preco) AS total, st.status_consum AS cons, st.status_fornec AS forn, st.status_transp AS transp \
@@ -164,20 +165,13 @@ router.get('/orders', (req,res) => {
                             AND (te.encomenda = e.id) AND (te.transportador = u2.id) AND (lpe.encomenda = e.id) \
                             AND (lpe.produto = p.id) AND (st.encomenda = e.id) \
                         GROUP BY e.id, u1.nome, u2.nome";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
 
-        conn.query(queryString, [consId], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 9");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try {
+        const result = await pool.query(queryString, [consId]);
+        return res.status(200).send({results: result}); 
+    } catch (err) {
+        return res.status(500).send({message:"fail"});
+    }
 });
 
 //exporta funções/"objetos"
