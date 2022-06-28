@@ -16,6 +16,7 @@ exports.teste = async function (req, res) {
     
     try {
         const [results, fields] = pool.query("SELECT id, morada AS addr FROM ecodb.utilizador WHERE id = 15");
+        console.log(results);
         const person = results[0];
         const address = encodeURIComponent(person.morada);
         //address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
