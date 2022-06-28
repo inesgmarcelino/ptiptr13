@@ -8,8 +8,37 @@ var pool = require('../svlib/db/getPool');
 
 /** auth0 */
 var auth = require('../svlib/auth0/tokenlib');
-const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
+
+
+router.get('/get', (req,res) => {
+    var tipo = req.query.tipo;
+    var subtipo = req.query.subtipo;
+
+    var queryString;
+    if (tipo && subtipo) {
+        queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (p.tipo = ?) AND (p.subtipo = ?) AND (u.id = p.fornecedor)";
+    } else if (tipo) {
+        queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (p.tipo = ?) AND (u.id = p.fornecedor)";
+    } else {
+        queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (u.id = p.fornecedor)";
+    }
+
+    pool.getConnection((err, conn) => {
+        if (err) throw err;
+        console.log("estou aqui")
+        conn.query(queryString, [tipo], (err,results) => {
+            conn.release();
+
+            if (!err) {
+                return res.status(200).send({results: results});
+            } else {
+                console.log("Não foi possível realizar essa operação. output 2");
+                return res.status(500).send({message:"fail"});
+            }
+        });
+    });
+});
 
 router.get('/order', (req,res) => {
     var order = req.query.order;
@@ -26,7 +55,7 @@ router.get('/order', (req,res) => {
                 return res.status(200).send({results: results});
 
             } else {
-                console.log("Não foi possível realizar essa operação. output 4");
+                console.log("Não foi possível realizar essa operação. output 1");
                 return res.status(500).send({message:"fail"});
             }
         });

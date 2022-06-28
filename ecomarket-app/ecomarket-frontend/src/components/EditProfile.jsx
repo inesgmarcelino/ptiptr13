@@ -38,8 +38,7 @@ function EditProfile () {
                 if (password !== '' && checkPassword !== '' && password !== checkPassword){
                         // setError(true);
                 } else{
-                    /* Axios.put("https://ecomarket.works/api/v1/users/edit", { */
-                    Axios.put("https://localhost:3000/api/v1/users/edit", {
+                    Axios.put("https://ecomarket.works/api/v1/users/edit", {
                         // params: {
                         //     id: id
                         // },
@@ -62,8 +61,7 @@ function EditProfile () {
                 }
                 break;
             case "delete":
-                /* Axios.delete("https://ecomarket.works/api/v1/users/delete", { */
-                Axios.delete("https://localhost:3000/api/v1/users/delete", {
+                Axios.delete("https://ecomarket.works/api/v1/users/delete", { 
                     // params: {
                     //     id: id
                     // }
@@ -84,7 +82,7 @@ function EditProfile () {
                 })
                 break;
             default:
-                console.log("Algum erro");
+                console.log();
         }
     }
 
