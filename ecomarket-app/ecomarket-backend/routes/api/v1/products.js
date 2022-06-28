@@ -21,7 +21,7 @@ router.get('/get', (req,res) => {
     } else if (tipo) {
         queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (p.tipo = ?) AND (u.id = p.fornecedor)";
     } else {
-        queryString = "SELECT p.*, u.nome FROM produto WHERE (u.id = p.fornecedor)";
+        queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (u.id = p.fornecedor)";
     }
 
     pool.getConnection((err, conn) => {
