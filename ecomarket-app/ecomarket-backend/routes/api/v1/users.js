@@ -44,39 +44,42 @@ router.post('/register', (req, res, next) => {
                 'content-type': 'application/json'
             }
         }).then(async function (response) {
-            var id = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
-            id = id[0][0].id;
+            var [rows, field] = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
+            id = rows[0].id;
             if (req.body.trans) {
                 const address = encodeURIComponent(req.body.morada);
                 //address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
                 console.log(address);
                 const link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt";
                 console.log(link);
-                const location = await axios.post(link).catch((err) => {throw err});
-                console.log(location);
-                if (location === udndefined || location.results.status !== "OK") throw new Error("Location Invalid");
-                var parts = {};
-                for (var element in location.results.address_components) {
-                    var key;
-                    if (element.types.length > 1) {
-                        key = element.types[0] === "political" ? element.types[1] : element.types[0];
-                    } else {
-                        key = element.types[0];
+                const location = await axios.post(link).then( async (response) => {
+                    var location = response.data;
+                    if (location.status !== "OK") throw new Error("Location Invalid");
+                    var parts = {};
+                    for (var element in location.results.address_components) {
+                        var key;
+                        if (element.types.length > 1) {
+                            key = element.types[0] === "political" ? element.types[1] : element.types[0];
+                        } else {
+                            key = element.types[0];
+                        }
+                        parts[key] = element.long_name;
                     }
-                    parts[key] = element.long_name;
-                }
-                const concid = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?"[parts.locality]);
-                if (concid[0][0].length == 0) throw new Error("concelho not found");
-                const insert = await pool.query("INSERT INTO localizacao(rua, c_postal, distrito, concelho, lati, lng) VALUES (?,?,?,?,?,?)",
-                    [parts.route + " " + parts.street_number,
-                    parts.postal_code,
-                    concid[0][0].distrito,
-                    concid[0][0].id,
-                    location.results.geometry.location.lat,
-                    location.results.geometry.location.lng]);
-                const locid = await pool.query("SELECT id FROM localizacao WHERE lati = ?, long = ?", [location.results.geometry.location.lat, location.results.geometry.location.lng]);
-
-                const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, locid[0][0].id]);
+                    console.log(parts);
+                    const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?"[parts.locality]);
+                    if (concelho.length == 0) throw new Error("concelho not found");
+                    console.log(concelho);
+                    const insert = await pool.query("INSERT INTO localizacao(rua, c_postal, distrito, concelho, lat, lng) VALUES (?,?,?,?,?,?)",
+                        [parts.route + " " + parts.street_number,
+                        parts.postal_code,
+                        concelho[0].distrito,
+                        concelho[0].id,
+                        location.results.geometry.location.lat,
+                        location.results.geometry.location.lng]);
+                    const [coords, o] = await pool.query("SELECT id FROM localizacao WHERE lati = ?, long = ?", [location.results.geometry.location.lat, location.results.geometry.location.lng]);
+    
+                    const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, coords[0].id]);
+                }).catch((err) => {throw err});
             } else {
                 console.error(req.body.cons);
                 if (req.body.cons) {
