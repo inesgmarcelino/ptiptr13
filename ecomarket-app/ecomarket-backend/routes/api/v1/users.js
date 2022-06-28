@@ -85,7 +85,7 @@ router.post('/register', (req, res, next) => {
                         coords.lat,
                         coords.lng]);
                     console.log("we got this far");
-                    const [cords, o] = await pool.query("SELECT id FROM localizacao WHERE morada = ?, concelho = ?", [parts.route + " " + parts.street_number,concelho[0].id]);
+                    const [cords, o] = await pool.query("SELECT id FROM localizacao WHERE lat = ? AND lng = ?", [coords.lat,coords.lng]);
     
                     const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, cords[0].id]);
                 }).catch( async (err) => {
