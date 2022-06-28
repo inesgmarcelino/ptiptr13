@@ -188,8 +188,8 @@ router.get('/cons', async (req,res) => {
                         WHERE (c.utilizador = u.id) and not (u.email = 'admin@ecomarket.pt')";
 
     try{
-        const result = await pool.query(queryString);     
-        return res.status(200).send({results:result});
+        const [rows,fields] = await pool.query(queryString);     
+        return res.status(200).send({results:rows});
     } catch(err){
         console.log(err);
         return res.status(500).send({message:"fail"});
