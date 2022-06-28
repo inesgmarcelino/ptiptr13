@@ -58,7 +58,7 @@ router.post('/register', (req, res, next) => {
                     console.log(location);
                     var parts = {};
                     console.error("before4loop");
-                    for (var element in location.results.address_components) {
+                    for (element in location.results.address_components) {
                         console.log("1 iteration");
                         console.log(element);
                         var key;
