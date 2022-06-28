@@ -11,7 +11,7 @@ var auth = require('../svlib/auth0/tokenlib');
 const { response } = require('express');
 
 
-router.get('/get', (req,res) => {
+router.get('/get', async (req,res) => {
     var tipo = req.query.tipo;
     var subtipo = req.query.subtipo;
 
@@ -24,46 +24,30 @@ router.get('/get', (req,res) => {
         queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (u.id = p.fornecedor)";
     }
 
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
-        console.log("estou aqui")
-        conn.query(queryString, [tipo], (err,results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 2");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try {
+        const result = await pool.query(queryString, [tipo,subtipo]);
+        return res.status(200).send({results: result}); 
+    } catch (err) {
+        return res.status(500).send({message:"fail"});
+    }
 });
 
-router.get('/order', (req,res) => {
+router.get('/order', async (req,res) => {
     var order = req.query.order;
     var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
                         FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
                         GROUP BY p.id, p.nome";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
 
-        conn.query(queryString, [order], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-
-            } else {
-                console.log("Não foi possível realizar essa operação. output 1");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try {
+        const result = await pool.query(queryString, [order]);
+        return res.status(200).send({results: result}); 
+    } catch (err) {
+        return res.status(500).send({message:"fail"});
+    }
 });
 
 
-// router.get('/:cid', (req,res) => {
+// router.get('/:cid', async (req,res) => {
 //     console.log("Uh oh wrong place wrong time mr freeman");
 //     const cid = req.params.cid;
 //     var queryString = "SELECT * FROM produto WHERE tipo = ?";
@@ -86,7 +70,7 @@ router.get('/order', (req,res) => {
 //     });
 // });
 
-// router.get('/:pid', (req,res) => {
+// router.get('/:pid', async (req,res) => {
 //     const pid = req.params.pid;
 //     var queryString = "SELECT * FROM produto WHERE id = ?";
 
@@ -108,7 +92,7 @@ router.get('/order', (req,res) => {
 //     });
 // });
 
-// router.get('/:pname', (req,res) => {
+// router.get('/:pname', async (req,res) => {
 //     const pname = req.params.pname;
 //     var queryString = "SELECT * FROM produto WHERE nome = '%?%'";
 

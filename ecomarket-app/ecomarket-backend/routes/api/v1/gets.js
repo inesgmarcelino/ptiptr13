@@ -12,87 +12,60 @@ var auth = require('../svlib/auth0/tokenlib');
 
 //probably very useful: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 
-// router.get('register', (req,res) =>{
+// router.get('register', async (req,res) =>{
 //     res.status(404);
 //     res.send({});
 // })
 
-router.get('/profpic/:uid', (req,res) => {
+router.get('/profpic/:uid', async (req,res) => {
 
 });
 
-router.get('/distritos', (req,res) => {
+// OPERACIONAL
+router.get('/distritos', async (req,res) => {
     var queryString = "SELECT * FROM distrito";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
 
-        conn.query(queryString, (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 1");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    })
+    try {
+        const result = await pool.query(queryString);
+        return res.status(200).send({results: result}); 
+    } catch (err) {
+        return res.status(500).send({message:"fail"});
+    }
 });
 
-router.get('/concelhos', (req,res) => {
+router.get('/concelhos', async (req,res) => {
     const dist = req.query.dist;
     var queryString = "SELECT id, nome FROM concelho WHERE distrito = ?";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
 
-        conn.query(queryString, [dist], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 2");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try {
+        const result = await pool.query(queryString, [dist]);
+        return res.status(200).send({results: result}); 
+    } catch (err) {
+        return res.status(500).send({message:"fail"});
+    }
 });
 
-router.get('/tipos', (req,res) => {
+router.get('/tipos', async (req,res) => {
     var queryString = "SELECT * FROM tipo_produto";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
 
-        conn.query(queryString, (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 3");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try {
+        const result = await pool.query(queryString);
+        return res.status(200).send({results: result}); 
+    } catch (err) {
+        return res.status(500).send({message:"fail"});
+    }
 });
 
-router.get('/subtipos', (req,res) => {
+router.get('/subtipos', async (req,res) => {
     var tip = req.query.tipo;
     var queryString = "SELECT subtipo_produto.* FROM tipo_subtipo, subtipo_produto WHERE tipo_subtipo.tipo = ? AND subtipo_produto.id = tipo_subtipo.subtipo";
-    pool.getConnection((err,conn) => {
-        if (err) throw err;
 
-        conn.query(queryString, [tip], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 4");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try {
+        const result = await pool.query(queryString, [tip]);
+        return res.status(200).send({results: results}); 
+    } catch (err) {
+        return res.status(500).send({message:"fail"});
+    }
 });
 
 
