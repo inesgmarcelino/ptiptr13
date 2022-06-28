@@ -50,7 +50,9 @@ router.post('/register', (req, res, next) => {
                 const address = encodeURIComponent(req.body.morada);
                 //address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
                 console.log(address);
-                const location = await axios.post("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt");
+                const link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt";
+                console.log(link);
+                const location = await axios.post(link);
                 if (location === udndefined || location.results.status !== "OK") throw new Error("Location Invalid");
                 var parts = {};
                 for (var element in location.results.address_components) {
