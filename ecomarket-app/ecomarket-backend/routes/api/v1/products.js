@@ -12,7 +12,6 @@ const { response } = require('express');
 
 
 router.get('/get', (req,res) => {
-    console.log(req.query);
     var tipo = req.query.tipo;
     var subtipo = req.query.subtipo;
 
@@ -25,11 +24,10 @@ router.get('/get', (req,res) => {
         queryString = "SELECT p.*, u.nome FROM produto WHERE (u.id = p.fornecedor)";
     }
 
-    console.log(tipo, subtipo, queryString)
     pool.getConnection((err, conn) => {
         if (err) throw err;
         console.log("estou aqui")
-        conn.query(queryString, [tipo, subtipo], (err,results) => {
+        conn.query(queryString, [tipo], (err,results) => {
             conn.release();
 
             if (!err) {
