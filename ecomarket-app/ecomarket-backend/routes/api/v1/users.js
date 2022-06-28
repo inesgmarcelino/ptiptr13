@@ -58,8 +58,8 @@ router.post('/register', (req, res, next) => {
                     console.log(location);
                     var parts = {};
                     console.error("before4loop");
-                    for (element in location.results.address_components) {
-                        console.log("1 iteration");
+                    location.results.address_components.forEach(element => {
+                        console.error("1 iteration");
                         console.log(element);
                         var key;
                         if (element.types.length > 1) {
@@ -69,7 +69,8 @@ router.post('/register', (req, res, next) => {
                         }
                         console.log(key)
                         parts[key] = element.long_name;
-                    }
+                    });
+
                     console.log(parts);
                     const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?"[parts.locality]);
                     if (concelho.length == 0) throw new Error("concelho not found");
