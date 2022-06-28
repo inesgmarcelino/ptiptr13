@@ -58,12 +58,14 @@ router.post('/register', (req, res, next) => {
                     console.log(location);
                     var parts = {};
                     for (var element in location.results.address_components) {
+                        console.log(element);
                         var key;
                         if (element.types.length > 1) {
                             key = element.types[0] === "political" ? element.types[1] : element.types[0];
                         } else {
                             key = element.types[0];
                         }
+                        console.log(key)
                         parts[key] = element.long_name;
                     }
                     console.log(parts);
