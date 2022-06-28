@@ -26,7 +26,7 @@ router.get('/distritos', async (req,res) => {
     var queryString = "SELECT * FROM distrito";
 
     try {
-        const result = await pool.query(queryString);
+        const [result,fields] = await pool.query(queryString);
         return res.status(200).send({results: result}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
@@ -38,7 +38,7 @@ router.get('/concelhos', async (req,res) => {
     var queryString = "SELECT id, nome FROM concelho WHERE distrito = ?";
 
     try {
-        const result = await pool.query(queryString, [dist]);
+        const [result,fields] = await pool.query(queryString, [dist]);
         return res.status(200).send({results: result}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
@@ -49,7 +49,7 @@ router.get('/tipos', async (req,res) => {
     var queryString = "SELECT * FROM tipo_produto";
 
     try {
-        const result = await pool.query(queryString);
+        const [result,fields] = await pool.query(queryString);
         return res.status(200).send({results: result}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});
@@ -61,7 +61,7 @@ router.get('/subtipos', async (req,res) => {
     var queryString = "SELECT subtipo_produto.* FROM tipo_subtipo, subtipo_produto WHERE tipo_subtipo.tipo = ? AND subtipo_produto.id = tipo_subtipo.subtipo";
 
     try {
-        const result = await pool.query(queryString, [tip]);
+        const [results,fields] = await pool.query(queryString, [tip]);
         return res.status(200).send({results: results}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});

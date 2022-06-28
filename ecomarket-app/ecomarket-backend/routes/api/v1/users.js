@@ -220,29 +220,22 @@ router.put('/edit/:uid', async (req,res) => {
 
     var userId = req.params.uid;
     queryString += "WHERE id = " +  userId;
+    try{
+        const [rows,fields] = await pool.query(queryString);
+        if(rows.length > 0){
+            console.log("Utilizador atualizado com sucesso");
+            return res.status(200).send({message:"success"});
+        } else {
+            console.log("Utilizador não se encontra na base de dados");
+            return res.status(404).send({message:"fail"});
+        }
+    } catch(err){
+        console.log(err);
+        return res.status(500).send({message:"fail"});
+    }
     
-    pool.getConnection((err,conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, (err, results) =>  {
-            conn.release();
-
-            if (!err) {
-                if(results.length > 0){
-                    console.log("Utilizador atualizado com sucesso");
-                    return res.status(200).send({message:"success"});
-                } else {
-                    console.log("Utilizador não se encontra na base de dados");
-                    return res.status(404).send({message:"fail"});
-                }
-            } else {
-                console.log("Não foi possível realizar essa operação. output 8");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
 });
-
+/*
 router.post('/uploadProfPic', async (req,res) => {
     const filename = req.body.filename;
     var queryString = "INSERT INTO image (filename) VALUES (?)";
@@ -270,7 +263,7 @@ router.post('/uploadProfPic', async (req,res) => {
     });
 });
 
-
+*/
 
 
 // um user que seja só consumidor ou só fornecedor pode se tornar também fornecedor ou consumidor...
