@@ -181,25 +181,18 @@ router.get('/edit/:uid', (req, res, next) => {
     });
 });
 
-router.get('/cons', (req,res) => {
+router.get('/cons', async (req,res) => {
+
     var queryString = "SELECT u.* \
                         FROM utilizador u, consumidor c \
                         WHERE (c.utilizador = u.id) and not (u.email = 'admin@ecomarket.pt')";
 
-    pool.getConnection((err,conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, (err,results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results:results});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 6");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try{
+        const result = await pool.query(queryString);     
+        return res.status(200).send({results:results[0][0]});
+    } catch(err){
+        return res.status(500).send({message:"fail"});
+    }
 });
 
 router.get('/prov', (req,res) => {
