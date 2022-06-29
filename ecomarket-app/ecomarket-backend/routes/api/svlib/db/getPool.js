@@ -9,17 +9,23 @@ https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-a
  */
 
 var mysql = require('mysql2');
+require('dotenv').config();
 
-var pool = mysql.createPool({
-    connectionLimit:10,
-    host: "10.0.0.5",
-    user: "ecobackend",
-    password: "Y1nGJ14Ng#",
-    database: "ecodb",
-    port: 6033
-  });
-  
-module.exports = pool.promise();
+console.log(process.env.DEV_ENV);
+var servIP = (process.env.DEV_ENV === "true") ? "35.206.132.204" : "10.0.0.5";
+
+const pool = mysql.createPool({
+  connectionLimit:10,
+  host: servIP,
+  user: "ecobackend",
+  password: "Y1nGJ14Ng#",
+  database: "ecodb",
+  port: 6033
+}).promise();
+
+console.error(pool.pool.config.connectionConfig);
+
+module.exports = pool;
 
 /**Codigo para obter uma ligacao
  * deve ser invocado dentro das paths

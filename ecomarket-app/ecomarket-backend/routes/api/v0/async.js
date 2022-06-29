@@ -1,13 +1,5 @@
 const axios = require('axios');
-const pool = require('mysql2').createPool({
-    connectionLimit:10,
-    host: "10.0.0.5",
-    user: "ecobackend",
-    password: "Y1nGJ14Ng#",
-    database: "ecodb",
-    port: 6033
-  }).promise();
-
+const pool = require('../svlib/db/getPool');
 
 exports.teste = async function (req, res) {
     
