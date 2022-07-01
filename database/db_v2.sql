@@ -160,7 +160,7 @@ INSERT INTO estado_despacho VALUES (4,"Entregue.");
 CREATE TABLE IF NOT EXISTS despacho (
     order INT NOT NULL,
     forn INT NOT NULL,
-    estado INT NOT NULL,
+    estado INT NOT NULL DEFAULT 1,
     transp INT DEFAULT NULL, -- inicialmente n temos transportadora atribuida
     vehic INT DEFAULT NULL, -- inicialmente n temos um veiculo atribuido
 
