@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS subcategoria(
     nome            VARCHAR(50) NOT NULL
     categoria       INT NOT NULL,
 
-    CONSTANT prim_subcat PRIMARY KEY(categoria,id),
+    CONSTRAINT prim_subcat PRIMARY KEY(categoria,id),
     CONSTRAINT fk_catgry FOREIGN KEY (categoria) REFERENCES categoria(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
