@@ -151,10 +151,10 @@ CREATE TABLE IF NOT EXISTS estado_despacho(
     descr VARCHAR(25) NOT NULL
 ) ENGINE = InnoDB;
 
-INSERT INTO estado_despacho VALUES (1,"A processar..."); -- Transportador ainda nao viu a encomenda
-INSERT INTO estado_despacho VALUES (2,"Por enviar..."); -- Transportador processou a encomenda mas ainda nao enviou
-INSERT INTO estado_despacho VALUES (3,"Em Expedição.");
-INSERT INTO estado_despacho VALUES (4,"Entregue.");
+-- INSERT INTO estado_despacho VALUES (1,"A processar..."); -- Transportador ainda nao viu a encomenda
+-- INSERT INTO estado_despacho VALUES (2,"Por enviar..."); -- Transportador processou a encomenda mas ainda nao enviou
+-- INSERT INTO estado_despacho VALUES (3,"Em Expedição.");
+-- INSERT INTO estado_despacho VALUES (4,"Entregue.");
 
 -- tabela que relaciona uma encomenda com os diferentes transportadores
 CREATE TABLE IF NOT EXISTS despacho (
