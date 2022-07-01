@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS encomenda (
 
 CREATE TABLE IF NOT EXISTS estado_despacho(    
     id INT(1) PRIMARY KEY,
-    desc VARCHAR(25) NOT NULL
+    descr VARCHAR(25) NOT NULL
 ) ENGINE = InnoDB;
 
 INSERT INTO estado_despacho VALUES (1,"A processar..."); -- Transportador ainda nao viu a encomenda
