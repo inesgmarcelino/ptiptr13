@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS concelho(
 
 CREATE TABLE IF NOT EXISTS morada(
     id INT NULL AUTO_INCREMENT,
-    user INT UNIQUE NULL,
+    user INT UNIQUE NOT NULL,
     prefix INT(4) NOT NULL,
     sufix INT(3) DEFAULT NULL,
     street VARCHAR(100),
