@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS stock(
     -- CONSTRAINT prim_stock PRIMARY KEY(forn,store,produ), -> Nao permite  
     -- adicionar multiplas instancias do mesmo produto com diferentes datas de validade (por exemplo)
     CONSTRAINT prim_u_stock PRIMARY KEY (forn,id),
-    CONSTRAINT fk_stock_user FOREIGN KEY (form) REFERENCES utilizador(id),
+    CONSTRAINT fk_stock_user FOREIGN KEY (forn) REFERENCES utilizador(id),
     CONSTRAINT fk_store_stock FOREIGN KEY (store,forn) REFERENCES armazem(id,user)
 ) ENGINE = InnoDB;
 
