@@ -58,13 +58,13 @@ CREATE TABLE IF NOT EXISTS morada(
 
 ) ENGINE = InnoDB;
 
+-- cada armazem tem o seu id e pode ser identificado pela sua morada
 CREATE TABLE IF NOT EXISTS armazem (
-    id              INT PRIMARY KEY AUTO_INCREMENT,
-    user            INT UNIQUE NOT NULL,
+    id              INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user            INT NOT NULL,
     morada          INT UNIQUE NOT NULL,
     --
 
-    CONSTRAINT prim_store PRIMARY KEY (id,user)
     CONSTRAINT fk_user FOREIGN KEY (morada,user) REFERENCES morada(user,id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
