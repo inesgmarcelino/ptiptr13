@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS categoria (
 
 CREATE TABLE IF NOT EXISTS subcategoria(
     id              INT NOT NULL UNIQUE AUTO_INCREMENT,
-    nome            VARCHAR(50) NOT NULL
+    nome            VARCHAR(50) NOT NULL,
     categoria       INT NOT NULL,
 
     CONSTRAINT prim_subcat PRIMARY KEY(categoria,id),
