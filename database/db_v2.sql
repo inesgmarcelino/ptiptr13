@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS veiculo (
     ano INT(4) NOT NULL,
     fuel   INT(1) NOT NULL, -- 1 -> Gasolina, 2 -> Gasóleo, 3 -> GPL, 4 -> Elétrico, 5 -> Híbrido
     consumo DECIMAL(4,2) NOT NULL, -- unidade/km (unidade varia consoante o tipo do consumo)
-    plate  VARCHAR(6) UNIQUE NOT NULL, --matricula
+    plate  VARCHAR(6) UNIQUE NOT NULL, -- matricula
 
     CONSTRAINT prim_car PRIMARY KEY (transp,id),
     CONSTRAINT fk_car_transp FOREIGN KEY (transp) REFERENCES utilizador(id) ON DELETE CASCADE,
