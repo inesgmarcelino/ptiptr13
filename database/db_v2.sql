@@ -3,7 +3,7 @@ ALTER DATABASE ecodb CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE ecodb;
 
 CREATE TABLE IF NOT EXISTS papeis (
-    id INT(1) PRIMARY KEY,
+    id INT PRIMARY KEY,
     descr VARCHAR(22) NOT NULL
 ) ENGINE = InnoDB;
 
