@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS veiculo (
 
     CONSTRAINT prim_car PRIMARY KEY (transp,id),
     CONSTRAINT fk_car_transp FOREIGN KEY (transp) REFERENCES utilizador(id) ON DELETE CASCADE,
-    CONSTRAINT chk_fuel CHECK (fuel = 1 OR fuel = 2 OR fuel = 3 OR fuel = 4 OR fuel = 5),
+    CONSTRAINT chk_fuel CHECK (fuel = 1 OR fuel = 2 OR fuel = 3 OR fuel = 4 OR fuel = 5)
 ) ENGINE = InnoDB;
 
 -- Relaciona uma encomenda com um consumido
