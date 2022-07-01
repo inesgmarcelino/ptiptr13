@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS stock(
     produ       INT NOT NULL,
     qtty        INT NOT NULL DEFAULT 0,
     preco       DECIMAL(7,2) NOT NULL DEFAULT (00000.00),
-    due         DATE DEFAULT NULL, --DATA DE VALIDADE
+    due         DATE DEFAULT NULL, -- DATA DE VALIDADE
 
     -- CONSTRAINT prim_stock PRIMARY KEY(forn,store,produ), -> Nao permite  
     -- adicionar multiplas instancias do mesmo produto com diferentes datas de validade (por exemplo)
