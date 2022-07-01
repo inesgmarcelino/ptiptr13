@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS armazem (
     --
 
     CONSTRAINT prim_store PRIMARY KEY (id,user)
-    CONSTRAINT fk_user FOREIGN KEY (morada,user) REFERENCES morada(id,user) ON DELETE CASCADE
+    CONSTRAINT fk_user FOREIGN KEY (morada,user) REFERENCES morada(user,id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS tipo_consumo (
