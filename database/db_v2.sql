@@ -7,10 +7,10 @@ CREATE TABLE IF NOT EXISTS papeis (
     descr VARCHAR(22) NOT NULL
 ) ENGINE = InnoDB;
 
---INSERT INTO papeis VALUES (1,"Consumidor");
---INSERT INTO papeis VALUES (2,"Fornecedor");
---INSERT INTO papeis VALUES (3,"Consumidor/Fornecedor");
---INSERT INTO papeis VALUES (4,"Transportador");
+-- INSERT INTO papeis VALUES (1,"Consumidor");
+-- INSERT INTO papeis VALUES (2,"Fornecedor");
+-- INSERT INTO papeis VALUES (3,"Consumidor/Fornecedor");
+-- INSERT INTO papeis VALUES (4,"Transportador");
 
 CREATE TABLE IF NOT EXISTS utilizador (
     id              INT PRIMARY KEY AUTO_INCREMENT,
