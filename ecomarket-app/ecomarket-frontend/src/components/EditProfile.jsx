@@ -10,6 +10,7 @@ function EditProfile () {
     const [password, setPassword]           = useState('');
     const [checkPassword, setCheckPassword] = useState('');
 
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     const handler = (x) => {
         switch(x.target.name) {
             case "nome":
@@ -38,7 +39,8 @@ function EditProfile () {
                 if (password !== '' && checkPassword !== '' && password !== checkPassword){
                         // setError(true);
                 } else{
-                    Axios.put("https://ecomarket.works/api/v1/users/edit", {
+
+                    Axios.put(url+"/api/v1/users/edit", {
                         // params: {
                         //     id: id
                         // },
@@ -61,7 +63,7 @@ function EditProfile () {
                 }
                 break;
             case "delete":
-                Axios.delete("https://ecomarket.works/api/v1/users/delete", { 
+                Axios.delete(url+"/api/v1/users/delete", { 
                     // params: {
                     //     id: id
                     // }

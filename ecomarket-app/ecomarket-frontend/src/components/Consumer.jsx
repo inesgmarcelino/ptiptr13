@@ -9,13 +9,14 @@ function Consumer () {
     const cid = 2;
 
     document.body.onload = function(){enc()};
-
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     const buscarEnc = (x) => {
-        window.location.href = 'https://ecomarket.works/order?id=' + x.target.value;   
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        window.location.href = url+'/order?id=' + x.target.value;   
     }
 
     const enc = () => {
-        Axios.get("https://ecomarket.works/api/v1/consumers/orders", {
+        Axios.get(url+"/api/v1/consumers/orders", {
             params: {
                 cid: cid
         }}).then ((response) => {

@@ -14,9 +14,9 @@ function Transporter () {
         enc();
         car();
     }
-
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     const enc = () => {
-        Axios.get("https://ecomarket.works/api/v1/transporters/orders", {
+        Axios.get(url+"/api/v1/transporters/orders", {
             params: {
                 tid: tid
         }}).then ((response) => {
@@ -45,7 +45,7 @@ function Transporter () {
     }
 
     const car = () => {
-        Axios.get("https://ecomarket.works/api/v1/transporters/cars", {
+        Axios.get(url+"/api/v1/transporters/cars", {
             params: {
                 tid: tid
         }}).then ((response) => {
