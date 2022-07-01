@@ -6,7 +6,7 @@ function Album(){
     const tp = 2;
     const st = null;
     document.body.onload = function(){prods()};
-
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     const prods = () => {
         var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
         Axios.get(url+"/api/v1/products/get", {
