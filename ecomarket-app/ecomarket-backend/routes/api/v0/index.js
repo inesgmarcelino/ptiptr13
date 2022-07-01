@@ -34,6 +34,8 @@ const asyn = require('./async');
  * 
  * 	Objetos req e res API: 
  */
+
+
 router.get('/hello', function(req, res, next) {
 	//funcao say exportada do ficheiro hello.js
 	hello.say(req,res);
