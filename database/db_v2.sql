@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS despacho (
 
     CONSTRAINT prim_despch PRIMARY KEY (encom, forn),
     CONSTRAINT fk_status FOREIGN KEY (estado) REFERENCES estado_despacho(id),
-    CONSTRAINT fk_order FOREIGN KEY (encom) REFERENCES encomenda(id),
+    CONSTRAINT fk_dispatch_order FOREIGN KEY (encom) REFERENCES encomenda(id),
     CONSTRAINT fk_vehic FOREIGN KEY (transp,vehic) REFERENCES veiculo(transp,id),
     CONSTRAINT chk_status CHECK ((estado > 0) AND (estado < 5))
 ) ENGINE = InnoDB;
