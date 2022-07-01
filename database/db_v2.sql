@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS distrito(
 CREATE TABLE IF NOT EXISTS concelho(
     id INT UNIQUE NOT NULL,
     nome VARCHAR(50) UNIQUE NOT NULL,
-    distrito INT UNIQUE NOT NULL,
+    distrito INT NOT NULL,
 
     CONSTRAINT prim_conc PRIMARY KEY(distrito,id),
     CONSTRAINT fk_dist FOREIGN KEY (distrito) REFERENCES distrito(id)
@@ -47,7 +47,6 @@ CREATE TABLE IF NOT EXISTS morada(
     street VARCHAR(100),
     dist INT NOT NULL,
     conc INT NOT NULL,
-    store INT UNIQUE DEFAULT NULL,
     lat DECIMAL(9,7) NOT NULL,
     lng DECIMAL(10,7) NOT NULL,
 
