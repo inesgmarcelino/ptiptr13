@@ -158,29 +158,29 @@ CREATE TABLE IF NOT EXISTS estado_despacho(
 
 -- tabela que relaciona uma encomenda com os diferentes transportadores
 CREATE TABLE IF NOT EXISTS despacho (
-    order INT NOT NULL,
+    encom INT NOT NULL,
     forn INT NOT NULL,
     estado INT NOT NULL DEFAULT 1,
     transp INT DEFAULT NULL, -- inicialmente n temos transportadora atribuida
     vehic INT DEFAULT NULL, -- inicialmente n temos um veiculo atribuido
 
-    CONSTRAINT prim_despch PRIMARY KEY (order, forn),
+    CONSTRAINT prim_despch PRIMARY KEY (encom, forn),
     CONSTRAINT fk_status FOREIGN KEY (estado) REFERENCES estado_despacho(id),
-    CONSTRAINT fk_order FOREIGN KEY (order) REFERENCES encomenda(id),
+    CONSTRAINT fk_order FOREIGN KEY (encom) REFERENCES encomenda(id),
     CONSTRAINT fk_vehic FOREIGN KEY (transp,vehic) REFERENCES veiculo(transp,vehic),
     CONSTRAINT chk_status CHECK ((estado > 0) AND (estado < 5))
 ) ENGINE = InnoDB;
 
 -- relaciona os produtos com o despacho de cada fornecedor (permite ter uma encomenda com multiplos fornecedores)
 CREATE TABLE IF NOT EXISTS encomenda_prods (
-    order INT UNIQUE NOT NULL,
+    encom INT UNIQUE NOT NULL,
     forn INT NOT NULL,
     prod INT NOT NULL,
     qtty INT NOT NULL,
     price DECIMAL(7,2) NOT NULL DEFAULT (00000.00), -- preco por unidade(util guardar em caso de descontos)
 
-    CONSTRAINT prim_ord_prod PRIMARY KEY (order,forn,prod),
-    CONSTRAINT fk_order FOREIGN KEY (order,forn) REFERENCES despacho(order,forn)
+    CONSTRAINT prim_ord_prod PRIMARY KEY (encom,forn,prod),
+    CONSTRAINT fk_order FOREIGN KEY (encom,forn) REFERENCES despacho(encom,forn)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS cesto_compras(
