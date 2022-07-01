@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS concelho(
     CONSTRAINT fk_dist FOREIGN KEY (distrito) REFERENCES distrito(id)
 ) ENGINE = InnoDB;
 
---Antes de introduzir nova morada, verificar quantas o utilizador ja tem
+-- Antes de introduzir nova morada, verificar quantas o utilizador ja tem
 CREATE TABLE IF NOT EXISTS morada(
     id INT NOT NULL,
     user INT NOT NULL,
@@ -77,7 +77,7 @@ INSERT INTO tipo_consumo VALUES(1,"Gasolina");
 INSERT INTO tipo_consumo VALUES(2,"Gasóleo");
 INSERT INTO tipo_consumo VALUES(3,"GPL");
 INSERT INTO tipo_consumo VALUES(4,"Elétrico");
-INSERT INTO tipo_consumo VALUES(5,"Híbrido"); --acho que deviamos tirar este
+INSERT INTO tipo_consumo VALUES(5,"Híbrido"); -- acho que deviamos tirar este
 
 CREATE TABLE IF NOT EXISTS veiculo (
     id INT UNIQUE NOT NULL AUTO_INCREMENT,
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS produto (
     CONSTRAINT prod_sbcatb FOREIGN KEY (catg,subcatg) REFERENCES subcategoria(categoria,id)
 ) ENGINE = InnoDB;
 
---permite obter produtos filtrando por fornecedor, armazem do fornecedor ou por produto
+-- permite obter produtos filtrando por fornecedor, armazem do fornecedor ou por produto
 CREATE TABLE IF NOT EXISTS stock(
     id          INT UNIQUE NOT NULL AUTO_INCREMENT,
     forn        INT NOT NULL,
@@ -130,8 +130,8 @@ CREATE TABLE IF NOT EXISTS stock(
     preco       DECIMAL(7,2) NOT NULL DEFAULT (00000.00),
     due         DATE DEFAULT NULL, --DATA DE VALIDADE
 
-    --CONSTRAINT prim_stock PRIMARY KEY(forn,store,produ), -> Nao permite  
-    --adicionar multiplas instancias do mesmo produto com diferentes datas de validade (por exemplo)
+    -- CONSTRAINT prim_stock PRIMARY KEY(forn,store,produ), -> Nao permite  
+    -- adicionar multiplas instancias do mesmo produto com diferentes datas de validade (por exemplo)
     CONSTRAINT prim_u_stock PRIMARY KEY (forn,id),
     CONSTRAINT fk_store_stock FOREIGN KEY (store,forn) REFERENCES armazem(id,user)
 ) ENGINE = InnoDB;
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS stock(
 CREATE TABLE IF NOT EXISTS encomenda (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     cons            INT NOT NULL,
-    tpurchase       DATE NOT NULL, --time of purchase: timestamp
+    tpurchase       DATE NOT NULL, -- time of purchase: timestamp
     total           DECIMAL(7,2) DEFAULT (00000.00),
 
     CONSTRAINT fk_order_user FOREIGN KEY (cons) REFERENCES utilizador(id)
@@ -155,12 +155,12 @@ INSERT INTO estado_despacho VALUES (2,"Por enviar..."); -- Transportador process
 INSERT INTO estado_despacho VALUES (3,"Em Expedição.");
 INSERT INTO estado_despacho VALUES (4,"Entregue.");
 
---tabela que relaciona uma encomenda com os diferentes transportadores
+-- tabela que relaciona uma encomenda com os diferentes transportadores
 CREATE TABLE IF NOT EXISTS despacho (
     order INT UNIQUE NOT NULL,
     forn INT NOT NULL,
     estado INT NOT NULL,
-    transp INT DEFAULT NULL, --inicialmente n temos transportadora atribuida
+    transp INT DEFAULT NULL, -- inicialmente n temos transportadora atribuida
     vehic INT DEFAULT NULL, -- inicialmente n temos um veiculo atribuido
 
     CONSTRAINT prim_despch PRIMARY KEY (order, forn),
@@ -170,13 +170,13 @@ CREATE TABLE IF NOT EXISTS despacho (
     CONSTRAINT chk_status CHECK ((estado > 0) AND (estado < 5))
 ) ENGINE = InnoDB;
 
---relaciona os produtos com o despacho de cada fornecedor (permite ter uma encomenda com multiplos fornecedores)
+-- relaciona os produtos com o despacho de cada fornecedor (permite ter uma encomenda com multiplos fornecedores)
 CREATE TABLE IF NOT EXISTS encomenda_prods (
     order INT UNIQUE NOT NULL,
     forn INT NOT NULL,
     prod INT NOT NULL,
     qtty INT NOT NULL,
-    price DECIMAL(7,2) NOT NULL DEFAULT (00000.00), --preco por unidade(util guardar em caso de descontos)
+    price DECIMAL(7,2) NOT NULL DEFAULT (00000.00), -- preco por unidade(util guardar em caso de descontos)
 
     CONSTRAINT prim_ord_prod PRIMARY KEY (order,forn,prod),
     CONSTRAINT fk_order FOREIGN KEY (order,forn) REFERENCES despacho(order,forn)
