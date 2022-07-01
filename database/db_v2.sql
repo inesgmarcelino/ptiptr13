@@ -3,93 +3,103 @@ ALTER DATABASE eco_db CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE eco_db;
 
 CREATE TABLE IF NOT EXISTS papeis (
-    id INT PRIMARY KEY,
-    descr VARCHAR(22) NOT NULL
+    id              INT PRIMARY KEY,
+    titulo           VARCHAR(22) NOT NULL
 ) ENGINE = InnoDB;
-
--- INSERT INTO papeis VALUES (1,"Consumidor");
--- INSERT INTO papeis VALUES (2,"Fornecedor");
--- INSERT INTO papeis VALUES (3,"Consumidor/Fornecedor");
--- INSERT INTO papeis VALUES (4,"Transportador");
 
 CREATE TABLE IF NOT EXISTS utilizador (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
     email           VARCHAR(50) NOT NULL UNIQUE,
     nif             INT(9) NOT NULL UNIQUE,
-    phone       INT(9) NOT NULL UNIQUE,
-    passwd       VARCHAR(250) NOT NULL,
-    papel       INT(1) NOT NULL,
-
-    CONSTRAINT fk_role FOREIGN KEY (papel) REFERENCES papeis(id)
+    phone           INT(9) NOT NULL UNIQUE,
+    passwd          VARCHAR(250) NOT NULL,
+    papel           INT(1) NOT NULL,
+    --
+    CONSTRAINT fk_role 
+        FOREIGN KEY (papel) REFERENCES papeis(id)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS distrito(
-    id INT PRIMARY KEY,
-    nome VARCHAR(50) UNIQUE NOT NULL
+CREATE TABLE IF NOT EXISTS distrito (
+    id              INT PRIMARY KEY,
+    nome            VARCHAR(50) UNIQUE NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS concelho(
-    id INT UNIQUE NOT NULL,
-    nome VARCHAR(50) UNIQUE NOT NULL,
-    distrito INT NOT NULL,
-
-    CONSTRAINT prim_conc PRIMARY KEY(distrito,id),
-    CONSTRAINT fk_dist FOREIGN KEY (distrito) REFERENCES distrito(id)
+CREATE TABLE IF NOT EXISTS concelho (
+    id              INT UNIQUE NOT NULL,
+    nome            VARCHAR(50) UNIQUE NOT NULL,
+    distrito        INT NOT NULL,
+    --
+    CONSTRAINT prim_conc 
+        PRIMARY KEY(id,distrito),
+    CONSTRAINT fk_dist 
+        FOREIGN KEY (distrito) REFERENCES distrito(id)
 ) ENGINE = InnoDB;
 
 -- Antes de introduzir nova morada, verificar quantas o utilizador ja tem
-CREATE TABLE IF NOT EXISTS morada(
-    id INT NOT NULL,
-    user INT NOT NULL,
-    prefix INT(4) NOT NULL,
-    sufix INT(3) DEFAULT NULL,
-    street VARCHAR(100),
-    dist INT NOT NULL,
-    conc INT NOT NULL,
-    lat DECIMAL(9,7) NOT NULL,
-    lng DECIMAL(10,7) NOT NULL,
-
-    CONSTRAINT prim_morada PRIMARY KEY (user,id),
-    CONSTRAINT fk_mor_user FOREIGN KEY (user) REFERENCES utilizador(id) ON DELETE CASCADE,
-    CONSTRAINT fk_mor_dist FOREIGN KEY (dist) REFERENCES distrito(id),
-    CONSTRAINT fk_mor_conc FOREIGN KEY (conc) REFERENCES concelho(id)
+CREATE TABLE IF NOT EXISTS morada (
+    id              INT NOT NULL,
+    userId          INT NOT NULL,
+    prefix          INT(4) NOT NULL,
+    sufix           INT(3) DEFAULT NULL,
+    street          VARCHAR(100),
+    dist            INT NOT NULL,
+    conc            INT NOT NULL,
+    lat             DECIMAL(9,7) NOT NULL,
+    lng             DECIMAL(10,7) NOT NULL,
+    --
+    CONSTRAINT prim_morada 
+        PRIMARY KEY (id, userId),
+    CONSTRAINT fk_mor_user 
+        FOREIGN KEY (userId) REFERENCES utilizador(id) ON DELETE CASCADE,
+    CONSTRAINT fk_mor_dist 
+        FOREIGN KEY (dist) REFERENCES distrito(id),
+    CONSTRAINT fk_mor_conc 
+        FOREIGN KEY (conc) REFERENCES concelho(id)
 
 ) ENGINE = InnoDB;
 
 -- cada armazem tem o seu id e pode ser identificado pela sua morada
 CREATE TABLE IF NOT EXISTS armazem (
     id              INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    user            INT NOT NULL,
+    userId          INT NOT NULL,
     morada          INT UNIQUE NOT NULL,
     --
-
-    CONSTRAINT fk_user FOREIGN KEY (morada,user) REFERENCES morada(user,id) ON DELETE CASCADE
+    CONSTRAINT fk_user 
+        FOREIGN KEY (morada,userId) REFERENCES morada(id,userId) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS tipo_consumo (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    tipo VARCHAR(20)
+    id              INT PRIMARY KEY AUTO_INCREMENT,
+    tipo            VARCHAR(20)
 ) ENGINE = InnoDB;
 
--- INSERT INTO tipo_consumo VALUES(1,"Gasolina");
--- INSERT INTO tipo_consumo VALUES(2,"Gasóleo");
--- INSERT INTO tipo_consumo VALUES(3,"GPL");
--- INSERT INTO tipo_consumo VALUES(4,"Elétrico");
--- INSERT INTO tipo_consumo VALUES(5,"Híbrido"); -- acho que deviamos tirar este
+CREATE TABLE IF NOT EXISTS consumos_veiculo (
+    id              INT PRIMARY KEY AUTO_INCREMENT,
+    unidade         INT NOT NULL, -- 1 - litros, 2- kWatts
+    quantidade      DECIMAL(4,2) NOT NULL,
+    --
+    CONSTRAINT chk_unid
+        CHECK (unidade = 1 OR unidade = 2)
+) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS veiculo (
-    id INT UNIQUE NOT NULL AUTO_INCREMENT,
-    transp INT UNIQUE NOT NULL,
-    marca VARCHAR(50) NOT NULL,
-    ano INT(4) NOT NULL,
-    fuel   INT(1) NOT NULL, -- 1 -> Gasolina, 2 -> Gasóleo, 3 -> GPL, 4 -> Elétrico, 5 -> Híbrido
-    consumo DECIMAL(4,2) NOT NULL, -- unidade/km (unidade varia consoante o tipo do consumo)
-    plate  VARCHAR(6) UNIQUE NOT NULL, -- matricula
-
-    CONSTRAINT prim_car PRIMARY KEY (transp,id),
-    CONSTRAINT fk_car_transp FOREIGN KEY (transp) REFERENCES utilizador(id) ON DELETE CASCADE,
-    CONSTRAINT chk_fuel CHECK (fuel = 1 OR fuel = 2 OR fuel = 3 OR fuel = 4 OR fuel = 5)
+    id              INT UNIQUE NOT NULL AUTO_INCREMENT,
+    transp          INT UNIQUE NOT NULL,
+    marca           VARCHAR(50) NOT NULL,
+    ano             INT(4) NOT NULL,
+    fuel            INT(1) NOT NULL, -- 1 -> Gasolina, 2 -> Gasóleo, 3 -> GPL, 4 -> Elétrico, 5 -> Híbrido
+    consumo         INT NOT NULL, 
+    plate           VARCHAR(6) UNIQUE NOT NULL, -- matricula
+    --
+    CONSTRAINT prim_car 
+        PRIMARY KEY (id,transp),
+    CONSTRAINT fk_car_transp 
+        FOREIGN KEY (transp) REFERENCES utilizador(id) ON DELETE CASCADE,
+    CONSTRAINT chk_fuel 
+        CHECK (fuel = 1 OR fuel = 2 OR fuel = 3 OR fuel = 4 OR fuel = 5),
+    CONSTRAINT fk_consumo
+        FOREIGN KEY (consumo) REFERENCES consumos_veiculo(id)
 ) ENGINE = InnoDB;
 
 -- Relaciona uma encomenda com um consumido
@@ -100,40 +110,47 @@ CREATE TABLE IF NOT EXISTS categoria (
     nome            VARCHAR(50) NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS subcategoria(
+CREATE TABLE IF NOT EXISTS subcategoria (
     id              INT NOT NULL UNIQUE AUTO_INCREMENT,
     nome            VARCHAR(50) NOT NULL,
     categoria       INT NOT NULL,
-
-    CONSTRAINT prim_subcat PRIMARY KEY(categoria,id),
-    CONSTRAINT fk_catgry FOREIGN KEY (categoria) REFERENCES categoria(id) ON DELETE CASCADE
+    --
+    CONSTRAINT prim_subcat 
+        PRIMARY KEY(id,categoria),
+    CONSTRAINT fk_catgry 
+        FOREIGN KEY (categoria) REFERENCES categoria(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS produto (
-    id          INT PRIMARY KEY AUTO_INCREMENT,
-    dscp        VARCHAR(340),
-    catg        INT NOT NULL,
-    subcatg     INT NOT NULL,
-
-    CONSTRAINT prod_catg FOREIGN KEY (catg) REFERENCES categoria(id),
-    CONSTRAINT prod_sbcatb FOREIGN KEY (catg,subcatg) REFERENCES subcategoria(categoria,id)
+    id              INT PRIMARY KEY AUTO_INCREMENT,
+    dscp            VARCHAR(340),
+    catg            INT NOT NULL,
+    subcatg         INT NOT NULL,
+    --
+    CONSTRAINT prod_catg 
+        FOREIGN KEY (catg) REFERENCES categoria(id),
+    CONSTRAINT prod_sbcatb 
+        FOREIGN KEY (catg,subcatg) REFERENCES subcategoria(categoria,id)
 ) ENGINE = InnoDB;
 
 -- permite obter produtos filtrando por fornecedor, armazem do fornecedor ou por produto
 CREATE TABLE IF NOT EXISTS stock(
-    id          INT UNIQUE NOT NULL AUTO_INCREMENT,
-    forn        INT NOT NULL,
-    store       INT NOT NULL,
-    produ       INT NOT NULL,
-    qtty        INT NOT NULL DEFAULT 0,
-    preco       DECIMAL(7,2) NOT NULL DEFAULT (00000.00),
-    due         DATE DEFAULT NULL, -- DATA DE VALIDADE
-
+    id              INT UNIQUE NOT NULL AUTO_INCREMENT,
+    forn            INT NOT NULL,
+    store           INT NOT NULL,
+    produ           INT NOT NULL,
+    qtty            INT NOT NULL DEFAULT 0,
+    preco           DECIMAL(7,2) NOT NULL DEFAULT (00000.00),
+    due             DATE DEFAULT NULL, -- DATA DE VALIDADE
+    --
     -- CONSTRAINT prim_stock PRIMARY KEY(forn,store,produ), -> Nao permite  
     -- adicionar multiplas instancias do mesmo produto com diferentes datas de validade (por exemplo)
-    CONSTRAINT prim_u_stock PRIMARY KEY (forn,id),
-    CONSTRAINT fk_stock_user FOREIGN KEY (forn) REFERENCES utilizador(id),
-    CONSTRAINT fk_store_stock FOREIGN KEY (store) REFERENCES armazem(id)
+    CONSTRAINT prim_u_stock 
+        PRIMARY KEY (forn,id),
+    CONSTRAINT fk_stock_user 
+        FOREIGN KEY (forn) REFERENCES utilizador(id),
+    CONSTRAINT fk_store_stock 
+        FOREIGN KEY (store) REFERENCES armazem(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS encomenda (
@@ -141,56 +158,61 @@ CREATE TABLE IF NOT EXISTS encomenda (
     cons            INT NOT NULL,
     tpurchase       DATE NOT NULL, -- time of purchase: timestamp
     total           DECIMAL(7,2) DEFAULT (00000.00),
-
+    --
     CONSTRAINT fk_order_user FOREIGN KEY (cons) REFERENCES utilizador(id)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS estado_despacho(    
-    id INT(1) PRIMARY KEY,
-    descr VARCHAR(25) NOT NULL
+CREATE TABLE IF NOT EXISTS estado_despacho (    
+    id              INT(1) PRIMARY KEY,
+    descr           VARCHAR(25) NOT NULL
 ) ENGINE = InnoDB;
-
--- INSERT INTO estado_despacho VALUES (1,"A processar..."); -- Transportador ainda nao viu a encomenda
--- INSERT INTO estado_despacho VALUES (2,"Por enviar..."); -- Transportador processou a encomenda mas ainda nao enviou
--- INSERT INTO estado_despacho VALUES (3,"Em Expedição.");
--- INSERT INTO estado_despacho VALUES (4,"Entregue.");
 
 -- tabela que relaciona uma encomenda com os diferentes transportadores
 CREATE TABLE IF NOT EXISTS despacho (
-    encom INT NOT NULL,
-    forn INT NOT NULL,
-    estado INT NOT NULL DEFAULT 1,
-    transp INT DEFAULT NULL, -- inicialmente n temos transportadora atribuida
-    vehic INT DEFAULT NULL, -- inicialmente n temos um veiculo atribuido
-
-    CONSTRAINT prim_despch PRIMARY KEY (encom, forn),
-    CONSTRAINT fk_status FOREIGN KEY (estado) REFERENCES estado_despacho(id),
-    CONSTRAINT fk_dispatch_order FOREIGN KEY (encom) REFERENCES encomenda(id),
-    CONSTRAINT fk_vehic FOREIGN KEY (transp,vehic) REFERENCES veiculo(transp,id),
-    CONSTRAINT chk_status CHECK ((estado > 0) AND (estado < 5))
+    encom           INT NOT NULL,
+    forn            INT NOT NULL,
+    estado          INT NOT NULL DEFAULT 1,
+    transp          INT, -- inicialmente n temos transportadora atribuida
+    vehic           INT, -- inicialmente n temos um veiculo atribuido
+    --
+    CONSTRAINT prim_despch 
+        PRIMARY KEY (encom, forn),
+    CONSTRAINT fk_status 
+        FOREIGN KEY (estado) REFERENCES estado_despacho(id),
+    CONSTRAINT fk_dispatch_order 
+        FOREIGN KEY (encom) REFERENCES encomenda(id),
+    CONSTRAINT fk_vehic 
+        FOREIGN KEY (transp,vehic) REFERENCES veiculo(transp,id),
+    CONSTRAINT chk_status 
+        CHECK ((estado > 0) AND (estado < 5))
 ) ENGINE = InnoDB;
 
 -- relaciona os produtos com o despacho de cada fornecedor (permite ter uma encomenda com multiplos fornecedores)
 CREATE TABLE IF NOT EXISTS encomenda_prods (
-    encom INT UNIQUE NOT NULL,
-    forn INT NOT NULL,
-    prod INT NOT NULL,
-    qtty INT NOT NULL,
-    price DECIMAL(7,2) NOT NULL DEFAULT (00000.00), -- preco por unidade(util guardar em caso de descontos)
-
-    CONSTRAINT prim_ord_prod PRIMARY KEY (encom,forn,prod),
-    CONSTRAINT fk_despacho FOREIGN KEY (encom,forn) REFERENCES despacho(encom,forn)
+    encom           INT UNIQUE NOT NULL,
+    forn            INT NOT NULL,
+    prod            INT NOT NULL,
+    qtty            INT NOT NULL,
+    price           DECIMAL(7,2) NOT NULL DEFAULT (00000.00), -- preco por unidade(util guardar em caso de descontos)
+    --
+    CONSTRAINT prim_ord_prod 
+        PRIMARY KEY (encom,forn,prod),
+    CONSTRAINT fk_despacho 
+        FOREIGN KEY (encom,forn) REFERENCES despacho(encom,forn)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS cesto_compras(
-    cons       INT UNIQUE NOT NULL,
-    forn       INT NOT NULL,
-    prod       INT NOT NULL,
-    qtty       INT NOT NULL DEFAULT 1,
+    cons            INT UNIQUE NOT NULL,
+    forn            INT NOT NULL,
+    prod            INT NOT NULL,
+    qtty            INT NOT NULL DEFAULT 1,
 
-    CONSTRAINT prim_cart PRIMARY KEY(cons,forn,prod),
-    CONSTRAINT fk_cart_cons FOREIGN KEY (cons) REFERENCES utilizador(id) ON DELETE CASCADE,
-    CONSTRAINT fk_cart_prod FOREIGN KEY (forn,prod) REFERENCES stock(forn,id) ON DELETE CASCADE
+    CONSTRAINT prim_cart 
+        PRIMARY KEY(cons,forn,prod),
+    CONSTRAINT fk_cart_cons 
+        FOREIGN KEY (cons) REFERENCES utilizador(id) ON DELETE CASCADE,
+    CONSTRAINT fk_cart_prod 
+        FOREIGN KEY (forn,prod) REFERENCES stock(forn,id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 
@@ -279,6 +301,12 @@ CREATE TABLE IF NOT EXISTS emite_poluicao (
 -- INSERT INTO tipo_subtipo VALUES (2,6);
 
 -- queries a usar like para verificar qual o coiso a inserir
+
+-- Insert de Papeis
+INSERT INTO papeis VALUES (1,"Consumidor");
+INSERT INTO papeis VALUES (2,"Fornecedor");
+INSERT INTO papeis VALUES (3,"Consumidor/Fornecedor");
+INSERT INTO papeis VALUES (4,"Transportador");
 
 -- Inserts de Distritos e Concelhos
 INSERT INTO distrito VALUES (1, 'Aveiro');
@@ -621,3 +649,15 @@ INSERT INTO concelho VALUES (2021, 'Tondela', 20);
 INSERT INTO concelho VALUES (2022, 'Vila Nova de Paiva', 20);
 INSERT INTO concelho VALUES (2023, 'Viseu', 20);
 INSERT INTO concelho VALUES (2024, 'Vouzela', 20);
+
+-- Inserts de Tipos_Consumo
+INSERT INTO tipo_consumo VALUES(1,"Gasolina");
+INSERT INTO tipo_consumo VALUES(2,"Gasóleo");
+INSERT INTO tipo_consumo VALUES(3,"GPL");
+INSERT INTO tipo_consumo VALUES(4,"Elétrico");
+
+-- Inserts de estado_despacho
+INSERT INTO estado_despacho VALUES (1,"A processar..."); -- Transportador ainda nao viu a encomenda
+INSERT INTO estado_despacho VALUES (2,"Por enviar..."); -- Transportador processou a encomenda mas ainda nao enviou
+INSERT INTO estado_despacho VALUES (3,"Em Expedição.");
+INSERT INTO estado_despacho VALUES (4,"Entregue.");
