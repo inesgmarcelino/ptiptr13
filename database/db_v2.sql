@@ -38,9 +38,10 @@ CREATE TABLE IF NOT EXISTS concelho(
     CONSTRAINT fk_dist FOREIGN KEY (distrito) REFERENCES distrito(id)
 ) ENGINE = InnoDB;
 
+--Antes de introduzir nova morada, verificar quantas o utilizador ja tem
 CREATE TABLE IF NOT EXISTS morada(
-    id INT NOT NULL AUTO_INCREMENT,
-    user INT UNIQUE NOT NULL,
+    id INT NOT NULL,
+    user INT NOT NULL,
     prefix INT(4) NOT NULL,
     sufix INT(3) DEFAULT NULL,
     street VARCHAR(100),
