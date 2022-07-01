@@ -16,7 +16,8 @@ var http = require('http');
  //process.env.PORT is the port defined in the running environment
  //In this case, is the port defined in GCP 
 
-var port = normalizePort(process.env.PORT || '3000');
+const local = process.env.DEV_ENV === "true" ? '3001' : '3000' ;
+var port = normalizePort(local);
 app.set('port', port);
 
 /**
