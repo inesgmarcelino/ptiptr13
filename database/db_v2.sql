@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS encomenda_prods (
     price DECIMAL(7,2) NOT NULL DEFAULT (00000.00), -- preco por unidade(util guardar em caso de descontos)
 
     CONSTRAINT prim_ord_prod PRIMARY KEY (encom,forn,prod),
-    CONSTRAINT fk_order FOREIGN KEY (encom,forn) REFERENCES despacho(encom,forn)
+    CONSTRAINT fk_despacho FOREIGN KEY (encom,forn) REFERENCES despacho(encom,forn)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS cesto_compras(
