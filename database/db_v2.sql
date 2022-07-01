@@ -4,7 +4,7 @@ USE ecodb;
 
 CREATE TABLE IF NOT EXISTS papeis (
     id INT(1) PRIMARY KEY,
-    desc VARCHAR(22) NOT NULL
+    descr VARCHAR(22) NOT NULL
 ) ENGINE = InnoDB;
 
 INSERT INTO papeis VALUES (1,"Consumidor");
