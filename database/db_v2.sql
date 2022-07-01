@@ -158,7 +158,7 @@ INSERT INTO estado_despacho VALUES (4,"Entregue.");
 
 -- tabela que relaciona uma encomenda com os diferentes transportadores
 CREATE TABLE IF NOT EXISTS despacho (
-    order INT UNIQUE NOT NULL,
+    order INT NOT NULL,
     forn INT NOT NULL,
     estado INT NOT NULL,
     transp INT DEFAULT NULL, -- inicialmente n temos transportadora atribuida
