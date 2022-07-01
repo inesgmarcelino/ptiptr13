@@ -7,10 +7,10 @@ CREATE TABLE IF NOT EXISTS papeis (
     descr VARCHAR(22) NOT NULL
 ) ENGINE = InnoDB;
 
-INSERT INTO papeis VALUES (1,"Consumidor");
-INSERT INTO papeis VALUES (2,"Fornecedor");
-INSERT INTO papeis VALUES (3,"Consumidor/Fornecedor");
-INSERT INTO papeis VALUES (4,"Transportador");
+--INSERT INTO papeis VALUES (1,"Consumidor");
+--INSERT INTO papeis VALUES (2,"Fornecedor");
+--INSERT INTO papeis VALUES (3,"Consumidor/Fornecedor");
+--INSERT INTO papeis VALUES (4,"Transportador");
 
 CREATE TABLE IF NOT EXISTS utilizador (
     id              INT PRIMARY KEY AUTO_INCREMENT,
@@ -52,8 +52,8 @@ CREATE TABLE IF NOT EXISTS morada(
 
     CONSTRAINT prim_morada PRIMARY KEY (user,id),
     CONSTRAINT fk_mor_user FOREIGN KEY (user) REFERENCES utilizador(id) ON DELETE CASCADE,
-    CONSTRAINT fk_mor_dist FOREIGN KEY (distrito) REFERENCES distrito(id),
-    CONSTRAINT fk_mor_conc FOREIGN KEY (concelho) REFERENCES concelho(id)
+    CONSTRAINT fk_mor_dist FOREIGN KEY (dist) REFERENCES distrito(id),
+    CONSTRAINT fk_mor_conc FOREIGN KEY (conc) REFERENCES concelho(id)
 
 ) ENGINE = InnoDB;
 
