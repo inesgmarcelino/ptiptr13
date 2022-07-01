@@ -73,11 +73,11 @@ CREATE TABLE IF NOT EXISTS tipo_consumo (
     tipo VARCHAR(20)
 ) ENGINE = InnoDB;
 
-INSERT INTO tipo_consumo VALUES(1,"Gasolina");
-INSERT INTO tipo_consumo VALUES(2,"Gasóleo");
-INSERT INTO tipo_consumo VALUES(3,"GPL");
-INSERT INTO tipo_consumo VALUES(4,"Elétrico");
-INSERT INTO tipo_consumo VALUES(5,"Híbrido"); -- acho que deviamos tirar este
+-- INSERT INTO tipo_consumo VALUES(1,"Gasolina");
+-- INSERT INTO tipo_consumo VALUES(2,"Gasóleo");
+-- INSERT INTO tipo_consumo VALUES(3,"GPL");
+-- INSERT INTO tipo_consumo VALUES(4,"Elétrico");
+-- INSERT INTO tipo_consumo VALUES(5,"Híbrido"); -- acho que deviamos tirar este
 
 CREATE TABLE IF NOT EXISTS veiculo (
     id INT UNIQUE NOT NULL AUTO_INCREMENT,
