@@ -118,7 +118,7 @@ function Transporter () {
             </div>
 
             <div className="container">
-                <Link to ='' ><button className="btn">Adicionar</button></Link>
+                <Link to ='/carRegister' ><button className="btn">Adicionar</button></Link>
                 <br />
                 <h3>Veículos</h3>     
             </div>

@@ -3,9 +3,13 @@ import Axios from 'axios';
 
 function CarRegister(){
 
+    const handler = () => {
+
+    }
+
     return(
         <div>
-            <div className="cardForn pr position-absolute top-50 start-50 translate-middle">
+            <div className="cardForn position-absolute top-50 start-50 translate-middle">
                 <div className="card-body">
                     <h5 className="card-title">Adicionar Veículo</h5>
                     <h6 className="card-subtitle mb-2">Condições do Veículo</h6>
@@ -20,28 +24,32 @@ function CarRegister(){
                         </div>
                         <div className="col-md-12">
                             <label>Caixa de Velocidades:</label>
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" id="check-automatico" name="check-automatico" onChange={handler} />
-                                <label className="form-check-label" htmlFor="check-automatico">Automático</label>
-                                <br />
-                                <input className="form-check-input" type="checkbox" id="check-manual" name="check-manual" onChange={handler} />
-                                <label className="form-check-label" htmlFor="check-manual">Manual</label>
+                            <div>
+                                <div className="form-check form-check-inline">
+                                    <input className="form-check-input" type="checkbox" id="check-automatico" name="check-automatico" onChange={handler} />
+                                    <label className="form-check-label" htmlFor="check-automatico">Automático</label>
+                                </div>
+                                <div className="form-check form-check-inline">
+                                    <input className="form-check-input" type="checkbox" id="check-manual" name="check-manual" onChange={handler} />
+                                    <label className="form-check-label" htmlFor="check-manual">Manual</label>
+                                </div>
                             </div>
                         </div>
                         <div className="col-md-12">
                             <label>Combustível</label>
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" id="check-gasolina" name="check-gasolina" onChange={handler} />
-                                <label className="form-check-label" htmlFor="check-gasolina">Gasolina</label>
-                                <br />
-                                <input className="form-check-input" type="checkbox" id="check-gasoleo" name="check-gasoleo" onChange={handler} />
-                                <label className="form-check-label" htmlFor="check-gasoleo">Gasóleo</label>
-                                <br />
-                                <input className="form-check-input" type="checkbox" id="check-eletrico" name="check-eletrico" onChange={handler} />
-                                <label className="form-check-label" htmlFor="check-eletrico">Elétrico</label>
-                                <br />
-                                <input className="form-check-input" type="checkbox" id="check-hibrido" name="check-hibrido" onChange={handler} />
-                                <label className="form-check-label" htmlFor="check-hibrido">Híbrido</label>
+                            <div>
+                                <div className="form-check form-check-inline">
+                                    <input className="form-check-input" type="checkbox" id="check-gasolina" name="check-gasolina" onChange={handler} />
+                                    <label className="form-check-label" htmlFor="check-gasolina">Gasolina</label>
+                                </div>
+                                <div className="form-check form-check-inline">
+                                    <input className="form-check-input" type="checkbox" id="check-gasoleo" name="check-gasoleo" onChange={handler} />
+                                    <label className="form-check-label" htmlFor="check-gasoleo">Gasóleo</label>
+                                </div>
+                                <div className="form-check form-check-inline">
+                                    <input className="form-check-input" type="checkbox" id="check-eletrico" name="check-eletrico" onChange={handler} />
+                                    <label className="form-check-label" htmlFor="check-eletrico">Elétrico</label>
+                                </div>
                             </div>
                         </div>
                         <div className="col-md-12">
@@ -53,5 +61,7 @@ function CarRegister(){
                 </div>
             </div>
         </div>
-    )
+    );
 }
+
+export default CarRegister;
