@@ -19,7 +19,7 @@ const pool = mysql.createPool({
   host: servIP,
   user: "ecobackend",
   password: "Y1nGJ14Ng#",
-  database: "ecodb",
+  database: "eco_db",
   port: 6033
 }).promise();
 
