@@ -76,7 +76,22 @@ function Album(){
 
     return(
         <div>
-            <div className="product-container" id="produtos">
+            <div className='row catalog'>
+                <div className='col-sm-3 filtros'>
+                    <h5>Categoria</h5>
+                    <div className="form-check">
+                        <input className="form-check-input cat" type="checkbox" id="check-brinquedos" name="check-brinquedos"  />
+                        <label className="form-check-label" htmlFor="check-brinquedps">Brinquedos</label>
+                        <br />
+                        <input className="form-check-input cat" type="checkbox" id="check-livros" name="check-livros"/>
+                        <label className="form-check-label" htmlFor="check-livros">Livros</label>
+                        <br />
+                        <input className="form-check-input cat" type="checkbox" id="check-comida" name="check-comida"  />
+                        <label className="form-check-label" htmlFor="check-comida">Comida</label>
+                    </div>
+                </div>
+                <div className="col product-container" id="produtos">
+                </div>
             </div>
         </div>
     );
