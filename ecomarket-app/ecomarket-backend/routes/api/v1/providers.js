@@ -11,7 +11,7 @@ var auth = require('../svlib/auth0/tokenlib');
 const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
-router.post('/reg_storage', (req,res) => {
+router.post('/reg_storage', async (req,res) => {
     const morada = req.body.morada;
     const cpostal = req.body.codpostal;
     const dist = req.body.dist;
@@ -93,7 +93,7 @@ router.post('/reg_storage', (req,res) => {
     });
 });
 
-router.post('/reg_product', (req,res) => {
+router.post('/reg_product', async (req,res) => {
     const prov = req.body.id;
     const nome = req.body.nome;
     const dataprod = req.body.dataprod;
@@ -250,72 +250,52 @@ router.post('/reg_product', (req,res) => {
     // });
 });
 
-router.get('/products', (req,res) => {
+// OPERACIONAL
+router.get('/products', async (req,res) => {
     var provId = req.query.pid;
     var queryString = "SELECT p.id AS id, p.nome AS nome, p.producao  AS producao, tp.nome AS tipo, stp.nome AS subtipo, p.preco \
                         FROM produto p, tipo_produto tp, subtipo_produto stp \
                         WHERE (p.fornecedor = 3) AND (tp.id = p.tipo) AND (stp.id = p.subtipo)";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
 
-        conn.query(queryString, [provId], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 15");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try {
+        const [results,fields] = await pool.query(queryString, [provId]);
+        return res.status(200).send({results: result}); 
+    } catch (err) {
+        return res.status(500).send({message:"fail"});
+    }
 });
 
 
-router.get('/orders', (req,res) => {
+router.get('/orders', async (req,res) => {
     var provId = req.query.pid;
     var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS transportador, SUM(lpe.quantidade * p.preco) AS total, u2.nome AS consumidor \
                         FROM encomenda e, utilizador u1, lista_produtos_encomenda lpe, produto p, lista_encomendas le, transportar_encomendas te, utilizador u2 \
                         WHERE (le.fornecedor = ?) AND (le.encomenda = e.id) AND (te.encomenda = e.id) AND (te.transportador = u1.id) AND (lpe.encomenda = e.id) \
                             AND (lpe.produto = p.id) AND (le.consumidor = u2.id) \
                         GROUP BY e.id, u1.nome, u2.nome";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
 
-        conn.query(queryString, [provId], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 16");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try {
+        const [results,fields] = await pool.query(queryString, [provId]);
+        return res.status(200).send({results: result}); 
+    } catch (err) {
+        return res.status(500).send({message:"fail"});
+    }
 });
 
 
-router.get('/storages', (req,res) => {
+router.get('/storages', async (req,res) => {
     var provId = req.query.pid;
     var queryString = "SELECT a.id AS id, l.morada AS morada, l.c_postal AS cpostal, d.nome AS distrito, c.nome AS concelho \
                         FROM armazem a, localizacao l, distrito d, concelho c, lista_armazens la \
                         WHERE (la.fornecedor = ?) AND (la.armazem = a.id) AND (a.localizacao = l.id) AND (l.distrito = d.id) AND (l.concelho = c.id) \
                         GROUP BY a.id";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
 
-        conn.query(queryString, [provId], (err, results) => {
-            conn.release();
-
-            if (!err) {
-                return res.status(200).send({results: results});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 17");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try {
+        const [results,fields] = await pool.query(queryString, [provId]);
+        return res.status(200).send({results: result}); 
+    } catch (err) {
+        return res.status(500).send({message:"fail"});
+    }
 });
 
 //exporta funções/"objetos"

@@ -10,8 +10,10 @@ function Order(){
 
     document.body.onload = function(){prod()};
 
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+
     const prod = () => {
-        Axios.get("https://ecomarket.works/api/v1/products/order", {
+        Axios.get(url+"/api/v1/products/order", {
             params: {
                 order: order
         }}).then ((response) => {

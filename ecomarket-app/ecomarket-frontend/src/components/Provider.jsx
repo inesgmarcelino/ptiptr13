@@ -15,9 +15,9 @@ function Provider () {
         prod();
         store();
     }
-
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     const enc = () => {
-        Axios.get("https://ecomarket.works/api/v1/providers/orders", {
+        Axios.get(url+"/api/v1/providers/orders", {
             params: {
                 pid: pid
         }}).then ((response) => {
@@ -47,7 +47,7 @@ function Provider () {
         }
     }
     const prod = () => {
-        Axios.get("https://ecomarket.works/api/v1/providers/products", {
+        Axios.get(url+"/api/v1/providers/products", {
             params: {
                 pid: pid
         }}).then ((response) => {
@@ -69,7 +69,7 @@ function Provider () {
     }
 
     const store = () => {
-        Axios.get("https://ecomarket.works/api/v1/providers/storages", {
+        Axios.get(url+"/api/v1/providers/storages", {
             params: {
                 pid: pid
         }}).then ((response) => {

@@ -8,7 +8,8 @@ function AdminUsersList(){
     document.body.onload = function(){users()};
 
     const users = () => {
-        Axios.get("https://ecomarket.works/api/v1/admin/cons").then ((response) => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        Axios.get(url+"/api/v1/admin/cons").then ((response) => {
             document.getElementById("admin_users").innerHTML += "<tr> \
                                                                     <td colspan='7'>Consumidores</td> \
                                                                 </tr>";
@@ -28,7 +29,7 @@ function AdminUsersList(){
             }
         });
 
-        Axios.get("https://ecomarket.works/api/v1/admin/prov").then ((response) => {
+        Axios.get(url+"/api/v1/admin/prov").then ((response) => {
             document.getElementById("admin_users").innerHTML += "<tr> \
                                                                     <td colspan='7'>Fornecedores</td> \
                                                                 </tr>";
@@ -48,7 +49,7 @@ function AdminUsersList(){
             }
         });
 
-        Axios.get("https://ecomarket.works/api/v1/admin/transp").then ((response) => {
+        Axios.get(url+"/api/v1/admin/transp").then ((response) => {
             document.getElementById("admin_users").innerHTML += "<tr> \
                                                                     <td colspan='7'>Transportadores</td> \
                                                                 </tr>";

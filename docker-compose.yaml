@@ -65,6 +65,7 @@ services:
       depends_on:
         - "frontend"
 
+
 networks:
     c-network:
 

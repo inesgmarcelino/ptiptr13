@@ -9,9 +9,14 @@ function Consumer () {
     const cid = 2;
 
     document.body.onload = function(){enc()};
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+    const buscarEnc = (x) => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        window.location.href = url+'/order?id=' + x.target.value;   
+    }
 
     const enc = () => {
-        Axios.get("https://ecomarket.works/api/v1/consumers/orders", {
+        Axios.get(url+"/api/v1/consumers/orders", {
             params: {
                 cid: cid
         }}).then ((response) => {
@@ -25,12 +30,13 @@ function Consumer () {
                                                                         <td>"+encomendas[i].transportador+"</td>\
                                                                         <td>"+status(encomendas[i].cons, encomendas[i].forn, encomendas[i].transp)+"</td>\
                                                                         <td>"+encomendas[i].total+"€</td>\
-                                                                        <td> Botão para a order.jsx respetiva</td>\
+                                                                        <td><button value='"+encomendas[i].id+"' onClick={buscarEnc}>Ver</button></td>\
                                                                     </tr>";
                 }
             }
         });
     }
+// <button value="x" onClick={buscarenc}
 
     const status = (c,f,t) => {
         if (c === 'YES') {

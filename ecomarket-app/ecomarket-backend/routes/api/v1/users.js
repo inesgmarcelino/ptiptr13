@@ -3,7 +3,7 @@ var router = express.Router();
 const multer = require('multer');
 const {Storage} = require('@google-cloud/storage');
 const axios = require('axios');
-const escaper = require('querystring');
+
 
 // https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
 // https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
@@ -15,7 +15,7 @@ var auth = require('../svlib/auth0/tokenlib');
 
 //probably very useful: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 
-// router.get('register', (req,res) =>{
+// router.get('register', async (req,res) =>{
 //     res.status(404);
 //     res.send({});
 // })
@@ -44,35 +44,54 @@ router.post('/register', (req, res, next) => {
                 'content-type': 'application/json'
             }
         }).then(async function (response) {
-            var id = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
-            id = id[0][0].id;
+            var [rows, field] = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
+            id = rows[0].id;
             if (req.body.trans) {
-                var address = escaper.escape(req.body.morada);
-                address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-                const location = await axios.post("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt");
-                if (location.results.status !== "OK") throw new Error("Location Invalid");
-                var parts = {};
-                for (var element in location.results.address_components) {
-                    var key;
-                    if (element.types.length > 1) {
-                        key = element.types[0] === "political" ? element.types[1] : element.types[0];
-                    } else {
-                        key = element.types[0];
-                    }
-                    parts[key] = element.long_name;
-                }
-                const concid = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?"[parts.locality]);
-                if (concid[0][0].length == 0) throw new Error("concelho not found");
-                const insert = await pool.query("INSERT INTO localizacao(rua, c_postal, distrito, concelho, lati, long) VALUES (?,?,?,?,?,?)",
-                    [parts.route + " " + parts.street_number,
-                    parts.postal_code,
-                    concid[0][0].distrito,
-                    concid[0][0].id,
-                    location.results.geometry.location.lat,
-                    location.results.geometry.location.lng]);
-                const locid = await pool.query("SELECT id FROM localizacao WHERE lati = ?, long = ?", [location.results.geometry.location.lat, location.results.geometry.location.lng]);
+                const address = encodeURIComponent(req.body.morada);
+                //address = address.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                console.log(address);
+                const link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt";
+                console.log(link);
+                const location = await axios.post(link).then( async (response) => {
+                    var location = response.data;
 
-                const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, locid[0][0].id]);
+                    if (location.status !== "OK") throw new Error("Location Invalid");
+                    var components = location.results[0].address_components;
+                    var coords = location.results[0].geometry.location;
+                    console.log(coords);
+                    var parts = {};
+
+                    components.forEach(element => {
+ 
+                        var key;
+                        if (element.types.length > 1) {
+                            key = element.types[0] === "political" ? element.types[1] : element.types[0];
+                        } else {
+                            key = element.types[0];
+                        }
+
+                        parts[key] = element.long_name;
+                    });
+
+                    console.log(parts);
+                    const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?",[parts.locality]);
+                    if (concelho.length == 0) throw new Error("concelho not found");
+                    console.log(concelho);
+                    const insert = await pool.query("INSERT INTO localizacao(morada, c_postal, distrito, concelho, lat, lng) VALUES (?,?,?,?,?,?)",
+                        [parts.route + " " + parts.street_number,
+                        parts.postal_code,
+                        concelho[0].distrito,
+                        concelho[0].id,
+                        coords.lat,
+                        coords.lng]);
+                    console.log("we got this far");
+                    const [cords, o] = await pool.query("SELECT id FROM localizacao WHERE lat = ? AND lng = ?", [coords.lat,coords.lng]);
+    
+                    const cons = await pool.query("INSERT INTO transportador(utilizador,localizacao) VALUES (?,?)", [id, cords[0].id]);
+                }).catch( async (err) => {
+                    const del = await pool.query("DELETE FROM utilizador WHERE id=?", id);
+                    throw err.message;
+                });
             } else {
                 console.error(req.body.cons);
                 if (req.body.cons) {
@@ -83,7 +102,9 @@ router.post('/register', (req, res, next) => {
                 }
             }
             res.status(200).send({ message: "success" });
-
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).send({ message: "fail" });
         });
     } catch (err) {
         console.error(err);
@@ -93,7 +114,7 @@ router.post('/register', (req, res, next) => {
 
 
 
-router.get('/:uid', (req,res) => {
+router.get('/:uid', async (req,res) => {
     var userId = req.params.uid;
     var queryString = "SELECT * FROM utilizador WHERE id = ?";
 
@@ -118,7 +139,7 @@ router.get('/:uid', (req,res) => {
     });
 });
 
-router.delete('/delete/:uid', (req,res) => {
+router.delete('/delete/:uid', async (req,res) => {
     var userId = req.params.uid;
     var queryString = "DELETE FROM utilizador WHERE id = ?";
 
@@ -144,7 +165,7 @@ router.delete('/delete/:uid', (req,res) => {
     });
 });
 
-router.put('/edit/:uid', (req,res) => {
+router.put('/edit/:uid', async (req,res) => {
     const nome = req.body.nome;
     const email = req.body.email;
     const tlm = req.body.tlm;
@@ -199,30 +220,23 @@ router.put('/edit/:uid', (req,res) => {
 
     var userId = req.params.uid;
     queryString += "WHERE id = " +  userId;
+    try{
+        const [rows,fields] = await pool.query(queryString);
+        if(rows.length > 0){
+            console.log("Utilizador atualizado com sucesso");
+            return res.status(200).send({message:"success"});
+        } else {
+            console.log("Utilizador não se encontra na base de dados");
+            return res.status(404).send({message:"fail"});
+        }
+    } catch(err){
+        console.log(err);
+        return res.status(500).send({message:"fail"});
+    }
     
-    pool.getConnection((err,conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, (err, results) =>  {
-            conn.release();
-
-            if (!err) {
-                if(results.length > 0){
-                    console.log("Utilizador atualizado com sucesso");
-                    return res.status(200).send({message:"success"});
-                } else {
-                    console.log("Utilizador não se encontra na base de dados");
-                    return res.status(404).send({message:"fail"});
-                }
-            } else {
-                console.log("Não foi possível realizar essa operação. output 8");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
 });
-
-router.post('/uploadProfPic', (req,res) => {
+/*
+router.post('/uploadProfPic', async (req,res) => {
     const filename = req.body.filename;
     var queryString = "INSERT INTO image (filename) VALUES (?)";
 
@@ -249,7 +263,7 @@ router.post('/uploadProfPic', (req,res) => {
     });
 });
 
-
+*/
 
 
 // um user que seja só consumidor ou só fornecedor pode se tornar também fornecedor ou consumidor...
