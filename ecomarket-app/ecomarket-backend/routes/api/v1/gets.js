@@ -45,8 +45,9 @@ router.get('/concelhos', async (req,res) => {
     }
 });
 
-router.get('/tipos', async (req,res) => {
-    var queryString = "SELECT * FROM tipo_produto";
+router.get('/categorias', async (req,res) => {
+    var queryString = "SELECT * FROM categoria \
+                        ORDER BY nome ASC";
 
     try {
         const [result,fields] = await pool.query(queryString);
@@ -56,12 +57,12 @@ router.get('/tipos', async (req,res) => {
     }
 });
 
-router.get('/subtipos', async (req,res) => {
-    var tip = req.query.tipo;
-    var queryString = "SELECT subtipo_produto.* FROM tipo_subtipo, subtipo_produto WHERE tipo_subtipo.tipo = ? AND subtipo_produto.id = tipo_subtipo.subtipo";
+router.get('/subcategorias', async (req,res) => {
+    var cat = req.query.cat;
+    var queryString = "SELECT * FROM subcategoria WHERE categoria = ?";
 
     try {
-        const [results,fields] = await pool.query(queryString, [tip]);
+        const [results,fields] = await pool.query(queryString, [cat]);
         return res.status(200).send({results: results}); 
     } catch (err) {
         return res.status(500).send({message:"fail"});

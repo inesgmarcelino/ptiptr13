@@ -1,3 +1,4 @@
+const Axios = require('axios');
 var express = require('express');
 var router = express.Router();
 
@@ -12,95 +13,65 @@ const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
 router.post('/reg_storage', async (req,res) => {
-    const morada = req.body.morada;
-    const cpostal = req.body.codpostal;
-    const dist = req.body.dist;
-    const conc = req.body.conc;
-    const prov = req.body.email;
+    try {
+        const address = encodeURIComponent(req.body.morada)
+        const link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt";
+        console.log(link);
+        const loc = await Axios.post(link).then(async (response) => {
+            var location = response.data;
 
-    var queryString = "SELECT utilizador.id FROM utilizador, fornecedor WHERE utilizador.email = ? AND utilizador.id = fornecedor.utilizador";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
+            if (location.status !== 'OK') throw new Error("Location Invalid");
+            var components = location.results[0].address_components;
+            var coords = location.results[0].geometry.location;
+            console.log(coords);
+            var parts = {};
 
-        conn.query(queryString, [prov], (err,result) => {
-            if (!err) {
-                var idprov = result[0].id;
+            components.forEach(element => {
 
-                queryString = "INSERT INTO localizacao (morada, c_postal, distrito, concelho) VALUES (?,?,?,?)";
-                conn.query(queryString, [morada, cpostal, dist, conc], (err, result) => {
-                    if (err) {
-                        conn.release();
+                var key;
+                if (element.types.length > 1) {
+                    key = element.types[0] === "political" ? element.types[1] : element.types[0];
+                } else {
+                    key = element.types[0];
+                }
 
-                        console.log("Não foi possível realizar essa operação. output 1");
-                        return res.status(500).send({message:"fail"});
-                    }
-                });
-    
-                queryString = "SELECT id FROM localizacao";
-                conn.query(queryString, (err,results) => {
-                    if (!err) {
-                        var idloc = results[results.length -1].id; //por verificar
+                parts[key] = element.long_name;
+            });
 
-                        queryString = "INSERT INTO armazem (localizacao) VALUES (?)";
-                        conn.query(queryString, [idloc], (err,result) => {
-                            if (err) {
-                                conn.release();
-
-                                console.log("Não foi possível realizar essa operação. output 2");
-                                return res.status(500).send({message:"fail"});
-                            }
-                        });
-                
-                        queryString = "SELECT id FROM armazem WHERE localizacao = ?";
-                        conn.query(queryString, [idloc], (err, result) => {
-                            if (!err) {
-                                var idsto = result[result.length - 1].id //por verificar
-
-                                queryString = "INSERT INTO lista_armazens (fornecedor, armazem) VALUES (?,?)";
-                                    conn.query(queryString, [idprov, idsto], (err, results) => {
-                                        conn.release();
-                                        
-                                        if (err) {
-                                            console.log("Não foi possível realizar essa operação. output 3");
-                                            return res.status(500).send({message:"fail"});
-                                        } else {
-                                            console.log("Registo bem sucessido");
-                                            return res.status(200).send({message:"success"});
-                                        }
-                                    });
-                                } else {
-                                    conn.release();
-
-                                    console.log("Não foi possível realizar essa operação. output 4");
-                                    return res.status(500).send({message:"fail"});
-                                }
-                        });
-
-                    } else {
-                        conn.release();
-
-                        console.log("Não foi possível realizar essa operação. output 5");
-                        return res.status(500).send({message:"fail"});
-                    }
-                });
-            } else {
-                conn.release();
-
-                console.log("Não foi possível realizar essa operação. output 6");
-                return res.status(500).send({message:"fail"});
-            }
+            console.log(parts);
+            const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?",[parts.locality]);
+            if (concelho.length == 0) throw new Error("concelho not found");
+            console.log(concelho);
+            const insert = await pool.query("INSERT INTO morada(id, userId, prefix, sufix, street, dist, conc, lat, lng) VALUES (?,?,?,?,?,?,?,?,?)",
+                [1, req.body.prov, parts.postal_code.substring(0,4), parts.postal_code.substring(5), parts.route, concelho[0].distrito, concelho[0].id, coords.lat, coords.lng]);
+            const [morada, fieds] = await pool.query("SELECT id FROM morada WHERE street = ? AND userId = ?", [parts.route, req.body.prov]);
+            const storage = await pool.query("INSERT INTO armazem (userId, morada) VALUES (?,?)", [req.body.prov, morada[0].id]);
+            
+        }).catch ( async (err) => {
+            res.status(500).send({message: "fail"});
+            throw err.message;
         })
-    });
-});
+
+        res.status(200).send({message: "success"});
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({message: "fail"});
+    }
+})
 
 router.post('/reg_product', async (req,res) => {
-    const prov = req.body.id;
+    const prov = req.body.prov;
     const nome = req.body.nome;
     const dataprod = req.body.dataprod;
     const preco = req.body.preco;
-    const tipo = req.body.tipo;
-    const subtipo = req.body.subtipo;
-    queryString = "INSERT INTO produto (nome, fornecedor, producao, preco, tipo, subtipo) VALUES (?,?,?,?,?,?,?)";
+    const quant = req.body.quant;
+    const armazem = req.body.storage;
+    const categoria = req.body.cat;
+    const subcategoria = req.body.subcat;
+    const insert = await pool.query("INSERT INTO produto (dscp, catg, subcatg) VALUES (?,?,?)", 
+        [nome, categoria, subcategoria]);
+    const select = await
+
     pool.getConnection((err, conn) => {
         conn.query(queryString, [nome, prov, dataprod, preco, tipo, subtipo, idcad], (err, result) => {
             conn.release();
@@ -285,15 +256,15 @@ router.get('/orders', async (req,res) => {
 
 router.get('/storages', async (req,res) => {
     var provId = req.query.pid;
-    var queryString = "SELECT a.id AS id, l.morada AS morada, l.c_postal AS cpostal, d.nome AS distrito, c.nome AS concelho \
-                        FROM armazem a, localizacao l, distrito d, concelho c, lista_armazens la \
-                        WHERE (la.fornecedor = ?) AND (la.armazem = a.id) AND (a.localizacao = l.id) AND (l.distrito = d.id) AND (l.concelho = c.id) \
-                        GROUP BY a.id";
+    var queryString = "SELECT a.id AS id, m.street AS rua, m.prefix AS postal1, m.sufix AS postal2, d.nome AS distrito, c.nome AS concelho \
+                        FROM armazem a, morada m, distrito d, concelho c \
+                        WHERE (a.userId = ?) AND (a.morada = m.id) AND (m.dist = d.id) AND (m.conc = c.id)";
 
     try {
         const [results,fields] = await pool.query(queryString, [provId]);
-        return res.status(200).send({results: result}); 
+        return res.status(200).send({results: results}); 
     } catch (err) {
+        console.error(err);
         return res.status(500).send({message:"fail"});
     }
 });

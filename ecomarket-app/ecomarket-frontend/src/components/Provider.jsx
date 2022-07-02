@@ -11,8 +11,8 @@ function Provider () {
     document.body.onload = function(){prov()};
 
     const prov = () => {
-        enc();
-        prod();
+        // enc();
+        // prod();
         store();
     }
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
@@ -78,8 +78,8 @@ function Provider () {
                 for (var i = 0; i < storages.length; i++) {
                     document.getElementById("prov_stor").innerHTML += "<tr>\
                                                                         <td>"+storages[i].id+"</td>\
-                                                                        <td>"+storages[i].morada+"</td>\
-                                                                        <td>"+cpostal(storages[i].cpostal)+"</td>\
+                                                                        <td>"+storages[i].rua+"</td>\
+                                                                        <td>"+cpostal(storages[i].postal1, storages[i].postal2)+"</td>\
                                                                         <td>"+storages[i].distrito+"</td>\
                                                                         <td>"+storages[i].concelho+"</td>\
                                                                     </tr>";
@@ -88,8 +88,22 @@ function Provider () {
         });
     }
 
-    const cpostal = (cp) => {
-        return cp.substring(0,4) + "-" + cp.substring(4);
+    const cpostal = (p1,p2) => {
+        if (p1 < 1000) {
+            p1 = "0"+p1;
+        } else if (p1 > 9 && p1 < 100) {
+            p1 = "00"+p1;
+        } else if (p1 < 10) {
+            p1 = "000"+p1;
+        }
+
+        if (p2 < 100) {
+            p2 = "0"+p2;
+        } else if (p2 < 10) {
+            p2 = "00"+p2;
+        }
+    
+        return p1+"-"+p2;
     }
 
     return(
@@ -116,7 +130,7 @@ function Provider () {
             </div>
 
             <div className="container">
-                <Link to ='' ><button className="btn">Adicionar</button></Link>
+                <Link to ='/productRegister' ><button className="btn">Adicionar</button></Link>
                 <br />
                 <h3>Produtos</h3>     
             </div>
@@ -140,7 +154,7 @@ function Provider () {
             </div>
 
             <div className="container">
-                <Link to ='' ><button className="btn">Adicionar</button></Link>
+                <Link to ='/storageRegister' ><button className="btn">Adicionar</button></Link>
                 <br />
                 <h3>Armazéns</h3>
             </div>

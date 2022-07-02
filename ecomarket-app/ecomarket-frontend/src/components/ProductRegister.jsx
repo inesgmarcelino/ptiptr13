@@ -2,48 +2,64 @@
 import Axios from 'axios';
 import { useState } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
+import { getOverlayDirection } from 'react-bootstrap/esm/helpers';
 
 function ProductRegister(){
     const { user } = useAuth0();
-    const id = 2; //testar forn
+    const id = 3; //testar forn
     
 
-    const [nomeProd, setNomeProd]   = useState('');
-    const [dataProd, setDataProd]   = useState('');
-    const [preco, setPreco]         = useState('');
-    const [tipo, setTipo]           = useState('');
-    const [subtipo, setSubtipo]     = useState('');
-    // const [nomeRec, setNomeRec]     = useState('');
-    // const [medidaRec, setMedRec]    = useState('');
-    // const [quantRec, setQuantRec]   = useState('');
-    // const [nomePol, setNomePol]     = useState('');
-    // const [quantPol, setQuantPol]   = useState('');
+    const [nomeProd, setNomeProd]           = useState('');
+    const [dataProd, setDataProd]           = useState('');
+    const [preco, setPreco]                 = useState('');
+    const [categoria, setCategoria]         = useState('');
+    const [subcategoria, setSubcategoria]   = useState('');
+    const [quantidade, setQuantidade]       = useState('');
+    const [armazem, setArmazem]             = useState('');
 
-    // const addRec = () => {
-    //     document.getElementsByClassName("recursos").innerHTML += "<div className='col-md-12'> \
-    //     <label>Nome:</label>\
-    //     <input className='form-control' type='text' name='nomeR'  size='50'/>\
-    // </div>\
-    // <div className='col-md-12'>\
-    //     <label>Medida:</label>\
-    //     <input className='form-control' type='text' name='medidaR' size='50'/>\
-    // </div>\
-    // <div className='col-md-12'>\
-    //     <label>Quantidade:</label>\
-    //     <input className='form-control' type='text' name='quantidadeR' size='50'/>\
-    // </div>";
-    // }
+    document.body.onload = function(){go()};
 
-    // const addPol = () => {
-    //     document.getElementsByClassName("poluicao").innerHTML += "<div className='col-md-12'>\
-    //     <label>Nome:</label>\
-    //     <input className='form-control' type='text' name='nomeP' size='50'/>\
-    // </div>\
-    // <div className='col-md-12'>\
-    //     <label>Quantidade:</label>\
-    //     <input className='form-control' type='text' name='quantidadeP'  size='50'/>\
-    // </div>";
-    // }
+    const go = () => {
+        categorias();
+        armazens();
+    }
+
+    const armazens = () => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        Axios.get(url+"/api/v1/providers/storages", {
+            params : {
+                pid: id
+            }
+        }).then((response) => {
+            var store = response.data.results;
+            for (var i = 0; i < store.length; i++) {
+                document.getElementById("armazens").innerHTML += "<option value='" + store[i]["id"] + "'>" + store[i]["rua"] + "</option>";
+            }
+        });
+    }
+
+    const categorias = () => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        Axios.get(url+"/api/v1/gets/categorias").then((response) => {
+            var cat = response.data.results;
+            for (var i = 0; i < cat.length; i++) {
+                document.getElementById("categorias").innerHTML += "<option value='" + cat[i]["id"] + "'>" + cat[i]["nome"] + "</option>";
+            }
+        });
+    }
+
+    const subcategorias = (x) => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        Axios.get(url+"/api/v1/gets/subcategorias", {
+            params : {
+                cat: x.target.value
+        }}).then((response) => {
+            var subcat = response.data.results;
+            for (var i = 0; i < subcat.length; i++) {
+                document.getElementById("subcategorias").innerHTML += "<option value='" + subcat[i]["id"] + "'>" + subcat[i]["nome"] + "</option>";
+            }
+        });
+    }
 
     const handler = (x) => {
         var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
@@ -57,30 +73,36 @@ function ProductRegister(){
             case "preco":
                 setPreco(x.target.value);
                 break;
+            case "quantidade":
+                setQuantidade(x.target.value);
+                break;
+            case "armazem":
+                setArmazem(x.target.value);
+                break;
             case "tipo":
-                var type = x.target[x.target.selectedIndex].text;
-                setTipo(type);
-                subtipos(type);
+                setCategoria(x.target.value);
                 break;
             case "subtipo":
-                setSubtipo(x.target.value);
+                setSubcategoria(x.target.value);
                 break;
             case "submit":
                 x.preventDefault();
-                if (nomeProd === '' || dataProd === '' || preco === '' || tipo === '' || subtipo === '') {
+                if (nomeProd === '' || dataProd === '' || preco === '' || quantidade === '' || armazem === '' || categoria === '' || subcategoria === '') {
                     // setError(true);
                 } else {
                     Axios.post(url+"/api/v1/providers/reg_product", {
-                        id: id,
+                        prov: id,
                         nome: nomeProd,
                         data: dataProd,
                         preco: preco,
-                        tipo: tipo,
-                        subtipo: subtipo
+                        quant: quantidade,
+                        storage: armazem,
+                        cat: categoria,
+                        subcat: subcategoria
                     }).then((response) => {
                         console.log(response);
                         if (response.data.message === "success") {
-                            window.location.href = url;
+                            window.location.href = "http://localhost:3000/provider"; //yo be changed
                         }
                     })
                 }
@@ -88,23 +110,6 @@ function ProductRegister(){
             default:
                 console.log();
         }
-    }
-
-
-
-    const subtipos = (type) => {
-        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
-        document.getElementById("subtipos").innerHTML = "<option value='' selected>Selecione um Subtipo</option>";
-        Axios.get(url+"/api/v1/gets/subtipos", { 
-            params: { 
-                tipo: type
-        }}).then((response) => {
-            var sub = response.data.results;
-            document.getElementById("subtipos").innerHTML = "<option value='' selected>Selecione um Tipo</option>";
-            for (var i = 0; i < sub.length; i++) {
-                document.getElementById("subtipos").innerHTML += "<option value='" + sub[i]['id'] + "'>" + sub[i]['nome'] + "</option>";
-            }
-        });
     }
 
     return(
@@ -129,17 +134,28 @@ function ProductRegister(){
                     </div>
 
                     <div className="col-md-12">
-                        <label>Tipo</label>
-                        <select className="form-select" name="tipo" id="tipos" onChange={handler} /*onMouseOver={tipos}*/ required>
-                            <option value='' selected>Selecione um Tipo</option>
-                            {useLoad()}
+                        <label>Quantidade em Stock</label>
+                        <input className="form-control" type="number" name="quantidade"  size="50" onChange={handler} required/>
+                    </div>
+
+                    <div className="col-md-12">
+                        <label>Armazém</label>
+                        <select className="form-select" name="armazem" id="armazens" onChange={handler} required>
+                            <option value='' selected>Selecione um Armazém</option>
                         </select>
                     </div>
 
                     <div className="col-md-12">
-                        <label>Subtipo</label>
-                        <select className="form-select" name="subtipo" id="subtipos" onChange={handler} required>
-                            <option value='' selected>Selecione um Subtipo</option>
+                        <label>Categoria</label>
+                        <select className="form-select" name="categoria" id="categorias" onChange={handler} onInput={subcategorias} required>
+                            <option value='' selected>Selecione uma Categoria</option>
+                        </select>
+                    </div>
+
+                    <div className="col-md-12">
+                        <label>Subcategoria</label>
+                        <select className="form-select" name="subcategoria" id="subcategorias" onChange={handler} required>
+                            <option value='' selected>Selecione uma Subcategoria</option>
                         </select>
                     </div>
                     
@@ -179,21 +195,6 @@ function ProductRegister(){
         </div> 
         </div>
     );
-}
-
-function useLoad(){
-
-    function tipos(){
-        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
-        Axios.get(url+"/api/v1/gets/tipos").then((response) => {
-            var tip = response.data.results;
-            for (var i = 0; i < tip.length; i++) {
-                document.getElementById("tipos").innerHTML += "<option value='" + tip[i]["id"] + "'>" + tip[i]["nome"] + "</option>";
-            }
-        });
-    }
-
-    document.body.onload = function(){tipos()};
 }
 
 export default ProductRegister;
