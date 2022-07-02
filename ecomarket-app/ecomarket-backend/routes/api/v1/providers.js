@@ -68,170 +68,35 @@ router.post('/reg_product', async (req,res) => {
     const armazem = req.body.storage;
     const categoria = req.body.cat;
     const subcategoria = req.body.subcat;
-    const insert = await pool.query("INSERT INTO produto (dscp, catg, subcatg) VALUES (?,?,?)", 
-        [nome, categoria, subcategoria]);
-    const select = await
-
-    pool.getConnection((err, conn) => {
-        conn.query(queryString, [nome, prov, dataprod, preco, tipo, subtipo, idcad], (err, result) => {
-            conn.release();
-            
-            if(!err){
-                console.log("Registo bem sucessido");
-                return res.status(200).send({message:"success"});
-            } else {
-                console.log("Não foi possível realizar essa operação. output 7");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
-    
-    // pool.getConnection((err, conn) => {
-    //     if (err) throw err;
-
-    //     conn.query(queryString, [nomerec, medida, quant], (err, result) => {
-    //         if (err) {
-    //             conn.release();
-
-    //             res.status(500);
-    //             res.type('json');
-    //             res.send({"message":"Não foi possível realizar essa operação. output 7"});
-    //             return;
-    //         }
-    //     });
-    
-    //     var idrec;
-    //     queryString = "SELECT id FROM recurso";
-    //     conn.query(queryString, [], (err,results) => {
-    //         if (!err) {
-    //             idcad = results[results.length -1].id; //por verificar
-    //         } else {
-    //             conn.release();
-                
-    //             res.status(500);
-    //             res.type('json');
-    //             res.send({"message":"Não foi possível realizar essa operação. output 8"});
-    //             return;
-    //         }
-    //     });
-    
-    //     const pol = req.body.pol;
-    //     queryString = "INSERT INTO poluicao (nome) VALUES (?)";
-    //     conn.query(queryString, [pol], (err, result) => {
-    //         if (err) {
-    //             conn.release();
-
-    //             res.status(500);
-    //             res.type('json');
-    //             res.send({"message":"Não foi possível realizar essa operação. output 9"});
-    //             return;
-    //         }
-    //     });
-    
-    //     var idpol;
-    //     queryString = "SELECT id FROM poluicao";
-    //     conn.query(queryString, [], (err,results) => {
-    //         if (!err) {
-    //             idpol = results[results.length -1].id; //por verificar
-    //         } else {
-    //             conn.release();
-                
-    //             res.status(500);
-    //             res.type('json');
-    //             res.send({"message":"Não foi possível realizar essa operação. output 10"});
-    //             return;
-    //         }
-    //     });
-    
-    //     queryString = "INSERT INTO cadeia_logistica";
-    //     conn.query(queryString, [], (err,result) => {
-    //         if (err) {
-    //             conn.release();
-
-    //             res.status(500);
-    //             res.type('json');
-    //             res.send({"message":"Não foi possível realizar essa operação. output 11"});
-    //             return;
-    //         }
-    //     });
-    
-    //     var idcad;
-    //     queryString = "SELECT id FROM cadeia_logistica";
-    //     conn.query(queryString, [], (err,results) => {
-    //         if (!err) {
-    //             idcad = results[results.length -1].id; //por verificar
-    //         } else {
-    //             conn.release();
-                
-    //             res.status(500);
-    //             res.type('json');
-    //             res.send({"message":"Não foi possível realizar essa operação. output 12"});
-    //             return;
-    //         }
-    //     });
-    
-    //     queryString = "INSERT INTO lista_recursos (cadeia_logis, recurso) VALUES (?,?)";
-    //     conn.query(queryString, [idcad, idrec], (err,result) => {
-    //         if (err) {
-    //             conn.release();
-
-    //             res.status(500);
-    //             res.type('json');
-    //             res.send({"message":"Não foi possível realizar essa operação. output 13"});
-    //             return;
-    //         }
-    //     });
-    
-    //     const quantpol = req.body.qtpol;
-    //     queryString = "INSERT INTO poluicao_cadeia (cadeia_logis, poluicao, quantidade) VALUES (?,?,?)";
-    //     conn.query(queryString, [idcad, idpol, quantpol], (err,result) => {
-    //         if (err) {
-    //             conn.release();
-
-    //             res.status(500);
-    //             res.type('json');
-    //             res.send({"message":"Não foi possível realizar essa operação. output 14"});
-    //             return;
-    //         }
-    //     });
-    
-    //     const prov = req.body.id;
-    //     const nome = req.body.nome;
-    //     const dataprod = req.body.dataprod;
-    //     const preco = req.body.preco;
-    //     const tipo = req.body.tipo;
-    //     const subtipo = req.body.subtipo;
-    //     queryString = "INSERT INTO produto (nome, fornecedor, producao, preco, tipo, subtipo, cadeia_logis) \
-    //                                 VALUES (?,?,?,?,?,?,?)";
-    //     conn.query(queryString, [nome, prov, dataprod, preco, tipo, subtipo, idcad], (err, result) => {
-    //         conn.release();
-            
-    //         if(!err){
-    //             res.status(200);
-    //             res.type('json');
-    //             res.send({"message":"Registo bem sucessido"});
-    //             return;
-    //         } else {
-    //             res.status(500);
-    //             res.type('json');
-    //             res.send({"message":"Não foi possível realizar essa operação. output 15"});
-    //             return;
-    //         }
-    //     });
-    // });
+    try {
+        const insert = await pool.query("INSERT INTO produto (dscp, catg, subcatg) VALUES (?,?,?)", 
+            [nome, categoria, subcategoria]);
+        const select = await pool.query("SELECT id FROM produto WHERE dscp = ?", [nome]);
+        console.log(select[0][0].id)
+        const insert2 = await pool.query("INSERT INTO stock (forn, store, produ, qtty, preco) VALUES (?,?,?,?,?)", 
+            [prov, armazem, select[0][0].id, quant, preco]);
+        
+        res.status(200).send({message: "success"});
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({message: "fail"});
+    }
 });
 
 // OPERACIONAL
 router.get('/products', async (req,res) => {
     var provId = req.query.pid;
-    var queryString = "SELECT p.id AS id, p.nome AS nome, p.producao  AS producao, tp.nome AS tipo, stp.nome AS subtipo, p.preco \
-                        FROM produto p, tipo_produto tp, subtipo_produto stp \
-                        WHERE (p.fornecedor = 3) AND (tp.id = p.tipo) AND (stp.id = p.subtipo)";
+    var queryString = "SELECT p.id AS id, p.dscp AS nome, c.nome AS categoria, sc.nome AS subcategoria, s.preco AS preco, m.street AS armazem, s.qtty as quantidade \
+                        FROM stock s, produto p, categoria c, subcategoria sc, armazem a, morada m \
+                        WHERE (s.forn = ?) AND (s.produ = p.id) AND (s.store = a.id) AND (a.morada = m.id) AND (p.catg = c.id) AND (p.subcatg = sc.id) \
+                        GROUP BY p.id, m.street, s.preco, s.qtty \
+                        ORDER BY p.dscp ASC";
 
     try {
         const [results,fields] = await pool.query(queryString, [provId]);
-        return res.status(200).send({results: result}); 
+        return res.status(200).send({results: results}); 
     } catch (err) {
+        console.error(err);
         return res.status(500).send({message:"fail"});
     }
 });

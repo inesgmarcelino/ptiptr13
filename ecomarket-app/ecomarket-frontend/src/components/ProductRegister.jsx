@@ -79,16 +79,16 @@ function ProductRegister(){
             case "armazem":
                 setArmazem(x.target.value);
                 break;
-            case "tipo":
+            case "categoria":
                 setCategoria(x.target.value);
                 break;
-            case "subtipo":
+            case "subcategoria":
                 setSubcategoria(x.target.value);
                 break;
             case "submit":
                 x.preventDefault();
                 if (nomeProd === '' || dataProd === '' || preco === '' || quantidade === '' || armazem === '' || categoria === '' || subcategoria === '') {
-                    // setError(true);
+                    console.log('amiga falta algo')
                 } else {
                     Axios.post(url+"/api/v1/providers/reg_product", {
                         prov: id,
@@ -118,7 +118,7 @@ function ProductRegister(){
             <div className="card-body">
                 <h5 className="card-title">FORNECEDOR:</h5>
                 <h6 className="card-subtitle mb-2">Registe aqui os aspetos gerais do Produto</h6>
-                <form method="post">
+                <form method='post'>
                     <div className="col-md-12">
                         <label>Nome do Produto:</label>
                         <input className="form-control" type="text" name="nomeProd"  size="50" onChange={handler} required/>
@@ -158,38 +158,8 @@ function ProductRegister(){
                             <option value='' selected>Selecione uma Subcategoria</option>
                         </select>
                     </div>
-                    
-                    {/* <h6 className="card-subtitle2 mb-2">Recursos</h6>
-                    <div className="recursos">
-                        <div className="col-md-12">
-                            <label>Nome:</label>
-                            <input className="form-control" type="text" name="nomeR"  size="50"/>
-                        </div>
-                        <div className="col-md-12">
-                            <label>Medida:</label>
-                            <input className="form-control" type="text" name="medidaR" size="50"/>
-                        </div>
-                        <div className="col-md-12">
-                            <label>Quantidade:</label>
-                            <input className="form-control" type="number" name="quantidadeR" size="50"/>
-                        </div>
-                    </div>
-                     <input type="button">Adicionar</input> onClick={addRec} 
-                
-                    <h6 className="card-subtitle2 mb-2">Poluição</h6>
-                    <div className="poluicao">
-                        <div className="col-md-12">
-                            <label>Nome:</label>
-                            <input className="form-control" type="text" name="nomeP" size="50"/>
-                        </div>
-                        <div className="col-md-12">
-                            <label>Quantidade:</label>
-                            <input className="form-control" type="number" name="quantidadeP"  size="50"/>
-                        </div>
-                    </div> 
-                     <input type="button" >Adicionar</input> onClick={addPol} */}
                          
-                    <button id="submit" type="submit" name="submit" className="btn" onChange={handler}>Registar</button>
+                    <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
                 </form>
             </div>
         </div> 

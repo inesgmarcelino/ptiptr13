@@ -41,30 +41,6 @@ function StorageRegister(){
         }
     }
 
-    // const distritos = () => {
-    //     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
-    //     Axios.get(url+"/api/v1/gets/distritos").then((response) => {
-    //         var dist = response.data.results;
-    //         for (var i = 0; i < dist.length; i++) {
-    //             document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
-    //         }
-    //     });
-    // }
-
-    // const concelhos = (x) => {
-    //     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
-    //     document.getElementById("concelhos").innerHTML = "<option value='' selected>Selecione um Concelho</option>";
-    //     Axios.get(url+"/api/v1/gets/concelhos", { 
-    //         params: { 
-    //             dist: x.target.value
-    //     }}).then((response) => {
-    //         var conc = response.data.results;
-    //         for (var i = 0; i < conc.length; i++) {
-    //             document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
-    //         }
-    //     });
-    // }
-
     return(
         <div>
         <div className="cardForn position-absolute top-50 start-50 translate-middle">
@@ -72,29 +48,12 @@ function StorageRegister(){
                 <h5 className="card-title">FORNECEDOR:</h5>
                 <h6 className="card-subtitle mb-2">Registe aqui o armazém</h6>
                 <form method="post">
-                         <div className="col-md-12">
-                            <label>Morada</label> {/*  falta coordenadas */}
-                                <input className="form-control" type="text" name="morada" size="50" onChange={handler} required/>
-                         </div>
-                         {/* <div className="col-md-12">
-                            <label>Código Postal</label>
-                                <input className="form-control" type="number" name="codigoPostal" size="50" onChange={handler} required/>
-                         </div>
-                         <div className="col-md-12">
-                            <label>Distrito</label>
-                            <select className="form-select" name="distrito" id="distritos" onChange={handler} onInput={concelhos} required>
-                                <option value='' selected>Selecione um Distrito</option>
-                            </select>
-                         </div>
-                         <div className="col-md-12">
-                            <label>Concelho</label>
-                            <select className="form-select" name="concelho" id="concelhos" onChange={handler} required>
-                                <option value='' selected>Selecione um Concelho</option>
-                            </select>
-                         </div> */}
-                        
-                         <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
-                     </form>
+                    <div className="col-md-12">
+                    <label>Morada</label> {/*  falta coordenadas */}
+                        <input className="form-control" type="text" name="morada" size="50" onChange={handler} required/>
+                    </div>                
+                    <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
+                </form>
             </div>
         </div> 
         </div>

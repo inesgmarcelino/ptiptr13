@@ -12,7 +12,7 @@ function Provider () {
 
     const prov = () => {
         // enc();
-        // prod();
+        prod();
         store();
     }
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
@@ -57,11 +57,12 @@ function Provider () {
                     document.getElementById("prov_prod").innerHTML += "<tr>\
                                                                         <td>"+produtos[i].id+"</td>\
                                                                         <td>"+produtos[i].nome+"</td>\
-                                                                        <td>"+produtos[i].producao+"</td>\
-                                                                        <td>"+produtos[i].tipo+"</td>\
-                                                                        <td>"+produtos[i].subtipo+"</td>\
+                                                                        <td>null</td>\
+                                                                        <td>"+produtos[i].categoria+"</td>\
+                                                                        <td>"+produtos[i].subcategoria+"</td>\
                                                                         <td>"+produtos[i].preco+"€</td>\
-                                                                        <td> Botão para a product.jsx respetiva</td>\
+                                                                        <td>"+produtos[i].armazem+"</td>\
+                                                                        <td>"+produtos[i].quantidade+"</td>\
                                                                     </tr>";
                 }
             }
@@ -142,10 +143,11 @@ function Provider () {
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Data de Produção</th>
-                        <th>Tipo</th>
-                        <th>Subtipo</th>
+                        <th>Categoria</th>
+                        <th>Subcategoria</th>
                         <th>Preço</th>
-                        <th>-- --</th>
+                        <th>Armazém</th>
+                        <th>Quantidade em Stock</th>
                     </tr>
                 </thead>
                 <tbody id="prov_prod">
