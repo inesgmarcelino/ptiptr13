@@ -11,7 +11,7 @@ var auth = require('../svlib/auth0/tokenlib');
 const { response } = require('express');
 
 
-router.get('/get', async (req,res) => {
+router.get('/', async (req,res) => {
     var tipo = req.query.tipo;
     var subtipo = req.query.subtipo;
 
