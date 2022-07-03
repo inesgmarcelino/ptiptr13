@@ -12,14 +12,14 @@ const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
 router.post('/reg_car', async (req,res) => {
-    const trans = req.body.trans;
-    const marca = req.body.marca;
-    const ano = req.body.ano;
-    const comb = req.body.combustivel;
-    const caixa = req.body.caixa;
-    const consumo = req.body.consumo;
-    const un = req.body.unidade;
-    const matricula = req.body.matricula;
+    var trans = req.body.trans;
+    var marca = req.body.marca;
+    var ano = req.body.ano;
+    var comb = req.body.combustivel;
+    var caixa = req.body.caixa;
+    var consumo = req.body.consumo;
+    var un = req.body.unidade;
+    var matricula = req.body.matricula;
 
    try {
     const insert = await pool.query("INSERT INTO consumos_veiculo (unidade, quantidade) VALUES (?,?)", 
@@ -53,15 +53,15 @@ router.get('/orders', async (req,res) => {
 
 router.get('/cars', async (req,res) => {
     var transId = req.query.tid;
-    var queryString = "SELECT v.id AS id, v.marca AS marca, v.ano AS ano, v.combustivel AS combustivel, v.caixa AS caixa, v.co2 AS emissao \
-                        FROM veiculo v, lista_veiculos lv \
-                        WHERE (lv.transportador = 4) AND (lv.veiculo = v.id) \
-                        GROUP BY v.id;";
-
+    var queryString = "SELECT v.id AS id, v.marca AS marca, v.ano AS ano, v.fuel AS combustivel, c.quantidade AS quantidade, c.unidade AS unidade, v.plate AS matricula \
+                        FROM veiculo v, consumos_veiculo c \
+                        WHERE (v.transp = ?) AND (v.consumo = c.id)";
+    
     try {
-        const [result,fields] = await pool.query(queryString, [transId]);
-        return res.status(200).send({results: result}); 
+        const [results, fields] = await pool.query(queryString, [transId]);
+        return res.status(200).send({results: results}); 
     } catch (err) {
+        console.error(err);
         return res.status(500).send({message:"fail"});
     }
 });
