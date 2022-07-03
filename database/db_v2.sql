@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS concelho (
 
 -- Antes de introduzir nova morada, verificar quantas o utilizador ja tem
 CREATE TABLE IF NOT EXISTS morada (
-    id              INT NOT NULL,
+    id              INT NOT NULL AUR,
     userId          INT NOT NULL,
     prefix          INT(4) NOT NULL,
     sufix           INT(3) DEFAULT NULL,
@@ -85,10 +85,10 @@ CREATE TABLE IF NOT EXISTS consumos_veiculo (
 
 CREATE TABLE IF NOT EXISTS veiculo (
     id              INT UNIQUE NOT NULL AUTO_INCREMENT,
-    transp          INT UNIQUE NOT NULL,
+    transp          INT NOT NULL,
     marca           VARCHAR(50) NOT NULL,
     ano             INT(4) NOT NULL,
-    fuel            INT(1) NOT NULL, -- 1 -> Gasolina, 2 -> Gasóleo, 3 -> GPL, 4 -> Elétrico, 5 -> Híbrido
+    fuel            INT(1) NOT NULL, -- 1 -> Gasolina, 2 -> Gasóleo, 3 -> Elétrico
     consumo         INT NOT NULL, 
     plate           VARCHAR(6) UNIQUE NOT NULL, -- matricula
     --
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS veiculo (
     CONSTRAINT fk_car_transp 
         FOREIGN KEY (transp) REFERENCES utilizador(id) ON DELETE CASCADE,
     CONSTRAINT chk_fuel 
-        CHECK (fuel = 1 OR fuel = 2 OR fuel = 3 OR fuel = 4 OR fuel = 5),
+        CHECK (fuel = 1 OR fuel = 2 OR fuel = 3),
     CONSTRAINT fk_consumo
         FOREIGN KEY (consumo) REFERENCES consumos_veiculo(id)
 ) ENGINE = InnoDB;
@@ -124,19 +124,22 @@ CREATE TABLE IF NOT EXISTS subcategoria (
 CREATE TABLE IF NOT EXISTS produto (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     dscp            VARCHAR(340),
+    forn            INT NOT NULL,
+    prod            DATE NOT NULL,
     catg            INT NOT NULL,
     subcatg         INT NOT NULL,
     --
     CONSTRAINT prod_catg 
         FOREIGN KEY (catg) REFERENCES categoria(id),
     CONSTRAINT prod_sbcatb 
-        FOREIGN KEY (catg,subcatg) REFERENCES subcategoria(categoria,id)
+        FOREIGN KEY (catg,subcatg) REFERENCES subcategoria(categoria,id),
+    CONSTRAINT fk_forn_prod
+        FOREIGN KEY (forn) REFERENCES utilizador(id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 -- permite obter produtos filtrando por fornecedor, armazem do fornecedor ou por produto
 CREATE TABLE IF NOT EXISTS stock(
     id              INT UNIQUE NOT NULL AUTO_INCREMENT,
-    forn            INT NOT NULL,
     store           INT NOT NULL,
     produ           INT NOT NULL,
     qtty            INT NOT NULL DEFAULT 0,
@@ -146,11 +149,11 @@ CREATE TABLE IF NOT EXISTS stock(
     -- CONSTRAINT prim_stock PRIMARY KEY(forn,store,produ), -> Nao permite  
     -- adicionar multiplas instancias do mesmo produto com diferentes datas de validade (por exemplo)
     CONSTRAINT prim_u_stock 
-        PRIMARY KEY (forn,id),
-    CONSTRAINT fk_stock_user 
-        FOREIGN KEY (forn) REFERENCES utilizador(id),
+        PRIMARY KEY (id,produ),
     CONSTRAINT fk_store_stock 
-        FOREIGN KEY (store) REFERENCES armazem(id)
+        FOREIGN KEY (store) REFERENCES armazem(id),
+    CONSTRAINT fk_prod_stock        
+        FOREIGN KEY (produ) REFERENCES produto(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS encomenda (
@@ -212,7 +215,7 @@ CREATE TABLE IF NOT EXISTS cesto_compras(
     CONSTRAINT fk_cart_cons 
         FOREIGN KEY (cons) REFERENCES utilizador(id) ON DELETE CASCADE,
     CONSTRAINT fk_cart_prod 
-        FOREIGN KEY (forn,prod) REFERENCES stock(forn,id) ON DELETE CASCADE
+        FOREIGN KEY (forn,prod) REFERENCES produto(forn,id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 
@@ -271,10 +274,6 @@ CREATE TABLE IF NOT EXISTS emite_poluicao (
         FOREIGN KEY (poluicao)  REFERENCES poluicao(id)
 ) ENGINE = InnoDB;
 
--- INSERT INTO utilizador (nome, email, nif, telemovel, pass_word, morada) VALUES ('Admin','admin@ecomarket.pt', 000000000,000000000, 'adminOK', 'Administração');
-
-
--- Inserts de Distritos e Concelhos
 --
 -- INSERT INTO tipo_produto (nome) VALUES ('Alimentao');
 -- INSERT INTO tipo_produto (nome) VALUES ('Livros');
@@ -303,10 +302,14 @@ CREATE TABLE IF NOT EXISTS emite_poluicao (
 -- queries a usar like para verificar qual o coiso a inserir
 
 -- Insert de Papeis
-INSERT INTO papeis VALUES (1,"Consumidor");
-INSERT INTO papeis VALUES (2,"Fornecedor");
-INSERT INTO papeis VALUES (3,"Consumidor/Fornecedor");
-INSERT INTO papeis VALUES (4,"Transportador");
+
+INSERT INTO papeis VALUES (1,"Administrador");
+INSERT INTO papeis VALUES (2,"Consumidor");
+INSERT INTO papeis VALUES (3,"Fornecedor");
+INSERT INTO papeis VALUES (4,"Consumidor/Fornecedor");
+INSERT INTO papeis VALUES (5,"Transportador");
+
+INSERT INTO utilizador (nome, email, nif, phone, passwd, papel) VALUES ('Admin','admin@ecomarket.pt', 000000000,000000000, 'adminOK', 1);
 
 -- Inserts de Distritos e Concelhos
 INSERT INTO distrito VALUES (1, 'Aveiro');
