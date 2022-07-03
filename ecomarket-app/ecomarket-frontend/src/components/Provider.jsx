@@ -57,7 +57,7 @@ function Provider () {
                     document.getElementById("prov_prod").innerHTML += "<tr>\
                                                                         <td>"+produtos[i].id+"</td>\
                                                                         <td>"+produtos[i].nome+"</td>\
-                                                                        <td>null</td>\
+                                                                        <td>"+data(produtos[i].data)+"</td>\
                                                                         <td>"+produtos[i].categoria+"</td>\
                                                                         <td>"+produtos[i].subcategoria+"</td>\
                                                                         <td>"+produtos[i].preco+"€</td>\
@@ -105,6 +105,10 @@ function Provider () {
         }
     
         return p1+"-"+p2;
+    }
+
+    const data = (x) => {
+        return x.substring(8,10)+"/"+x.substring(5,7)+"/"+x.substring(0,4);
     }
 
     return(
