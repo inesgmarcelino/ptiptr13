@@ -168,11 +168,11 @@ function CarRegister(){
                                 <input className="form-control" type="number" step={.01} name="consumo" size="50" onChange={handler} required />
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox" id="check-litros" name="check-litros" onChange={handler} />
-                                    <label className="form-check-label" htmlFor="check-litros">lts/Km</label>
+                                    <label className="form-check-label" htmlFor="check-litros">lts/100Kms</label>
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox" id="check-kwatts" name="check-kwatts" onChange={handler} />
-                                    <label className="form-check-label" htmlFor="check-kwatts">kWatts/Km</label>
+                                    <label className="form-check-label" htmlFor="check-kwatts">kWatts/100Kms</label>
                                 </div>
                         </div>
                         <div className="col-md-12">

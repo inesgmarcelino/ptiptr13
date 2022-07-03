@@ -24,9 +24,13 @@ router.post('/reg_car', async (req,res) => {
    try {
     const insert = await pool.query("INSERT INTO consumos_veiculo (unidade, quantidade) VALUES (?,?)", 
         [un, consumo]);
-    const select = await pool.query("SELECT id FROM consumos_veiculo ORDER id DESC")
+    const select = await pool.query("SELECT id FROM consumos_veiculo ORDER BY id DESC");
+    const insert2 = await pool.query("INSERT INTO veiculo (transp, marca, ano, fuel, consumo, plate) VALUES (?,?,?,?,?,?)",
+        [trans, marca, ano, comb, select[0][0].id, matricula]);
+    res.status(200).send({message: "success"});
    } catch(err) {
-
+    console.error(err);
+    res.status(500).send({message: "fail"});
    }
 });
 
