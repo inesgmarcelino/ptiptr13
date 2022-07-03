@@ -10,6 +10,7 @@ const pathexample = require('./pathexample.js');
 const testbd = require('./bdexample.js');
 const authtest = require('./authtest');
 const asyn = require('./async');
+const post = require('./posttest');
 
 /** o objeto router define as paths
  *  eh invocado como router.METODO_HTTP
@@ -89,6 +90,10 @@ router.get('/authtest',function(req, res, next){
 
 router.get('/async', function(req,res,next){
 	asyn.teste(req,res);
+})
+
+router.post('/test', (req,res,next) => {
+	post(req,res);
 })
 
 module.exports = router;

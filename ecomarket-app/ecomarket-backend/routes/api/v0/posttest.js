@@ -1,0 +1,21 @@
+const parser = require('../svlib/validator/parser');
+
+module.exports = (req,res) => {
+    console.log(req.body);
+    const expected = [3,{
+        number:{
+            type:"number",
+        },
+        word:{
+            type:"string",
+            length: 4
+        },
+        numberl:{
+            type:"number",
+            length:4
+        }
+    }]
+    result = parser(req.body,expected);
+    console.log(result);
+    res.send(result);
+}
