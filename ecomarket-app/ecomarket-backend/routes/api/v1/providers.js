@@ -42,8 +42,8 @@ router.post('/reg_storage', async (req,res) => {
             const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?",[parts.locality]);
             if (concelho.length == 0) throw new Error("concelho not found");
             console.log(concelho);
-            const insert = await pool.query("INSERT INTO morada(id, userId, prefix, sufix, street, dist, conc, lat, lng) VALUES (?,?,?,?,?,?,?,?,?)",
-                [1, req.body.prov, parts.postal_code.substring(0,4), parts.postal_code.substring(5), parts.route, concelho[0].distrito, concelho[0].id, coords.lat, coords.lng]);
+            const insert = await pool.query("INSERT INTO morada(userId, prefix, sufix, street, dist, conc, lat, lng) VALUES (?,?,?,?,?,?,?,?)",
+                [req.body.prov, parts.postal_code.substring(0,4), parts.postal_code.substring(5), parts.route, concelho[0].distrito, concelho[0].id, coords.lat, coords.lng]);
             const [morada, fieds] = await pool.query("SELECT id FROM morada WHERE street = ? AND userId = ?", [parts.route, req.body.prov]);
             const storage = await pool.query("INSERT INTO armazem (userId, morada) VALUES (?,?)", [req.body.prov, morada[0].id]);
             

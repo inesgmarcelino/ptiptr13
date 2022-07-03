@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS concelho (
 
 -- Antes de introduzir nova morada, verificar quantas o utilizador ja tem
 CREATE TABLE IF NOT EXISTS morada (
-    id              INT NOT NULL AUR,
+    id              INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     userId          INT NOT NULL,
     prefix          INT(4) NOT NULL,
     sufix           INT(3) DEFAULT NULL,
@@ -48,8 +48,6 @@ CREATE TABLE IF NOT EXISTS morada (
     lat             DECIMAL(9,7) NOT NULL,
     lng             DECIMAL(10,7) NOT NULL,
     --
-    CONSTRAINT prim_morada 
-        PRIMARY KEY (id, userId),
     CONSTRAINT fk_mor_user 
         FOREIGN KEY (userId) REFERENCES utilizador(id) ON DELETE CASCADE,
     CONSTRAINT fk_mor_dist 
@@ -66,7 +64,7 @@ CREATE TABLE IF NOT EXISTS armazem (
     morada          INT UNIQUE NOT NULL,
     --
     CONSTRAINT fk_user 
-        FOREIGN KEY (morada,userId) REFERENCES morada(id,userId) ON DELETE CASCADE
+        FOREIGN KEY (userId,morada) REFERENCES morada(userId,id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS tipo_consumo (
