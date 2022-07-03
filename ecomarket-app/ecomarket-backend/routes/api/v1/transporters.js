@@ -12,32 +12,22 @@ const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
 router.post('/reg_car', async (req,res) => {
-    const transp = req.body.trasnp;
-    const cond = req.body.cond;
+    const trans = req.body.trans;
+    const marca = req.body.marca;
+    const ano = req.body.ano;
+    const comb = req.body.combustivel;
+    const caixa = req.body.caixa;
+    const consumo = req.body.consumo;
+    const un = req.body.unidade;
+    const matricula = req.body.matricula;
 
-    var queryString = "INSERT INTO veiculo (condicoes) VALUES (?)";
-    try{
-        const [insert,fields] = await pool.query(queryString, [cond]);
-    
-        queryString = "SELECT MAX(id) AS id FROM veiculo";
+   try {
+    const insert = await pool.query("INSERT INTO consumos_veiculo (unidade, quantidade) VALUES (?,?)", 
+        [un, consumo]);
+    const select = await pool.query("SELECT id FROM consumos_veiculo ORDER id DESC")
+   } catch(err) {
 
-        const [result, field] = await pool.query(queryString);
-        var idveic = result[0].id;
-
-        queryString = "INSERT INTO lista_veiculos (transportador, veiculo) VALUES (?,?)";
-
-        const [results, fiel] = await pool.query(queryString, [transp, idveic]);
-
-
-        res.status(200);
-        res.type('json');
-        res.send({"message":"Registo bem sucessido"});
-
-    } catch(err){
-        res.status(500);
-        res.type('json');
-        res.send({"message":"Não foi possível realizar essa operação. output 1"});
-    }
+   }
 });
 
 // OPERACIONAL

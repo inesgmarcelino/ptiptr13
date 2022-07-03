@@ -71,7 +71,7 @@ router.post('/reg_product', async (req,res) => {
     try {
         const insert = await pool.query("INSERT INTO produto (dscp, catg, subcatg) VALUES (?,?,?)", 
             [nome, categoria, subcategoria]);
-        const select = await pool.query("SELECT id FROM produto WHERE dscp = ?", [nome]);
+        const select = await pool.query("SELECT id FROM produto WHERE dscp = ? ORDER id DESC", [nome]);
         console.log(select[0][0].id)
         const insert2 = await pool.query("INSERT INTO stock (forn, store, produ, qtty, preco) VALUES (?,?,?,?,?)", 
             [prov, armazem, select[0][0].id, quant, preco]);

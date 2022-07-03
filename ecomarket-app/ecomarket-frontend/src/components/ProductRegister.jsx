@@ -130,7 +130,7 @@ function ProductRegister(){
                         
                     <div className="col-md-12">
                         <label>Preço Unitário:</label>
-                        <input className="form-control" type="number" name="preco"  size="50" onChange={handler} required/>
+                        <input className="form-control" type="number" step={.01} name="preco"  size="50" onChange={handler} required/>
                     </div>
 
                     <div className="col-md-12">
