@@ -11,56 +11,25 @@ function Catalog(){
     document.body.onload = function(){catalog()};
 
     const catalog = () => {
+        filtros();
         prods();
-        // filtros();
-    }
-
-    const handler = (x) => {
-        console.log("entrei")
-        switch(x.target.name) {
-            case "categoria":
-                catsId.forEach((id) => {
-                    if (id !== x.target.value && document.getElementById("categoria"+x.target.value).checked) {
-                        document.getElementById("categoria"+id).disabled = true;
-                    } else if (id !== x.target.value && !document.getElementById("categoria"+x.target.value).checked) {
-                        document.getElementById("categoria"+id).disabled = false;
-                    }
-                })
-                break;
-            default:
-                console.log();
-                break;
-        }
     }
 
     const filtros = () => {
         Axios.get(url+"/api/v1/gets/categorias").then((response) => {
             if (response.data.message !== "fail") {
                 var cats = response.data.results;
-                var result = '';
                 for (var i = 0; i < cats.length; i++) {
-                    if (i === 0) {
-                        result =   <div className= "col-md-12"> 
-                                        <input className="form-check-input cat" type="checkbox" id="categoria'+cats[i].id+'" name="categoria" value="'+cats[i].id+'" onChange={handler} /> 
-                                        <label className="form-check-label" htmlFor="categoria">' + cats[i].nome + '</label> 
-                                        <div id="'+ cats[i].id +'"></div> 
-                                    </div>;
-                    } else {
-                        result +=   <div className= "col-md-12"> 
-                                        <input className="form-check-input cat" type="checkbox" id="categoria'+cats[i].id+'" name="categoria" value="'+cats[i].id+'" onChange={handler} /> 
-                                        <label className="form-check-label" htmlFor="categoria">' + cats[i].nome + '</label> 
-                                        <div id="'+ cats[i].id +'"></div> 
-                                    </div>;
-                    }
+                    document.getElementById("filtros").innerHTML +=   '<div className= "col-md-12"> \
+                                    <input className="form-check-input cat" type="checkbox" id="categoria'+cats[i].id+'" name="categoria" value="'+cats[i].id+'" onChange={handler} /> \
+                                    <label className="form-check-label">' + cats[i].nome + '</label> \
+                                    <div id="'+ cats[i].id +'"></div> \
+                                </div>';
                     catsId.push(cats[i].id);
                 }
             }
-            return result;
         });
     }
-
-    
-
 
     const prods = () => {
         Axios.get(url+"/api/v1/products", {
@@ -99,32 +68,10 @@ function Catalog(){
                                                                                 </div>\
                                                                             </div>\
                                                                         </div>";
-                        i--;
-                        k += 2;
                     }
-
-                    // if (i === 0 && j > 0) {
-                    //     document.getElementById("produtos").innerHTML += "<div className='row mx-5'> \
-                    //                                                         <div className='card mb-3'>\
-                    //                                                             <div className='product-info'>\
-                    //                                                                 <h2 className='product-name'>"+lista[k].nome+"</h2>\
-                    //                                                                 <p className='product-short-des'>"+lista[k].fornecedor+"</p>\
-                    //                                                                 <span className='price'>"+lista[k].preco+"</span>\
-                    //                                                             </div>\
-                    //                                                         </div>\
-                    //                                                         <div className='card mb-3'>\
-                    //                                                             <div className='product-info'>\
-                    //                                                                 <h2 className='product-name'>"+lista[k].nome+"</h2>\
-                    //                                                                 <p className='product-short-des'>"+lista[k].fornecedor+"</p>\
-                    //                                                                 <span className='price'>"+lista[k].preco+"</span>\
-                    //                                                             </div>\
-                    //                                                         </div>\
-                    //                                                     </div>";
-                    //     j--;
-                    // }
                 }
             }
-        })
+        });
     }
 
 
@@ -137,9 +84,27 @@ function Catalog(){
                     </div>
                 </div>
                 <div className="col product-container" id="produtos">
-                    {filtros()}
                 </div>
             </div>
+            <script>
+                {function handler(x) {
+                    console.log("entrei")
+                    switch(x.target.name) {
+                        case "categoria":
+                            catsId.forEach((id) => {
+                                if (id !== x.target.value && document.getElementById("categoria"+x.target.value).checked) {
+                                    document.getElementById("categoria"+id).disabled = true;
+                                } else if (id !== x.target.value && !document.getElementById("categoria"+x.target.value).checked) {
+                                    document.getElementById("categoria"+id).disabled = false;
+                                }
+                            });
+                            break;
+                        default:
+                            console.log();
+                            break;
+                    }
+                }}
+            </script>
         </div>
     );
 
