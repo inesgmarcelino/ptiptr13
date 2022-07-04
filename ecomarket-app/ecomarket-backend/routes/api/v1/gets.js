@@ -59,7 +59,10 @@ router.get('/categorias', async (req,res) => {
 
 router.get('/subcategorias', async (req,res) => {
     var cat = req.query.cat;
-    var queryString = "SELECT * FROM subcategoria WHERE categoria = ?";
+    var queryString = "SELECT * \
+                        FROM subcategoria \
+                        WHERE categoria = ? \
+                        ORDER BY nome ASC";
 
     try {
         const [results,fields] = await pool.query(queryString, [cat]);

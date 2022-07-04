@@ -1,18 +1,72 @@
 /* eslint-disable no-multi-str */
-import React from 'react';
+import { useState } from "react";
 import Axios from "axios";
 
-function Album(){
-    const tp = 2;
-    const st = null;
-    document.body.onload = function(){prods()};
+function Catalog(){
+    const [cat, setCat] = useState('');
+    const [subcat, setSubcat] = useState('');
+    var catsId = [];
+
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+    document.body.onload = function(){catalog()};
+
+    const catalog = () => {
+        prods();
+        // filtros();
+    }
+
+    const handler = (x) => {
+        console.log("entrei")
+        switch(x.target.name) {
+            case "categoria":
+                catsId.forEach((id) => {
+                    if (id !== x.target.value && document.getElementById("categoria"+x.target.value).checked) {
+                        document.getElementById("categoria"+id).disabled = true;
+                    } else if (id !== x.target.value && !document.getElementById("categoria"+x.target.value).checked) {
+                        document.getElementById("categoria"+id).disabled = false;
+                    }
+                })
+                break;
+            default:
+                console.log();
+                break;
+        }
+    }
+
+    const filtros = () => {
+        Axios.get(url+"/api/v1/gets/categorias").then((response) => {
+            if (response.data.message !== "fail") {
+                var cats = response.data.results;
+                var result = '';
+                for (var i = 0; i < cats.length; i++) {
+                    if (i === 0) {
+                        result =   <div className= "col-md-12"> 
+                                        <input className="form-check-input cat" type="checkbox" id="categoria'+cats[i].id+'" name="categoria" value="'+cats[i].id+'" onChange={handler} /> 
+                                        <label className="form-check-label" htmlFor="categoria">' + cats[i].nome + '</label> 
+                                        <div id="'+ cats[i].id +'"></div> 
+                                    </div>;
+                    } else {
+                        result +=   <div className= "col-md-12"> 
+                                        <input className="form-check-input cat" type="checkbox" id="categoria'+cats[i].id+'" name="categoria" value="'+cats[i].id+'" onChange={handler} /> 
+                                        <label className="form-check-label" htmlFor="categoria">' + cats[i].nome + '</label> 
+                                        <div id="'+ cats[i].id +'"></div> 
+                                    </div>;
+                    }
+                    catsId.push(cats[i].id);
+                }
+            }
+            return result;
+        });
+    }
+
+    
+
+
     const prods = () => {
-        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
-        Axios.get(url+"/api/v1/products/get", {
+        Axios.get(url+"/api/v1/products", {
             params: {
-                tipo: tp,
-                subtipo: st
+                // tipo: tp,
+                // subtipo: st
             }
         }).then((response) => {
             if (response.data.message !== 'fail') {
@@ -77,20 +131,13 @@ function Album(){
     return(
         <div>
             <div className='row catalog'>
-                <div className='col-sm-3 filtros'>
-                    <h5>Categoria</h5>
-                    <div className="form-check">
-                        <input className="form-check-input cat" type="checkbox" id="check-brinquedos" name="check-brinquedos"  />
-                        <label className="form-check-label" htmlFor="check-brinquedps">Brinquedos</label>
-                        <br />
-                        <input className="form-check-input cat" type="checkbox" id="check-livros" name="check-livros"/>
-                        <label className="form-check-label" htmlFor="check-livros">Livros</label>
-                        <br />
-                        <input className="form-check-input cat" type="checkbox" id="check-comida" name="check-comida"  />
-                        <label className="form-check-label" htmlFor="check-comida">Comida</label>
+                <div className='col-sm-3 mx-4 p-4 filtros border-top border-start'>
+                    <h4><img src="https://img.icons8.com/ios-filled/50/000000/empty-filter.png" id ="icon" alt=""/>Filtros</h4>
+                    <div className="form-check" id="filtros">
                     </div>
                 </div>
                 <div className="col product-container" id="produtos">
+                    {filtros()}
                 </div>
             </div>
         </div>
@@ -98,4 +145,4 @@ function Album(){
 
 }
 
-export default Album;
+export default Catalog;
