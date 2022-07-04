@@ -13,12 +13,11 @@ var pool = require('../svlib/db/getPool');
 var auth = require('../svlib/auth0/tokenlib');
 /** */
 
-
 router.post('/register', async (req, res, next) => {
-    const expected = [10,
+    const expected = [11,
         {
             "email": { type: "string" },
-            "pwd": { type: "string" },
+            "passwd": { type: "string" },
             "nome": { type: "string" },
             "nif": { type: "number", length: "9" },
             "tlm": { type: "number", length: "9" },
@@ -26,107 +25,85 @@ router.post('/register', async (req, res, next) => {
             "conc": { type: "string" },
             "dist": { type: "string" },
             "prefix": { type: "number", length: "4" },
-            "sufix": { type: "number", length: "3" }
+            "sufix": { type: "number", length: "3" },
+            "papel" : {type:"number", min:1, max:4}
         }];
     try {
         if (!parser(req.body, expected)) throw new Error("Dados fornecidos inválidos.");
         const CEP = req.body.prefix + "-" + req.body.sufix;
-        var address = req.body.rua + "," + req.body.conc + "," + req.body.dist + "," + CEP;
-        console.error(address);
+        var address = req.body.rua + "," + req.body.conc + ' '+ CEP;
         address = encodeURIComponent(address);
-        console.error(address);
         const link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt";
         const reply = await axios.post(link);
         if (reply.data.status !== "OK") throw new Error("Morada inválida.");
         const coords = reply.data.results[0].geometry.location;
-
         const registo = await axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
             {
                 client_id: '8d3hjpCHdNoQWDGJk2g4MNSeGNPZZs5R',
                 connection: 'Username-Password-Authentication',
                 email: req.body.email,
-                password: req.body.pwd,
+                password: req.body.passwd,
                 name: req.body.nome,
                 picture: "https://digimedia.web.ua.pt/wp-content/uploads/2017/05/default-user-image.png",
                 user_metadata: {
                     nif: req.body.nif,
                     tlm: req.body.tlm,
-                    morada: req.body.morada
+                    papel: req.body.papel
                 }
             }, {
             headers: {
                 'content-type': 'application/json'
             }
-        })
-
+        }).catch(err => {throw new Error("Não foi possível registar o utilizador.")});
         const [users, field] = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
-        if (users.length == 0) throw new Error("Utilizador não se registou com sucesso.");
+        if (users.length == 0) throw new Error("Não foi possível registar o utilizador.");
 
-        const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?",[parts.locality]);
+        const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?",[req.body.conc]);
         if (concelho.length == 0) throw new Error("Concelho fornecido inválido.");
 
-        const insert = await pool.query("INSERT INTO localizacao(morada, c_postal, distrito, concelho, lat, lng) VALUES (?,?,?,?,?,?)",
-        [parts.route + " " + parts.street_number,
-        parts.postal_code,
+        const insert = await pool.query("INSERT INTO morada(userId,prefix,sufix,street,dist,conc,lat,lng) VALUES (?,?,?,?,?,?,?,?)",
+        [users[0].id,
+        req.body.prefix,
+        req.body.sufix,
+        req.body.rua,
         concelho[0].distrito,
         concelho[0].id,
         coords.lat,
-        coords.lng]);
-
+        coords.lng]).catch(err => {
+            //TO_DO code to delete user
+            console.error(err);
+            throw new Error("Não foi possível registar a morada do utilizador")});
+        res.status(200).send({message:"Utilizador registado com sucesso."});
     } catch (err) {
         res.status(400).send({ message: err.message });
     }
 });
 
 router.get('/:uid', async (req,res) => {
-    var userId = req.params.uid;
-    var queryString = "SELECT * FROM utilizador WHERE id = ?";
-
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, [userId], (err, rows) =>  {
-            conn.release();
-
-            if (!err) {
-                if(rows.length > 0){
-                    return res.status(200).send({message:"success", results: rows});
-                } else {
-                    console.log("Utilizador não se encontra na base de dados");
-                    return res.status(404).send({message:"no email"});
-                }
-            } else {
-                console.log("Não foi possível realizar essa operação. output 6");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
+    try{
+        const expected = [1,{uid:{type:"number",min:1}}];
+        if (!parser(req.params, expected)) throw new Error("Dados fornecidos inválidos.");
+        const queryString = "SELECT * FROM utilizador WHERE id = ?";
+        const [udata,fields] = await pool.query(queryString,[req.params.uid]);
+        if(udata[0].length === 0) throw new Error();
+        res.status(200).send(udata[0]);
+    }catch(err){
+        res.status(404).send()
+    }
 });
 
-router.delete('/delete/:uid', async (req,res) => {
-    var userId = req.params.uid;
-    var queryString = "DELETE FROM utilizador WHERE id = ?";
+router.delete('/delete/:uid', async (req, res) => {
+    try {
+        const expected = [1, { uid: { type: "number", min: 1 } }];
+        if (!parser(req.params, expected)) throw new Error("Dados fornecidos inválidos.");
+        var queryString = "DELETE FROM utilizador WHERE id = ?";
+        const [udata, fields] = await pool.query(queryString, [req.params.uid]);
+        if (udata[0].length === 0) throw new Error();
+        res.status(200).send(udata[0]);
+    } catch (err) {
+        res.status(404).send()
+    }
 
-    pool.getConnection((err,conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, [userId], (err, results) =>  {
-            conn.release();
-
-            if (!err) {
-                if(results.length > 0){
-                    console.log("Utilizador removido com sucesso");
-                    return res.status(200).send({message:"success"});
-                } else {
-                    console.log("Utilizador não se encontra na base de dados");
-                    return res.status(404).send({message:"fail"});
-                }
-            } else {
-                console.log("Não foi possível realizar essa operação. output 7");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
 });
 
 router.put('/edit/:uid', async (req,res) => {
@@ -199,39 +176,5 @@ router.put('/edit/:uid', async (req,res) => {
     }
     
 });
-/*
-router.post('/uploadProfPic', async (req,res) => {
-    const filename = req.body.filename;
-    var queryString = "INSERT INTO image (filename) VALUES (?)";
 
-    pool.getConnection((err,conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, (err, results) => {
-    
-            if (!err) {
-                queryString = "SELECT id FROM image";
-                conn.query(queryString, (err, results) => {
-                    conn.release();
-
-                    if (!err) {
-                        console.log("Imagem descarregada com sucesso");
-                        return res.status(200).send({message: results[results.size -1].id})
-                    }
-                })
-            } else {
-                console.log("Não foi possível realizar essa operação. output 9");
-                return res.status(500).send({message:"fail"});
-            }
-        });
-    });
-});
-
-*/
-
-
-// um user que seja só consumidor ou só fornecedor pode se tornar também fornecedor ou consumidor...
-
-
-//exporta funções/"objetos"
 module.exports = router ;

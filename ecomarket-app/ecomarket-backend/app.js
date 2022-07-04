@@ -112,6 +112,14 @@ for(var path in apiPathsV1){
 //Nota nao relacionada: falta definir a 
 //API para criar as Cadeias logisticas no ficheiro .yaml
 
+const basePathV2 = '/api/v2/';
+const apiPathsV2 = ["users"/**,"admin","providers","products","carriers","transporters","consumers", "gets"/**,cadeialogistica?*/];
+for(var path in apiPathsV2){
+  var filePath = basePathV2+apiPathsV2[path];
+  var apiRouterV2 = require('./routes'+filePath+'.js');
+  app.use(filePath, apiRouterV2);
+} 
+
 
 /**
  * Funcoes middleware

@@ -11,7 +11,6 @@ https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-a
 var mysql = require('mysql2');
 require('dotenv').config();
 
-console.log(process.env.DEV_ENV);
 var servIP = (process.env.DEV_ENV === "true") ? "35.206.132.204" : "10.0.0.5";
 
 const pool = mysql.createPool({
@@ -23,7 +22,6 @@ const pool = mysql.createPool({
   port: 6033
 }).promise();
 
-console.error(pool.pool.config.connectionConfig);
 
 module.exports = pool;
 

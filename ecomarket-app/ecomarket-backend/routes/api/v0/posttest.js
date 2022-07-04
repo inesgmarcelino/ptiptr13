@@ -4,7 +4,7 @@ module.exports = (req,res) => {
     console.log(req.body);
     const expected = [3,{
         number:{
-            type:"number",
+            type:"number", min:1, max:5
         },
         word:{
             type:"string",
