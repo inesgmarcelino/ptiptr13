@@ -36,8 +36,6 @@ root.render(
       <Route path='/order' element={<Order />} />
       <Route path='/transporter' element={<Transporter />} />
       <Route path='/adminUsersList' element={<AdminUsersList />} />
-
-
     </Routes>
     {/* <Footer /> */}
     </Auth0ProviderWithHistory>

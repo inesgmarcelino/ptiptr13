@@ -5,50 +5,29 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url(green2.jpg);
+  height: 100vh;
+  width: 100vw;
 }
 
- .navbar {
+#root {
+  min-width: 100vw;
+}
+
+.navbar {
   background-color: #283618;
   position: relative;
-  /* height: 100vh;
-  display: flex; */
-  position: fixed; 
-  height: 70px;
   z-index: 1;
+  padding:0;
 }
 
 .navbar-brand {
   max-width: 17.5%;
 }
 
-.navbar-brand > img {
-  min-width: 194px;
-  min-height: 48px;
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.NavDrop {
-  vertical-align: middle;
-  color: white;
-}
-
 .logBox {
   position: absolute;
   right:0;
 }
-
-.searchBar {
-  height: 100%;
-  position:relative;
-  left:100%;
-  margin-bottom: 7px;
-  min-width: 400px;
-  max-width: 400px;
-  vertical-align: middle;
- 
-}
-
 
 #icon {
   width: 25px;
@@ -65,9 +44,110 @@ body {
   margin-top: 5px;
  }
 
+@media only screen and (min-width:375px){
+  .navbar{
+    height: 25vh;
+    width: 100vw;
+    justify-content: center;
+  } 
+
+  .navbar-brand {
+    justify-content: center;
+  }
+
+  .navbar-brand > img {
+    max-width: auto;/*100vw;*/
+    max-height: 7vh;
+    margin: 0;
+    position: absolute;
+    top: 1.75vh;
+    left: 24.5vw;
+  }
+
+  .NavWrapper {
+    padding-left: 0px;
+    margin:0;
+  }
+
+  .NavRow {
+    padding:0;
+    margin:0;
+    position: absolute;
+    top:0;
+  }
+
+  .NavCol {
+    padding: 0;
+    margin:0;
+    justify-content: center;
+  }
+
+  .NavSearch{
+    position: absolute;
+    top: 9vh;
+  }
+
+  .SearchBar {
+    height: 100%;
+    position:relative;
+    left: -3vw;
+    margin-bottom: 7px;
+    min-width: 80vw;
+    margin-left:10vw;
+  }
+
+  .NavLogin{
+    position: absolute;
+    left:0vw;
+    top:15vh;
+    min-width: 80vw;
+  }
+}
+
+@media only screen and (min-width:768px){
+  .navbar{
+    height: 25vh;
+    width: 100vw;
+  }
+
+  .navbar-brand > img {
+    min-width: 194px;
+    min-height: 48px;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+@media only screen and (min-width:992px){
+  .navbar{
+    height: 15vh;
+    width: 100vw;
+  }
+  .navbar-brand > img {
+    min-width: 194px;
+    min-height: 48px;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+@media only screen and (min-width:1200px){
+  .navbar{
+    height: 7vh;
+    width: 100vw;
+  }
+  .navbar-brand > img {
+    min-width: 194px;
+    min-height: 48px;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+/*
  .row {
    margin-right: 0;
- }
+ }*/
 
  .footer {
   bottom: 0;
