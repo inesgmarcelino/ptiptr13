@@ -4,9 +4,8 @@ const multer = require('multer');
 const {Storage} = require('@google-cloud/storage');
 const axios = require('axios');
 const parser = require('../svlib/validator/parser');
+const ServerError = require('../svlib/ServError/ServerError');
 
-// https://stackoverflow.com/questions/62134713/nodejs-mysql-connection-best-practice
-// https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
 var pool = require('../svlib/db/getPool');
 
 /** auth0 */
@@ -29,13 +28,13 @@ router.post('/register', async (req, res, next) => {
             "papel" : {type:"number", min:1, max:4}
         }];
     try {
-        if (!parser(req.body, expected)) throw new Error("Dados fornecidos inválidos.");
+        if (!parser(req.body, expected)) throw new ServerError(400,"Dados fornecidos inválidos.");
         const CEP = req.body.prefix + "-" + req.body.sufix;
         var address = req.body.rua + "," + req.body.conc + ' '+ CEP;
         address = encodeURIComponent(address);
         const link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt";
         const reply = await axios.post(link);
-        if (reply.data.status !== "OK") throw new Error("Morada inválida.");
+        if (reply.data.status !== "OK") throw new ServerError(400,"Morada inválida.");
         const coords = reply.data.results[0].geometry.location;
         const registo = await axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
             {
@@ -54,12 +53,11 @@ router.post('/register', async (req, res, next) => {
             headers: {
                 'content-type': 'application/json'
             }
-        }).catch(err => {throw new Error("Não foi possível registar o utilizador.")});
+        }).catch(err => {throw new ServerError(500,"Não foi possível registar o utilizador.")});
         const [users, field] = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
-        if (users.length == 0) throw new Error("Não foi possível registar o utilizador.");
 
         const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?",[req.body.conc]);
-        if (concelho.length == 0) throw new Error("Concelho fornecido inválido.");
+        if (concelho.length == 0) throw new ServerError(404,"Concelho fornecido inválido.");
 
         const insert = await pool.query("INSERT INTO morada(userId,prefix,sufix,street,dist,conc,lat,lng) VALUES (?,?,?,?,?,?,?,?)",
         [users[0].id,
@@ -71,11 +69,10 @@ router.post('/register', async (req, res, next) => {
         coords.lat,
         coords.lng]).catch(err => {
             //TO_DO code to delete user
-            console.error(err);
-            throw new Error("Não foi possível registar a morada do utilizador")});
+            throw new ServerError(500,"Não foi possível registar a morada do utilizador. Tente mais tarde.")});
         res.status(200).send({message:"Utilizador registado com sucesso."});
     } catch (err) {
-        res.status(400).send({ message: err.message });
+        res.status(err.code).send({ message: err.message });
     }
 });
 
@@ -92,11 +89,34 @@ router.get('/:uid', async (req,res) => {
     }
 });
 
+router.get('/:uid/moradas', async (req,res) => {
+    try{
+        const expected = [1, { uid: { type: "number", min: 1 } }];
+        if (!parser(req.params, expected)) throw new Error("Dados fornecidos inválidos.");
+        const queryString = "SELECT id AS mid,"+ 
+                                   "userId AS user,"+
+                                   "prefix, sufix,"+
+                                   "street, dist, conc"+
+                                   "FROM morada WHERE userId = ?";
+        const [moradas, fields] = pool.query(queryString,[req.params.uid]);
+        var reply = {};
+        moradas.array.forEach(e => { //for each element
+            const CEP = String(e.prefix)+"-"+String(e.sufix);
+            const address = e.street+","+e.conc+" "+CEP+","+e.dist;
+            reply[String(e.user)+"."+String(e.mid)]=address;
+        });
+        res.status(200).send(reply);
+    } catch (err) {
+        res.status(err.code).send(err.message);
+    }
+
+});
+
 router.delete('/delete/:uid', async (req, res) => {
     try {
         const expected = [1, { uid: { type: "number", min: 1 } }];
         if (!parser(req.params, expected)) throw new Error("Dados fornecidos inválidos.");
-        var queryString = "DELETE FROM utilizador WHERE id = ?";
+        const queryString = "DELETE FROM utilizador WHERE id = ?";
         const [udata, fields] = await pool.query(queryString, [req.params.uid]);
         if (udata[0].length === 0) throw new Error();
         res.status(200).send(udata[0]);
