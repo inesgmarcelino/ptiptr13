@@ -8,7 +8,8 @@ function ProductRegister(){
     const { user } = useAuth0();
     const id = 3; //testar forn
     
-
+    const [existeP, setExistP]              = useState(false);
+    const [prod, setProd]                   = useState('');
     const [nomeProd, setNomeProd]           = useState('');
     const [dataProd, setDataProd]           = useState('');
     const [preco, setPreco]                 = useState('');
@@ -22,6 +23,20 @@ function ProductRegister(){
     const go = () => {
         categorias();
         armazens();
+        whatForm();
+    }
+
+    const prods = () => {
+        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+        Axios.get(url+"/api/v1/providers/products", {
+            params: {
+                pid: id
+        }}).then((response) => {
+            var prods = response.data.results;
+            for (var i = 0; i < prods.length; i++) {
+                document.getElementById("produtos").innerHTML += "<option value='" + prods[i]["id"] + "'>" + prods[i]["nome"] + "</option>";
+            }
+        });
     }
 
     const armazens = () => {
@@ -67,6 +82,9 @@ function ProductRegister(){
             case "nomeProd":
                 setNomeProd(x.target.value);
                 break;
+            case "prod":
+                setProd(x.target.value);
+                break;
             case "dataProd":
                 setDataProd(x.target.value);
                 break;
@@ -85,13 +103,32 @@ function ProductRegister(){
             case "subcategoria":
                 setSubcategoria(x.target.value);
                 break;
+            case "check-existe":
+                if (x.checked) {
+                    setExistP(true);
+                } else {
+                    setExistP(false);
+                }
+                break;
             case "submit":
                 x.preventDefault();
-                if (nomeProd === '' || dataProd === '' || preco === '' || quantidade === '' || armazem === '' || categoria === '' || subcategoria === '') {
-                    console.log('amiga falta algo')
+                if (existeP) {
+                    if (prod === '') {
+                        setProd(document.getElementById("produtos").value);
+                    }
                 } else {
+                    if (nomeProd === '' || dataProd === '' || preco === '') {
+                        setNomeProd(document.getElementById("nomeProd").value);
+                        setDataProd(document.getElementById("dataProd").value);
+                        setPreco(document.getElementById("preco").value);
+                    }
+                }
+
+                if (((existeP && prod !== '') || (!existeP && nomeProd !== '' && dataProd !== '' && preco !== '')) && quantidade !== '' && armazem !== '' && categoria !== '' && subcategoria !== '') {
                     Axios.post(url+"/api/v1/providers/reg_product", {
                         prov: id,
+                        existe: existeP,
+                        prod: prod,
                         nome: nomeProd,
                         data: dataProd,
                         preco: preco,
@@ -112,6 +149,34 @@ function ProductRegister(){
         }
     }
 
+    const whatForm = () => {
+        if (document.getElementById("check-existe").checked) {
+            document.getElementById("wProd").innerHTML = "<div class='col-md-12'> \
+                                                            <label>Nome do Produto:</label> \
+                                                            <select class='form-select' name='produto' id='produtos' required > \
+                                                                <option value='' selected>Selecione um Produto</option> \
+                                                            </select> \
+                                                        </div>";
+            prods();
+        } else {
+            document.getElementById("wProd").innerHTML = "<div> \
+                                                            <div class='col-md-12'> \
+                                                                <label>Nome do Produto:</label> \
+                                                                <input class='form-control' type='text' name='nomeProd' id='nomeProd' size='50' required/> \
+                                                            </div> \
+                                                            <div class='col-md-12'> \
+                                                                <label>Data de Produção:</label> \
+                                                                <input class='form-control' type='date' name='dataProd' id ='dataProd' placeholder='DD/MM/AAAA'  size='50' required/> \
+                                                            </div> \
+                                                            <div class='col-md-12'> \
+                                                                <label>Preço Unitário:</label> \
+                                                                <input class='form-control' type='number' step={.01} name='preco' id='preco size='50'  required/> \
+                                                            </div> \
+                                                        </div>";
+        }
+    }
+
+
     return(
         <div>
         <div className="cardForn position-absolute top-50 start-50 translate-middle">
@@ -120,19 +185,10 @@ function ProductRegister(){
                 <h6 className="card-subtitle mb-2">Registe aqui os aspetos gerais do Produto</h6>
                 <form method='post'>
                     <div className="col-md-12">
-                        <label>Nome do Produto:</label>
-                        <input className="form-control" type="text" name="nomeProd"  size="50" onChange={handler} required/>
+                        <input className="form-check-input" type="checkbox" id="check-existe" name="check-existe" onChange={whatForm} />
+                        <label className="form-check-label mx-2" htmlFor="check-existe">Já existe?</label>
                     </div>
-                    <div className="col-md-12">
-                        <label>Data de Produção:</label>
-                        <input className="form-control" type="date" name="dataProd" placeholder="DD/MM/AAAA"  size="50" onChange={handler} required/>
-                    </div>
-                        
-                    <div className="col-md-12">
-                        <label>Preço Unitário:</label>
-                        <input className="form-control" type="number" step={.01} name="preco"  size="50" onChange={handler} required/>
-                    </div>
-
+                    <div id="wProd"></div>
                     <div className="col-md-12">
                         <label>Quantidade em Stock</label>
                         <input className="form-control" type="number" name="quantidade"  size="50" onChange={handler} required/>
