@@ -61,17 +61,42 @@ router.post('/reg_storage', async (req,res) => {
 
 router.post('/reg_product', async (req,res) => {
     const prov = req.body.prov;
-    const nome = req.body.nome;
-    const dataprod = req.body.data;
-    const preco = req.body.preco;
+    const existe = req.body.existe;
     const quant = req.body.quant;
     const armazem = req.body.storage;
     const categoria = req.body.cat;
     const subcategoria = req.body.subcat;
+
+    try {
+        if (existe) {
+            const prod = req.body.prod;
+            const insert = await pool.query("INSERT INTO stock (store, produ, qtty, preco) VALUES (?,?,?,?)", 
+                [armazem, prod, quant, preco]);
+    
+        } else {
+            const prod = req.body.nome; 
+            const dataprod = req.body.data;
+            const preco = req.body.preco;
+            const insert = await pool.query("INSERT INTO produto (dscp, forn, prod, catg, subcatg) VALUES (?,?,?,?,?)", 
+                [prod, prov, dataprod, categoria, subcategoria]);
+            const select = await pool.query("SELECT id FROM produto WHERE dscp = ? AND forn = ? ORDER BY id DESC", [nome, prov]);
+            console.log(select[0][0].id)
+            const insert2 = await pool.query("INSERT INTO stock (store, produ, qtty, preco) VALUES (?,?,?,?)", 
+                [armazem, select[0][0].id, quant, preco]);
+
+        }
+
+        res.status(200).send({message: "success"});
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({message: "fail"});
+    }
+    
+    
     try {
         const insert = await pool.query("INSERT INTO produto (dscp, forn, prod, catg, subcatg) VALUES (?,?,?,?,?)", 
             [nome, prov, dataprod, categoria, subcategoria]);
-        const select = await pool.query("SELECT id FROM produto WHERE dscp = ? ORDER BY id DESC", [nome]);
+        const select = await pool.query("SELECT id FROM produto WHERE dscp = ? AND forn = ? ORDER BY id DESC", [nome, prov]);
         console.log(select[0][0].id)
         const insert2 = await pool.query("INSERT INTO stock (store, produ, qtty, preco) VALUES (?,?,?,?)", 
             [armazem, select[0][0].id, quant, preco]);

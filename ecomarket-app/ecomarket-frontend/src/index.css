@@ -465,10 +465,18 @@ input:focus {
 .card-subtitle2{
   margin-top: 20px;
 }
+
 .pr{
   margin-top: 200px;
 }
 
+.pr2 {
+  margin-top: 147px;
+}
+
+.pr3 {
+  margin-top: -120px;
+}
 
 /*Album*/
 .product-container::-webkit-scrollbar{

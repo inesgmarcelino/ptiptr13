@@ -15,6 +15,8 @@ export { default as Product } from "./Product";
 export { default as AdminLogin } from "./AdminLogin";
 export { default as StorageRegister } from "./StorageRegister";
 export { default as ProductRegister } from "./ProductRegister";
+export { default as NewProduct } from "./NewProduct";
+export { default as ProductExists } from "./ProductExists";
 export { default as AdminTipos} from "./AdminTipos";
 export { default as Cart } from "./Cart";
 export { default as Order } from "./Order";

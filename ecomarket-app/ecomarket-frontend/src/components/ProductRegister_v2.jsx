@@ -92,7 +92,7 @@ function ProductRegister() {
     //     window.location.href = url+"/newProduct"; 
     // }
 
-    return (<div className="cardForn position-absolute top-50 start-50 translate-middle pr3" id="card">
+    return (<div className="cardForn position-absolute top-50 start-50 translate-middle" id="card">
                 <div className="card-body">
                     <h5 className="card-title">FORNECEDOR:</h5>
                     <h6 className="card-subtitle mb-2">Pertende fazer um registo?</h6>
