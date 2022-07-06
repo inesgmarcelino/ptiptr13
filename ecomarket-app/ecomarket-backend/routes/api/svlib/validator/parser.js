@@ -3,8 +3,9 @@
  * dictionary 
  * [ expected_size,
  * {
- *  expected_key: {type:expected_type,length:expected_length, min: min_value, max: max_value },
+ *  expected_key: {type:expected_type,length:expected_length, max_len: max_length, min: min_value, max: max_value },
  * }] 
+
  */
 module.exports = (received, expected) => {
     const expected_size = expected[0];
@@ -19,7 +20,7 @@ module.exports = (received, expected) => {
                 if (value === undefined) result = false;
                 else if (values.max !== undefined && values.max <= value) result = false;
                 else if (values.min !== undefined && values.min >= value) result = false;
-            }
+            } else if(values.type === "string" && values.max_len !== undefined && received[key].length > parseInt(values.max_len)) result = false;
             if (values.length !== undefined && values.length != received[key].length) result = false;
         } else if (typeof (received[key]) !== values.type) result = false;
     }
