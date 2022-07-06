@@ -64,8 +64,6 @@ router.post('/reg_product', async (req,res) => {
     const existe = req.body.existe;
     const quant = req.body.quant;
     const armazem = req.body.storage;
-    const categoria = req.body.cat;
-    const subcategoria = req.body.subcat;
 
     try {
         if (existe) {
@@ -74,13 +72,15 @@ router.post('/reg_product', async (req,res) => {
                 [armazem, prod, quant, preco]);
     
         } else {
-            const prod = req.body.nome; 
+            const prod = req.body.prod; 
             const dataprod = req.body.data;
             const preco = req.body.preco;
-            const insert = await pool.query("INSERT INTO produto (dscp, forn, prod, catg, subcatg) VALUES (?,?,?,?,?)", 
+            const categoria = req.body.cat;
+            const subcategoria = req.body.subcat;
+            const insert = await pool.query("INSERT INTO produto (nome, forn, prod, catg, subcatg) VALUES (?,?,?,?,?)", 
                 [prod, prov, dataprod, categoria, subcategoria]);
-            const select = await pool.query("SELECT id FROM produto WHERE dscp = ? AND forn = ? ORDER BY id DESC", [nome, prov]);
-            console.log(select[0][0].id)
+            const select = await pool.query("SELECT id FROM produto WHERE nome = ? AND forn = ? ORDER BY id DESC", [prod, prov]);
+            console.log(select[0][0].id);
             const insert2 = await pool.query("INSERT INTO stock (store, produ, qtty, preco) VALUES (?,?,?,?)", 
                 [armazem, select[0][0].id, quant, preco]);
 
@@ -91,27 +91,12 @@ router.post('/reg_product', async (req,res) => {
         console.error(err);
         res.status(500).send({message: "fail"});
     }
-    
-    
-    try {
-        const insert = await pool.query("INSERT INTO produto (dscp, forn, prod, catg, subcatg) VALUES (?,?,?,?,?)", 
-            [nome, prov, dataprod, categoria, subcategoria]);
-        const select = await pool.query("SELECT id FROM produto WHERE dscp = ? AND forn = ? ORDER BY id DESC", [nome, prov]);
-        console.log(select[0][0].id)
-        const insert2 = await pool.query("INSERT INTO stock (store, produ, qtty, preco) VALUES (?,?,?,?)", 
-            [armazem, select[0][0].id, quant, preco]);
-        
-        res.status(200).send({message: "success"});
-    } catch (err) {
-        console.error(err);
-        res.status(500).send({message: "fail"});
-    }
 });
 
 // OPERACIONAL
 router.get('/products', async (req,res) => {
     var provId = req.query.pid;
-    var queryString = "SELECT p.id AS id, p.dscp AS nome, p.prod AS data, c.nome AS categoria, sc.nome AS subcategoria, s.preco AS preco, m.street AS armazem, s.qtty as quantidade \
+    var queryString = "SELECT p.id AS id, p.nome AS nome, p.prod AS data, c.nome AS categoria, sc.nome AS subcategoria, s.preco AS preco, m.street AS armazem, s.qtty as quantidade \
                         FROM stock s, produto p, categoria c, subcategoria sc, armazem a, morada m \
                         WHERE (p.forn = ?) AND (s.produ = p.id) AND (s.store = a.id) AND (a.morada = m.id) AND (p.catg = c.id) AND (p.subcatg = sc.id) \
                         GROUP BY p.id, m.street, s.preco, s.qtty \

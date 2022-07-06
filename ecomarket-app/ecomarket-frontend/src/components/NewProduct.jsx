@@ -1,11 +1,20 @@
 /* eslint-disable no-multi-str */
 import Axios from 'axios';
-import { useState } from "react";
+import { useState, Redirect } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 
 function NewProduct() {
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     const id = 3 //temporario
+
+    const [nome, setNome]                   = useState('');
+    const [data, setData]                   = useState('');
+    const [preco, setPreco]                 = useState('');
+    const [categoria, setCategoria]         = useState('');
+    const [subcategoria, setSubcategoria]   = useState('');
+    const [quantidade, setQuantidade]       = useState('');
+    const [armazem, setArmazem]             = useState('');
+
 
     document.body.onload = function(){go()};
 
@@ -49,7 +58,51 @@ function NewProduct() {
     }
 
     const handler = (x) => {
-
+        switch(x.target.name) {
+            case "nome":
+                setNome(x.target.value);
+                break;
+            case "data":
+                setData(x.target.value);
+                break;
+            case "preco":
+                setPreco(x.target.value);
+                break;
+            case "categoria":
+                setCategoria(x.target.value);
+                break;
+            case "subcategoria":
+                setSubcategoria(x.target.value);
+                break;
+            case "quantidade":
+                setQuantidade(x.target.value);
+                break;
+            case "armazem":
+                setArmazem(x.target.value);
+                break;
+            case "submit":
+                x.preventDefault();
+                if (nome !== '' || data !== '' || preco !== '' || categoria !== '' || subcategoria !== '' || quantidade !== '' || armazem !== '') {
+                    Axios.post(url+"/api/v1/providers/reg_product", {
+                        existe: false,
+                        prov: id,
+                        prod: nome, 
+                        data: data,
+                        preco: preco,
+                        cat: categoria,
+                        subcat: subcategoria,
+                        quant: quantidade,
+                        storage: armazem
+                    }).then((response) => {
+                        if (response.data.message === 'success') {
+                            window.location.href = "http://localhost:3000/provider";
+                        }
+                    })
+                }
+                break;
+            default:
+                console.log();
+        }
     }
 
     return (
@@ -60,19 +113,19 @@ function NewProduct() {
                 <form method='post'>
                     <div class='col-md-12'> 
                         <label>Nome do Produto:</label> 
-                        <input class='form-control' type='text' name='nomeProd' id='nomeProd' size='50' required/> 
+                        <input class='form-control' type='text' name='nome' size='50' onChange={handler} required/> 
                     </div> 
                     <div class='col-md-12'> 
                         <label>Data de Produção:</label> 
-                        <input class='form-control' type='date' name='dataProd' id ='dataProd' placeholder='DD/MM/AAAA'  size='50' required/> 
+                        <input class='form-control' type='date' name='data' placeholder='DD/MM/AAAA'  size='50' onChange={handler} required/> 
                     </div> 
                     <div class='col-md-12'> 
                         <label>Preço Unitário:</label> 
-                        <input class='form-control' type='number' step={.01} name='preco' id='preco' size='50'  required/> 
+                        <input class='form-control' type='number' step={.01} name='preco' size='50' onChange={handler} required/> 
                     </div> 
                     <div class='col-md-12'> 
                         <label>Categoria</label> 
-                        <select class='form-select' name='categoria' id='categorias' onInput={subcategorias} required> 
+                        <select class='form-select' name='categoria' id='categorias' onChange={handler} onInput={subcategorias} required> 
                             <option value='' selected>Selecione uma Categoria</option> 
                         </select> 
                     </div> 
@@ -84,7 +137,7 @@ function NewProduct() {
                     </div>
                     <div className="col-md-12">
                         <label>Quantidade em Stock</label>
-                        <input className="form-control" type="number" name="quantidade"  size="50" onChange={handler} required/>
+                        <input className="form-control" type="number" name="quantidade" size="50" onChange={handler} required/>
                     </div>
 
                     <div className="col-md-12">
