@@ -76,6 +76,8 @@ router.post('/register', async (req, res, next) => {
     }
 });
 
+/**CHECK ON THESE LATER */
+
 router.get('/:uid', async (req,res) => {
     try{
         const expected = [1,{uid:{type:"number",min:1}}];
