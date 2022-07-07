@@ -7,6 +7,10 @@ function ProductExists() {
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     const id = 3 //temporario
 
+    const [prod, setProd]               = useState('');
+    const [quantidade, setQuantidade]   = useState('');
+    const [armazem, setArmazem]         = useState('');
+
     document.body.onload = function(){go()};
 
     const go = () => {
@@ -40,6 +44,35 @@ function ProductExists() {
     }
 
     const handler = (x) => {
+        switch(x.target.name) {
+            case "produto":
+                setProd(x.target.value);
+                break;
+            case "quantidade":
+                setQuantidade(x.target.value);
+                break;
+            case "armazem":
+                setArmazem(x.target.value);
+                break;
+            case "submit":
+                x.preventDefault();
+                if (prod !== '' && quantidade !== '' && armazem !== '') {
+                    Axios.post(url+"/api/v1/providers/reg_product", {
+                        prov: id,
+                        existe: true,
+                        prod: prod,
+                        quant: quantidade,
+                        storage: armazem
+                    }).then((response) => {
+                        if (response.data.message === 'success') {
+                            window.location.href = "http://localhost:3000/provider";  //to be changed
+                        }
+                    });
+                }
+                break;
+            default:
+                console.log();
+        }
 
     }
     return (
@@ -50,7 +83,7 @@ function ProductExists() {
                 <form method='post'>
                     <div class='col-md-12'>
                         <label>Nome do Produto:</label>
-                        <select class='form-select' name='produto' id='produtos' required >
+                        <select class='form-select' name='produto' id='produtos' onChange={handler} required >
                             <option value='' selected>Selecione um Produto</option>
                         </select>
                     </div>

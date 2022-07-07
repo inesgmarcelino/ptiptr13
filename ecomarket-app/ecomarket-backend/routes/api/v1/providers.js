@@ -68,8 +68,13 @@ router.post('/reg_product', async (req,res) => {
     try {
         if (existe) {
             const prod = req.body.prod;
-            const insert = await pool.query("INSERT INTO stock (store, produ, qtty, preco) VALUES (?,?,?,?)", 
-                [armazem, prod, quant, preco]);
+            const select = await pool.query("SELECT * FROM stock WHERE produ = ? AND store = ?", [prod, armazem]);
+            if (select[0].length > 0) {
+                const update = await pool.query("UPDATE stock SET qtty = ? WHERE id = ?",[parseInt(select[0][0].qtty) + parseInt(quant), select[0][0].id]);
+            } else {
+                const insert = await pool.query("INSERT INTO stock (store, produ, qtty) VALUES (?,?,?)", 
+                    [armazem, prod, quant]);
+            }
     
         } else {
             const prod = req.body.prod; 
@@ -77,11 +82,10 @@ router.post('/reg_product', async (req,res) => {
             const preco = req.body.preco;
             const categoria = req.body.cat;
             const subcategoria = req.body.subcat;
-            const insert = await pool.query("INSERT INTO produto (nome, forn, prod, catg, subcatg) VALUES (?,?,?,?,?)", 
-                [prod, prov, dataprod, categoria, subcategoria]);
+            const insert = await pool.query("INSERT INTO produto (nome, forn, prod, catg, subcatg, preco) VALUES (?,?,?,?,?,?)", 
+                [prod, prov, dataprod, categoria, subcategoria, preco]);
             const select = await pool.query("SELECT id FROM produto WHERE nome = ? AND forn = ? ORDER BY id DESC", [prod, prov]);
-            console.log(select[0][0].id);
-            const insert2 = await pool.query("INSERT INTO stock (store, produ, qtty, preco) VALUES (?,?,?,?)", 
+            const insert2 = await pool.query("INSERT INTO stock (store, produ, qtty) VALUES (?,?,?)", 
                 [armazem, select[0][0].id, quant, preco]);
 
         }
@@ -96,10 +100,10 @@ router.post('/reg_product', async (req,res) => {
 // OPERACIONAL
 router.get('/products', async (req,res) => {
     var provId = req.query.pid;
-    var queryString = "SELECT p.id AS id, p.nome AS nome, p.prod AS data, c.nome AS categoria, sc.nome AS subcategoria, s.preco AS preco, m.street AS armazem, s.qtty as quantidade \
+    var queryString = "SELECT p.id AS id, p.nome AS nome, p.prod AS data, c.nome AS categoria, sc.nome AS subcategoria, p.preco AS preco, m.street AS armazem, s.qtty as quantidade \
                         FROM stock s, produto p, categoria c, subcategoria sc, armazem a, morada m \
                         WHERE (p.forn = ?) AND (s.produ = p.id) AND (s.store = a.id) AND (a.morada = m.id) AND (p.catg = c.id) AND (p.subcatg = sc.id) \
-                        GROUP BY p.id, m.street, s.preco, s.qtty \
+                        GROUP BY p.id, m.street, p.preco, s.qtty \
                         ORDER BY p.id ASC";
 
     try {

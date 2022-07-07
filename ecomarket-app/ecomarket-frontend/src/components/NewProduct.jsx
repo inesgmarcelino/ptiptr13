@@ -82,10 +82,10 @@ function NewProduct() {
                 break;
             case "submit":
                 x.preventDefault();
-                if (nome !== '' || data !== '' || preco !== '' || categoria !== '' || subcategoria !== '' || quantidade !== '' || armazem !== '') {
+                if (nome !== '' && data !== '' && preco !== '' && categoria !== '' && subcategoria !== '' && quantidade !== '' && armazem !== '') {
                     Axios.post(url+"/api/v1/providers/reg_product", {
-                        existe: false,
                         prov: id,
+                        existe: false,
                         prod: nome, 
                         data: data,
                         preco: preco,
@@ -95,7 +95,7 @@ function NewProduct() {
                         storage: armazem
                     }).then((response) => {
                         if (response.data.message === 'success') {
-                            window.location.href = "http://localhost:3000/provider";
+                            window.location.href = "http://localhost:3000/provider"; //to be changed
                         }
                     })
                 }

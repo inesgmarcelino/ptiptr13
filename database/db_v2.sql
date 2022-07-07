@@ -126,6 +126,7 @@ CREATE TABLE IF NOT EXISTS produto (
     prod            DATE NOT NULL,
     catg            INT NOT NULL,
     subcatg         INT NOT NULL,
+    preco           DECIMAL(7,2) NOT NULL DEFAULT (00000.00),
     --
     CONSTRAINT prod_catg 
         FOREIGN KEY (catg) REFERENCES categoria(id),
@@ -141,7 +142,6 @@ CREATE TABLE IF NOT EXISTS stock(
     store           INT NOT NULL,
     produ           INT NOT NULL,
     qtty            INT NOT NULL DEFAULT 0,
-    preco           DECIMAL(7,2) NOT NULL DEFAULT (00000.00),
     due             DATE DEFAULT NULL, -- DATA DE VALIDADE
     --
     -- CONSTRAINT prim_stock PRIMARY KEY(forn,store,produ), -> Nao permite  
