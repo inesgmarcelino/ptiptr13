@@ -21,13 +21,14 @@ router.get('/', async (req,res) => {
     } else if (tipo) {
         queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (p.tipo = ?) AND (u.id = p.fornecedor)";
     } else {
-        queryString = "SELECT p.*, u.nome FROM produto p, utilizador u WHERE (u.id = p.fornecedor)";
+        queryString = "SELECT p.id AS id, p.nome AS nome, u.nome AS fornecedor, p.preco as preco FROM produto p, utilizador u WHERE (p.forn = u.id)";
     }
 
     try {
         const [result,fields] = await pool.query(queryString, [tipo,subtipo]);
         return res.status(200).send({results: result}); 
     } catch (err) {
+        console.log(err);
         return res.status(500).send({message:"fail"});
     }
 });

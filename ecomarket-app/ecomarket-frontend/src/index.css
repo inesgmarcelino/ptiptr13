@@ -169,6 +169,21 @@ body {
   border-radius: 10px;
 }
 
+.b2 {
+  background-color: #283618;
+  color:white;
+  margin-top: 10px;
+  margin-right: -5px;
+  margin-bottom: 15px;
+  border: 0;
+
+}
+
+.b2:hover {
+  background-color: #394d22;
+  color: white;
+}
+
 #morada {
   display: none;
   height: 30px;
@@ -478,9 +493,17 @@ input:focus {
   margin-top: -120px;
 }
 
-/*Album*/
-.product-container::-webkit-scrollbar{
-  display: none;
+.col {
+  margin-left: 300px;
+}
+
+.product {
+  color: white
+}
+
+.card.product {
+  width: 400px;
+  height: 200px;
 }
 
 .product-card{
@@ -562,6 +585,7 @@ label {
   background-color: #ffffff;
   width: 259px;
   border-radius: 5px;
+  height: max-content;
   /* border: #283618; */
 }
 
@@ -569,10 +593,11 @@ label {
   color: #283618;
 }
 
-.filtros > div {
-  margin-left: -20px;
+.form-check {
+  padding-left: 0.5rem;
 }
 
-.filtros > .form-check label {
-  font-size: 18px;
+#subcategorias>p {
+  color: gray;
+  font-size: smaller;
 }

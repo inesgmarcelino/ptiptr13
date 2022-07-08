@@ -23,3 +23,5 @@ export { default as Order } from "./Order";
 export { default as Transporter } from "./Transporter";
 export { default as AdminUsersList } from "./AdminUsersList";
 export { default as CarRegister } from "./CarRegister";
+export { default as Filtros } from "./Filtros";
+export { default as Products } from "./Products";
