@@ -221,4 +221,10 @@ router.get("/:uid/products/:pid", async (req, res, next) => {
     }
 })
 
+//get order
+router.get('/order/:oid')
+
+//Choose transportadora
+router.post("/")
+
 module.exports = router ;

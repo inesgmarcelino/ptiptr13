@@ -153,19 +153,20 @@ router.get('/order/:oid', async (req,res,next)=>{
     try {
         if (!parser(req.params, e_params)) throw new ServerError(400,"Dados fornecidos inválidos.");
 
-        const query = "SELECT e.tpurchase AS date, e.total AS ototal, d.forn AS forn, s.descr AS dscr,"+   
-                      ""+
-                      //s is for status
-                      "FROM encomenda e, despacho d, encomenda_prods p, estado_despacho s WHERE "+
-                      " e.id = ? AND d.encom = e.id AND p.encom = e.id AND s.id = d.estado";
+        const query = "SELECT e.tpurchase AS date, e.total AS total, d.forn AS forn, st.descr AS status,"+   
+                      "p.nome AS nome, ep.price AS preco, ep.qtty AS qtty "+
+                      "FROM encomenda e, despacho d, encomenda_prods ep, estado_despacho st,"+
+                      "produto p, stock s WHERE "+
+                      " e.id = ? AND d.encom = e.id AND ep.encom = e.id AND st.id = d.estado AND  "+
+                      "s.id = ep.prod AND p.id = s.produ "+
+                      "ORDER BY d.forn";
         const [results,fields] = await pool.query(query,[req.params.oid]).catch(err =>{
             console.error(err);
             throw new ServerError(500, "Não foi possível concretizar ação pedida.\nTente mais tarde.");
         });
         if(results.length === 0) throw ServerError(404,"Encomenda não existe.");
 
-
-
+        res.status(200).send(results);
     } catch (err) {
         res.status(err.code).send(err.message);
     }
