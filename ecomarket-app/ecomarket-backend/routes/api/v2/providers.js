@@ -161,7 +161,7 @@ router.get("/:uid/armazem/:aid", async (req,res,next) => {
             id: a.id,
             forn: req.params.uid,
             addr: address,
-        }
+        };
         const [prods,garbo] = await pool.query("SELECT s.id AS id, s.produ AS product, s.qtty AS qtty,"+
                                 " s.preco AS preco, p.nome AS nome, p.dscp AS dscp, "+
                                 " p.catg AS catg, p.subcatg AS subcatg "+

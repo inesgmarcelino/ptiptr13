@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS despacho (
     CONSTRAINT fk_status 
         FOREIGN KEY (estado) REFERENCES estado_despacho(id),
     CONSTRAINT fk_dispatch_order 
-        FOREIGN KEY (encom) REFERENCES encomenda(id),
+        FOREIGN KEY (encom) REFERENCES encomenda(id) ON DELETE CASCADE,
     CONSTRAINT fk_vehic 
         FOREIGN KEY (transp,vehic) REFERENCES veiculo(transp,id),
     CONSTRAINT chk_status 
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS encomenda_prods (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS cesto_compras(
-    cons            INT UNIQUE NOT NULL,
+    cons            INT NOT NULL,
     forn            INT NOT NULL,
     prod            INT NOT NULL,
     qtty            INT NOT NULL DEFAULT 1,

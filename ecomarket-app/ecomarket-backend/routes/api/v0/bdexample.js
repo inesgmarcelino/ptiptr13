@@ -4,21 +4,19 @@ const pool = require('../svlib/db/getPool');
 
 //from example: https://stackoverflow.com/questions/37102364/how-do-i-create-a-mysql-connection-pool-while-working-with-nodejs-and-express
 
-exports.hello = function(req,res){
-
-    pool.getConnection((err, connection) => {
-
-       
-        pool.query("INSERT INTO users(email,password) VALUES('UHOHRAMDINGDONG','asijd1q2io4rj13526')");
-        if(err){
-          console.error({"message":err.message});
-          return;
-        } else {
-            console.error("No problem");
-        }
-        connection.release();
-      });
- 
+exports.hello = async function(req,res){
+  try {
+    const [results,fields] = await pool.query("INSERT INTO test(value) VALUES(1)").catch(err => {
+      console.error(err);
+      throw new Error();
+    });
+    console.error(results.insertId);
+    console.error(results);
+    console.error(fields);
+    res.send(200);
+  } catch (error) {
+    res.send(500);
+  }
 }
 
 exports.insert = function(req,res){

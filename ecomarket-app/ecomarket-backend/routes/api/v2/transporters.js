@@ -20,7 +20,7 @@ router.post('/:tid/vehicles/register', async (req,res,next) => {
         marca:{},
         ano:{},
         fuel:{},
-        plate:{}
+        plate:{type:"string"}
     }];
     try {
         if (!parser(req.params, e_params)) throw new ServerError(400,"Dados fornecidos inválidos.");
