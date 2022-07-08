@@ -1,4 +1,3 @@
-
 body {
   margin: 0;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -51,8 +50,8 @@ body {
 
 
 #icon {
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   margin-right: 10px;
 }
  
@@ -83,6 +82,10 @@ body {
 .form-control, .form-check {
   margin-top: 10px;
   max-width: 100%;
+}
+
+.form-check-input {
+  margin-top: 12px;
 }
 
 .card {
@@ -164,6 +167,21 @@ body {
   margin-right: 15px;
   border: 3px solid  #283618ce;
   border-radius: 10px;
+}
+
+.b2 {
+  background-color: #283618;
+  color:white;
+  margin-top: 10px;
+  margin-right: -5px;
+  margin-bottom: 15px;
+  border: 0;
+
+}
+
+.b2:hover {
+  background-color: #394d22;
+  color: white;
 }
 
 #morada {
@@ -289,6 +307,7 @@ body {
   font-size: 50px;
   text-align:center;
 }
+
 .shopping-cart {
   width:1000px;
   height: auto;
@@ -461,14 +480,30 @@ input:focus {
 .card-subtitle2{
   margin-top: 20px;
 }
+
 .pr{
   margin-top: 200px;
 }
 
+.pr2 {
+  margin-top: 147px;
+}
 
-/*Album*/
-.product-container::-webkit-scrollbar{
-  display: none;
+.pr3 {
+  margin-top: -120px;
+}
+
+.col {
+  margin-left: 300px;
+}
+
+.product {
+  color: white
+}
+
+.card.product {
+  width: 400px;
+  height: 200px;
 }
 
 .product-card{
@@ -527,8 +562,8 @@ input:focus {
 }
 
 /*forms*/
-label{
-  color: antiquewhite;
+label {
+  color: black;
   margin-top: 10px;
 }
 
@@ -542,3 +577,27 @@ label{
   color:#283618
 }
 
+.catalog{
+  margin-top: 100px;
+}
+
+.filtros {
+  background-color: #ffffff;
+  width: 259px;
+  border-radius: 5px;
+  height: max-content;
+  /* border: #283618; */
+}
+
+.filtros > h4 {
+  color: #283618;
+}
+
+.form-check {
+  padding-left: 0.5rem;
+}
+
+#subcategorias>p {
+  color: gray;
+  font-size: smaller;
+}

@@ -12,32 +12,26 @@ const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
 router.post('/reg_car', async (req,res) => {
-    const transp = req.body.trasnp;
-    const cond = req.body.cond;
+    var trans = req.body.trans;
+    var marca = req.body.marca;
+    var ano = req.body.ano;
+    var comb = req.body.combustivel;
+    var caixa = req.body.caixa;
+    var consumo = req.body.consumo;
+    var un = req.body.unidade;
+    var matricula = req.body.matricula;
 
-    var queryString = "INSERT INTO veiculo (condicoes) VALUES (?)";
-    try{
-        const [insert,fields] = await pool.query(queryString, [cond]);
-    
-        queryString = "SELECT MAX(id) AS id FROM veiculo";
-
-        const [result, field] = await pool.query(queryString);
-        var idveic = result[0].id;
-
-        queryString = "INSERT INTO lista_veiculos (transportador, veiculo) VALUES (?,?)";
-
-        const [results, fiel] = await pool.query(queryString, [transp, idveic]);
-
-
-        res.status(200);
-        res.type('json');
-        res.send({"message":"Registo bem sucessido"});
-
-    } catch(err){
-        res.status(500);
-        res.type('json');
-        res.send({"message":"Não foi possível realizar essa operação. output 1"});
-    }
+   try {
+    const insert = await pool.query("INSERT INTO consumos_veiculo (unidade, quantidade) VALUES (?,?)", 
+        [un, consumo]);
+    const select = await pool.query("SELECT id FROM consumos_veiculo ORDER BY id DESC");
+    const insert2 = await pool.query("INSERT INTO veiculo (transp, marca, ano, fuel, consumo, plate) VALUES (?,?,?,?,?,?)",
+        [trans, marca, ano, comb, select[0][0].id, matricula]);
+    res.status(200).send({message: "success"});
+   } catch(err) {
+    console.error(err);
+    res.status(500).send({message: "fail"});
+   }
 });
 
 // OPERACIONAL
@@ -59,15 +53,15 @@ router.get('/orders', async (req,res) => {
 
 router.get('/cars', async (req,res) => {
     var transId = req.query.tid;
-    var queryString = "SELECT v.id AS id, v.marca AS marca, v.ano AS ano, v.combustivel AS combustivel, v.caixa AS caixa, v.co2 AS emissao \
-                        FROM veiculo v, lista_veiculos lv \
-                        WHERE (lv.transportador = 4) AND (lv.veiculo = v.id) \
-                        GROUP BY v.id;";
-
+    var queryString = "SELECT v.id AS id, v.marca AS marca, v.ano AS ano, v.fuel AS combustivel, c.quantidade AS quantidade, c.unidade AS unidade, v.plate AS matricula \
+                        FROM veiculo v, consumos_veiculo c \
+                        WHERE (v.transp = ?) AND (v.consumo = c.id)";
+    
     try {
-        const [result,fields] = await pool.query(queryString, [transId]);
-        return res.status(200).send({results: result}); 
+        const [results, fields] = await pool.query(queryString, [transId]);
+        return res.status(200).send({results: results}); 
     } catch (err) {
+        console.error(err);
         return res.status(500).send({message:"fail"});
     }
 });

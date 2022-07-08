@@ -50,16 +50,16 @@ function Transporter () {
                 tid: tid
         }}).then ((response) => {
             if (response.data.message !== "fail") {
-                var produtos = response.data.results;
-                for (var i = 0; i < produtos.length; i++) {
+                var cars = response.data.results;
+                for (var i = 0; i < cars.length; i++) {
                     document.getElementById("trans_car").innerHTML += "<tr>\
-                                                                        <td>"+produtos[i].id+"</td>\
-                                                                        <td>"+produtos[i].marca+"</td>\
-                                                                        <td>"+produtos[i].ano+"</td>\
-                                                                        <td>"+comb(produtos[i].combustivel)+"</td>\
-                                                                        <td>"+caixa(produtos[i].caixa)+"</td>\
-                                                                        <td>"+produtos[i].emissao+"g/km</td>\
-                                                                        <td> Botão para a product.jsx respetiva</td>\
+                                                                        <td>"+cars[i].id+"</td>\
+                                                                        <td>"+cars[i].marca+"</td>\
+                                                                        <td>"+cars[i].ano+"</td>\
+                                                                        <td>"+comb(cars[i].combustivel)+"</td>\
+                                                                        <td>NULL</td>\
+                                                                        <td>"+cars[i].quantidade+" " + consumo(cars[i].unidade)+"</td>\
+                                                                        <td>"+matricula(cars[i].matricula)+"</td>\
                                                                     </tr>";
                 }
             }
@@ -73,11 +73,7 @@ function Transporter () {
             case 2:
                 return "Gasóleo";
             case 3:
-                return "GPL";
-            case 4:
                 return "Elétrico";
-            case 5:
-                return "Híbrido";
             default:
                 break;
         }
@@ -86,12 +82,27 @@ function Transporter () {
     const caixa = (x) => {
         switch (x) {
             case 1:
-                return "Manual";
-            case 2:
                 return "Automática";
+            case 2:
+                return "Manual";
             default:
                 break;
         }
+    }
+
+    const consumo = (x) => {
+        switch(x) {
+            case 1:
+                return "lts/100Kms";
+            case 2:
+                return "kWatts/100Kms";
+            default:
+                break;
+        }
+    }
+    
+    const matricula = (x) => {
+        return x.substring(0,2) + "-" + x.substring(2,4) + "-" + x.substring(4);
     }
 
     return(
@@ -118,7 +129,7 @@ function Transporter () {
             </div>
 
             <div className="container">
-                <Link to ='' ><button className="btn">Adicionar</button></Link>
+                <Link to ='/carRegister' ><button className="btn">Adicionar</button></Link>
                 <br />
                 <h3>Veículos</h3>     
             </div>
@@ -132,7 +143,8 @@ function Transporter () {
                         <th>Ano</th>
                         <th>Combustível</th>
                         <th>Caixa</th>
-                        <th>Emissão CO2</th>
+                        <th>Consumo</th>
+                        <th>Matrícula</th>
                     </tr>
                 </thead>
                 <tbody id="trans_car">

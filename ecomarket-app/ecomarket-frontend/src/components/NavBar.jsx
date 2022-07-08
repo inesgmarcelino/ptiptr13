@@ -9,30 +9,64 @@ const cart = require('../images/icons/cart.png');
 
 function SideBar(props) {
     const { isAuthenticated } = useAuth0();    
+
     return (
-        <Navbar>
-            <Stack direction="horizontal" gap={1}>
-                <Navbar.Brand href="/" xs={12} xxl={4}>
-                    <img src={logo} alt="" id="logo" />
-                </Navbar.Brand>
-                <Form>
-                    <Form.Group>
-                        <Form.Control type="" placeholder="Search" className="searchBar" />
-                    </Form.Group>
-                </Form>
-                <Row className="logBox align-items-center">
-                    <Col>
-                        <NavLink to="/Cart">
-                            <img src={cart} id="cart" alt="" className="d-inline-block align-center" />
-                        </NavLink>
-                    </Col>
-                    <Col >
+        <nav class="navbar fixed-top navbar-expand-lg p-md-3">
+                <div class="container-fluid"> 
+                    <a href="/" className="navbar-brand" ><img src={logo} alt="" id="logo" /></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="mx-auto">
+                        <input class="form-control me-2" id="searchBar" type="search" placeholder="Search" size="50" aria-label="Search" />
+                    </div>
+                    
+                    <NavLink to="/Cart">
+                        <img src={cart} id="cart" alt=""/>
+                    </NavLink>
+                    <ul class="navbar-nav">
+                        <li className="nav-item"> {/* se autenticado user */}
                         {useLogin(isAuthenticated)}
-                    </Col>
-                </Row>
-            </Stack>
-        </Navbar>
+                         {/* <NavLink className="nav-link text-white" to="/login">
+                            Inicie Sessão
+                              falta os pontos 
+                             </NavLink>
+                         </li>
+                         <li className="nav-item">
+                         <NavLink className="nav-link text-white" to="/register">
+                            Registe-se
+                         </NavLink> */}
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </nav>
     );
+    // return (
+    //     <Navbar>
+    //         <Stack direction="horizontal" gap={1}>
+    //             <Navbar.Brand href="/" xs={12} xxl={4}>
+    //                 <img src={logo} alt="" id="logo" />
+    //             </Navbar.Brand>
+    //             <Form>
+    //                 <Form.Group>
+    //                     <Form.Control type="" placeholder="Search" className="searchBar" />
+    //                 </Form.Group>
+    //             </Form>
+    //             <Row className="logBox align-items-center">
+    //                 <Col>
+    //                     <NavLink to="/Cart">
+    //                         <img src={cart} id="cart" alt="" className="d-inline-block align-center" />
+    //                     </NavLink>
+    //                 </Col>
+    //                 <Col >
+    //                     {useLogin(isAuthenticated)}
+    //                 </Col>
+    //             </Row>
+    //         </Stack>
+    //     </Navbar>
+    // );
 }
 
 function useLogin(logged) {

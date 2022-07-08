@@ -11,7 +11,7 @@ function Provider () {
     document.body.onload = function(){prov()};
 
     const prov = () => {
-        enc();
+        // enc();
         prod();
         store();
     }
@@ -57,11 +57,12 @@ function Provider () {
                     document.getElementById("prov_prod").innerHTML += "<tr>\
                                                                         <td>"+produtos[i].id+"</td>\
                                                                         <td>"+produtos[i].nome+"</td>\
-                                                                        <td>"+produtos[i].producao+"</td>\
-                                                                        <td>"+produtos[i].tipo+"</td>\
-                                                                        <td>"+produtos[i].subtipo+"</td>\
+                                                                        <td>"+data(produtos[i].data)+"</td>\
+                                                                        <td>"+produtos[i].categoria+"</td>\
+                                                                        <td>"+produtos[i].subcategoria+"</td>\
                                                                         <td>"+produtos[i].preco+"€</td>\
-                                                                        <td> Botão para a product.jsx respetiva</td>\
+                                                                        <td>"+produtos[i].armazem+"</td>\
+                                                                        <td>"+produtos[i].quantidade+"</td>\
                                                                     </tr>";
                 }
             }
@@ -78,8 +79,8 @@ function Provider () {
                 for (var i = 0; i < storages.length; i++) {
                     document.getElementById("prov_stor").innerHTML += "<tr>\
                                                                         <td>"+storages[i].id+"</td>\
-                                                                        <td>"+storages[i].morada+"</td>\
-                                                                        <td>"+cpostal(storages[i].cpostal)+"</td>\
+                                                                        <td>"+storages[i].rua+"</td>\
+                                                                        <td>"+cpostal(storages[i].postal1, storages[i].postal2)+"</td>\
                                                                         <td>"+storages[i].distrito+"</td>\
                                                                         <td>"+storages[i].concelho+"</td>\
                                                                     </tr>";
@@ -88,8 +89,26 @@ function Provider () {
         });
     }
 
-    const cpostal = (cp) => {
-        return cp.substring(0,4) + "-" + cp.substring(4);
+    const cpostal = (p1,p2) => {
+        if (p1 < 1000) {
+            p1 = "0"+p1;
+        } else if (p1 > 9 && p1 < 100) {
+            p1 = "00"+p1;
+        } else if (p1 < 10) {
+            p1 = "000"+p1;
+        }
+
+        if (p2 < 100) {
+            p2 = "0"+p2;
+        } else if (p2 < 10) {
+            p2 = "00"+p2;
+        }
+    
+        return p1+"-"+p2;
+    }
+
+    const data = (x) => {
+        return x.substring(8,10)+"/"+x.substring(5,7)+"/"+x.substring(0,4);
     }
 
     return(
@@ -116,7 +135,7 @@ function Provider () {
             </div>
 
             <div className="container">
-                <Link to ='' ><button className="btn">Adicionar</button></Link>
+                <Link to ='/productRegister' ><button className="btn">Adicionar</button></Link>
                 <br />
                 <h3>Produtos</h3>     
             </div>
@@ -128,10 +147,11 @@ function Provider () {
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Data de Produção</th>
-                        <th>Tipo</th>
-                        <th>Subtipo</th>
+                        <th>Categoria</th>
+                        <th>Subcategoria</th>
                         <th>Preço</th>
-                        <th>-- --</th>
+                        <th>Armazém</th>
+                        <th>Quantidade em Stock</th>
                     </tr>
                 </thead>
                 <tbody id="prov_prod">
@@ -140,7 +160,7 @@ function Provider () {
             </div>
 
             <div className="container">
-                <Link to ='' ><button className="btn">Adicionar</button></Link>
+                <Link to ='/storageRegister' ><button className="btn">Adicionar</button></Link>
                 <br />
                 <h3>Armazéns</h3>
             </div>
