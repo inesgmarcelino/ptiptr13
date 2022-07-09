@@ -28,45 +28,12 @@ function SideBar(props) {
                     <ul class="navbar-nav">
                         <li className="nav-item"> {/* se autenticado user */}
                         {useLogin(isAuthenticated)}
-                         {/* <NavLink className="nav-link text-white" to="/login">
-                            Inicie Sessão
-                              falta os pontos 
-                             </NavLink>
-                         </li>
-                         <li className="nav-item">
-                         <NavLink className="nav-link text-white" to="/register">
-                            Registe-se
-                         </NavLink> */}
                         </li>
                     </ul>
                     </div>
                 </div>
                 </nav>
     );
-    // return (
-    //     <Navbar>
-    //         <Stack direction="horizontal" gap={1}>
-    //             <Navbar.Brand href="/" xs={12} xxl={4}>
-    //                 <img src={logo} alt="" id="logo" />
-    //             </Navbar.Brand>
-    //             <Form>
-    //                 <Form.Group>
-    //                     <Form.Control type="" placeholder="Search" className="searchBar" />
-    //                 </Form.Group>
-    //             </Form>
-    //             <Row className="logBox align-items-center">
-    //                 <Col>
-    //                     <NavLink to="/Cart">
-    //                         <img src={cart} id="cart" alt="" className="d-inline-block align-center" />
-    //                     </NavLink>
-    //                 </Col>
-    //                 <Col >
-    //                     {useLogin(isAuthenticated)}
-    //                 </Col>
-    //             </Row>
-    //         </Stack>
-    //     </Navbar>
-    // );
 }
 
 function useLogin(logged) {
@@ -86,7 +53,7 @@ function useLogin(logged) {
         return (
             /*Trocar para username mais tarde e talvez acrescentar a fotografia se quiserem*/ 
             <NavDropdown title={user.name} id="basic-nav-dropdown" className="NavDrop">
-                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                <NavDropdown.Item href="/profile" style={{color: "black"}} >Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={() => logout({returnTo: window.location.origin,})}>Logout</NavDropdown.Item>
             </NavDropdown>

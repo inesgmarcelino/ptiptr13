@@ -168,6 +168,14 @@ body {
   margin-bottom: 0;
 }
 
+.nav-link, .nav-link:hover, .nav-link:focus {
+  color: white;
+}
+
+/* .dropdown-item {
+  color: black;
+} */
+
 .btn {
   float: right;
   background-color: #fff;

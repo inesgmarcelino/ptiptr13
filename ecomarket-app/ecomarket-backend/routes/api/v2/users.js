@@ -76,6 +76,18 @@ router.post('/register', async (req, res, next) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        const expected = [1,{"email": { type: "string" } }];
+        if (!parser(req.query, expected)) throw new Error("Dados inválidos");
+        const [user, fields] = await pool.query("SELECT * FROM utilizador WHERE email = ?", [req.query.email]);
+        res.status(200).send({results: user})
+    } catch (err) {
+        console.log(err)
+        res.status(500).send({message: 'fail'});
+    }
+})
+
 /**CHECK ON THESE LATER */
 
 router.get('/:uid', async (req,res) => {
