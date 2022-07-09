@@ -17,10 +17,10 @@ function IsTransportador(user){
 router.post('/:tid/vehicles/register', async (req,res,next) => {
     const e_params = [1,{tid:{type:"number",min:1}}];
     const e_body = [5,{
-        marca:{},
-        ano:{},
-        fuel:{},
-        plate:{type:"string"}
+        marca:{type:"string"},
+        ano:{type:"number",length:4},
+        fuel:{type:"string",min:1,min:2},
+        plate:{type:"string",length:6}
     }];
     try {
         if (!parser(req.params, e_params)) throw new ServerError(400,"Dados fornecidos inválidos.");
@@ -29,7 +29,7 @@ router.post('/:tid/vehicles/register', async (req,res,next) => {
         const query ="INSERT INTO veiculo(transp,marca,ano,fuel,consumo,plate) VALUES (?,?,?,?,?)";
         const params = [
             req.params.tid, req.body.marca,req.body.ano,req.body.fuel,req.body.consu,req.body.plate
-        ]
+        ];
         const [results,garbage] = await pool.query(query,params).catch(err => {
             console.error(err);
             throw new ServerError(500,"Não foi possível concretizar ação pedida.\nTente mais tarde.");
