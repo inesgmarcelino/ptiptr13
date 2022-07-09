@@ -5,7 +5,7 @@ import $ from 'jquery';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function Register() {
-
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     const { loginWithRedirect} = useAuth0();
 
     // states for registration
@@ -13,13 +13,17 @@ function Register() {
     const [email, setEmail]                         = useState('');
     const [nif, setNif]                             = useState('');
     const [telem, setTelem]                         = useState('');
-    const [morada, setMorada]                       = useState('');
-    const [profpic, setProfPic]                     = useState(null);
+    const [rua, setRua]                             = useState('');
+    const [dist, setDist]                           = useState('');
+    const [conc, setConc]                           = useState('');
+    const [prefix, setPrefix]                       = useState('');
+    const [sufix, setSufix]                         = useState('');
     const [password, setPassword]                   = useState('');
     const [checkPassword, setCheckPassword]         = useState('');
     const [checkConsumidor, setConsumidor]          = useState(false);
     const [checkFornecedor, setFornecedor]          = useState(false);
     const [checkTransportador, setTransportador]    = useState(false);
+    const [papel, setPapel]                         = useState('');
 
     const handleShow = () => {
         $("#modal_register").css("display", "block");
@@ -28,9 +32,32 @@ function Register() {
     function handleHide(){
         $("#modal_register").css("display", "none");
     }
+
+    document.body.onload = function(){distritos()};
+
+    const distritos = () => {
+        Axios.get(url+"/api/v1/gets/distritos").then((response) => {
+            var dist = response.data.results;
+            for (var i = 0; i < dist.length; i++) {
+                document.getElementById("distritos").innerHTML += "<option value='" + dist[i]["id"] + "'>" + dist[i]["nome"] + "</option>";
+            }
+        });
+    }
+
+    const concelhos = (x) => {
+        document.getElementById("concelhos").innerHTML = "<option value='' selected>Selecione um Concelho</option>";
+        Axios.get(url+"/api/v1/gets/concelhos", { 
+            params: { 
+                dist: x.target.value
+        }}).then((response) => {
+            var conc = response.data.results;
+            for (var i = 0; i < conc.length; i++) {
+                document.getElementById("concelhos").innerHTML += "<option value='" + conc[i]["id"] + "'>" + conc[i]["nome"] + "</option>";
+            }
+        });
+    }
     
     const goLogin = () => {
-        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
         window.location.href = url;
     }
 
@@ -51,23 +78,51 @@ function Register() {
     }
 
     const handler = (x) => {
-        var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
         check();
         switch(x.target.name) {
             case "nome":
                 setNome(x.target.value);
+                console.log(nome);
                 break;
             case "email":
                 setEmail(x.target.value);
+                console.log(email);
                 break;
             case "nif":
-                setNif(x.target.value);
+                if (nif.length < 9 || x.target.value.length < 9) {
+                    setNif(x.target.value.replace(/[^0-9]/gi, ''));
+                }
+                console.log(nif);
                 break;
             case "telem":
-                setTelem(x.target.value);
+                if (telem.length < 9 || x.target.value.length < 9) {
+                    setTelem(x.target.value.replace(/[^0-9]/gi, ''));
+                }
+                console.log(telem);
                 break;
-            case "profpic":
-                setProfPic(x.target.files[0]);
+            case "rua":
+                setRua(x.target.value);
+                console.log(rua);
+                break;
+            case "distrito":
+                setDist(x.target.value);
+                console.log(dist);
+                break;
+            case "concelho":
+                setConc(x.target.value);
+                console.log(conc);
+                break;
+            case "prefix":
+                if (prefix.length < 4 || x.target.value.length < 4) {
+                    setPrefix(x.target.value.replace(/[^0-9]/gi, ''));
+                }
+                console.log(prefix);
+                break;
+            case "sufix":
+                if (sufix.length < 3 || x.target.value.length < 3) {
+                    setSufix(x.target.value.replace(/[^0-9]/gi, ''));
+                }
+                console.log(sufix);
                 break;
             case "password":
                 setPassword(x.target.value);
@@ -75,39 +130,41 @@ function Register() {
             case "checkPassword":
                 setCheckPassword(x.target.value);
                 break;
-            case "morada":
-                setMorada(x.target.value);
-                break;
             case "check-consumidor":
-                setConsumidor(x.target.checked);
+                if (papel === 3) {
+                    setPapel(4)
+                } else {
+                    setPapel(2);
+                }
                 break;
             case "check-fornecedor":
-                setFornecedor(x.target.checked);
+                if (papel === 2) {
+                    setPapel(4);
+                } else {
+                    setPapel(3);
+                }
                 break;
             case "check-transportador":
-                setTransportador(x.target.checked);
+                setPapel(5);
                 break;
             case "submit":
                 x.preventDefault();
-                if (nome === '' || email === '' || nif === '' || 
-                    telem === '' || password === '' || checkPassword === '' || morada === '' ||
-                    // verificar passwords
-                    (password !== checkPassword) || 
-                    // garante que quando se é transportador, n pode adquirir nenhum dos outros papeis
-                    (checkTransportador && (checkConsumidor || checkFornecedor))) {
-                        // setError(true);
-                } else {
-                    Axios.post(url+"/api/v1/users/register", {
+                console.log(papel);
+                if (nome !== '' && email !== '' && nif !== '' && telem !== '' && password !== '' && checkPassword !== '' && rua !== '' && 
+                    dist !== '' && conc !== '' && prefix !== '' && sufix !== '' && (password === checkPassword) && papel !== '') {
+
+                    Axios.post(url+"/api/v2/users/register", {
                         nome: nome, 
                         email: email, 
                         nif: nif, 
                         tlm: telem, 
-                        morada: morada,
-                        profpic: profpic,
-                        pwd: password,
-                        cons: checkConsumidor,
-                        forn: checkFornecedor,
-                        trans: checkTransportador
+                        rua: rua,
+                        conc: conc, 
+                        dist: dist,
+                        prefix: prefix,
+                        sufix: sufix,
+                        passwd: password,
+                        papel: papel                       
                     }).then((response) => {
                         if (response.status === 200) {
                             document.getElementById("modal_header_register").innerText = 'Registo bem sucedido!';
@@ -156,21 +213,41 @@ function Register() {
                             </div>
                             <div className="col-md-12">
                                 <label>NIF</label>
-                                <input className="form-control" type="number" maxlength='9' name="nif" size="50" onChange={handler} required />
+                                <input type="text" inputMode="numeric" class="form-control" pattern="[0-9]{9}" name="nif" size="50" value={nif} onChange={handler} required />
 
                             </div>
                             <div className="col-md-12">
-                                <label>Morada</label>
-                                <input className="form-control" type="text" name="morada" size="50" onChange={handler} required />
-                            </div>
-                            <div className="col-md-12">
                                 <label>Número de Telemóvel</label>
-                                <input className="form-control" type="number" maxlength='9' name="telem" size="50" onChange={handler} required />
+                                <input type="text" inputMode="numeric" class="form-control" pattern="[0-9]{9}" name="telem" size="50" value={telem} onChange={handler} required />
                             </div>
                             <div className="col-md-12">
+                                <label>Rua</label>
+                                <input className="form-control" type="text" name="rua" size="50" onChange={handler} required />
+                            </div>
+                            <div className="col-md-12">
+                                <label>Distrito</label>
+                                <select className="form-select" name="distrito" id="distritos" onChange={handler} onInput={concelhos} required>
+                                    <option value='' selected>Selecione um Distrito</option>
+                                </select>
+                            </div>
+                            <div className="col-md-12">
+                                <label>Concelho</label>
+                                <select className="form-select" name="concelho" id="concelhos" onChange={handler} required>
+                                    <option value='' selected>Selecione um Concelho</option>
+                                </select>
+                            </div>
+                            <div className="col-md-12">
+                                <label>Código Postal</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" pattern="[0-9]{4}" name="prefix" value={prefix} onChange={handler} />
+                                    <span class="input-group-text">-</span>
+                                    <input type="text" class="form-control" pattern="[0-9]{3}" name="sufix" value={sufix} onChange={handler} />
+                                </div>
+                            </div>
+                            {/* <div className="col-md-12">
                                 <label>Foto de Perfil</label>
                                 <input className="form-control" type="file" name="profpic" size="50" onChange={handler} />
-                            </div>
+                            </div> */}
                             <div className="col-md-12">
                                 <label>Password</label>
                                 <input className="form-control" type="password" name="password"size="50" onChange={handler} required />

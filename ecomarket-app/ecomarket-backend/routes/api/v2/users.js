@@ -21,11 +21,11 @@ router.post('/register', async (req, res, next) => {
             "nif": { type: "number", length: "9" },
             "tlm": { type: "number", length: "9" },
             "rua": { type: "string" },
-            "conc": { type: "string" },
-            "dist": { type: "string" },
+            "conc": { type: "number" },
+            "dist": { type: "number" },
             "prefix": { type: "number", length: "4" },
             "sufix": { type: "number", length: "3" },
-            "papel" : {type:"number", min:1, max:4}
+            "papel" : {type:"number", min:1, max:5}
         }];
     try {
         if (!parser(req.body, expected)) throw new ServerError(400,"Dados fornecidos inválidos.");
@@ -47,25 +47,25 @@ router.post('/register', async (req, res, next) => {
                 user_metadata: {
                     nif: req.body.nif,
                     tlm: req.body.tlm,
-                    papel: req.body.papel
+                    papel: String(req.body.papel)
                 }
             }, {
             headers: {
                 'content-type': 'application/json'
             }
-        }).catch(err => {throw new ServerError(500,"Não foi possível registar o utilizador.")});
+        }).catch(err => {
+            console.log(err);
+            throw new ServerError(500,"Não foi possível registar o utilizador.")});
         const [users, field] = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
 
-        const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?",[req.body.conc]);
-        if (concelho.length == 0) throw new ServerError(404,"Concelho fornecido inválido.");
 
         const insert = await pool.query("INSERT INTO morada(userId,prefix,sufix,street,dist,conc,lat,lng) VALUES (?,?,?,?,?,?,?,?)",
         [users[0].id,
         req.body.prefix,
         req.body.sufix,
         req.body.rua,
-        concelho[0].distrito,
-        concelho[0].id,
+        req.body.dist,
+        req.body.conc,
         coords.lat,
         coords.lng]).catch(err => {
             //TO_DO code to delete user

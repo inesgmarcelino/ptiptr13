@@ -53,10 +53,10 @@ function Profile() {
             <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
           </tr>
           <tr>
-            <td className='card-profile'><h3>Sou Consumidor</h3> <Link to ='/consumidor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>
+            <td className='card-profile'><h3>Sou Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>
           </tr>
           <tr>
-            <td className='card-profile'  ><h3>Sou Fornecedor</h3> <Link to ='/fornecedor' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
+            <td className='card-profile'  ><h3>Sou Fornecedor</h3> <Link to ='/provider' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
           </tr>
           <tr>
             <td className='card-profile'><h3>Sou Transportador</h3> <Link to ='/login' id='profile'> <button type="button" className="btn btn btn-primary" >Tornar-me</button></Link> </td>

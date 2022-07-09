@@ -159,6 +159,15 @@ body {
   font-size: 15px
 }
 
+.input-group-text {
+  height: 40px;
+  margin-top: 10px;
+  background-color: #4a5835;
+  border: black;
+  color: white;
+  margin-bottom: 0;
+}
+
 .btn {
   float: right;
   background-color: #fff;
