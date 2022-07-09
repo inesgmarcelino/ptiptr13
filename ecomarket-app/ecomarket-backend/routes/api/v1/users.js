@@ -26,18 +26,32 @@ router.post('/register', (req, res, next) => {
         if(!req.body.trans && !req.body.cons && !req.body.forn) throw new Error("Utilizador deve ter um tipo");
         console.error(req.body);
         /** Meter aqui correção dos dados do utilizador */
-        const reply = axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
+        var papel;
+        if(req.body.trans) papel = 5;
+        if(req.body.cons ) papel = 2;
+        if(req.body.forn) papel = 3
+        if(req.body.cons && req.body.forn) papel =4;
+
+        const CEP = req.body.prefix + "-" + req.body.sufix;
+        var address = req.body.rua + "," + req.body.conc + ' '+ CEP;
+        address = encodeURIComponent(address);
+        const link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyAo6Nzo6UBDA2oEHjWeCAFfVqfEq-2-0S4&language=pt";
+        const reply = await axios.post(link);
+        if (reply.data.status !== "OK") throw new Error("Morada inválida.");
+        const coords = reply.data.results[0].geometry.location;
+        const registo = await axios.post('https://ecomarket.eu.auth0.com/dbconnections/signup',
             {
                 client_id: '8d3hjpCHdNoQWDGJk2g4MNSeGNPZZs5R',
                 connection: 'Username-Password-Authentication',
                 email: req.body.email,
-                password: req.body.pwd,
+                password: req.body.passwd,
                 name: req.body.nome,
                 picture: "https://digimedia.web.ua.pt/wp-content/uploads/2017/05/default-user-image.png",
                 user_metadata: {
                     nif: req.body.nif,
                     tlm: req.body.tlm,
-                    morada: req.body.morada
+                    papel: papel
+                    //papel: req.body.papel
                 }
             }, {
             headers: {
@@ -106,6 +120,25 @@ router.post('/register', (req, res, next) => {
             console.log(err);
             res.status(500).send({ message: "fail" });
         });
+
+        const [users, field] = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
+
+        const [concelho,fields] = await pool.query("SELECT id, distrito FROM concelho WHERE nome=?",[req.body.conc]);
+
+        const insert = await pool.query("INSERT INTO morada(userId,prefix,sufix,street,dist,conc,lat,lng) VALUES (?,?,?,?,?,?,?,?)",
+        [users[0].id,
+        req.body.prefix,
+        req.body.sufix,
+        req.body.rua,
+        concelho[0].distrito,
+        concelho[0].id,
+        coords.lat,
+        coords.lng]).catch(err => {
+            console.error(err);
+            throw new Error("Error");
+        });
+    
+            res.status(200).send({ message: "success" });
     } catch (err) {
         console.log(err);
         res.status(500).send({ message: "fail" });
