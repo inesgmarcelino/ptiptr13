@@ -50,7 +50,8 @@ router.post('/register', (req, res, next) => {
                 user_metadata: {
                     nif: req.body.nif,
                     tlm: req.body.tlm,
-                    papel: req.body.papel
+                    papel: papel
+                    //papel: req.body.papel
                 }
             }, {
             headers: {
