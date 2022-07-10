@@ -43,18 +43,18 @@ function Profile() {
             <tr>
               <td className='card-profile'><h3>Lista de Utilizadores</h3>
                 <Link to ='/adminUsersList' id='profile'>
-                  <button type="button" className="btn btn btn-primary">Ver</button>
+                  <button type="button" className="btn">Ver</button>
                 </Link>
               </td>
             </tr>
             <tr>
               <td className='card-profile'><h3>Tipos</h3>
-                <button type="button" id='profile' onClick={addTipo} className="btn btn btn-primary">Adicionar</button>
+                <button type="button" id='profile' onClick={addTipo} className="btn">Adicionar</button>
               </td>
             </tr>
             <tr>
               <td className='card-profile'><h3>Subtipos</h3>
-                <button type="button" id='profile' onClick={addSubtipo} className="btn btn btn-primary">Adicionar</button>
+                <button type="button" id='profile' onClick={addSubtipo} className="btn">Adicionar</button>
               </td>
             </tr>
           </tbody>
@@ -63,26 +63,26 @@ function Profile() {
           return (
             <tbody> 
               <tr>
-                <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
+                <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn"  >Editar</button></Link></td>
               </tr>
               <tr>
-                <td className='card-profile'><h3>Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>
+                <td className='card-profile'><h3>Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn" >Ver</button></Link></td>
               </tr>
               <tr>
-                <td className='card-profile'><h3>Fornecedor</h3> <Link to ='#' id='profile'> <button type="button" className="btn btn btn-primary">Tornar-me</button></Link> </td>
+                <td className='card-profile'><h3>Fornecedor</h3> <Link to ='#' id='profile'> <button type="button" className="btn">Tornar-me</button></Link> </td>
               </tr>
             </tbody>);
       } else if (papel === 3) { // Fornecedor
         return (
           <tbody> 
             <tr>
-              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
+              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn"  >Editar</button></Link></td>
             </tr>
             <tr>
-              <td className='card-profile'><h3>Fornecedor</h3> <Link to ='/provider' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
+              <td className='card-profile'><h3>Fornecedor</h3> <Link to ='/provider' id='profile'> <button type="button" className="btn" >Ver</button></Link> </td>
             </tr>
             <tr>
-              <td className='card-profile'><h3>Consumidor</h3> <Link to ='#' id='profile'> <button type="button" className="btn btn btn-primary" >Tornar-me</button></Link></td>
+              <td className='card-profile'><h3>Consumidor</h3> <Link to ='#' id='profile'> <button type="button" className="btn" >Tornar-me</button></Link></td>
             </tr>
           </tbody>);
 
@@ -90,13 +90,13 @@ function Profile() {
         return (
           <tbody> 
             <tr>
-              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
+              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn"  >Editar</button></Link></td>
             </tr>
             <tr>
-              <td className='card-profile'><h3>Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link></td>
+              <td className='card-profile'><h3>Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn" >Ver</button></Link></td>
             </tr>
             <tr>
-              <td className='card-profile'><h3>Fornecedor</h3> <Link to ='/provider' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
+              <td className='card-profile'><h3>Fornecedor</h3> <Link to ='/provider' id='profile'> <button type="button" className="btn" >Ver</button></Link> </td>
             </tr>
             </tbody>);
 
@@ -104,10 +104,10 @@ function Profile() {
         return (
           <tbody> 
             <tr>
-              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn btn-primary"  >Editar</button></Link></td>
+              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn"  >Editar</button></Link></td>
             </tr>
             <tr>
-              <td className='card-profile'><h3>Transportador</h3> <Link to ='/transporter' id='profile'> <button type="button" className="btn btn btn-primary" >Ver</button></Link> </td>
+              <td className='card-profile'><h3>Transportador</h3> <Link to ='/transporter' id='profile'> <button type="button" className="btn" >Ver</button></Link> </td>
             </tr>
             </tbody>);
 
