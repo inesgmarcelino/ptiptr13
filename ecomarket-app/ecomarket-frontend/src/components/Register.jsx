@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 function Register() {
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
-    const { loginWithRedirect} = useAuth0();
+    const { loginWithRedirect } = useAuth0();
 
     // states for registration
     const [nome, setNome]                           = useState('');

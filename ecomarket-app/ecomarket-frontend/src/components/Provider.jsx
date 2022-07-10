@@ -1,7 +1,7 @@
 /* eslint-disable no-multi-str */
-import React, { useState } from 'react';
 import Axios from "axios";
 import {Link } from "react-router-dom";
+import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function Provider () {
