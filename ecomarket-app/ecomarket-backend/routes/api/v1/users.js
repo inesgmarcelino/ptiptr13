@@ -21,7 +21,7 @@ var auth = require('../svlib/auth0/tokenlib');
 // })
 
 
-router.post('/register', (req, res, next) => {
+router.post('/register', async (req, res, next) => {
     try {
         if(!req.body.trans && !req.body.cons && !req.body.forn) throw new Error("Utilizador deve ter um tipo");
         console.error(req.body);

@@ -157,19 +157,16 @@ router.post('/cancel/:oid', async (req,res) => {
 // OPERACIONAL
 router.get('/orders', async (req,res) => {
     var consId = req.query.cid;
-    var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS fornecedor, u2.nome AS transportador, \
-                            SUM(lpe.quantidade * p.preco) AS total, st.status_consum AS cons, st.status_fornec AS forn, st.status_transp AS transp \
-                        FROM encomenda e, lista_encomendas le, transportar_encomendas te, utilizador u1, \
-                            utilizador u2, lista_produtos_encomenda lpe, produto p, estado_encomenda st \
-                        WHERE (le.consumidor = ?) AND (le.encomenda = e.id) AND (le.fornecedor = u1.id) \
-                            AND (te.encomenda = e.id) AND (te.transportador = u2.id) AND (lpe.encomenda = e.id) \
-                            AND (lpe.produto = p.id) AND (st.encomenda = e.id) \
-                        GROUP BY e.id, u1.nome, u2.nome";
+    var queryString = "SELECT e.id AS id, e.tpurchase AS data, u1.nome AS fornecedor, u2.nome AS transportador, ed.descr AS estado, e.total \
+                        FROM encomenda e, utilizador u1, utilizador u2, estado_despacho ed, despacho d \
+                        WHERE (e.cons = ?) AND (e.id = d.encom) AND (d.forn = u1.id) AND (d.transp = u2.id) AND (d.estado = ed.id) \
+                        GROUP BY e.id, u1.nome, u2.nome, ed.descr";
 
     try {
         const [result,fields] = await pool.query(queryString, [consId]);
         return res.status(200).send({results: result}); 
     } catch (err) {
+        console.log(err);
         return res.status(500).send({message:"fail"});
     }
 });

@@ -181,7 +181,7 @@ function Profile() {
     }
             
     return (
-      <div className="position-absolute showItems">  {/* Aqui antes estava container inves de profile */}
+      <div className="position-absolute showItems">
         <div className="container">
           <br />
           <h3>A minha conta</h3>
@@ -215,9 +215,7 @@ function Profile() {
         </div>
       </div>
     );
-  } else {
-    return (<div></div>);
-  }
+  } 
 
 }
 
