@@ -114,7 +114,7 @@ for(var path in apiPathsV1){
 //API para criar as Cadeias logisticas no ficheiro .yaml
 
 const basePathV2 = '/api/v2/';
-const apiPathsV2 = ["users"/**,"admin","providers","products","carriers","transporters","consumers", "gets"/**,cadeialogistica?*/];
+const apiPathsV2 = ["users","admin"/**,"providers","products","carriers","transporters","consumers", "gets"/**,cadeialogistica?*/];
 for(var path in apiPathsV2){
   var filePath = basePathV2+apiPathsV2[path];
   var apiRouterV2 = require('./routes'+filePath+'.js');

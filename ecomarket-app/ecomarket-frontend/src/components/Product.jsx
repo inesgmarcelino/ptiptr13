@@ -22,7 +22,7 @@ function Product(){
                     <p>9.4 kg CO2</p>
 
                     
-                    <button className="btn cart-btnP">Adicionar Carrinho</button>
+                    <button className="btn btn2 cart-btnP">Adicionar Carrinho</button>
                 </div>
             </section>
             </div>

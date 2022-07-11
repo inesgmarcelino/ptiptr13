@@ -260,7 +260,7 @@ function Register() {
                                 </div>
                             </div>
                             
-                             <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
+                             <button id="submit" type="submit" name="submit" className="btn btn2" onClick={handler}>Registar</button>
                          </form>
                 </div>
             </div>
@@ -275,7 +275,7 @@ function Register() {
                          <div className="modal-body" id="modal_body_register">
                          </div>
                          <div className="modal-footer" id="modal_footer_register">
-                         <button className="btn" type="button" id="continue">OK</button>
+                         <button className="btn btn2" type="button" id="continue">OK</button>
                          </div>
                      </div>
                  </div>

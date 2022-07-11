@@ -52,7 +52,7 @@ function StorageRegister(){
                     <label>Morada</label> {/*  falta coordenadas */}
                         <input className="form-control" type="text" name="morada" size="50" onChange={handler} required/>
                     </div>                
-                    <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
+                    <button id="submit" type="submit" name="submit" className="btn btn2" onClick={handler}>Registar</button>
                 </form>
             </div>
         </div> 

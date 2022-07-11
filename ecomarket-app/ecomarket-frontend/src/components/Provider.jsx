@@ -11,18 +11,19 @@ function Provider () {
     const [papel, setPapel]     = useState('');
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
 
+    const getsUser = () => {
+        Axios.get(url+"/api/v2/users", {
+            params: {
+              email: user.email
+          }}).then((response) => {
+            if (response.data.message !== 'fail') {
+              setPapel(response.data.results[0].papel)
+              setPID(response.data.results[0].id);
+            }
+          });
+    }
+
     if (!isLoading) {
-        const getsUser = () => {
-            Axios.get(url+"/api/v2/users", {
-                params: {
-                  email: user.email
-              }}).then((response) => {
-                if (response.data.message !== 'fail') {
-                  setPapel(response.data.results[0].papel)
-                  setPID(response.data.results[0].id);
-                }
-              });
-        }
 
         getsUser();
         console.log(papel);
@@ -156,7 +157,7 @@ function Provider () {
                     </div>
         
                     <div className="container">
-                        <Link to ='/productRegister' ><button className="btn">Adicionar</button></Link>
+                        <Link to ='/productRegister' ><button className="btn btn2">Adicionar</button></Link>
                         <br />
                         <h3>Produtos</h3>     
                     </div>
@@ -181,7 +182,7 @@ function Provider () {
                     </div>
         
                     <div className="container">
-                        <Link to ='/storageRegister' ><button className="btn">Adicionar</button></Link>
+                        <Link to ='/storageRegister' ><button className="btn btn2">Adicionar</button></Link>
                         <br />
                         <h3>Armazéns</h3>
                     </div>

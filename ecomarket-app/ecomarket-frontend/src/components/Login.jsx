@@ -76,7 +76,7 @@ function Login() {
                             <input className="form-control" type="password" name="password" size="50"  onChange={handler} required />
                         </div>
                     
-                        <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Iniciar Sessão</button>
+                        <button id="submit" type="submit" name="submit" className="btn btn2" onClick={handler}>Iniciar Sessão</button>
                     </form>
                 </div>
             </div>

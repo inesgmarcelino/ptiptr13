@@ -279,7 +279,7 @@ function EditProfile () {
                                     <input className="form-control" type="password" name="checkPassword" size="50" onChange={handler}  />
                                 </div>
                                 
-                                <button type="submit" name="submit" className="btn" onClick={handler} >Guardar</button>
+                                <button type="submit" name="submit" className="btn btn2" onClick={handler} >Guardar</button>
                                 <button id="remove" name="delete" className="btn" onClick={handler} >Remover Conta</button>
                             </form>
                     </div>

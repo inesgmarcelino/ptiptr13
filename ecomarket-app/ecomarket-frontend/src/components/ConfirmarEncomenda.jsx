@@ -26,7 +26,7 @@ function ConfirmarEncomenda () {
     return(
         <div className="position-absolute showItems">
             <div className="container">
-                <Link to ='/profile' ><button type="button" className="btn" >Voltar</button></Link>
+                <Link to ='/profile' ><button type="button" className="btn btn2" >Voltar</button></Link>
                 <br />
                 <h3>Confirmar Encomenda</h3>     
             </div>

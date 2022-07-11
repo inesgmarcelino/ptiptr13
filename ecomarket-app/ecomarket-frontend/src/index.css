@@ -176,7 +176,7 @@ body {
   color: black;
 } */
 
-.btn {
+.btn2 {
   float: right;
   background-color: #fff;
   color: #283618;
@@ -222,8 +222,15 @@ body {
 }
 
 #cancelar {
-  background-color: lightgrey;
-  color: white
+  color: grey;
+  border: 3px solid  grey;
+  align-self: flex-start;
+  border-radius: 10px;
+}
+
+#cancelar:hover {
+  background-color: grey;
+  color: lightgray;
 }
 
 #continue {

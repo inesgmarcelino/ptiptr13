@@ -10,21 +10,30 @@ function Profile() {
   const { user, isLoading } = useAuth0();
 
   // var newtipo, tipo, newsubtipo;
-  const [newtipo, setNewTipo]         = useState('');
-  const [tipo, setTipo]               = useState('');
-  const [newsubtipo, setNewSubtipo]   = useState('');
+  const [newCat, setNewCat]         = useState('');
+  const [cat, setCat]               = useState('');
+  const [newSubcat, setNewSubcat]   = useState('');
   const [papel, setPapel]             = useState('');
 
   var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
 
   if (!isLoading) {
   
-    const handleShow = () => {
-      $("#modal_admin").css("display","block");
+    const handleShowCat = () => {
+      $("#modal_cat").css("display","block");
     }
   
-    const handleHide = () => {
-      $("#modal_admin").css("display","none");
+    const handleHideCat = () => {
+      $("#modal_cat").css("display","none");
+    }
+
+    const handleShowSubcat = () => {
+      $("#modal_subcat").css("display","block");
+      categorias();
+    }
+
+    const handleHideSubcat = () => {
+      $("#modal_subcat").css("display","none");
     }
   
     const whichUser = () => {
@@ -43,18 +52,18 @@ function Profile() {
             <tr>
               <td className='card-profile'><h3>Lista de Utilizadores</h3>
                 <Link to ='/adminUsersList' id='profile'>
-                  <button type="button" className="btn">Ver</button>
+                  <button type="button" className="btn btn2">Ver</button>
                 </Link>
               </td>
             </tr>
             <tr>
               <td className='card-profile'><h3>Tipos</h3>
-                <button type="button" id='profile' onClick={addTipo} className="btn">Adicionar</button>
+                <button type="button" id='profile' onClick={handleShowCat} className="btn btn2">Adicionar</button>
               </td>
             </tr>
             <tr>
               <td className='card-profile'><h3>Subtipos</h3>
-                <button type="button" id='profile' onClick={addSubtipo} className="btn">Adicionar</button>
+                <button type="button" id='profile' onClick={handleShowSubcat} className="btn btn2">Adicionar</button>
               </td>
             </tr>
           </tbody>
@@ -63,26 +72,26 @@ function Profile() {
           return (
             <tbody> 
               <tr>
-                <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn"  >Editar</button></Link></td>
+                <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
               </tr>
               <tr>
-                <td className='card-profile'><h3>Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn" >Ver</button></Link></td>
+                <td className='card-profile'><h3>Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn btn2" >Ver</button></Link></td>
               </tr>
               <tr>
-                <td className='card-profile'><h3>Fornecedor</h3> <Link to ='#' id='profile'> <button type="button" className="btn">Tornar-me</button></Link> </td>
+                <td className='card-profile'><h3>Fornecedor</h3> <Link to ='#' id='profile'> <button type="button" className="btn btn2">Tornar-me</button></Link> </td>
               </tr>
             </tbody>);
       } else if (papel === 3) { // Fornecedor
         return (
           <tbody> 
             <tr>
-              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn"  >Editar</button></Link></td>
+              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
             </tr>
             <tr>
-              <td className='card-profile'><h3>Fornecedor</h3> <Link to ='/provider' id='profile'> <button type="button" className="btn" >Ver</button></Link> </td>
+              <td className='card-profile'><h3>Fornecedor</h3> <Link to ='/provider' id='profile'> <button type="button" className="btn btn2" >Ver</button></Link> </td>
             </tr>
             <tr>
-              <td className='card-profile'><h3>Consumidor</h3> <Link to ='#' id='profile'> <button type="button" className="btn" >Tornar-me</button></Link></td>
+              <td className='card-profile'><h3>Consumidor</h3> <Link to ='#' id='profile'> <button type="button" className="btn btn2" >Tornar-me</button></Link></td>
             </tr>
           </tbody>);
 
@@ -90,13 +99,13 @@ function Profile() {
         return (
           <tbody> 
             <tr>
-              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn"  >Editar</button></Link></td>
+              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
             </tr>
             <tr>
-              <td className='card-profile'><h3>Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn" >Ver</button></Link></td>
+              <td className='card-profile'><h3>Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn btn2" >Ver</button></Link></td>
             </tr>
             <tr>
-              <td className='card-profile'><h3>Fornecedor</h3> <Link to ='/provider' id='profile'> <button type="button" className="btn" >Ver</button></Link> </td>
+              <td className='card-profile'><h3>Fornecedor</h3> <Link to ='/provider' id='profile'> <button type="button" className="btn btn2" >Ver</button></Link> </td>
             </tr>
             </tbody>);
 
@@ -104,10 +113,10 @@ function Profile() {
         return (
           <tbody> 
             <tr>
-              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn"  >Editar</button></Link></td>
+              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
             </tr>
             <tr>
-              <td className='card-profile'><h3>Transportador</h3> <Link to ='/transporter' id='profile'> <button type="button" className="btn" >Ver</button></Link> </td>
+              <td className='card-profile'><h3>Transportador</h3> <Link to ='/transporter' id='profile'> <button type="button" className="btn btn2" >Ver</button></Link> </td>
             </tr>
             </tbody>);
 
@@ -116,68 +125,50 @@ function Profile() {
     
     const handler = (x) => {
       switch(x.target.name) {
-        case "newtipo":
-          setNewTipo(x.target.value);
+        case "newcategoria":
+          setNewCat(x.target.value);
           break;
-        case "tipo":
-          setTipo(x.target.value);
+        case "categoria":
+          setCat(x.target.value);
           break;
-        case "newsubtipo":
-          setNewSubtipo(x.target.value);
+        case "newsubcategoria":
+          setNewSubcat(x.target.value);
           break;
-        case "submit":
-          if (newtipo !== '' && tipo === '' && newsubtipo === '') {
-            Axios.post(url+"/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
-              console.log(response);
-              if (response.data.message === "success") {
-                document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
-                document.getElementById("modal_body_admin").innerHTML = "";
-              }
-            });
-          } else if (tipo !== '' && newsubtipo !== '' && newtipo === '') {
-              // Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
-              //   console.log(response);
-              //   if (response.data.message === "success") {
-                //     document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
-                //     document.getElementById("modal_body_admin").innerHTML = "";
-                //   }
-                // });
-           }
+        case "submitCat":
+          // if (newtipo !== '' && tipo === '' && newsubtipo === '') {
+          //   Axios.post(url+"/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
+          //     console.log(response);
+          //     if (response.data.message === "success") {
+          //       document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
+          //       document.getElementById("modal_body_admin").innerHTML = "";
+          //     }
+          //   });
+          // } else if (tipo !== '' && newsubtipo !== '' && newtipo === '') {
+          //     // Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
+          //     //   console.log(response);
+          //     //   if (response.data.message === "success") {
+          //       //     document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
+          //       //     document.getElementById("modal_body_admin").innerHTML = "";
+          //       //   }
+          //       // });
+          //  }
+          break;
+        case "submitSubcat":
           break;
         default:
           console.log();
       }
     }
-            
-    const addTipo = () => {
-      document.getElementById("modal_header_admin").innerText = "Adicionar novo Tipo";
-      document.getElementById("formulario").innerHTML = "<label>Tipo</label>\
-      <input className='form-control' type='text' name='newtipo' onChange={handler} size='30'/>";
-      handleShow();
-    }
   
-    const tipos = () => {
+    const categorias = () => {
       var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
-      document.getElementById("tipos").innerHTML = "<option value='' selected>Selecione um Tipo</option>";
-      Axios.get(url+"/api/v1/gets/tipos").then((response) => {
+      document.getElementById("categorias").innerHTML = "<option value='' selected>Selecione uma Categoria</option>";
+      Axios.get(url+"/api/v1/gets/categorias").then((response) => {
           var tipo = response.data.results;
           for (var i = 0; i < tipo.length; i++) {
-              document.getElementById("tipos").innerHTML += "<option value='" + tipo[i]["id"] + "'>" + tipo[i]["nome"] + "</option>";
+              document.getElementById("categorias").innerHTML += "<option value='" + tipo[i]["id"] + "'>" + tipo[i]["nome"] + "</option>";
           }
       });
-    }
-  
-    const addSubtipo = () => {
-      document.getElementById("modal_header_admin").innerText = "Adicionar novo Subipo";
-      document.getElementById("modal_body_admin").innerHTML = "<label>Tipo</label>\
-        <select className='form-select' name='tipo' id='tipos' onChange={handler} onMouseOver={tipos} required>\
-            <option value='' selected>Selecione um Tipo</option>\
-        </select>\
-      </div>\
-      <div className='col-md-12'>\
-        <label>Subtipo</label>\
-        <input className='form-control' type='text' name='newsubtipo' size='30'/>";
-      handleShow();
     }
             
     return (
@@ -196,19 +187,41 @@ function Profile() {
           </table>
         </div>
   
-        {/* MODAL */}
-        <div className="modal fade" id="modal_admin" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {/* MODAL CATEGORIA */}
+        <div className="modal fade" id="modal_cat" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content">
-                  <div className="modal-header" id="modal_header_admin">
-                      <button type="button" className="btn-close" aria-label="Close"></button>
+                  <div className="modal-header" id="modal_header_cat">
+                      Registe uma Categoria
                   </div>
-                  <div className="modal-body" id="modal_body_admin">
-                      <div className='col-md-12' id="formulario"></div>
-                      <button id='submit' type='submit' name='submit' onClick={handler} className='btn'>Adicionar</button>
+                  <div className="modal-body" id="modal_body_cat">
+                    <label>Nome</label>
+                    <input className='form-control' type='text' name='newcategoria' />
+                  </div> 
+                  <div className="modal-footer" id="modal_footer_cat">
+                      <button type="button" onClick={handleHideCat} className="btn" id="cancelar" >Cancelar</button>
+                      <button id='submit' type='submit' name='submitCat' onClick={handler} className='btn btn2' >Adicionar</button>
                   </div>
-                  <div className="modal-footer" id="modal_footer_admin">
-                    <button type="button" onClick={handleHide} className="btn" id="cancelar2" >Cancelar</button>
+              </div>
+          </div>
+        </div>
+        {/* MODAL SUBCATEGORIA */}
+        <div className="modal fade" id="modal_subcat" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                  <div className="modal-header" id="modal_header_subcat">
+                    Registe uma Subcategoria
+                  </div>
+                  <div className="modal-body" id="modal_body_subcat">
+                    <label>Selecione a Categoria</label>
+                      <select className='form-select' name='tipo' id='categorias' onChange={handler} required>
+                      </select>
+                    <label>Nome da Subcategoria</label>
+                      <input className='form-control' type='text' name='newsubcategoria'/>
+                  </div> 
+                  <div className="modal-footer" id="modal_footer_subcat">
+                      <button type="button" onClick={handleHideSubcat} className="btn" id="cancelar" >Cancelar</button>
+                      <button id='submit' type='submit' name='submitSubcat' onClick={handler} className='btn btn2' >Adicionar</button>
                   </div>
               </div>
           </div>

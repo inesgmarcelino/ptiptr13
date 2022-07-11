@@ -89,7 +89,7 @@ function Cart() {
             <div className="sumprice">Preço total:  6€</div>
             
 
-            <button name="encomendar" className="btn" >Encomendar</button>
+            <button name="encomendar" className="btn btn2" >Encomendar</button>
 
         </div>
     </div>

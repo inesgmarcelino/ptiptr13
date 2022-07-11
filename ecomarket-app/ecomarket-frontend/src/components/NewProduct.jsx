@@ -146,7 +146,7 @@ function NewProduct() {
                             <option value='' selected>Selecione um Armazém</option>
                         </select>
                     </div>
-                    <button id="submit" type="submit" name="submit" className="btn" onClick={handler}>Registar</button>
+                    <button id="submit" type="submit" name="submit" className="btn btn2" onClick={handler}>Registar</button>
                 </form>
             </div>
         </div>);

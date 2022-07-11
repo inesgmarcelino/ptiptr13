@@ -23,7 +23,7 @@ function ShoopingCart () {
                         <div className="container">
                             <h5 className="text-uppercase">items 3</h5>
                             <h5>€ 132.00</h5>
-                            <button type="button" className="btn btn btn-primary" >Finalizar compra</button>
+                            <button type="button" className="btn btn-primary" >Finalizar compra</button>
                         </div>
                         
                     </div>
