@@ -198,12 +198,17 @@ router.delete('/delete/:uid', async (req,res) => {
     });
 });
 
-router.put('/edit/:uid', async (req,res) => {
+router.put('/edit', async (req,res) => {
+    const id = req.body.id;
     const nome = req.body.nome;
     const email = req.body.email;
-    const tlm = req.body.tlm;
     const nif = req.body.nif;
-    /* const morada = req.body.morada; */
+    const tlm = req.body.tlm;
+    const rua = req.body.rua;
+    const dist = req.body.dist;
+    const conc = req.body.conc;
+    const prefix = req.body.prefix;
+    const sufix = req.body.sufix;
     const pwd = req.body.pwd;
     
     var queryString = "UPDATE utilizador SET ";
@@ -212,7 +217,7 @@ router.put('/edit/:uid', async (req,res) => {
     }
 
     if (email !== '') {
-        if ('=' in queryString) {
+        if (queryString.includes("=")) {
             queryString += "AND email = '" + email + "' ";
         } else {
             queryString += "email = '" + email + "' ";
@@ -220,7 +225,7 @@ router.put('/edit/:uid', async (req,res) => {
     }
 
     if (tlm !== '') {
-        if ('=' in queryString) {
+        if (queryString.includes("=")) {
             queryString += "AND telemovel = " + tlm + " ";
         } else {
             queryString += "telemovel = " + tlm + " ";
@@ -228,7 +233,7 @@ router.put('/edit/:uid', async (req,res) => {
     }
 
     /* if (morada !== '') {
-        if ('=' in queryString) {
+        if (queryString.includes("=")) {
             queryString += "AND morada = '" + morada + "' ";
         } else {
             queryString += "morada = '" + morada + "' ";
@@ -236,7 +241,7 @@ router.put('/edit/:uid', async (req,res) => {
     } */
 
     if (nif !== '') {
-        if ('=' in queryString) {
+        if (queryString.includes("=")) {
             queryString += "AND nif = '" + nif + "' ";
         } else {
             queryString += "nif = '" + nif + "' ";
@@ -244,7 +249,7 @@ router.put('/edit/:uid', async (req,res) => {
     }
 
     if (pwd !== '') {
-        if ('=' in queryString) {
+        if (queryString.includes("=")) {
             queryString += "AND pass_word = '" + pwd + "' ";
         } else {
             queryString += "pass_word = '" + pwd + "' ";

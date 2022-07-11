@@ -82,47 +82,38 @@ function Register() {
         switch(x.target.name) {
             case "nome":
                 setNome(x.target.value);
-                console.log(nome);
                 break;
             case "email":
                 setEmail(x.target.value);
-                console.log(email);
                 break;
             case "nif":
                 if (nif.length < 9 || x.target.value.length < 9) {
                     setNif(x.target.value.replace(/[^0-9]/gi, ''));
                 }
-                console.log(nif);
                 break;
             case "telem":
                 if (telem.length < 9 || x.target.value.length < 9) {
                     setTelem(x.target.value.replace(/[^0-9]/gi, ''));
                 }
-                console.log(telem);
                 break;
             case "rua":
                 setRua(x.target.value);
-                console.log(rua);
                 break;
             case "distrito":
                 setDist(x.target.value);
-                console.log(dist);
                 break;
             case "concelho":
                 setConc(x.target.value);
-                console.log(conc);
                 break;
             case "prefix":
                 if (prefix.length < 4 || x.target.value.length < 4) {
                     setPrefix(x.target.value.replace(/[^0-9]/gi, ''));
                 }
-                console.log(prefix);
                 break;
             case "sufix":
                 if (sufix.length < 3 || x.target.value.length < 3) {
                     setSufix(x.target.value.replace(/[^0-9]/gi, ''));
                 }
-                console.log(sufix);
                 break;
             case "password":
                 setPassword(x.target.value);
@@ -239,9 +230,9 @@ function Register() {
                             <div className="col-md-12">
                                 <label>Código Postal</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" pattern="[0-9]{4}" name="prefix" value={prefix} onChange={handler} />
+                                    <input type="text" class="form-control" pattern="[0-9]{4}" name="prefix" value={prefix} onChange={handler} required />
                                     <span class="input-group-text">-</span>
-                                    <input type="text" class="form-control" pattern="[0-9]{3}" name="sufix" value={sufix} onChange={handler} />
+                                    <input type="text" class="form-control" pattern="[0-9]{3}" name="sufix" value={sufix} onChange={handler} required />
                                 </div>
                             </div>
                             {/* <div className="col-md-12">

@@ -485,7 +485,7 @@ input:focus {
 #remove{
   background-color: #8d1a0f;
   color: #fff;
-  border: none;
+  border: 3px solid  #8d1a0fce;
 }
 
 
