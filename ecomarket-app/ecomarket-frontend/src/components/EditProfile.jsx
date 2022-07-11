@@ -3,22 +3,22 @@ import React, {useState} from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function EditProfile () {
-    const { user, isLoading }   = useAuth0();
+    const { user, isLoading, logout }   = useAuth0();
     const [id, setID]         = useState('');
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     
     // states for editing
-    const [nome, setNome]                           = useState('');
-    const [email, setEmail]                         = useState('');
-    const [nif, setNif]                             = useState('');
-    const [telem, setTelem]                         = useState('');
-    const [rua, setRua]                             = useState('');
-    const [dist, setDist]                           = useState('');
-    const [conc, setConc]                           = useState('');
-    const [prefix, setPrefix]                       = useState('');
-    const [sufix, setSufix]                         = useState('');
-    const [password, setPassword]                   = useState('');
-    const [checkPassword, setCheckPassword]         = useState('');
+    var nome            = '';
+    var email           = '';
+    var nif             = '';
+    var telem           = '';
+    var rua             = '';
+    var dist            = '';
+    var conc            = '';
+    var prefix          = '';
+    var sufix           = '';
+    var password        = '';
+    var checkPassword   = '';
 
     // default values
     const [nomeD, setNomeD]                           = useState('');
@@ -31,32 +31,33 @@ function EditProfile () {
     const [prefixD, setPrefixD]                       = useState('');
     const [sufixD, setSufixD]                         = useState('');
 
-    if (!isLoading) {
-        const getsUser = () => {
-            Axios.get(url+"/api/v2/users", {
-                params: {
-                  email: user.email
-              }}).then((response) => {
-                if (response.data.message !== 'fail') {
-                    setID(response.data.results[0].id);
-                    setNomeD(response.data.results[0].nome);
-                    setEmailD(response.data.results[0].email);
-                    setNifD(response.data.results[0].nif);
-                    setTelemD(response.data.results[0].phone);
-                    setRuaD(response.data.results[0].street);
-                    setDistD(response.data.results[0].dist);
-                    setConcD(response.data.results[0].conc);
-                    setPrefixD(response.data.results[0].prefix);
-                    if (response.data.results[0].sufix.length === 2) {
-                        setSufixD("0"+response.data.results[0].sufix);
-                    } else if (response.data.results[0].sufix.length === 1) {
-                        setSufixD("00"+response.data.results[0].sufix);
-                    } else {
-                        setSufixD(response.data.results[0].sufix);
-                    }
+    const getsUser = () => {
+        Axios.get(url+"/api/v2/users", {
+            params: {
+              email: user.email
+          }}).then((response) => {
+            if (response.data.message !== 'fail') {
+                setID(response.data.results[0].id);
+                setNomeD(response.data.results[0].nome);
+                setEmailD(response.data.results[0].email);
+                setNifD(response.data.results[0].nif);
+                setTelemD(response.data.results[0].phone);
+                setRuaD(response.data.results[0].street);
+                setDistD(response.data.results[0].dist);
+                setConcD(response.data.results[0].conc);
+                setPrefixD(response.data.results[0].prefix);
+                if (response.data.results[0].sufix.length === 2) {
+                    setSufixD("0"+response.data.results[0].sufix);
+                } else if (response.data.results[0].sufix.length === 1) {
+                    setSufixD("00"+response.data.results[0].sufix);
+                } else {
+                    setSufixD(response.data.results[0].sufix);
                 }
-              });
-        }
+            }
+          });
+    }
+
+    if (!isLoading) {
         getsUser();
         
         const distritos = () => {
@@ -88,109 +89,113 @@ function EditProfile () {
             });
         }
 
+        const setDefaults = () => {
+            if (nome === '') {
+                nome = nomeD;
+            }
+            if (email === '') {
+                email = emailD;
+            }
+            if (nif === '') {
+                nif = nifD;
+            } 
+            if (telem === '') {
+                telem = telemD;
+            }
+            if (rua === '') {
+                rua = ruaD;
+            } 
+            if (dist === '') {
+                dist = distD;
+            }
+            if (conc === '') {
+                conc = concD;
+            }
+            if (prefix === '') {
+                prefix = prefixD;
+            }
+            if (sufix === '') {
+                sufix = sufixD;
+            }
+            if (password === '') {
+                password = false;
+            }
+        }
 
         const handler = (x) => {
             switch(x.target.name) {
                 case "nome":
-                    setNome(x.target.value);
+                    console.log("aqui")
+                    nome = x.target.value;
                     console.log(nome);
                     break;
                 case "email":
-                    setEmail(x.target.value);
+                    console.log("aqui2")
+                    email = x.target.value;
                     break;
                 case "nif":
+                    console.log("aqui3")
                     if (nif.length < 9 || x.target.value.length < 9) {
-                        setNif(x.target.value.replace(/[^0-9]/gi, ''));
+                        nif = x.target.value.replace(/[^0-9]/gi, '');
                     }
                     break;
                 case "telem":
+                    console.log("aqui4")
                     if (telem.length < 9 || x.target.value.length < 9) {
-                        setTelem(x.target.value.replace(/[^0-9]/gi, ''));
+                        telem = x.target.value.replace(/[^0-9]/gi, '');
                     }
                     break;
                 case "rua":
-                    setRua(x.target.value);
+                    console.log("aqui5")
+                    rua = x.target.value;
                     break;
                 case "distrito":
-                    setDist(x.target.value);
+                    console.log("aqui6")
+                    dist = x.target.value;
                     break;
                 case "concelho":
-                    setConc(x.target.value);
+                    console.log("aqui7")
+                    conc = x.target.value;
                     break;
                 case "prefix":
+                    console.log("aqui8")
                     if (prefix.length < 4 || x.target.value.length < 4) {
-                        setPrefix(x.target.value.replace(/[^0-9]/gi, ''));
+                        prefix = x.target.value.replace(/[^0-9]/gi, '');
                     }
                     break;
                 case "sufix":
+                    console.log("aqui9")
                     if (sufix.length < 3 || x.target.value.length < 3) {
-                        setSufix(x.target.value.replace(/[^0-9]/gi, ''));
+                        sufix = x.target.value.replace(/[^0-9]/gi, '');
                     }
                     break;
                 case "password":
-                    setPassword(x.target.value);
+                    console.log("aqui10")
+                    password = x.target.value;
                     break;
                 case "checkPassword":
-                    setCheckPassword(x.target.value);
+                    console.log("aqui11")
+                    checkPassword = x.target.value;
                     break;
-                /* case "morada":
-                    setMorada(x.target.value);
-                    break; */
                 case "submit":
+                    console.log("aqui12")
                     x.preventDefault();
-
-                    if (nome === '') {
-                        setNome(nomeD);
-                    }
-                    if (email === '') {
-                        setEmail(emailD);
-                    }
-                    if (nif === '') {
-                        setNif(nifD);
-                    } 
-                    if (telem === '') {
-                        setTelem(telemD);
-                    }
-                    if (rua === '') {
-                        setRua(ruaD);
-                    } 
-                    if (dist === '') {
-                        setDist(distD);
-                    }
-                    if (conc === '') {
-                        setConc(concD);
-                    }
-                    if (prefix === '') {
-                        setPrefix(prefixD);
-                    }
-                    if (sufix === '') {
-                        setSufix(sufixD);
-                    }
-                    if (password === '') {
-                        setPassword(false);
-                    }
-
-                    console.log(nome, email, nif, telem, rua, dist, conc, prefix, sufix, password);
-                    if (nome !== '' && email !== '' && nif !== '' && telem !== '' && rua !== '' && dist !== '' && conc !== '' && prefix !== '' && sufix !== '' && (password === false || password === checkPassword)) {
-
-                        Axios.put(url+"/api/v1/users/edit", {
+                    setDefaults();
+                    
+                    if (password === false || password === checkPassword) {
+                        console.log("aqui14")
+                        Axios.put(url+"/api/v2/users/edit", {
                             id: id,
                             nome: nome,
                             email: email,
                             nif: nif,
                             tlm: telem,
-                            rua: rua,
-                            dist: dist,
-                            conc: conc,
-                            prefix: prefix,
-                            sufix: sufix,
                             pwd: password
                         }).then((response) => {
                             console.log(response);
                             if (response.data.message === "success") {
                                 document.getElementById("guardardados").innerText = 'Dados da conta alterados com sucesso!';
-                            }
-                            else {
+                            } else {
                                 document.getElementById("guardardados").innerText = 'Alteração de dados da conta inválido.';
                             }
 
@@ -198,24 +203,15 @@ function EditProfile () {
                     }
                     break;
                 case "delete":
-                    Axios.delete(url+"/api/v1/users/delete", { 
-                        // params: {
-                        //     id: id
-                        // }
-                        nome: nome,
-                        email: email,
-                        tlm: telem,
-                        nif: nif,
-                        /* morada: morada, */
-                        pwd: password
-                    }).then ((response) => {
+                    x.preventDefault();
+                    Axios.delete(url+"/api/v2/users/delete", { 
+                        params: {
+                            id: id
+                        }}).then ((response) => {
                         console.log(response);
                         if (response.data.message === "success") {
-                            document.getElementById("removerconta").innerText = 'Conta removida com sucesso!';
-                        }
-                        else {
-                            document.getElementById("removerconta").innerText = 'Conta não foi removida com sucesso.';
-                        }
+                            logout({returnTo: window.location.origin,});
+                            }
                     })
                     break;
                 default:
@@ -235,7 +231,7 @@ function EditProfile () {
                                 </div>
                                 <div className="col-md-12">
                                     <label>Email</label>
-                                    <input className="form-control" type="email" name="email" size="50" placeholder={emailD} onChange={handler} />
+                                    <input className="form-control" type="email" name="email" size="50" placeholder={emailD} value={email} onChange={handler} />
                                 </div>
                                 <div className="col-md-12">
                                     <label>NIF</label>
@@ -246,23 +242,21 @@ function EditProfile () {
                                     <label>Número de Telemóvel</label>
                                     <input type="text" inputMode="numeric" class="form-control" pattern="[0-9]{9}" name="telem" size="50" value={telem} placeholder={telemD} onChange={handler} />
                                 </div>
-                                <div className="col-md-12">
+                                {/* <div className="col-md-12">
                                     <label>Rua</label>
-                                    <input className="form-control" type="text" name="rua" size="50" placeholder={ruaD} onChange={handler} />
-                                </div>
-                                <div className="col-md-12">
+                                    <input className="form-control" type="text" name="rua" size="50" placeholder={ruaD} value={rua} onChange={handler} />
+                                </div> */}
+                                {/* <div className="col-md-12">
                                     <label>Distrito</label>
                                     <select className="form-select" name="distrito" id="distritos" onChange={handler} >
                                         <option value=''>Selecione um Distrito</option>
                                     </select>
-                                    {/* {distritos()} */}
                                 </div>
                                 <div className="col-md-12">
                                     <label>Concelho</label>
                                     <select className="form-select" name="concelho" id="concelhos" onChange={handler} >
                                         <option value=''>Selecione um Concelho</option>
                                     </select>
-                                    {/* {concelhos()} */}
                                 </div>
                                 <div className="col-md-12">
                                     <label>Código Postal</label>
@@ -271,8 +265,8 @@ function EditProfile () {
                                         <span class="input-group-text">-</span>
                                         <input type="text" class="form-control" pattern="[0-9]{3}" name="sufix" value={sufix} placeholder={sufixD} onChange={handler} />
                                     </div>
-                                </div>
-                                {/* <div className="col-md-12">
+                                </div> 
+                                <div className="col-md-12">
                                     <label>Foto de Perfil</label>
                                     <input className="form-control" type="file" name="profpic" size="50" onChange={handler} />
                                 </div> */}
@@ -286,7 +280,7 @@ function EditProfile () {
                                 </div>
                                 
                                 <button type="submit" name="submit" className="btn" onClick={handler} >Guardar</button>
-                                <button type="submit" id="remove" name="delete" className="btn" onClick={handler} >Remover Conta</button>
+                                <button id="remove" name="delete" className="btn" onClick={handler} >Remover Conta</button>
                             </form>
                     </div>
                 </div>);

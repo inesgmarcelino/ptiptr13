@@ -12,6 +12,18 @@ var pool = require('../svlib/db/getPool');
 var auth = require('../svlib/auth0/tokenlib');
 /** */
 
+router.get('/', async (req, res) => {
+    try {
+        const expected = [1,{"email": { type: "string" } }];
+        if (!parser(req.query, expected)) throw new Error("Dados inválidos");
+        const [user, fields] = await pool.query("SELECT u.*, m.prefix, m.sufix, m.street, m.dist, m.conc FROM utilizador u, morada m WHERE (u.email = ?) AND (u.id = m.userId)", [req.query.email]);
+        res.status(200).send({results: user})
+    } catch (err) {
+        console.log(err)
+        res.status(500).send({message: 'fail'});
+    }
+});
+
 router.post('/register', async (req, res, next) => {
     const expected = [11,
         {
@@ -76,14 +88,43 @@ router.post('/register', async (req, res, next) => {
     }
 });
 
-router.get('/', async (req, res) => {
+router.put('/edit', async (req,res) => {
     try {
-        const expected = [1,{"email": { type: "string" } }];
-        if (!parser(req.query, expected)) throw new Error("Dados inválidos");
-        const [user, fields] = await pool.query("SELECT u.*, m.prefix, m.sufix, m.street, m.dist, m.conc FROM utilizador u, morada m WHERE (u.email = ?) AND (u.id = m.userId)", [req.query.email]);
-        res.status(200).send({results: user})
+        const id = req.body.id;
+        const nome = req.body.nome;
+        const email = req.body.email;
+        const nif = req.body.nif;
+        const tlm = req.body.tlm;
+        const pwd = req.body.pwd; // to be handled
+
+        const [select, fields] = await pool.query("SELECT * from utilizador WHERE id = ?", [id]);
+
+        if (select[0].nome !== nome) {
+            const update = await pool.query("UPDATE utilizador SET nome = ? WHERE id = ?", [nome, id]);
+        }
+        if (select[0].email !== email) {
+            const update = await pool.query("UPDATE utilizador SET email = ? WHERE id = ?", [email, id]);
+        }
+        if (select[0].nif !== nif) {
+            const update = await pool.query("UPDATE utilizador SET nif = ? WHERE id = ?", [nif, id]);
+        }
+        if (select[0].phone !== tlm) {
+            const update = await pool.query("UPDATE utilizador SET phone = ? WHERE id = ?", [tlm, id]);
+        }
+        res.status(200).send({message: 'success'});
     } catch (err) {
-        console.log(err)
+        console.log(err);
+        res.status(500).send({message: 'fail'});
+    }
+});
+
+router.delete('/delete', async (req,res) => {
+    try {
+        const id = req.query.id;
+        const deleting = await pool.query("DELETE FROM utilizador WHERE id = ?", [id]);
+        res.status(200).send({message: 'success'});
+    } catch (err) {
+        console.log(err);
         res.status(500).send({message: 'fail'});
     }
 })
@@ -138,77 +179,6 @@ router.delete('/delete/:uid', async (req, res) => {
         res.status(404).send()
     }
 
-});
-
-router.put('/edit/:uid', async (req,res) => {
-    const nome = req.body.nome;
-    const email = req.body.email;
-    const tlm = req.body.tlm;
-    const nif = req.body.nif;
-    /* const morada = req.body.morada; */
-    const pwd = req.body.pwd;
-    
-    var queryString = "UPDATE utilizador SET ";
-    if (nome !== '') {
-        queryString += "nome = '" + nome + "' ";
-    }
-
-    if (email !== '') {
-        if ('=' in queryString) {
-            queryString += "AND email = '" + email + "' ";
-        } else {
-            queryString += "email = '" + email + "' ";
-        }
-    }
-
-    if (tlm !== '') {
-        if ('=' in queryString) {
-            queryString += "AND telemovel = " + tlm + " ";
-        } else {
-            queryString += "telemovel = " + tlm + " ";
-        }
-    }
-
-    /* if (morada !== '') {
-        if ('=' in queryString) {
-            queryString += "AND morada = '" + morada + "' ";
-        } else {
-            queryString += "morada = '" + morada + "' ";
-        }
-    } */
-
-    if (nif !== '') {
-        if ('=' in queryString) {
-            queryString += "AND nif = '" + nif + "' ";
-        } else {
-            queryString += "nif = '" + nif + "' ";
-        }
-    }
-
-    if (pwd !== '') {
-        if ('=' in queryString) {
-            queryString += "AND pass_word = '" + pwd + "' ";
-        } else {
-            queryString += "pass_word = '" + pwd + "' ";
-        }
-    }
-
-    var userId = req.params.uid;
-    queryString += "WHERE id = " +  userId;
-    try{
-        const [rows,fields] = await pool.query(queryString);
-        if(rows.length > 0){
-            console.log("Utilizador atualizado com sucesso");
-            return res.status(200).send({message:"success"});
-        } else {
-            console.log("Utilizador não se encontra na base de dados");
-            return res.status(404).send({message:"fail"});
-        }
-    } catch(err){
-        console.log(err);
-        return res.status(500).send({message:"fail"});
-    }
-    
 });
 
 module.exports = router ;
