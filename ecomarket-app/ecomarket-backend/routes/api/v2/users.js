@@ -1,8 +1,9 @@
+const axios = require('axios');
 var express = require('express');
 var router = express.Router();
 const multer = require('multer');
+const bcrypt = require('bcrypt');
 const {Storage} = require('@google-cloud/storage');
-const axios = require('axios');
 const parser = require('../svlib/validator/parser');
 const ServerError = require('../svlib/ServError/ServerError');
 
@@ -95,7 +96,7 @@ router.put('/edit', async (req,res) => {
         const email = req.body.email;
         const nif = req.body.nif;
         const tlm = req.body.tlm;
-        const pwd = req.body.pwd; // to be handled
+        const pwd = req.body.pwd;
 
         const [select, fields] = await pool.query("SELECT * from utilizador WHERE id = ?", [id]);
 
@@ -110,6 +111,13 @@ router.put('/edit', async (req,res) => {
         }
         if (select[0].phone !== tlm) {
             const update = await pool.query("UPDATE utilizador SET phone = ? WHERE id = ?", [tlm, id]);
+        }
+
+        if (pwd !== false) {
+            bcrypt.hash(pwd, 10, function(err, hash) {
+                if (err) throw new err;
+                const update2 = pool.query("UPDATE utilizador SET passwd = ? WHERE id = ?", [hash, id]);
+            });
         }
         res.status(200).send({message: 'success'});
     } catch (err) {
