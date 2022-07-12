@@ -1,17 +1,28 @@
 /* eslint-disable no-multi-str */
-import React from 'react'
 import Axios from "axios";
+import React, {useState} from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-
 import { useParams } from "react-router-dom";
 
 function Order(){
-    const { user } = useAuth0();
-    let { id } = useParams();
-
-    document.body.onload = function(){prod()};
-
+    const { user, isLoading }   = useAuth0();
+    let { id }                  = useParams();
+    const [papel, setPapel]     = useState();
+    const [prodOK, setPOK]      = useState(false);
+    const [forn, setForn]       = useState();
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+
+    // document.body.onload = function(){prod()};
+    const getsUser = () => {
+        Axios.get(url+"/api/v2/users", {
+            params: {
+                email: user.email
+            }}).then((response) => {
+            if (response.data.message !== 'fail') {
+                setPapel(response.data.results[0].papel);
+            }
+        });
+    }
 
     const prod = () => {
         Axios.get(url+"/api/v1/products/order", {
@@ -28,40 +39,70 @@ function Order(){
                                                                         <th>"+produtos[i].total+"€</th>\
                                                                     </tr>";
                 }
+                setForn(produtos[0].email);
             }
-        })
+        });
+        setPOK(true);
     }
 
-    return(
-        <div className="position-absolute showItems">
-        <div className='container'>
-        <section className='product-details'>
-            {/* <div className='imageP'>
-                {/* <img src={img1} alt='' /> 
-            </div> */}
+    const cancela = () => {
+        if (forn  !== user.email) {
+            return (<button type="submit" id="remove" name="delete" onClick={cancel} className="btn btn2 d-inline-flex flex-row-reverse">Cancelar</button>);
+        }
+    }
 
-            <div className="details">
-                <h2 className="product-brand">Encomenda {id}</h2>
-                {/* lista dos produtos */}
-                <div className="container">
-                    <table className="table table-bordered" id='centrar'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Produto</th>
-                                <th>Quantidade</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody id ="linhas">
-                        </tbody>
-                    </table>
+    const cancel = () => {
+        Axios.delete(url+"/api/v1/consumers/cancel", { 
+            params: {
+                id: id
+            }}).then ((response) => {
+            console.log(response);
+            if (response.data.message === "success") {
+                window.location.href = "http://localhost:3000/consumer";
+            }
+        });
+    }
+
+    if (isLoading) {
+        return (<div></div>);
+    } else {
+        getsUser();
+
+        if (!prodOK) {
+            prod();
+        }
+
+        return(
+            <div className="position-absolute showItems">
+            <div className='container'>
+            <section className='product-details'>
+                <div className="details">
+                    <div className="container">
+                        <h2 className="product-brand">Encomenda {id}</h2>
+                        <br />   
+                    </div>
+                   
+                    <div className="container">
+                        <table className="table table-bordered" id='centrar'>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody id ="linhas">
+                            </tbody>
+                        </table>
+                    </div>
+                    {cancela()}
                 </div>
+            </section>
             </div>
-        </section>
-        </div>
-        </div>
-    );
+            </div>
+        );
+    }
 }
 
 export default Order;

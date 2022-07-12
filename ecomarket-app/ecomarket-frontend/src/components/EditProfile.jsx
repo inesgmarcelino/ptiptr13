@@ -49,7 +49,7 @@ function EditProfile () {
                     setTelemD(response.data.results[0].phone);
                 }
             }
-            });
+        });
     }
 
     if (!isLoading) {
@@ -142,7 +142,7 @@ function EditProfile () {
                         if (response.data.message === "success") {
                             logout({returnTo: window.location.origin,});
                             }
-                    })
+                    });
                     break;
                 default:
                     console.log();

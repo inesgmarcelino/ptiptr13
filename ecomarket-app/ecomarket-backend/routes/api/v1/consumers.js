@@ -126,35 +126,19 @@ router.post('/order', async (req,res) => {
     });
 });
 
-router.post('/cancel/:oid', async (req,res) => {
-    var orderId = req.params.oid;
-    var queryString = "DELETE FROM encomenda WHERE id = ?";
-    pool.getConnection((err, conn) => {
-        if (err) throw err;
-        
-        conn.query(queryString, [orderId], (err, results) =>  {
-            if (!err) {
-                if(results.length > 0){
-                    res.status(200);
-                    res.type('json');
-                    res.send(results);
-                } else {
-                    res.status(404);
-                    res.type('json');
-                    res.send({"message":"Utilizador não se encontra na base de dados"});
-                }
-            } else {
-                conn.release();
-
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 8"});
-            }
-        });
-    });
+router.delete('/cancel', async (req,res) => {
+    try {
+        var order = req.query.id;
+        const cancel = await pool.query("DELETE FROM encomenda_prods WHERE encom = ?", [order]);
+        const cancel2 = await pool.query("DELETE FROM despacho WHERE encom = ?", [order]);
+        const cancel3 = await pool.query("DELETE FROM encomenda WHERE id = ?", [order]);
+        return res.status(200).send({message: 'success'});
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({message: 'fail'});
+    }
 });
 
-// OPERACIONAL
 router.get('/orders', async (req,res) => {
     var consId = req.query.cid;
     console.log(consId);

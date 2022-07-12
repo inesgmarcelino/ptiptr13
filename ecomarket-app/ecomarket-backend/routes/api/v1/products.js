@@ -35,10 +35,10 @@ router.get('/', async (req,res) => {
 
 router.get('/order', async (req,res) => {
     var order = req.query.order;
-    var queryString = "SELECT p.id AS id, p.nome AS nome, ep.qtty AS quant, ep.price AS total \
-                        FROM produto p, encomenda_prods ep \
-                        WHERE (ep.encom = ?) AND (ep.prod = p.id) \
-                        GROUP BY p.id, p.nome, ep.qtty, ep.price \
+    var queryString = "SELECT p.id AS id, p.nome AS nome, u1.email AS forn, ep.qtty AS quant, ep.price AS total \
+                        FROM produto p, encomenda_prods ep, utilizador u1 \
+                        WHERE (ep.encom = ?) AND (ep.prod = p.id) AND (ep.forn = u1.id)\
+                        GROUP BY p.id, p.nome, ep.qtty, ep.price, u1.email \
                         ORDER BY p.id ASC";
     // var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
     //                     FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
