@@ -32,7 +32,7 @@ function Provider () {
         getsUser();
         console.log(papel);
 
-        if (papel === 3 || papel === 4) {
+    
             const enc = () => {
                 Axios.get(url+"/api/v1/providers/orders", {
                     params: {
@@ -132,84 +132,99 @@ function Provider () {
                 return x.substring(8,10)+"/"+x.substring(5,7)+"/"+x.substring(0,4);
             }
 
-            const prov = () => {
-                // enc();
-                prod();
-                store();
-            }
+            // const prov = () => {
+            //     // enc();
+            //     prod();
+            //     store();
+            // }
 
-            prov();
+            if (papel === 3 || papel === 4) {
+                const prov = () => {
+                    if (!encOK) {
+                        enc();
+                    }
 
-            return(
-                <div className="position-absolute showItems">
-                    <div className="container">
-                        <h3>Encomendas</h3>     
-                    </div>
-                    <br />
-                    <div className="container">
-                    <table className="table table-bordered" id='centrar'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Consumidor</th>
-                                <th>Data</th>
-                                <th>Transportador</th>
-                                <th>Valor Total</th>
-                                <th>-- --</th>
-                            </tr>
-                        </thead>
-                        <tbody id="prov_enc">
-                        </tbody>
-                    </table>
-                    </div>
-        
-                    <div className="container">
-                        <Link to ='/productRegister' ><button className="btn btn2">Adicionar</button></Link>
+                    if (!prodOK && encOK) {
+                        prod();
+                    }
+
+                    if (!armzOK && encOK && prodOK) {
+                        store();
+                    }
+                }
+                prov()
+
+                return(
+                    <div className="position-absolute showItems">
+                        <div className="container">
+                            <h3>Encomendas</h3>     
+                        </div>
                         <br />
-                        <h3>Produtos</h3>     
-                    </div>
-                    <br />
-                    <div className="container">
-                    <table className="table table-bordered" id='centrar'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Data de Produção</th>
-                                <th>Categoria</th>
-                                <th>Subcategoria</th>
-                                <th>Preço</th>
-                                <th>Armazém</th>
-                                <th>Quantidade em Stock</th>
-                            </tr>
-                        </thead>
-                        <tbody id="prov_prod">
-                        </tbody>
-                    </table>
-                    </div>
-        
-                    <div className="container">
-                        <Link to ='/storageRegister' ><button className="btn btn2">Adicionar</button></Link>
+                        <div className="container">
+                        <table className="table table-bordered" id='centrar'>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Consumidor</th>
+                                    <th>Data</th>
+                                    <th>Transportador</th>
+                                    <th>Estado</th>
+                                    <th>Valor Total</th>
+                                    <th>-- --</th>
+                                </tr>
+                            </thead>
+                            <tbody id="prov_enc">
+                            </tbody>
+                        </table>
+                        </div>
+            
+                        <div className="container">
+                            <Link to ='/productRegister' ><button className="btn btn2">Adicionar</button></Link>
+                            <br />
+                            <h3>Produtos</h3>     
+                        </div>
                         <br />
-                        <h3>Armazéns</h3>
-                    </div>
-                    <br />
-                    <div className="container">
-                    <table className="table table-bordered" id='centrar'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Morada</th>
-                                <th>Código Postal</th>
-                                <th>Distrito</th>
-                                <th>Concelho</th>
-                            </tr>
-                        </thead>
-                        <tbody id="prov_stor">
-                        </tbody>
-                    </table>
-                    </div>
-                </div>);
+                        <div className="container">
+                        <table className="table table-bordered" id='centrar'>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Data de Produção</th>
+                                    <th>Categoria</th>
+                                    <th>Subcategoria</th>
+                                    <th>Preço</th>
+                                    <th>Armazém</th>
+                                    <th>Quantidade em Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody id="prov_prod">
+                            </tbody>
+                        </table>
+                        </div>
+            
+                        <div className="container">
+                            <Link to ='/storageRegister' ><button className="btn btn2">Adicionar</button></Link>
+                            <br />
+                            <h3>Armazéns</h3>
+                        </div>
+                        <br />
+                        <div className="container">
+                        <table className="table table-bordered" id='centrar'>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Morada</th>
+                                    <th>Código Postal</th>
+                                    <th>Distrito</th>
+                                    <th>Concelho</th>
+                                </tr>
+                            </thead>
+                            <tbody id="prov_stor">
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>);
         } else {
             return (<div></div>);
         }

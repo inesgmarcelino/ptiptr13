@@ -118,16 +118,17 @@ router.get('/products', async (req,res) => {
 
 router.get('/orders', async (req,res) => {
     var provId = req.query.pid;
-    var queryString = "SELECT e.id AS id, e.data AS data, u1.nome AS transportador, SUM(lpe.quantidade * p.preco) AS total, u2.nome AS consumidor \
-                        FROM encomenda e, utilizador u1, lista_produtos_encomenda lpe, produto p, lista_encomendas le, transportar_encomendas te, utilizador u2 \
-                        WHERE (le.fornecedor = ?) AND (le.encomenda = e.id) AND (te.encomenda = e.id) AND (te.transportador = u1.id) AND (lpe.encomenda = e.id) \
-                            AND (lpe.produto = p.id) AND (le.consumidor = u2.id) \
-                        GROUP BY e.id, u1.nome, u2.nome";
+    var queryString = "SELECT enc.id AS id, u1.nome AS cons, enc.tpurchase AS data, u2.nome AS transp, ed.descr AS estado, enc.total AS total \
+                        FROM encomenda enc, utilizador u1, utilizador u2, despacho d, estado_despacho ed \
+                        WHERE (d.forn = ?) AND (d.encom = enc.id) AND (enc.cons = u1.id) AND (d.transp = u2.id) AND (d.estado = ed.id) \
+                        GROUP BY enc.id, u1.nome, u2.nome \
+                        ORDER BY enc.id ASC"
 
     try {
         const [results,fields] = await pool.query(queryString, [provId]);
-        return res.status(200).send({results: result}); 
+        return res.status(200).send({results: results}); 
     } catch (err) {
+        console.log(err);
         return res.status(500).send({message:"fail"});
     }
 });
