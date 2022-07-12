@@ -186,6 +186,16 @@ body {
   border-radius: 10px;
 }
 
+.btn3 {
+  background-color: #fff;
+  color: #283618;
+  border: 3px solid  #283618ce;
+  border-radius: 10px;
+  margin: 0;
+  position: relative;
+  transform: translate(-50%, 0%)
+}
+
 .btn:hover {
   background-color: #283618;
   color: white;

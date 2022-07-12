@@ -39,16 +39,15 @@ function AdminUsersList(){
                 if (response.data.message !== "fail") {
                     var c = response.data.results;
                     for (var i = 0; i < c.length; i++) {
-                        document.getElementById("admin_users").innerHTML += "<tr>\
-                                                                            <td>"+c[i].id+"</td>\
-                                                                            <td>"+c[i].nome+"</td>\
-                                                                            <td>"+c[i].email+"</td>\
-                                                                            <td>"+c[i].nif+"</td>\
-                                                                            <td>"+c[i].phone+"</td>\
-                                                                            <td> Botão para o editprofile.jsx respetivo</td>\
-                                                                        </tr>";
+                        document.getElementById("admin_users").innerHTML += `<tr>
+                                                                            <td>${c[i].id}</td>
+                                                                            <td>${c[i].nome}</td>
+                                                                            <td>${c[i].email}</td>
+                                                                            <td>${c[i].nif}</td>
+                                                                            <td>${c[i].phone}</td>
+                                                                            <td class=''><a href='http://localhost:3000/editProfile/${c[i].id}' id='profile'><button type='button' class='btn btn3'>Editar</button></a></td>
+                                                                        </tr>`;
                     }
-                    
                 }
             });
             setCOK(true);
@@ -63,14 +62,14 @@ function AdminUsersList(){
                     if (response.data.message !== "fail") {
                         var p = response.data.results;
                         for (var i = 0; i < p.length; i++) {
-                            document.getElementById("admin_users").innerHTML += "<tr>\
-                                                                                <td>"+p[i].id+"</td>\
-                                                                                <td>"+p[i].nome+"</td>\
-                                                                                <td>"+p[i].email+"</td>\
-                                                                                <td>"+p[i].nif+"</td>\
-                                                                                <td>"+p[i].phone+"</td>\
-                                                                                <td> Botão para o editprofile.jsx respetivo</td>\
-                                                                            </tr>";
+                            document.getElementById("admin_users").innerHTML += `<tr>
+                                                                                    <td>${p[i].id}</td>
+                                                                                    <td>${p[i].nome}</td>
+                                                                                    <td>${p[i].email}</td>
+                                                                                    <td>${p[i].nif}</td>
+                                                                                    <td>${p[i].phone}</td>
+                                                                                    <td class=''><a href='http://localhost:3000/editProfile/${p[i].id}' id='profile'><button type='button' class='btn btn3'>Editar</button></a></td>
+                                                                                </tr>`;
                         }
                     }
                 });
@@ -87,14 +86,14 @@ function AdminUsersList(){
                     if (response.data.message !== "fail") {
                         var t = response.data.results;
                         for (var i = 0; i < t.length; i++) {
-                            document.getElementById("admin_users").innerHTML += "<tr>\
-                                                                                <td>"+t[i].id+"</td>\
-                                                                                <td>"+t[i].nome+"</td>\
-                                                                                <td>"+t[i].email+"</td>\
-                                                                                <td>"+t[i].nif+"</td>\
-                                                                                <td>"+t[i].phone+"</td>\
-                                                                                <td> Botão para o editprofile.jsx respetivo</td>\
-                                                                            </tr>";
+                            document.getElementById("admin_users").innerHTML += `<tr>
+                                                                                    <td>${t[i].id}</td>
+                                                                                    <td>${t[i].nome}</td>
+                                                                                    <td>${t[i].email}</td>
+                                                                                    <td>${t[i].nif}</td>
+                                                                                    <td>${t[i].phone}</td>
+                                                                                    <td class=''><a href='http://localhost:3000/editProfile/${t[i].id}' id='profile'><button type='button' class='btn btn3'>Editar</button></a></td>
+                                                                                </tr>`;
                         }
                     }
                 });

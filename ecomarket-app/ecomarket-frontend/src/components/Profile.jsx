@@ -10,10 +10,11 @@ function Profile() {
   const { user, isLoading } = useAuth0();
 
   // var newtipo, tipo, newsubtipo;
-  const [newCat, setNewCat]         = useState('');
-  const [cat, setCat]               = useState('');
-  const [newSubcat, setNewSubcat]   = useState('');
-  const [papel, setPapel]             = useState('');
+  const [newCat, setNewCat]         = useState();
+  const [cat, setCat]               = useState();
+  const [newSubcat, setNewSubcat]   = useState();
+  const [papel, setPapel]           = useState();
+  const [id, setID]                 = useState();
 
   var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
 
@@ -42,7 +43,8 @@ function Profile() {
           email: user.email
       }}).then((response) => {
         if (response.data.message !== 'fail') {
-          setPapel(response.data.results[0].papel)
+          setPapel(response.data.results[0].papel);
+          setID(response.data.results[0].id);
         }
       });
 
@@ -72,7 +74,7 @@ function Profile() {
           return (
             <tbody> 
               <tr>
-                <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
+                <td className='card-profile'><h3>Editar os meus dados</h3> <Link to={`/editProfile/${id}`} id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
               </tr>
               <tr>
                 <td className='card-profile'><h3>Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn btn2" >Ver</button></Link></td>
@@ -85,7 +87,7 @@ function Profile() {
         return (
           <tbody> 
             <tr>
-              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
+              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to={`/editProfile/${id}`} id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
             </tr>
             <tr>
               <td className='card-profile'><h3>Fornecedor</h3> <Link to ='/provider' id='profile'> <button type="button" className="btn btn2" >Ver</button></Link> </td>
@@ -99,7 +101,7 @@ function Profile() {
         return (
           <tbody> 
             <tr>
-              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
+              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to={`/editProfile/${id}`} id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
             </tr>
             <tr>
               <td className='card-profile'><h3>Consumidor</h3> <Link to ='/consumer' id='profile'> <button type="button" className="btn btn2" >Ver</button></Link></td>
@@ -113,7 +115,7 @@ function Profile() {
         return (
           <tbody> 
             <tr>
-              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to ='/editProfile' id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
+              <td className='card-profile'><h3>Editar os meus dados</h3> <Link to={`/editProfile/${id}`} id='profile' ><button type="button" className="btn btn2"  >Editar</button></Link></td>
             </tr>
             <tr>
               <td className='card-profile'><h3>Transportador</h3> <Link to ='/transporter' id='profile'> <button type="button" className="btn btn2" >Ver</button></Link> </td>
@@ -135,25 +137,24 @@ function Profile() {
           setNewSubcat(x.target.value);
           break;
         case "submitCat":
-          // if (newtipo !== '' && tipo === '' && newsubtipo === '') {
-          //   Axios.post(url+"/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
-          //     console.log(response);
-          //     if (response.data.message === "success") {
-          //       document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
-          //       document.getElementById("modal_body_admin").innerHTML = "";
-          //     }
-          //   });
-          // } else if (tipo !== '' && newsubtipo !== '' && newtipo === '') {
-          //     // Axios.post("https://ecomarket.works/api/v1/admin/admintipo", {newtipo: newtipo}).then((response) => {
-          //     //   console.log(response);
-          //     //   if (response.data.message === "success") {
-          //       //     document.getElementById("modal_header_admin").innerText = "Registo bem sucedido!";
-          //       //     document.getElementById("modal_body_admin").innerHTML = "";
-          //       //   }
-          //       // });
-          //  }
+          Axios.post(url+"/api/v2/admin/addCat", {
+            cat: newCat
+          }).then((response) => {
+            if (response.data.message === 'success') {
+              handleHideCat();
+            }
+          })
           break;
         case "submitSubcat":
+          console.log(cat, newSubcat);
+          Axios.post(url+"/api/v2/admin/addSubcat", {
+            cat: cat,
+            subcat: newSubcat
+          }).then((response) => {
+            if (response.data.message === 'success') {
+              handleHideSubcat();
+            }
+          })
           break;
         default:
           console.log();
@@ -196,7 +197,7 @@ function Profile() {
                   </div>
                   <div className="modal-body" id="modal_body_cat">
                     <label>Nome</label>
-                    <input className='form-control' type='text' name='newcategoria' />
+                    <input className='form-control' type='text' onChange={handler} name='newcategoria' />
                   </div> 
                   <div className="modal-footer" id="modal_footer_cat">
                       <button type="button" onClick={handleHideCat} className="btn" id="cancelar" >Cancelar</button>
@@ -214,10 +215,10 @@ function Profile() {
                   </div>
                   <div className="modal-body" id="modal_body_subcat">
                     <label>Selecione a Categoria</label>
-                      <select className='form-select' name='tipo' id='categorias' onChange={handler} required>
+                      <select className='form-select' name='tipo' id='categorias' name='categoria' onChange={handler} required>
                       </select>
                     <label>Nome da Subcategoria</label>
-                      <input className='form-control' type='text' name='newsubcategoria'/>
+                      <input className='form-control' type='text' onChange={handler} name='newsubcategoria'/>
                   </div> 
                   <div className="modal-footer" id="modal_footer_subcat">
                       <button type="button" onClick={handleHideSubcat} className="btn" id="cancelar" >Cancelar</button>
