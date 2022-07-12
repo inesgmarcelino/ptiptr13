@@ -150,7 +150,8 @@ function EditProfile () {
         }
 
         return(
-            <div className="card pr3 position-absolute top-50 start-50 translate-middle">
+
+            <div className="card pr1 position-absolute top-50 start-50 translate-middle">
                 <div className="card-body">
                     <h5 className="card-title">Edição da Conta</h5>
                     <h6 className="card-subtitle mb-2">Edite aqui os dados da sua conta</h6>
@@ -166,6 +167,7 @@ function EditProfile () {
                         <div className="col-md-12">
                             <label>NIF</label>
                             <input type="text" inputMode="numeric" class="form-control" pattern="[0-9]{9}" name="nif" size="50" value={nif} placeholder={nifD} onChange={handler} />
+
 
                         </div>
                         <div className="col-md-12">

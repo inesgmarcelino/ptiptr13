@@ -3,7 +3,7 @@ body {
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url(green2.jpg);
+  background-image: url(fundo1.jpg);
 }
 
  .navbar {
@@ -184,16 +184,6 @@ body {
   margin-right: 15px;
   border: 3px solid  #283618ce;
   border-radius: 10px;
-}
-
-.btn3 {
-  background-color: #fff;
-  color: #283618;
-  border: 3px solid  #283618ce;
-  border-radius: 10px;
-  margin: 0;
-  position: relative;
-  transform: translate(-50%, 0%)
 }
 
 .btn:hover {
@@ -521,6 +511,10 @@ input:focus {
 
 .pr{
   margin-top: 200px;
+}
+
+.pr1{
+  margin-top: 125px;
 }
 
 .pr2 {
