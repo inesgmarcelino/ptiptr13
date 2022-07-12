@@ -17,7 +17,19 @@ router.get('/', async (req, res) => {
     try {
         const expected = [1,{"email": { type: "string" } }];
         if (!parser(req.query, expected)) throw new Error("Dados inválidos");
-        const [user, fields] = await pool.query("SELECT u.*, m.prefix, m.sufix, m.street, m.dist, m.conc FROM utilizador u, morada m WHERE (u.email = ?) AND (u.id = m.userId)", [req.query.email]);
+        const [user, fields] = await pool.query("SELECT * FROM utilizador WHERE (email = ?)", [req.query.email]);
+        res.status(200).send({results: user})
+    } catch (err) {
+        console.log(err)
+        res.status(500).send({message: 'fail'});
+    }
+});
+
+router.get('/id', async (req, res) => {
+    try {
+        const expected = [1,{"id": { type: "number" } }];
+        if (!parser(req.query, expected)) throw new Error("Dados inválidos");
+        const [user, fields] = await pool.query("SELECT * FROM utilizador u WHERE (id = ?)", [req.query.id]);
         res.status(200).send({results: user})
     } catch (err) {
         console.log(err)

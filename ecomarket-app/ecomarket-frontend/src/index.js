@@ -21,7 +21,7 @@ root.render(
       <Route path='/register' element={<Register />} />
       <Route path='/cart' element={<Cart />} />
       <Route path='/profile' element={<Profile />} />
-      <Route path='/editProfile' element={<EditProfile />} />
+      <Route path='/editProfile/:id' element={<EditProfile />} />
       <Route path='/payment' element={<Payment />} />
       <Route path='/consumer' element={<Consumer />} />
       <Route path='/provider' element={<Provider />} />

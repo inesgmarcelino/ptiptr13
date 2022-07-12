@@ -9,21 +9,25 @@ function Provider () {
 
     const [pid, setPID]         = useState('');
     const [papel, setPapel]     = useState('');
+    const [encOK, setEOK]       = useState(false);
+    const [prodOK, setPOK]      = useState(false);
+    const [armzOK, setAOK]      = useState(false);
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
 
-    const getsUser = () => {
-        Axios.get(url+"/api/v2/users", {
-            params: {
-              email: user.email
-          }}).then((response) => {
-            if (response.data.message !== 'fail') {
-              setPapel(response.data.results[0].papel)
-              setPID(response.data.results[0].id);
-            }
-          });
-    }
-
-    if (!isLoading) {
+    if (isLoading) {
+        return (<div></div>);
+    } else {
+        const getsUser = () => {
+            Axios.get(url+"/api/v2/users", {
+                params: {
+                  email: user.email
+              }}).then((response) => {
+                if (response.data.message !== 'fail') {
+                  setPapel(response.data.results[0].papel)
+                  setPID(response.data.results[0].id);
+                }
+              });
+        }
 
         getsUser();
         console.log(papel);
@@ -48,6 +52,7 @@ function Provider () {
                         }
                     }
                 });
+                setEOK(true);
             }
         
             const transp = (t) => {
@@ -81,6 +86,7 @@ function Provider () {
                         }
                     }
                 });
+                setPOK(true);
             }
         
             const store = () => {
@@ -101,6 +107,7 @@ function Provider () {
                         }
                     }
                 });
+                setAOK(true);
             }
         
             const cpostal = (p1,p2) => {
