@@ -40,14 +40,15 @@ function Provider () {
                 if (response.data.message !== "fail") {
                     var encomendas = response.data.results;
                     for (var i = 0; i < encomendas.length; i++) {
-                        document.getElementById("prov_enc").innerHTML += "<tr>\
-                                                                            <td>"+encomendas[i].id+"</td>\
-                                                                            <td>"+encomendas[i].consumidor+"</td>\
-                                                                            <td>"+encomendas[i].data.substring(0,10)+"</td>\
-                                                                            <td>"+transp(encomendas[i].transportador)+"</td>\
-                                                                            <td>"+encomendas[i].total+"</td>\
-                                                                            <td> Botão para a order.jsx respetiva</td>\
-                                                                        </tr>";
+                        document.getElementById("prov_enc").innerHTML += `<tr>\
+                                                                            <td>${encomendas[i].id}</td>\
+                                                                            <td>${encomendas[i].cons}</td>\
+                                                                            <td>${encomendas[i].data.substring(0,10)}</td>\
+                                                                            <td>${transp(encomendas[i].transportador)}</td>\
+                                                                            <td>${encomendas[i].estado}</td>\
+                                                                            <td>${encomendas[i].total}€</td>\
+                                                                            <td class=''><a href='http://localhost:3000/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
+                                                                        </tr>`;
                     }
                 }
             });

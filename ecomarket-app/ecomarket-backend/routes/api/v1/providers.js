@@ -118,10 +118,10 @@ router.get('/products', async (req,res) => {
 
 router.get('/orders', async (req,res) => {
     var provId = req.query.pid;
-    var queryString = "SELECT enc.id AS id, u1.nome AS cons, enc.tpurchase AS data, u2.nome AS transp, ed.descr AS estado, enc.total AS total \
+    var queryString = "SELECT enc.id AS id, u1.nome AS cons, enc.tpurchase AS data, d.transp AS transp, ed.descr AS estado, enc.total AS total \
                         FROM encomenda enc, utilizador u1, utilizador u2, despacho d, estado_despacho ed \
-                        WHERE (d.forn = ?) AND (d.encom = enc.id) AND (enc.cons = u1.id) AND (d.transp = u2.id) AND (d.estado = ed.id) \
-                        GROUP BY enc.id, u1.nome, u2.nome \
+                        WHERE (d.forn = ?) AND (d.encom = enc.id) AND (enc.cons = u1.id) AND (d.estado = ed.id) \
+                        GROUP BY enc.id, u1.nome, ed.descr, enc.total \
                         ORDER BY enc.id ASC"
 
     try {

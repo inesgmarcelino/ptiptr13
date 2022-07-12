@@ -9,7 +9,7 @@ function Order(){
     let { id }                  = useParams();
     const [papel, setPapel]     = useState();
     const [prodOK, setPOK]      = useState(false);
-    const [forn, setForn]       = useState();
+    const [cancelar, setCancelar]   = useState(true);
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
 
     // document.body.onload = function(){prod()};
@@ -39,14 +39,16 @@ function Order(){
                                                                         <th>"+produtos[i].total+"€</th>\
                                                                     </tr>";
                 }
-                setForn(produtos[0].email);
+                if (user.email === produtos[0].forn) {
+                    setCancelar(false);
+                }
             }
         });
         setPOK(true);
     }
 
-    const cancela = () => {
-        if (forn  !== user.email) {
+    const cancela = () => {;
+        if (cancelar) {
             return (<button type="submit" id="remove" name="delete" onClick={cancel} className="btn btn2 d-inline-flex flex-row-reverse">Cancelar</button>);
         }
     }
