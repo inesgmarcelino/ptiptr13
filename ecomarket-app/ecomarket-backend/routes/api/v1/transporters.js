@@ -37,11 +37,11 @@ router.post('/reg_car', async (req,res) => {
 // OPERACIONAL
 router.get('/orders', async (req,res) => {
     var transId = req.query.tid;
-    var queryString = "SELECT e.id AS id, e.data AS data, ee.status_transp AS transp, SUM(lpe.quantidade * p.preco) AS total, u1.nome AS consumidor \
-                        FROM encomenda e, estado_encomenda ee, lista_produtos_encomenda lpe, produto p, transportar_encomendas te, utilizador u1, lista_encomendas le \
-                        WHERE (te.transportador = ?) AND (te.encomenda = e.id) AND (ee.encomenda = e.id) AND (lpe.encomenda = e.id) AND (p.id = lpe.produto) \
-                            AND (le.encomenda = e.id) AND (le.consumidor = u1.id) \
-                        GROUP BY e.id, u1.nome";
+    var queryString = "SELECT enc.id AS id, u1.nome AS cons, enc.tpurchase AS data, ed.descr AS estado, enc.total AS total \
+                        FROM encomenda enc, utilizador u1, despacho d, estado_despacho ed \
+                        WHERE (d.forn = ?) AND (d.encom = enc.id) AND (enc.cons = u1.id) AND (d.estado = ed.id) \
+                        GROUP BY enc.id, u1.nome \
+                        ORDER BY enc.id ASC"
 
     try {
         const [result,fields] = await pool.query(queryString, [transId]);
@@ -55,7 +55,9 @@ router.get('/cars', async (req,res) => {
     var transId = req.query.tid;
     var queryString = "SELECT v.id AS id, v.marca AS marca, v.ano AS ano, v.fuel AS combustivel, c.quantidade AS quantidade, c.unidade AS unidade, v.plate AS matricula \
                         FROM veiculo v, consumos_veiculo c \
-                        WHERE (v.transp = ?) AND (v.consumo = c.id)";
+                        WHERE (v.transp = ?) AND (v.consumo = c.id) \
+                        GROUP BY v.id, v.marca \
+                        ORDER BY v.id ASC";
     
     try {
         const [results, fields] = await pool.query(queryString, [transId]);
