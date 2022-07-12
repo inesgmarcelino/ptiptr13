@@ -9,10 +9,12 @@ function Consumer () {
 
     const [cid, setCID]         = useState('');
     const [papel, setPapel]     = useState('');
+    const [encOK, setEOK]       = useState(false);
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
 
-    if (!isLoading) {
-
+    if(isLoading) {
+        return (<div></div>);
+    } else {
         const getsUser = () => {
             Axios.get(url+"/api/v2/users", {
                 params: {
@@ -26,50 +28,58 @@ function Consumer () {
         }
 
         getsUser();
+
+        const enc = () => {
+            Axios.get(url+"/api/v1/consumers/orders", {
+                params: {
+                    cid: cid
+            }}).then ((response) => {
+                if (response.data.message !== "fail") {
+                    var encomendas = response.data.results;
+                    for (var i = 0; i < encomendas.length; i++) {
+                        document.getElementById("linhas").innerHTML += `<tr>\
+                                                                            <td>${encomendas[i].id}</td>\
+                                                                            <td>${encomendas[i].data.substring(0,10)}</td>\
+                                                                            <td>${encomendas[i].fornecedor}</td>\
+                                                                            <td>${transp(4)}</td>\
+                                                                            <td>${encomendas[i].estado}</td>\
+                                                                            <td>${encomendas[i].total}€</td>\
+                                                                            <td class=''><a href='http://localhost:3000/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
+                                                                        </tr>`;
+                    }
+                }
+            });
+            setEOK(true);
+        }
+    // <button value="x" onClick={buscarenc}
+    
+        const transp = (x) => {
+            if (x !== null) {
+                let nome = '';
+                Axios.get(url+"/api/v2/users/id", {
+                    params: {
+                        id: x
+                }}).then((response) => {
+                    return response.data.results[0].nome; //to be fixed
+                });
+            } else {
+                return "Por atribuir pelo Fornecedor";
+            }
+        }
+
         if (papel === 2 || papel === 4) {
             // const buscarEnc = (x) => {
             //     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
             //     window.location.href = url+'/order?id=' + x.target.value;   
             // }
-        
-            const enc = () => {
-                Axios.get(url+"/api/v1/consumers/orders", {
-                    params: {
-                        cid: cid
-                }}).then ((response) => {
-                    if (response.data.message !== "fail") {
-                        var encomendas = response.data.results;
-                        for (var i = 0; i < encomendas.length; i++) {
-                            document.getElementById("linhas").innerHTML += "<tr>\
-                                                                                <td>"+encomendas[i].id+"</td>\
-                                                                                <td>"+encomendas[i].data.substring(0,10)+"</td>\
-                                                                                <td>"+encomendas[i].fornecedor+"</td>\
-                                                                                <td>"+encomendas[i].transportador+"</td>\
-                                                                                <td>"+status(encomendas[i].cons, encomendas[i].forn, encomendas[i].transp)+"</td>\
-                                                                                <td>"+encomendas[i].total+"€</td>\
-                                                                                <td><button value='"+encomendas[i].id+"'>Ver</button></td>\
-                                                                            </tr>";
-                        }
-                    }
-                });
-            }
-        // <button value="x" onClick={buscarenc}
-        
-            const status = (c,f,t) => {
-                if (c === 'YES') {
-                    if (f === 'NO') {
-                        return "A aguardar pela confirmação do Fornecedor";
-                    } else if (t === 'NO') {
-                        return "Em trânsito";
-                    } else {
-                        return "Entregue";
-                    }
-                } else {
-                    return "A aguardar o pagamento";
+            
+            const cons = () => {
+                if (!encOK) {
+                    enc();
                 }
             }
+            cons();
 
-            enc();
 
             return(
                 <div className="position-absolute showItems">

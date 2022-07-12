@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS despacho (
 
 -- relaciona os produtos com o despacho de cada fornecedor (permite ter uma encomenda com multiplos fornecedores)
 CREATE TABLE IF NOT EXISTS encomenda_prods (
-    encom           INT UNIQUE NOT NULL,
+    encom           INT NOT NULL,
     forn            INT NOT NULL,
     prod            INT NOT NULL,
     qtty            INT NOT NULL,

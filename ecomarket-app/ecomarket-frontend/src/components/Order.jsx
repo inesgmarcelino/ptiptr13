@@ -1,12 +1,13 @@
 /* eslint-disable no-multi-str */
 import React from 'react'
 import Axios from "axios";
-import {Link } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
+
+import { useParams } from "react-router-dom";
 
 function Order(){
     const { user } = useAuth0();
-    const order = 1;
+    let { id } = useParams();
 
     document.body.onload = function(){prod()};
 
@@ -15,7 +16,7 @@ function Order(){
     const prod = () => {
         Axios.get(url+"/api/v1/products/order", {
             params: {
-                order: order
+                order: id
         }}).then ((response) => {
             if (response.data.message !== "fail") {
                 var produtos = response.data.results;
@@ -40,7 +41,7 @@ function Order(){
             </div> */}
 
             <div className="details">
-                <h2 className="product-brand">Encomenda {order}</h2>
+                <h2 className="product-brand">Encomenda {id}</h2>
                 {/* lista dos produtos */}
                 <div className="container">
                     <table className="table table-bordered" id='centrar'>

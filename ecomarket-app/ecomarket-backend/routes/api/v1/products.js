@@ -35,14 +35,20 @@ router.get('/', async (req,res) => {
 
 router.get('/order', async (req,res) => {
     var order = req.query.order;
-    var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
-                        FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
-                        GROUP BY p.id, p.nome";
+    var queryString = "SELECT p.id AS id, p.nome AS nome, ep.qtty AS quant, ep.price AS total \
+                        FROM produto p, encomenda_prods ep \
+                        WHERE (ep.encom = ?) AND (ep.prod = p.id) \
+                        GROUP BY p.id, p.nome, ep.qtty, ep.price \
+                        ORDER BY p.id ASC";
+    // var queryString = "SELECT p.id AS id, p.nome AS nome, lpe.quantidade AS quant, SUM(lpe.quantidade * p.preco) AS total \
+    //                     FROM produto p, lista_produtos_encomenda lpe WHERE (lpe.encomenda = ?) AND (lpe.produto = p.id) \
+    //                     GROUP BY p.id, p.nome";
 
     try {
         const [result,fields] = await pool.query(queryString, [order]);
         return res.status(200).send({results: result}); 
     } catch (err) {
+        console.log(err);
         return res.status(500).send({message:"fail"});
     }
 });

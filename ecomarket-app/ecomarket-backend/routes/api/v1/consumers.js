@@ -157,10 +157,12 @@ router.post('/cancel/:oid', async (req,res) => {
 // OPERACIONAL
 router.get('/orders', async (req,res) => {
     var consId = req.query.cid;
-    var queryString = "SELECT e.id AS id, e.tpurchase AS data, u1.nome AS fornecedor, u2.nome AS transportador, ed.descr AS estado, e.total \
-                        FROM encomenda e, utilizador u1, utilizador u2, estado_despacho ed, despacho d \
-                        WHERE (e.cons = ?) AND (e.id = d.encom) AND (d.forn = u1.id) AND (d.transp = u2.id) AND (d.estado = ed.id) \
-                        GROUP BY e.id, u1.nome, u2.nome, ed.descr";
+    console.log(consId);
+    var queryString = "SELECT e.id AS id, e.tpurchase AS data, u1.nome AS fornecedor, d.transp AS transportador, ed.descr AS estado, e.total AS total \
+                        FROM encomenda e, utilizador u1, estado_despacho ed, despacho d \
+                        WHERE (e.cons = ?) AND (e.id = d.encom) AND (d.forn = u1.id) AND (d.estado = ed.id) \
+                        GROUP BY e.id, u1.nome, ed.descr, d.transp \
+                        ORDER BY e.id ASC";
 
     try {
         const [result,fields] = await pool.query(queryString, [consId]);
