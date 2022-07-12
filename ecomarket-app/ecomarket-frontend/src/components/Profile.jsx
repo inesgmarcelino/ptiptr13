@@ -229,7 +229,9 @@ function Profile() {
         </div>
       </div>
     );
-  } 
+  } else {
+    return (<div></div>);
+  }
 
 }
 

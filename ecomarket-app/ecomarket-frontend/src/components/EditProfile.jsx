@@ -150,7 +150,7 @@ function EditProfile () {
         }
 
         return(
-            <div className="card pr position-absolute top-50 start-50 translate-middle">
+            <div className="card pr3 position-absolute top-50 start-50 translate-middle">
                 <div className="card-body">
                     <h5 className="card-title">Edição da Conta</h5>
                     <h6 className="card-subtitle mb-2">Edite aqui os dados da sua conta</h6>
