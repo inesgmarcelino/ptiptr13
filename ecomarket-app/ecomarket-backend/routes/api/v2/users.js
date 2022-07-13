@@ -15,13 +15,14 @@ var auth = require('../svlib/auth0/tokenlib');
 
 router.get('/', async (req, res) => {
     try {
+        console.log(req.query.email)
         const expected = [1,{"email": { type: "string" } }];
         if (!parser(req.query, expected)) throw new Error("Dados inválidos");
         const [user, fields] = await pool.query("SELECT * FROM utilizador WHERE (email = ?)", [req.query.email]);
-        res.status(200).send({results: user})
+        return res.status(200).send({results: user})
     } catch (err) {
         console.log(err)
-        res.status(500).send({message: 'fail'});
+        return res.status(500).send({message: 'fail'});
     }
 });
 

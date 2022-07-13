@@ -34,60 +34,19 @@ function Home() {
     <div>
         <div className="position-absolute showItems">
 
-            <div className="headline">
+            <div className="headline" >
                 <h2>Bem-vindo ao EcoMarket!</h2>
-                <h5>Faça aqui as suas compras mais eco.</h5>
+                <h5>Faça aqui as suas compras mais eco</h5>
+                <p>Aqui vai poder fazer as melhoras compras tendo em conta o que realmente importa, o ambiente</p>
+                <p>Este pequeno market foi desenvolvido por 3 alunos da Licenciatura em Tecnologias de Informação:</p>
+                <ul>
+                    <li>Inês Marcelino</li>
+                    <li>José Sousa</li>
+                    <li>Sofia Lourenço</li>
+                </ul>
             </div>
-            <div className="rowH">
-                <div className="column mx-5"> 
-                     <a href=""> {/* onClick={goCategorie(this.value)} value="1" */}
-                        <div className="card mb-3">
-                            <img src={cat1} className="card-img-top" alt="..."/>
-                            <br />
-                            <h5 className="card-title mx-auto my-0"> Alimentação </h5>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="card mb-3">
-                            <img src={cat2} className="card-img-top" alt="..."/>
-                            <br />
-                            <h5 className="card-title mx-auto my-0"> Tecnologia </h5>
-                        </div>
-                    </a>
-                </div>
-                <div className="column mx-5">
-                    <a href="#">
-                        <div className="card mb-3">
-                            <img src={cat6} className="card-img-top" alt="..."/>
-                            <br />
-                            <h5 className="card-title mx-auto my-0"> Desporto </h5>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="card mb-3">
-                            <img src={cat7} className="card-img-top" alt="..."/>
-                            <br />
-                            <h5 className="card-title mx-auto my-0"> Jardim </h5>
-                        </div>
-                    </a>
-                </div>
-                <div className="column mx-5">
-                    <a href="#">
-                        <div className="card mb-3">
-                            <img src={cat4} className="card-img-top" alt="..."/>
-                            <br />
-                            <h5 className="card-title mx-auto my-0"> Tecnologia </h5>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="card mb-3">
-                            <img src={cat5} className="card-img-top" alt="..."/>
-                            <br />
-                            <h5 className="card-title mx-auto my-0"> Tecnologia </h5>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            
+        
         </div>
     </div>
         

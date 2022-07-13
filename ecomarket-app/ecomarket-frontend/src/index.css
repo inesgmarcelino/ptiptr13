@@ -317,6 +317,11 @@ body {
   margin-bottom: -50px;
 }
 
+.direcionar{
+  margin-top: 130px;
+  
+}
+
 .column a {
   text-decoration: none;
 }
@@ -655,4 +660,9 @@ label {
 #subcategorias>p {
   color: gray;
   font-size: smaller;
+}
+
+.order{
+  margin-top: 50px;
+  align-content: center;
 }

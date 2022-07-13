@@ -38,6 +38,7 @@ function Profile() {
     }
   
     const whichUser = () => {
+      console.log(user.email)
       Axios.get(url+"/api/v2/users", {
         params: {
           email: user.email
@@ -215,7 +216,7 @@ function Profile() {
                   </div>
                   <div className="modal-body" id="modal_body_subcat">
                     <label>Selecione a Categoria</label>
-                      <select className='form-select' name='tipo' id='categorias' name='categoria' onChange={handler} required>
+                      <select className='form-select' id='categorias' name='categoria' onChange={handler} required>
                       </select>
                     <label>Nome da Subcategoria</label>
                       <input className='form-control' type='text' onChange={handler} name='newsubcategoria'/>
