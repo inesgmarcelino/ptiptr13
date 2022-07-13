@@ -41,29 +41,32 @@ function Consumer () {
                                                                             <td>${encomendas[i].id}</td>\
                                                                             <td>${encomendas[i].data.substring(0,10)}</td>\
                                                                             <td>${encomendas[i].fornecedor}</td>\
-                                                                            <td>${transp(4)}</td>\
+                                                                            <td id="nome${encomendas[i].id}"></td>\
                                                                             <td>${encomendas[i].estado}</td>\
                                                                             <td>${encomendas[i].total}€</td>\
                                                                             <td class=''><a href='http://localhost:3000/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
                                                                         </tr>`;
+                        transp(encomendas[i].transportador, encomendas[i].id);
                     }
                 }
             });
             setEOK(true);
         }
-    // <button value="x" onClick={buscarenc}
     
-        const transp = (x) => {
-            if (x !== null) {
-                let nome = '';
-                Axios.get(url+"/api/v2/users/id", {
+        const transp = (t, i) => {
+            if (typeof t === "number") {
+                Axios.get(url+'/api/v2/users/id', {
                     params: {
-                        id: x
+                        id: t
                 }}).then((response) => {
-                    return response.data.results[0].nome; //to be fixed
-                });
+                    if (response.data.message !== 'fail') {
+                        document.getElementById("nome"+i).innerText = response.data.results[0].nome;
+                        return;
+                    }
+                })
             } else {
-                return "Por atribuir pelo Fornecedor";
+                document.getElementById("nome"+i).innerHTML = "Ainda não foi atribuído";
+                return;
             }
         }
 
