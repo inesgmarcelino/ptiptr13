@@ -36,25 +36,28 @@ function Transporter () {
                 if (response.data.message !== "fail") {
                     var encomendas = response.data.results;
                     for (var i = 0; i < encomendas.length; i++) {
-                        document.getElementById("trans_enc").innerHTML += "<tr>\
-                                                                            <td>"+encomendas[i].id+"</td>\
-                                                                            <td>"+encomendas[i].cons+"</td>\
-                                                                            <td>"+encomendas[i].data.substring(0,10)+"</td>\
-                                                                            <td>"+encomendas[i].estado+"</td>\
-                                                                            <td>"+encomendas[i].total+"</td>\
-                                                                            <td> Botão para a order.jsx respetiva</td>\
-                                                                        </tr>";
+                        document.getElementById("trans_enc").innerHTML += `<tr>\
+                                                                                <td>${encomendas[i].id}</td>\
+                                                                                <td>${encomendas[i].cons}</td>\
+                                                                                <td>${encomendas[i].data.substring(0,10)}</td>\
+                                                                                <td id="carro${encomendas[i].id}"></td>\
+                                                                                <td>${encomendas[i].estado}</td>\
+                                                                                <td>${encomendas[i].total}€</td>\
+                                                                                <td class=''><a href='http://localhost:3000/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
+                                                                            </tr>`;
+                        carro(encomendas[i].car, encomendas[i].id);
                     }
                 }
             });
             setEOK(true);
         }
     
-        const status = (t) => {
-            if (t === 'NO') {
-                return "Em trânsito";
+        const carro = (c, i) => {
+            if (typeof c === "number") {
+                document.getElementById("carro"+i).innerText = c;
             } else {
-                return "Entregue";
+                document.getElementById("carro"+i).innerHTML = `<a href='http://localhost:3000/selectCar/${i}' id='profile'><button type='button' class='btn btn5'>Selecione um Carro</button></a>`;
+                return;
             }
         }
     
@@ -134,6 +137,7 @@ function Transporter () {
                                 <th>ID</th>
                                 <th>Consumidor</th>
                                 <th>Data</th>
+                                <th>Carro</th>
                                 <th>Estado</th>
                                 <th>Valor Total</th>
                                 <th>-- --</th>

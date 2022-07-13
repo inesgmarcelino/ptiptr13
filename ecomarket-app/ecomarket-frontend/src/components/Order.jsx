@@ -48,7 +48,7 @@ function Order(){
     }
 
     const cancela = () => {;
-        if (cancelar) {
+        if (cancelar && (papel === 2 || papel === 4)) {
             return (<button type="submit" id="remove" name="delete" onClick={cancel} className="btn btn2 d-inline-flex flex-row-reverse">Cancelar</button>);
         }
     }

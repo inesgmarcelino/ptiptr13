@@ -44,24 +44,32 @@ function Provider () {
                                                                             <td>${encomendas[i].id}</td>\
                                                                             <td>${encomendas[i].cons}</td>\
                                                                             <td>${encomendas[i].data.substring(0,10)}</td>\
-                                                                            <td>${transp(encomendas[i].transportador)}</td>\
+                                                                            <td id="nome${encomendas[i].id}"></td>\
                                                                             <td>${encomendas[i].estado}</td>\
                                                                             <td>${encomendas[i].total}€</td>\
-                                                                            <td class=''><a href='http://localhost:3000/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
+                                                                            <td ><a href='http://localhost:3000/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
                                                                         </tr>`;
+                        transp(encomendas[i].transp, encomendas[i].id);
                     }
                 }
             });
             setEOK(true);
         }
     
-        const transp = (t) => {
-            if (t === null) {
-                return (
-                    <button></button> //botão para escolher transportador
-                ); 
+        const transp = (t, i) => {
+            if (typeof t === "number") {
+                Axios.get(url+'/api/v2/users/id', {
+                    params: {
+                        id: t
+                }}).then((response) => {
+                    if (response.data.message !== 'fail') {
+                        document.getElementById("nome"+i).innerText = response.data.results[0].nome;
+                        return;
+                    }
+                })
             } else {
-                return t;
+                document.getElementById("nome"+i).innerHTML = `<a href='http://localhost:3000/selectTransp/${i}' id='profile'><button type='button' class='btn btn5'>Selecione um Transportador</button></a>`;
+                return;
             }
         }
 

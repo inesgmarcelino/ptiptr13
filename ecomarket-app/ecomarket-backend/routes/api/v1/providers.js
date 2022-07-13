@@ -182,5 +182,18 @@ router.get('/storages', async (req,res) => {
     }
 });
 
+router.get('/add_transp', async (req, res) => {
+    try {
+        const order = req.query.id;
+        const transp = req.query.transp;
+        const update = await pool.query("UPDATE despacho SET transp = ? WHERE encom = ?", [transp, order]);
+        const update2 = await pool.query("UPDATE despacho SET estado = 2 WHERE encom = ?", [order]);
+        return res.redirect("http://localhost:3000/provider"); // por mudar
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({message:"fail"});
+    }
+});
+
 //exporta funções/"objetos"
 module.exports = router ;

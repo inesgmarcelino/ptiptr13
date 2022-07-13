@@ -4,7 +4,7 @@ import './index.css';
 import Auth0ProviderWithHistory from './auth/auth0-hist-prov';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {NavBar, Home, Login, Register, Cart, Footer, Profile, EditProfile, Catalog, Payment, Consumer, Provider,
-    ConfirmarEncomenda, Comparador, Product, StorageRegister, ProductRegister, ProductRegister2, AdminLogin, AdminTipos, Order, Transporter, AdminUsersList, CarRegister, ProductExists, NewProduct} from './components';
+    ConfirmarEncomenda, Comparador, Product, StorageRegister, ProductRegister, ProductRegister2, AdminLogin, AdminTipos, Order, Transporter, AdminUsersList, CarRegister, ProductExists, NewProduct, SelectTransp, SelectCar} from './components';
 
 
 const root = createRoot(
@@ -29,6 +29,8 @@ root.render(
       <Route path='/comparador' element={<Comparador />} />
       <Route path='/adminLogin' element={<AdminLogin />} />
       <Route path='/product/:id' element={<Product />} />
+      <Route path='/selectTransp/:id' element={<SelectTransp />} />
+      <Route path='/selectCar/:id' element={<SelectCar />} />
       <Route path='/storageRegister' element={<StorageRegister />} />
       <Route path='/productRegister' element={<ProductRegister />} />
       <Route path='/productExists' element={<ProductExists />} />

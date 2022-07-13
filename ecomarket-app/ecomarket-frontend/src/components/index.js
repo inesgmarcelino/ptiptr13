@@ -25,3 +25,5 @@ export { default as AdminUsersList } from "./AdminUsersList";
 export { default as CarRegister } from "./CarRegister";
 export { default as Filtros } from "./Filtros";
 export { default as Products } from "./Products";
+export { default as SelectTransp } from "./SelectTransp";
+export { default as SelectCar } from "./SelectCar";

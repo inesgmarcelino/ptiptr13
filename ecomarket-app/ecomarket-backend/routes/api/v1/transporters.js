@@ -37,16 +37,17 @@ router.post('/reg_car', async (req,res) => {
 // OPERACIONAL
 router.get('/orders', async (req,res) => {
     var transId = req.query.tid;
-    var queryString = "SELECT enc.id AS id, u1.nome AS cons, enc.tpurchase AS data, ed.descr AS estado, enc.total AS total \
+    var queryString = "SELECT enc.id AS id, u1.nome AS cons, enc.tpurchase AS data, d.vehic AS car, ed.descr AS estado, enc.total AS total \
                         FROM encomenda enc, utilizador u1, despacho d, estado_despacho ed \
-                        WHERE (d.forn = ?) AND (d.encom = enc.id) AND (enc.cons = u1.id) AND (d.estado = ed.id) \
-                        GROUP BY enc.id, u1.nome \
+                        WHERE (d.transp = ?) AND (d.encom = enc.id) AND (enc.cons = u1.id) AND (d.estado = ed.id) \
+                        GROUP BY enc.id, u1.nome, ed.descr, d.vehic \
                         ORDER BY enc.id ASC"
 
     try {
         const [result,fields] = await pool.query(queryString, [transId]);
         return res.status(200).send({results: result}); 
     } catch (err) {
+        console.log(err);
         return res.status(500).send({message:"fail"});
     }
 });
@@ -62,6 +63,19 @@ router.get('/cars', async (req,res) => {
     try {
         const [results, fields] = await pool.query(queryString, [transId]);
         return res.status(200).send({results: results}); 
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({message:"fail"});
+    }
+});
+
+router.get('/add_car', async (req, res) => {
+    try {
+        const order = req.query.id;
+        const car = req.query.car;
+        const update = await pool.query("UPDATE despacho SET vehic = ? WHERE encom = ?", [car, order]);
+        const update2 = await pool.query("UPDATE despacho SET estado = 3 WHERE encom = ?", [order]);
+        return res.redirect("http://localhost:3000/transporter"); // por mudar
     } catch (err) {
         console.error(err);
         return res.status(500).send({message:"fail"});
