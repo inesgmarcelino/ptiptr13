@@ -40,53 +40,23 @@ function Cart() {
     });
 
     return (
-        <div className="container">
-        <p className="titulo">Carrinho de Compras</p>
-        <div className="shopping-cart">
-            <div className="row" >
-                <div className="col-sm image">
-                    <img src={img1} alt="" />
+        <div>
+            <div className="container">
+                <p className="titulo">Carrinho de Compras</p>
+                <div className="shopping-cart">
+                    <table>
+                        <tr>
+                            <th className="cart">Produto</th>
+                            <th className="cart">Quantidade</th>
+                            <th className="cart">Preço</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                    
                 </div>
-                <div className="col-sm description">
-                    <span>Cereais Chocolate</span>
-                    <span>Chocolate Negro</span>
-                    <span>Continente</span>
-                </div>
-                <div className="col-sm quantity">
-                    <button className="plus-btn1" type="button" name="button">
-                        <img src={img3} alt=""/>
-                    </button>
-                    <input type="text" name="name" value="1"/>
-                    <button className="minus-btn1" type="button" name="button">
-                        <img src={img4} alt="" />
-                    </button>
-                </div>
-                <div className="col total-price">3€</div>
-            </div>
-
-            <div className="row">
-                <div className="col image">
-                    <img src={img2} alt="" />
-                </div>
-                <div className="col description">
-                    <span>Cereais Golden</span>
-                    <span>Mel</span>
-                    <span>Nestlé</span>
-                </div>
-                <div className="col quantity">
-                    <button className="plus-btn1" type="button" name="button">
-                        <img src={img3} alt=""/>
-                    </button>
-                    <input type="text" name="name" value="1"/>
-                    <button className="minus-btn1" type="button" name="button">
-                        <img src={img4} alt="" />
-                    </button>
-                </div>
-                <div className="col total-price">3€</div>
-            </div>
 
     
-            <div className="sumprice">Preço total:  6€</div>
+            <div className="sumprice">Preço total: </div>
             
 
             <button name="encomendar" className="btn btn2" >Encomendar</button>

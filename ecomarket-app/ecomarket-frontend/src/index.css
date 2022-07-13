@@ -261,11 +261,12 @@ body {
   color: white
 }
 
-.rowH {
+/*.rowH {
   display: flex;
   flex-wrap: wrap;
   padding: 0 4px;
   margin: 100px;
+
 }
 
 /* Create four equal columns that sits next to each other */
@@ -308,9 +309,6 @@ body {
   margin-top: 100px;
 }
 
-.rowH {
-  margin-left: 20px;
-}
 
 .headline {
   margin-left: 95px;
@@ -516,6 +514,10 @@ input:focus {
   margin-right: 2%;
 }
 
+.cart{
+  text-align: center;
+}
+
 /*MyData*/
 #remove{
   background-color: #8d1a0f;
@@ -665,4 +667,24 @@ label {
 .order{
   margin-top: 50px;
   align-content: center;
+}
+
+.jumbotron{
+  margin-top: 170px;
+  width: auto;
+  height: auto;
+}
+
+.home{
+  margin-top: 100px
+}
+
+.card-title{
+  text-align: center;
+  color: #FFFFFF;
+  background-color:#283618 ;
+  height: auto;
+  -moz-border-radius:75px;
+  -webkit-border-radius: 75px;
+  width: 100px;
 }
