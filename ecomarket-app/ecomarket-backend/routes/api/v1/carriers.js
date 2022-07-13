@@ -26,7 +26,7 @@ router.get('/delete/prod', async (req,res) => {
         const id = req.query.cons;
         const prod = req.query.prod;
         const deleting = await pool.query("DELETE FROM cesto_compras WHERE (cons = ?) AND (prod = ?)", [id,prod]);
-        return res.redirect("http://localhost:3000/cart"); // por mudar
+        return res.redirect("https://ecomarket.works/cart");
     } catch (err) {
         console.log(err);
         return res.status(500).send({message: 'fail'});

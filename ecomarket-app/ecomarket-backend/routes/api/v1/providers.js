@@ -188,7 +188,7 @@ router.get('/add_transp', async (req, res) => {
         const transp = req.query.transp;
         const update = await pool.query("UPDATE despacho SET transp = ? WHERE encom = ?", [transp, order]);
         const update2 = await pool.query("UPDATE despacho SET estado = 2 WHERE encom = ?", [order]);
-        return res.redirect("http://localhost:3000/provider"); // por mudar
+        return res.redirect("https://ecomarket.works/provider");
     } catch (err) {
         console.error(err);
         return res.status(500).send({message:"fail"});

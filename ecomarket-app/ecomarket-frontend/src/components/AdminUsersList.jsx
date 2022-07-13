@@ -45,7 +45,7 @@ function AdminUsersList(){
                                                                             <td>${c[i].email}</td>
                                                                             <td>${c[i].nif}</td>
                                                                             <td>${c[i].phone}</td>
-                                                                            <td class=''><a href='http://localhost:3000/editProfile/${c[i].id}' id='profile'><button type='button' class='btn btn3'>Editar</button></a></td>
+                                                                            <td class=''><a href='https://ecomarket.works/editProfile/${c[i].id}' id='profile'><button type='button' class='btn btn3'>Editar</button></a></td>
                                                                         </tr>`;
                     }
                 }
@@ -68,7 +68,7 @@ function AdminUsersList(){
                                                                                     <td>${p[i].email}</td>
                                                                                     <td>${p[i].nif}</td>
                                                                                     <td>${p[i].phone}</td>
-                                                                                    <td class=''><a href='http://localhost:3000/editProfile/${p[i].id}' id='profile'><button type='button' class='btn btn3'>Editar</button></a></td>
+                                                                                    <td class=''><a href='https://ecomarket.works/editProfile/${p[i].id}' id='profile'><button type='button' class='btn btn3'>Editar</button></a></td>
                                                                                 </tr>`;
                         }
                     }
@@ -92,7 +92,7 @@ function AdminUsersList(){
                                                                                     <td>${t[i].email}</td>
                                                                                     <td>${t[i].nif}</td>
                                                                                     <td>${t[i].phone}</td>
-                                                                                    <td class=''><a href='http://localhost:3000/editProfile/${t[i].id}' id='profile'><button type='button' class='btn btn3'>Editar</button></a></td>
+                                                                                    <td class=''><a href='https://ecomarket.works/editProfile/${t[i].id}' id='profile'><button type='button' class='btn btn3'>Editar</button></a></td>
                                                                                 </tr>`;
                         }
                     }

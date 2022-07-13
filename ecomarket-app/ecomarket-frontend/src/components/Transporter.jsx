@@ -43,7 +43,7 @@ function Transporter () {
                                                                                 <td id="carro${encomendas[i].id}"></td>\
                                                                                 <td>${encomendas[i].estado}</td>\
                                                                                 <td>${encomendas[i].total}€</td>\
-                                                                                <td class=''><a href='http://localhost:3000/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
+                                                                                <td class=''><a href='https://ecomarket.works/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
                                                                             </tr>`;
                         carro(encomendas[i].car, encomendas[i].id);
                     }
@@ -56,7 +56,7 @@ function Transporter () {
             if (typeof c === "number") {
                 document.getElementById("carro"+i).innerText = c;
             } else {
-                document.getElementById("carro"+i).innerHTML = `<a href='http://localhost:3000/selectCar/${i}' id='profile'><button type='button' class='btn btn5'>Selecione um Carro</button></a>`;
+                document.getElementById("carro"+i).innerHTML = `<a href='https://ecomarket.works/selectCar/${i}' id='profile'><button type='button' class='btn btn5'>Selecione um Carro</button></a>`;
                 return;
             }
         }

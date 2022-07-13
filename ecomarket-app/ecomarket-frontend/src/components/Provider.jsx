@@ -47,7 +47,7 @@ function Provider () {
                                                                             <td id="nome${encomendas[i].id}"></td>\
                                                                             <td>${encomendas[i].estado}</td>\
                                                                             <td>${encomendas[i].total}€</td>\
-                                                                            <td ><a href='http://localhost:3000/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
+                                                                            <td ><a href='https://ecomarket.works/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
                                                                         </tr>`;
                         transp(encomendas[i].transp, encomendas[i].id);
                     }
@@ -68,7 +68,7 @@ function Provider () {
                     }
                 })
             } else {
-                document.getElementById("nome"+i).innerHTML = `<a href='http://localhost:3000/selectTransp/${i}' id='profile'><button type='button' class='btn btn5'>Selecione um Transportador</button></a>`;
+                document.getElementById("nome"+i).innerHTML = `<a href='https://ecomarket.works/selectTransp/${i}' id='profile'><button type='button' class='btn btn5'>Selecione um Transportador</button></a>`;
                 return;
             }
         }

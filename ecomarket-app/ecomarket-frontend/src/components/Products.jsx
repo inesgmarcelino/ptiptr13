@@ -26,7 +26,7 @@ function Products() {
                                                                                     <p class='product-short-des'>${lista[k].fornecedor}</p>\
                                                                                     <span class='price'>${lista[k].preco}€</span>\
                                                                                 </div>\
-                                                                                <a href='http://localhost:3000/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
+                                                                                <a href='https://ecomarket.works/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
                                                                             </div>\
                                                                             <div class='card mb-3 mx-2 product position-relative'>\
                                                                                 <div class='product-info'>\
@@ -34,7 +34,7 @@ function Products() {
                                                                                     <p class='product-short-des'>${lista[k+1].fornecedor}</p>\
                                                                                     <span class='price'>${lista[k+1].preco}€</span>\
                                                                                 </div>\
-                                                                                <a href='http://localhost:3000/product/${lista[k+1].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
+                                                                                <a href='https://ecomarket.works/product/${lista[k+1].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
                                                                             </div>\
                                                                             <div class='card mb-3 mx-2 product position-relative'>\
                                                                                 <div class='product-info'>\
@@ -42,7 +42,7 @@ function Products() {
                                                                                     <p class='product-short-des'>${lista[k+2].fornecedor}</p>\
                                                                                     <span class='price'>${lista[k+2].preco}€</span>\
                                                                                 </div>\
-                                                                                <a href='http://localhost:3000/product/${lista[k+2].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
+                                                                                <a href='https://ecomarket.works/product/${lista[k+2].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
                                                                             </div>\
                                                                         </div>`;
                         k += 2;
@@ -54,7 +54,7 @@ function Products() {
                                                                                     <p class='product-short-des'>${lista[k].fornecedor}</p>\
                                                                                     <span class='price'>${lista[k].preco}€</span>\
                                                                                 </div>\
-                                                                                <a href='http://localhost:3000/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
+                                                                                <a href='https://ecomarket.works/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
                                                                             </div>\
                                                                             <div class='card mb-3 mx-2 product position-relative'>\
                                                                                 <div class='product-info'>\
@@ -62,7 +62,7 @@ function Products() {
                                                                                     <p class='product-short-des'>${lista[k+1].fornecedor}</p>\
                                                                                     <span class='price'>${lista[k+1].preco}€</span>\
                                                                                 </div>\
-                                                                                <a href='http://localhost:3000/product/${lista[k+1].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
+                                                                                <a href='https://ecomarket.works/product/${lista[k+1].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
                                                                             </div>`;
                         k++;
                     } else if (i > 0 && k < lista.length) {
@@ -72,7 +72,7 @@ function Products() {
                                                                                 <p class='product-short-des'>${lista[k+1].fornecedor}</p>\
                                                                                 <span class='price'>${lista[k+1].preco}€</span>\
                                                                             </div>\
-                                                                            <a href='http://localhost:3000/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
+                                                                            <a href='https://ecomarket.works/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
                                                                         </div>`;
                     }
                 }

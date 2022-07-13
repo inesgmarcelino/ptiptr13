@@ -44,7 +44,7 @@ function Consumer () {
                                                                             <td id="nome${encomendas[i].id}"></td>\
                                                                             <td>${encomendas[i].estado}</td>\
                                                                             <td>${encomendas[i].total}€</td>\
-                                                                            <td class=''><a href='http://localhost:3000/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
+                                                                            <td class=''><a href='https://ecomarket.works/order/${encomendas[i].id}' id='profile'><button type='button' class='btn btn3'>Ver</button></a></td>
                                                                         </tr>`;
                         transp(encomendas[i].transportador, encomendas[i].id);
                     }

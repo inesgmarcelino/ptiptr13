@@ -75,7 +75,7 @@ router.get('/add_car', async (req, res) => {
         const car = req.query.car;
         const update = await pool.query("UPDATE despacho SET vehic = ? WHERE encom = ?", [car, order]);
         const update2 = await pool.query("UPDATE despacho SET estado = 3 WHERE encom = ?", [order]);
-        return res.redirect("http://localhost:3000/transporter"); // por mudar
+        return res.redirect("https://ecomarket.works/transporter"); // por mudar
     } catch (err) {
         console.error(err);
         return res.status(500).send({message:"fail"});
