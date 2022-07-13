@@ -15,7 +15,6 @@ var auth = require('../svlib/auth0/tokenlib');
 
 router.get('/', async (req, res) => {
     try {
-        console.log(req.query.email)
         const expected = [1,{"email": { type: "string" } }];
         if (!parser(req.query, expected)) throw new Error("Dados inválidos");
         const [user, fields] = await pool.query("SELECT * FROM utilizador WHERE (email = ?)", [req.query.email]);

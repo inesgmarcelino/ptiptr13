@@ -12,29 +12,17 @@ const { query } = require('../svlib/db/getPool');
 const { response } = require('express');
 
 router.post('/add_prod_shbag', async (req,res) => {
-    const cons = req.body.cons;
-    const prod = req.body.prod;
-
-    var queryString = "INSERT INTO cesto_compras (consumidor, produto) VALUES (?,?)";
-    pool.getConnection((err,conn) => {
-        if (err) throw err;
-
-        conn.query(queryString, [cons, prod], (err,result) => {
-            conn.release();
-
-            if (err) {
-                res.status(500);
-                res.type('json');
-                res.send({"message":"Não foi possível realizar essa operação. output 1"});
-                return;
-            } else {
-                res.status(200);
-                res.type('json');
-                res.send({"message":"Registo bem sucessido"});
-                return;
-            }
-        });
-    });
+    try {
+        const cons = req.body.cons;
+        const prod = req.body.prod;
+        const qtty = req.body.qtty;
+        const [produto, fields] = await pool.query("SELECT forn FROM produto WHERE id = ?", [prod]);
+        const insert = await pool.query("INSERT INTO cesto_compras VALUES (?,?,?,?)", [cons, produto[0].forn, prod, qtty]);
+        return res.status(200).send({message: 'success'});
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({message: 'fail'});
+    }
 });
 
 router.post('/order', async (req,res) => {

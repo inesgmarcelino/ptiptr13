@@ -52,14 +52,14 @@ function Product(){
             $("#qtty").val(count);
         }
 
-        const handler = (x) => {
+        const handler = () => {
             Axios.post(url+"/api/v1/consumers/add_prod_shbag", {
                 cons: cid,
                 prod: id,
                 qtty: $("#qtty").val()
             }).then((response) => {
                 if (response.data.message === 'success') {
-                    window.location = "/cart";
+                    window.location.href = "http://localhost:3000/cart";
                 }
             })
         }
@@ -82,7 +82,7 @@ function Product(){
 
         const consumidor = () => {
             if (papel === 2 || papel === 4) {
-            return (<form>
+            return (<div>
                         <div className="col-sm quantity">
                             <button className="minus-btn1" type="button" onClick={minus} name="button">
                                 <img src={img4} alt="" />
@@ -92,8 +92,8 @@ function Product(){
                                 <img src={img3} alt=""/>
                             </button>
                         </div>
-                        <button type="submmit" className="btn btn2 cart-btnP" onClick={handler}>Adicionar Carrinho</button>
-                    </form>);
+                        <button className="btn btn2" onClick={handler}>Adicionar Carrinho</button>
+                    </div>);
             }
         }
 
