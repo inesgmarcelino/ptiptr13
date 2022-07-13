@@ -214,7 +214,7 @@ body {
   color: white;
   border: 1px solid  #283618ce;
   border-radius: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 #remover:hover {
@@ -388,8 +388,14 @@ body {
 }
 
 .sumprice{
-  margin-right: 30px;
+  float: right;
+  margin-right: 120px;
 }
+
+.sumprice>p {
+  margin-bottom: -20px;
+}
+
 
 .image > img{
   margin-right: 50px;

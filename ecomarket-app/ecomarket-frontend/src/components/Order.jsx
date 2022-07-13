@@ -9,6 +9,7 @@ function Order(){
     let { id }                  = useParams();
     const [papel, setPapel]     = useState();
     const [prodOK, setPOK]      = useState(false);
+    const [total, setTotal]      = useState(false);
     const [cancelar, setCancelar]   = useState(true);
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
 
@@ -35,7 +36,7 @@ function Order(){
                                                                         <th>"+produtos[i].id+"</th>\
                                                                         <th>"+produtos[i].nome+"</th>\
                                                                         <th>"+produtos[i].quant+"</th>\
-                                                                        <th>"+produtos[i].total+"€</th>\
+                                                                        <th>"+produtos[i].quant * produtos[i].total+"€</th>\
                                                                     </tr>";
                 }
                 if (user.email === produtos[0].forn) {
@@ -53,13 +54,24 @@ function Order(){
     }
 
     const cancel = () => {
-        Axios.delete(url+"/api/v1/consumers/cancel", { 
+        Axios.delete(url+"/api/v1/gets/order", { 
             params: {
                 id: id
             }}).then ((response) => {
             console.log(response);
             if (response.data.message === "success") {
                 window.location = "/consumer";
+            }
+        });
+    }
+
+    const getTotal = () => {
+        Axios.get(url+"/api/v1/gets/order", { 
+            params: {
+                id: id
+            }}).then ((response) => {
+            if (response.data.message !== "fail") {
+                setTotal(response.data.results);
             }
         });
     }
@@ -71,6 +83,7 @@ function Order(){
 
         if (!prodOK) {
             prod();
+            getTotal();
         }
 
         return(
@@ -79,7 +92,7 @@ function Order(){
             <section className='product-details'>
                 <div className="details">
                     <div className="container">
-                        <h2 className="product-brand">Encomenda {id}</h2>
+                        <h2 className="product-brand">Encomenda {id} - {total} €</h2>
                         <br />   
                     </div>
                    

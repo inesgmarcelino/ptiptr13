@@ -72,6 +72,17 @@ router.get('/subcategorias', async (req,res) => {
     }
 });
 
+router.get('/order', async (req,res) => {
+    try {
+        const order = req.query.id;
+        const [select, fields] = await pool.query("SELECT total FROM encomenda WHERE id = ?", [order]);
+        return res.status(200).send({results: select[0].total});
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({message: 'fail'});
+    }
+})
+
 
 //exporta funções/"objetos"
 module.exports = router ;

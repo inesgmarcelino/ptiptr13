@@ -13,22 +13,11 @@ function Cart() {
 
     const [cid, setCID]         = useState('');
     const [papel, setPapel]     = useState('');
+    const [total, setTotal]     = useState(0);
     const [prodOK, setPOK]      = useState(false);
+    var count = 0;
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
-
-    const minus = () => {
-        var count = $("#qtty").val();
-        if (count > 0) {
-            count--;
-            $("#qtty").val(count);
-        }
-    }
-
-    const plus = () => {
-        var count = $("#qtty").val();
-        count++;
-        $("#qtty").val(count);
-    }
+   
 
     const prod = () => {
         Axios.get(url+"/api/v1/carriers", {
@@ -41,25 +30,26 @@ function Cart() {
                     document.getElementById("linhas").innerHTML += `<tr>\
                                                                         <td class='cart'>${produtos[i].nome}</td>\
                                                                         <td class='cart'>${produtos[i].quantidade}</td>\
-                                                                        <td class='cart'>${produtos[i].preco}€</td>\
+                                                                        <td class='cart'>${produtos[i].preco} €/un.</td>\
                                                                         <td class='cart'><a href='${url}/api/v1/carriers/delete/prod?cons=${cid}&prod=${produtos[i].id}' id='profile'><button type='button' id="remover" value="${produtos[i].id}" class='btn btn5'>Remover</button></a></td>\
                                                                     </tr>`;
+                    count += (produtos[i].quantidade * produtos[i].preco);
+                    setTotal(count);
                 }
             }
         });
         setPOK(true);
     }
 
-    // document.getElementById("remover").addEventListener('click', () => {
-    //     Axios.delete(url+'/carriers/delete/prod', {
-    //         cons: cid,
-    //         prod: document.getElementById("remover").value
-    //     }).then((response) => {
-    //         if (response.data.message === 'success') {
-    //             window.location = '/cart';
-    //         }
-    //     })
-    // });
+    const encomendar = () => {
+        Axios.post(url+'/api/v1/consumers/order', {
+            cons: cid
+        }).then((response) => {
+            if (response.data.message === 'success') {
+                window.location = '/consumer';
+            }
+        })
+    }
 
     if (isLoading) {
         return (<div></div>);
@@ -102,8 +92,10 @@ function Cart() {
                                 </table>
                                 
                             </div>
-                            <div className="sumprice">Preço total: </div>
-                            <button name="encomendar" className="btn btn2" >Encomendar</button>
+                            <div className="sumprice">
+                                <p>Total: {total} €</p>
+                                <button name="encomendar" className="btn btn2" onClick={encomendar}>Encomendar</button>
+                            </div>
                         </div>
                     </div>);
         }
