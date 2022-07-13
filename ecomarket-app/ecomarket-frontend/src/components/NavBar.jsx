@@ -19,17 +19,17 @@ function SideBar(props) {
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="mx-auto">
-                        <input class="form-control me-2" id="searchBar" type="search" placeholder="Search" size="50" aria-label="Search" />
+                        <input class="form-control me-2" id="searchBar" type="search" placeholder="Pesquise produtos aqui" size="50" aria-label="Search" />
                     </div>
-                    
-                    <NavLink onClick={() => { window.location = "/cart" }}>
-                        <img src={cart} id="cart" alt=""/>
-                    </NavLink>
+                    <NavLink className="nav-link text-white" onClick={() => { window.location = "/catalog" }}>Catálogo</NavLink>
                     <ul class="navbar-nav">
                         <li className="nav-item"> {/* se autenticado user */}
                         {useLogin(isAuthenticated)}
                         </li>
                     </ul>
+                    <NavLink onClick={() => { window.location = "/cart" }}>
+                        <img src={cart} id="cart" alt=""/>
+                    </NavLink>
                     </div>
                 </div>
                 </nav>
@@ -52,7 +52,7 @@ function useLogin(logged) {
     } else {
         return (
             /*Trocar para username mais tarde e talvez acrescentar a fotografia se quiserem*/ 
-            <NavDropdown title={user.name} id="basic-nav-dropdown" className="NavDrop">
+            <NavDropdown title={`Olá, ${user.name}`} id="basic-nav-dropdown" className="NavDrop">
                 <NavDropdown.Item href="/profile" style={{color: "black"}} >Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={() => logout({returnTo: window.location.origin,})}>Logout</NavDropdown.Item>

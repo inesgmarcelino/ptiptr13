@@ -53,6 +53,20 @@ router.get('/order', async (req,res) => {
     }
 });
 
+router.get('/id', async (req,res) => {
+    try{
+        const prod = req.query.id
+        const queryString = "SELECT p.nome AS nome, u1.nome AS forn, p.prod AS data, c.nome AS cat, s.nome AS subcat, p.preco AS preco \
+                        FROM produto p, utilizador u1, categoria c, subcategoria s \
+                        WHERE (p.id = ?) AND (p.forn = u1.id) AND (p.catg = c.id) AND (p.subcatg = s.id)";
+        const [produto, fields] = await pool.query(queryString, [prod]);
+        return res.status(200).send({results: produto});
+    }catch(err){
+        console.log(err);
+        res.status(500).send({message: 'fail'});
+    }
+
+});
 
 // router.get('/:cid', async (req,res) => {
 //     console.log("Uh oh wrong place wrong time mr freeman");

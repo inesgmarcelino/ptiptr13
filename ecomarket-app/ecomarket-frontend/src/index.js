@@ -28,7 +28,7 @@ root.render(
       <Route path='/confirmarEncomenda' element={<ConfirmarEncomenda />} />
       <Route path='/comparador' element={<Comparador />} />
       <Route path='/adminLogin' element={<AdminLogin />} />
-      <Route path='/product' element={<Product />} />
+      <Route path='/product/:id' element={<Product />} />
       <Route path='/storageRegister' element={<StorageRegister />} />
       <Route path='/productRegister' element={<ProductRegister />} />
       <Route path='/productExists' element={<ProductExists />} />

@@ -19,56 +19,61 @@ function Products() {
 
                 for (var k = 0; k < lista.length; k++) {
                     if (i > 0 && k+2 < lista.length) {
-                        document.getElementById("produtos").innerHTML += "<div class='row mx-5'> \
+                        document.getElementById("produtos").innerHTML += `<div class='row mx-5'> \
                                                                             <div class='card mb-3 mx-2 product position-relative'>\
                                                                                 <div class='product-info'>\
-                                                                                    <h2 class='product-name'>"+lista[k].nome+"</h2>\
-                                                                                    <p class='product-short-des'>"+lista[k].fornecedor+"</p>\
-                                                                                    <span class='price'>"+lista[k].preco+"</span>\
+                                                                                    <h2 class='product-name'>${lista[k].nome}</h2>\
+                                                                                    <p class='product-short-des'>${lista[k].fornecedor}</p>\
+                                                                                    <span class='price'>${lista[k].preco}€</span>\
                                                                                 </div>\
+                                                                                <a href='http://localhost:3000/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
                                                                             </div>\
                                                                             <div class='card mb-3 mx-2 product position-relative'>\
                                                                                 <div class='product-info'>\
-                                                                                    <h2 class='product-name'>"+lista[k+1].nome+"</h2>\
-                                                                                    <p class='product-short-des'>"+lista[k+1].fornecedor+"</p>\
-                                                                                    <span class='price'>"+lista[k+1].preco+"</span>\
+                                                                                    <h2 class='product-name'>${lista[k+1].nome}</h2>\
+                                                                                    <p class='product-short-des'>${lista[k+1].fornecedor}</p>\
+                                                                                    <span class='price'>${lista[k+1].preco}€</span>\
                                                                                 </div>\
+                                                                                <a href='http://localhost:3000/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
                                                                             </div>\
                                                                             <div class='card mb-3 mx-2 product position-relative'>\
                                                                                 <div class='product-info'>\
-                                                                                    <h2 class='product-name'>"+lista[k+2].nome+"</h2>\
-                                                                                    <p class='product-short-des'>"+lista[k+2].fornecedor+"</p>\
-                                                                                    <span class='price'>"+lista[k+2].preco+"</span>\
+                                                                                    <h2 class='product-name'>${lista[k+2].nome}</h2>\
+                                                                                    <p class='product-short-des'>${lista[k+2].fornecedor}</p>\
+                                                                                    <span class='price'>${lista[k+2].preco}€</span>\
                                                                                 </div>\
+                                                                                <a href='http://localhost:3000/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
                                                                             </div>\
-                                                                        </div>";
+                                                                        </div>`;
                         k += 2;
                     } else if (i > 0 && k+1 < lista.length) {
-                        document.getElementById("produtos").innerHTML += "<div class='row mx-5'> \
+                        document.getElementById("produtos").innerHTML += `<div class='row mx-5'> \
                                                                             <div class='card mb-3 mx-2 product position-relative'>\
                                                                                 <div class='product-info'>\
-                                                                                    <h2 class='product-name'>"+lista[k].nome+"</h2>\
-                                                                                    <p class='product-short-des'>"+lista[k].fornecedor+"</p>\
-                                                                                    <span class='price'>"+lista[k].preco+"</span>\
+                                                                                    <h2 class='product-name'>${lista[k].nome}</h2>\
+                                                                                    <p class='product-short-des'>${lista[k].fornecedor}</p>\
+                                                                                    <span class='price'>${lista[k].preco}€</span>\
                                                                                 </div>\
+                                                                                <a href='http://localhost:3000/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
                                                                             </div>\
                                                                             <div class='card mb-3 mx-2 product position-relative'>\
                                                                                 <div class='product-info'>\
-                                                                                    <h2 class='product-name'>"+lista[k+1].nome+"</h2>\
-                                                                                    <p class='product-short-des'>"+lista[k+1].fornecedor+"</p>\
-                                                                                    <span class='price'>"+lista[k+1].preco+"</span>\
+                                                                                    <h2 class='product-name'>${lista[k+1].nome}</h2>\
+                                                                                    <p class='product-short-des'>${lista[k+1].fornecedor}</p>\
+                                                                                    <span class='price'>${lista[k+1].preco}€</span>\
                                                                                 </div>\
-                                                                            </div>";
+                                                                                <a href='http://localhost:3000/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
+                                                                            </div>`;
                         k++;
                     } else if (i > 0 && k < lista.length) {
-                        document.getElementById("produtos").innerHTML += "<div class='row mx-5'> \
-                                                                            <div class='card mb-3 mx-2 product position-relative'>\
-                                                                                <div class='product-info'>\
-                                                                                    <h2 class='product-name'>"+lista[k].nome+"</h2>\
-                                                                                    <p class='product-short-des'>"+lista[k].fornecedor+"</p>\
-                                                                                    <span class='price'>"+lista[k].preco+"</span>\
-                                                                                </div>\
-                                                                            </div>";
+                        document.getElementById("produtos").innerHTML += `<div class='card mb-3 mx-2 product position-relative'>\
+                                                                            <div class='product-info'>\
+                                                                                <h2 class='product-name'>${lista[k+1].nome}</h2>\
+                                                                                <p class='product-short-des'>${lista[k+1].fornecedor}</p>\
+                                                                                <span class='price'>${lista[k+1].preco}€</span>\
+                                                                            </div>\
+                                                                            <a href='http://localhost:3000/product/${lista[k].id}' id='profile'><button type='button' class='btn btn4'>Ver mais</button></a>\
+                                                                        </div>`;
                     }
                 }
             }

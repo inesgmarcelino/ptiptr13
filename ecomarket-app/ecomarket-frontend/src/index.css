@@ -44,7 +44,6 @@ body {
   margin-bottom: 7px;
   min-width: 400px;
   max-width: 400px;
-  vertical-align: middle;
  
 }
 
@@ -85,7 +84,11 @@ body {
 }
 
 .form-check-input {
-  margin-top: 12px;
+  margin-top: 12.5px;
+}
+
+.form-check-inline {
+  margin-right: 30px;
 }
 
 .card {
@@ -194,6 +197,16 @@ body {
   margin: 0;
   position: relative;
   transform: translate(-50%, 0%)
+}
+
+.btn4 {
+  background-color: #fff;
+  color: #283618;
+  border: 3px solid  #283618ce;
+  border-radius: 10px;
+  width: max-content;
+  margin-bottom: -75px;
+  margin-left: 80px;
 }
 
 .btn:hover {

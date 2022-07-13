@@ -1,33 +1,125 @@
-const img1 = require('../images/cereaisGoldenGraham.jpg');
+import $ from "jquery";
+import Axios from "axios";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useAuth0 } from '@auth0/auth0-react';
+const img3 = require('../images/plus.png')
+const img4 = require('../images/less.png')
 
 function Product(){
- 
+    let { id }  = useParams();
+    const { user, isLoading }   = useAuth0();
+
+    const [cid, setCID]         = useState('');
+    const [papel, setPapel]     = useState('');
+
+    const [nome, setNome]   = useState('');
+    const [preco, setPreco] = useState('');
+    const [forn, setForn]   = useState('');
+    const [data, setData]   = useState('');
+    const [cat, setCat]     = useState('');
+    const [scat, setScat]   = useState('');
+    var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
+
+    if (isLoading) {
+        return (<div></div>);
+    } else {
+        const getsUser = () => {
+            Axios.get(url+"/api/v2/users", {
+                params: {
+                  email: user.email
+              }}).then((response) => {
+                if (response.data.message !== 'fail') {
+                  setPapel(response.data.results[0].papel)
+                  setCID(response.data.results[0].id);
+                }
+              });
+        }
+
+        getsUser();
+
+        const minus = () => {
+            var count = $("#qtty").val();
+            if (count > 0) {
+                count--;
+                $("#qtty").val(count);
+            }
+        }
+
+        const plus = () => {
+            var count = $("#qtty").val();
+            count++;
+            $("#qtty").val(count);
+        }
+
+        const handler = (x) => {
+            Axios.post(url+"/api/v1/consumers/add_prod_shbag", {
+                cons: cid,
+                prod: id,
+                qtty: $("#qtty").val()
+            }).then((response) => {
+                if (response.data.message === 'success') {
+                    window.location = "/cart";
+                }
+            })
+        }
+
+        const get = () => {
+            Axios.get(url+"/api/v1/products/id", {
+                params: {
+                    id: id
+            }}).then((response) => {
+                if (response.data.message !== 'fail') {
+                    setNome(response.data.results[0].nome);
+                    setPreco(response.data.results[0].preco);
+                    setForn(response.data.results[0].forn);
+                    setData(response.data.results[0].data.substring(0,10));
+                    setCat(response.data.results[0].cat);
+                    setScat(response.data.results[0].subcat);
+                }
+            });
+        }
+
+        const consumidor = () => {
+            if (papel === 2 || papel === 4) {
+            return (<form>
+                        <div className="col-sm quantity">
+                            <button className="minus-btn1" type="button" onClick={minus} name="button">
+                                <img src={img4} alt="" />
+                            </button>
+                            <input type="text" id="qtty" name="qtty" value={1}/>
+                            <button className="plus-btn1" type="button" onClick={plus} name="button">
+                                <img src={img3} alt=""/>
+                            </button>
+                        </div>
+                        <button type="submmit" className="btn btn2 cart-btnP" onClick={handler}>Adicionar Carrinho</button>
+                    </form>);
+            }
+        }
+
+        get();
 
         return(
             <div className="position-absolute showItems">
             <div className='container'>
             <section className='product-details'>
-                <div className='imageP'>
-                    <img src={img1} alt='' />
-                </div>
-
                 <div className="details">
-                    <h2 className="product-brand">Cereais Golden Graham</h2>
-                    <span className="product-price">2€</span>
-                    <h3 className="product-short-des">Cadeia Logística:</h3>
-                    <p > Produto Agrícula, 500kms pelo Transportador; Produtor Industrial, 125kms pelo Transportador; Grossista, 80kms pelo Transportador; Retalhista</p>
-                    <h3 className="product-short-des">Recursos Consumidos:</h3>
-                    <p>1000 L de Água, 2000 kW de Eletricidade, 162L de Gasóleo</p>
-                    <h3 className="product-short-des">Poluição Gerada:</h3>
-                    <p>9.4 kg CO2</p>
-
-                    
-                    <button className="btn btn2 cart-btnP">Adicionar Carrinho</button>
+                    <h2 className="product-brand">{nome}</h2>
+                    <span className="product-price">{preco}€/un.</span>
+                    <h3 className="product-short-des">Fornecedor:</h3>
+                    <p>{forn}</p>
+                    <h3 className="product-short-des">Data de Produção:</h3>
+                    <p>{data}</p>
+                    <h3 className="product-short-des">Categoria:</h3>
+                    <p>{cat}</p>
+                    <h3 className="product-short-des">Subcategoria:</h3>
+                    <p>{scat}</p>
+                    {consumidor()}
                 </div>
             </section>
             </div>
-            </div>
-        )
+            </div>);
+    }
 }
 
 export default Product;
