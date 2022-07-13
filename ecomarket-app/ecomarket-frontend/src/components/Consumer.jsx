@@ -68,10 +68,6 @@ function Consumer () {
         }
 
         if (papel === 2 || papel === 4) {
-            // const buscarEnc = (x) => {
-            //     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
-            //     window.location.href = url+'/order?id=' + x.target.value;   
-            // }
             
             const cons = () => {
                 if (!encOK) {

@@ -108,7 +108,7 @@ function CarRegister(){
                     }).then ((response) => {
                         console.log(response);
                         if (response.data.message === "success") {
-                            window.location.href = "http://localhost:3000/transporter"; //yo be changed
+                            window.location = "/transporter";
                         }
                     });
                 }

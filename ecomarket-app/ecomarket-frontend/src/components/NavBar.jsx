@@ -22,7 +22,7 @@ function SideBar(props) {
                         <input class="form-control me-2" id="searchBar" type="search" placeholder="Search" size="50" aria-label="Search" />
                     </div>
                     
-                    <NavLink to="/Cart">
+                    <NavLink onClick={() => { window.location = "/cart" }}>
                         <img src={cart} id="cart" alt=""/>
                     </NavLink>
                     <ul class="navbar-nav">

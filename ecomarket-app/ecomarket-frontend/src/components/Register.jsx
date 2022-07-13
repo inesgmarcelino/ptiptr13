@@ -56,10 +56,6 @@ function Register() {
             }
         });
     }
-    
-    const goLogin = () => {
-        window.location.href = url;
-    }
 
     function check(){
         let forncheck = document.getElementById("check-fornecedor");

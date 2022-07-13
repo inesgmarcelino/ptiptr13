@@ -122,9 +122,9 @@ function EditProfile () {
                             console.log(response);
                             if (response.data.message === "success") {
                                 if (papel === 1) {
-                                    window.location.href = "http://localhost:3000/adminUsersList";  //to be changed
+                                    window.location = "/adminUsersList";
                                 } else {
-                                    window.location.href = "http://localhost:3000/profile";  //to be changed
+                                    window.location = "/profile";
                                 }
                                 
                             }

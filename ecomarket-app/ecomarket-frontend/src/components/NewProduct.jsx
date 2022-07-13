@@ -111,7 +111,7 @@ function NewProduct() {
                         storage: armazem
                     }).then((response) => {
                         if (response.data.message === 'success') {
-                            window.location.href = "http://localhost:3000/provider"; //to be changed
+                            window.location = "/provider";
                         }
                     })
                 }
