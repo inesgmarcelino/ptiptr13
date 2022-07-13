@@ -12,7 +12,6 @@ function Order(){
     const [cancelar, setCancelar]   = useState(true);
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
 
-    // document.body.onload = function(){prod()};
     const getsUser = () => {
         Axios.get(url+"/api/v2/users", {
             params: {

@@ -59,7 +59,7 @@ function Product(){
                 qtty: $("#qtty").val()
             }).then((response) => {
                 if (response.data.message === 'success') {
-                    window.location.href = "http://localhost:3000/cart";
+                    window.location = "/cart";
                 }
             })
         }

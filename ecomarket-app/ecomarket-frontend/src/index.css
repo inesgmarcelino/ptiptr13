@@ -209,6 +209,20 @@ body {
   margin-left: 80px;
 }
 
+.btn5 {
+  background-color: #283618;
+  color: white;
+  border: 1px solid  #283618ce;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+#remover:hover {
+  background-color: #3e5325;
+  color: white;
+}
+
+
 .btn:hover {
   background-color: #283618;
   color: white;
