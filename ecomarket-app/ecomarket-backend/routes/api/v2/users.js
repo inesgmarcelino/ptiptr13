@@ -80,7 +80,9 @@ router.post('/register', async (req, res, next) => {
             }
         }).catch(err => {
             console.log(err);
-            throw new ServerError(500,"Não foi possível registar o utilizador.")});
+            throw new ServerError(500,"Não foi possível registar o utilizador.")
+        });
+
         const [users, field] = await pool.query("SELECT id FROM utilizador WHERE email = ?", [req.body.email]);
 
 

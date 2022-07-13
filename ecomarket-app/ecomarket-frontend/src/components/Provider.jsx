@@ -132,12 +132,6 @@ function Provider () {
             return x.substring(8,10)+"/"+x.substring(5,7)+"/"+x.substring(0,4);
         }
 
-        // const prov = () => {
-        //     // enc();
-        //     prod();
-        //     store();
-        // }
-
         if (papel === 3 || papel === 4) {
             const prov = () => {
                 if (!encOK) {
