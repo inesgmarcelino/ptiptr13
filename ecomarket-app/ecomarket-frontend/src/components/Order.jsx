@@ -75,7 +75,7 @@ function Order(){
         }
 
         return(
-            <div className="position-absolute showItems">
+            <div className="showItems">
             <div className='container'>
             <section className='product-details'>
                 <div className="details">
