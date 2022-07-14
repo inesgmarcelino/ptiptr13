@@ -20,9 +20,6 @@ function Register() {
     const [sufix, setSufix]                         = useState('');
     const [password, setPassword]                   = useState('');
     const [checkPassword, setCheckPassword]         = useState('');
-    const [checkConsumidor, setConsumidor]          = useState(false);
-    const [checkFornecedor, setFornecedor]          = useState(false);
-    const [checkTransportador, setTransportador]    = useState(false);
     const [papel, setPapel]                         = useState('');
 
     const handleShow = () => {

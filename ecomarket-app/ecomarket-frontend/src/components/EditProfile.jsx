@@ -9,12 +9,12 @@ function EditProfile () {
     var url = (process.env.REACT_APP_TEST === "true") ? process.env.REACT_APP_TEST_IP : process.env.REACT_APP_DOMAIN;
     
     // states for editing
-    var nome            = '';
-    var email           = '';
-    var nif             = '';
-    var telem           = '';
-    var password        = '';
-    var checkPassword   = '';
+    const [nome, setNome]                           = useState('');
+    const [email, setEmail]                         = useState('');
+    const [nif, setNif]                             = useState('');
+    const [telem, setTelem]                         = useState('');
+    const [password, setPassword]                   = useState('');
+    const [checkPassword, setCheckPassword]         = useState('');
 
     // default values
     const [nomeD, setNomeD]                           = useState('');
@@ -57,55 +57,48 @@ function EditProfile () {
 
         const setDefaults = () => {
             if (nome === '') {
-                nome = nomeD;
+                setNome(nomeD);
             }
             if (email === '') {
-                email = emailD;
+                setEmail(emailD);
             }
             if (nif === '') {
-                nif = nifD;
+                setNif(nifD);
             } 
             if (telem === '') {
-                telem = telemD;
+                setTelem(telemD);
             }
             if (password === '') {
-                password = false;
+                setPassword(false);
             }
         }
 
         const handler = (x) => {
             switch(x.target.name) {
                 case "nome":
-                    console.log("aqui")
-                    nome = x.target.value;
+                    setNome(x.target.value);
                     console.log(nome);
                     break;
                 case "email":
-                    console.log("aqui2")
-                    email = x.target.value;
+                    setEmail(x.target.value);
                     break;
                 case "nif":
-                    console.log("aqui3")
                     if (nif.length < 9 || x.target.value.length < 9) {
-                        nif = x.target.value.replace(/[^0-9]/gi, '');
+                        setNif(x.target.value.replace(/[^0-9]/gi, ''));
                     }
                     break;
                 case "telem":
-                    console.log("aqui4")
                     if (telem.length < 9 || x.target.value.length < 9) {
-                        telem = x.target.value.replace(/[^0-9]/gi, '');
+                        setTelem(x.target.value.replace(/[^0-9]/gi, ''));
                     }
                     break;
                 case "password":
-                    console.log("aqui10")
-                    password = x.target.value;
+                    setPassword(x.target.value);
                     break;
                 case "checkPassword":
-                    console.log("aqui11")
-                    checkPassword = x.target.value;
+                    setCheckPassword(x.target.value);
                     break;
                 case "submit":
-                    console.log("aqui12")
                     x.preventDefault();
                     setDefaults();
                     
@@ -162,7 +155,7 @@ function EditProfile () {
                         </div>
                         <div className="col-md-12">
                             <label>Email</label>
-                            <input className="form-control" type="email" name="email" size="50" placeholder={emailD} value={email} onChange={handler} />
+                            <input className="form-control" type="email" name="email" size="50" placeholder={emailD} onChange={handler} />
                         </div>
                         <div className="col-md-12">
                             <label>NIF</label>
